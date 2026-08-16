@@ -1,0 +1,158 @@
+﻿
+<!-- ================= LOGIN SYSTEM ================= -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card" id="loginCard">
+
+    <div class="login-brand">
+      <div class="lb-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/><path d="M3.5 12h4l1.5-3 2 6 1.5-3h8"/></svg></div>
+      <div><div class="lb-name">Hospitall</div><div class="lb-tenant" id="loginTenantName">CityCare Clinic</div></div>
+    </div>
+
+    <!-- STEP 0: role picker -->
+    <div class="login-step active" id="loginStepRole">
+      <div class="login-title">Sign in to continue</div>
+      <div class="login-sub">Enter your email, phone number, or name</div>
+
+      <div class="login-error" id="unifiedLoginError">We couldn't find an account matching that. Check for typos, or contact your clinic admin.</div>
+
+      <div class="login-field">
+        <label>Email, Phone Number, or Name</label>
+        <input id="unifiedIdentifier" placeholder="you@clinic.com, 98765 43210, or your name" onkeydown="if(event.key==='Enter') continueUnifiedLogin()">
+      </div>
+      <div class="login-submit-btn" onclick="continueUnifiedLogin()">Continue</div>
+      <div class="login-hint">New patient? <span style="color:var(--success);font-weight:700;cursor:pointer;" onclick="selectLoginRole('patient');showPatientRegister();" >Register here</span></div>
+      <div class="login-hint">Staff: once you sign in, bookmark the page â€” it'll skip straight back here next time.</div>
+    </div>
+
+    <!-- STEP 1: Doctor / Admin â€” password or OTP -->
+    <div class="login-step" id="loginStepStaff">
+      <div class="login-back" onclick="backToRolePicker()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</div>
+      <div class="login-title" id="staffLoginTitle">Doctor Sign In</div>
+      <div class="login-sub" id="staffLoginSub">Enter your credentials to continue</div>
+
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="tabPassword" onclick="setStaffAuthMode('password')">Password</div>
+        <div class="auth-tab" id="tabOtp" onclick="setStaffAuthMode('otp')">OTP</div>
+      </div>
+
+      <div class="login-error" id="staffLoginError">Incorrect password. Please try again.</div>
+
+      <div id="staffPasswordMode">
+        <div class="login-field">
+          <label>Email or Phone</label>
+          <input id="staffEmail" placeholder="you@citycareclinic.com" value="arjun.patel@citycareclinic.com">
+        </div>
+        <div class="login-field">
+          <label>Password</label>
+          <div class="pw-field-wrap">
+            <input type="password" id="staffPassword" placeholder="Enter your password">
+            <div class="pw-toggle" onclick="togglePwVisibility('staffPassword', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          </div>
+        </div>
+        <div class="login-row-between">
+          <label class="login-remember"><input type="checkbox" checked>Remember me</label>
+          <span class="login-forgot" onclick="showToast('Password reset link sent (simulated).')">Forgot password?</span>
+        </div>
+        <div class="login-submit-btn" onclick="submitStaffPasswordLogin()">Sign In</div>
+      </div>
+
+      <div id="staffOtpMode" style="display:none;">
+        <div id="staffOtpRequestView">
+          <div class="login-field">
+            <label>Registered Phone Number</label>
+            <input id="staffOtpPhone" placeholder="98765 43210" value="98765 43210">
+          </div>
+          <div class="login-submit-btn" onclick="requestStaffOtp()">Send OTP</div>
+        </div>
+        <div id="staffOtpVerifyView" style="display:none;">
+          <div class="login-sub" style="margin-bottom:14px;">Enter the 6-digit code sent to <b id="staffOtpPhoneShown">98765 43210</b></div>
+          <div class="otp-box-row">
+            <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
+            <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
+            <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
+            <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
+            <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
+            <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
+          </div>
+          <div class="otp-resend" id="staffOtpResend">Resend code in <b>30s</b></div>
+          <div class="login-submit-btn" onclick="verifyStaffOtp()">Verify &amp; Sign In</div>
+        </div>
+      </div>
+
+      <div class="login-hint">Don't have an account? Contact your clinic admin to get set up.</div>
+      <div class="login-hint">Prototype note: any password / any 6-digit code will work.</div>
+    </div>
+
+    <!-- STEP 2: Receptionist â€” staff picker + PIN -->
+    <div class="login-step" id="loginStepReception">
+      <div class="login-back" onclick="backToRolePicker()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</div>
+      <div id="staffPickerView">
+        <div class="login-title">Who's checking in?</div>
+        <div class="login-sub">Tap your name, then enter your PIN</div>
+        <div class="staff-grid" id="staffPickerGrid"></div>
+        <div class="login-hint">Don't see your name? Ask your clinic admin to add you.</div>
+      </div>
+      <div id="pinPadView" style="display:none;">
+        <div class="login-back" onclick="backToStaffPicker()" style="margin-bottom:6px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Not you?</div>
+        <div class="pin-avatar-row">
+          <div class="pa-chip" id="pinAvatarChip">MI</div>
+          <div style="text-align:left;"><div style="font-size:14px;font-weight:700;color:var(--ink-900);" id="pinStaffName">Meena Iyer</div><div style="font-size:11.5px;color:var(--ink-500);" id="pinStaffRole">Front Desk Lead</div></div>
+        </div>
+        <div class="login-sub" style="margin-bottom:16px;">Enter your 4-digit PIN</div>
+        <div class="pin-dots" id="pinDots">
+          <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+        </div>
+        <div class="pin-pad">
+          <div class="pin-key" onclick="pressPinDigit('1')">1</div><div class="pin-key" onclick="pressPinDigit('2')">2</div><div class="pin-key" onclick="pressPinDigit('3')">3</div>
+          <div class="pin-key" onclick="pressPinDigit('4')">4</div><div class="pin-key" onclick="pressPinDigit('5')">5</div><div class="pin-key" onclick="pressPinDigit('6')">6</div>
+          <div class="pin-key" onclick="pressPinDigit('7')">7</div><div class="pin-key" onclick="pressPinDigit('8')">8</div><div class="pin-key" onclick="pressPinDigit('9')">9</div>
+          <div class="pin-key action" onclick="clearPin()">Clear</div><div class="pin-key" onclick="pressPinDigit('0')">0</div><div class="pin-key action" onclick="backspacePin()">âŒ«</div>
+        </div>
+        <div class="login-hint">Prototype note: any 4 digits will work.</div>
+      </div>
+    </div>
+
+    <!-- STEP 3: Patient â€” phone + OTP, with register branch -->
+    <div class="login-step" id="loginStepPatient">
+      <div class="login-back" onclick="backToRolePicker()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</div>
+
+      <div id="patientPhoneView">
+        <div class="login-title">Patient Login</div>
+        <div class="login-sub">We'll text you a one-time code â€” no password needed</div>
+        <div class="login-field">
+          <label>Mobile Number</label>
+          <input id="patientPhone" placeholder="98765 43210">
+        </div>
+        <div class="login-submit-btn" onclick="requestPatientOtp()">Send OTP</div>
+        <div class="login-hint">New patient? <span style="color:var(--success);font-weight:700;cursor:pointer;" onclick="showPatientRegister()">Register here</span></div>
+      </div>
+
+      <div id="patientOtpView" style="display:none;">
+        <div class="login-title">Enter OTP</div>
+        <div class="login-sub">Sent to <b id="patientOtpPhoneShown">98765 43210</b></div>
+        <div class="otp-box-row">
+          <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
+          <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
+          <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
+          <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
+          <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
+          <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
+        </div>
+        <div class="otp-resend" id="patientOtpResend">Resend code in <b>30s</b></div>
+        <div class="login-submit-btn" onclick="verifyPatientOtp()">Verify &amp; Continue</div>
+        <div class="login-hint">Prototype note: any 6-digit code will work.</div>
+      </div>
+
+      <div id="patientRegisterView" style="display:none;">
+        <div class="login-title">New Patient Registration</div>
+        <div class="login-sub">Takes less than a minute</div>
+        <div class="login-field"><label>Full Name</label><input id="regName" placeholder="e.g. Sunita Rao"></div>
+        <div class="login-field"><label>Mobile Number</label><input id="regPhone" placeholder="98765 43210"></div>
+        <div class="login-field"><label>Age</label><input id="regAge" type="number" placeholder="Age"></div>
+        <div class="login-field"><label>Gender</label><select id="regGender"><option>Male</option><option>Female</option><option>Other</option></select></div>
+        <div class="login-submit-btn" onclick="submitPatientRegister()">Register &amp; Send OTP</div>
+      </div>
+    </div>
+
+  </div>
+</div>

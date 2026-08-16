@@ -1,0 +1,197 @@
+    <div class="content-wrap" id="page-settings" style="display:none;grid-template-columns:1fr;">
+      <div class="rc-wrap" style="max-width:640px;">
+        <div class="breadcrumb" onclick="goHome()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</div>
+        <div class="page-header">
+          <div>
+            <div class="page-title">Settings</div>
+            <div class="page-sub">Clinic information and consultation fees</div>
+          </div>
+        </div>
+
+        <div class="rc-card" style="margin-bottom:16px;">
+          <div class="rc-step-title" style="margin-bottom:14px;">Clinic Information</div>
+          <div class="st-row"><label>Clinic Name</label><input id="stClinicName" value="CityCare Clinic"></div>
+          <div class="st-row"><label>Address</label><input id="stClinicAddress" value="250, Hitech City, Hyderabad – 500081"></div>
+          <div class="btn btn-primary" style="display:inline-flex;" onclick="saveClinicInfo()">Save Clinic Info</div>
+        </div>
+
+        <div class="rc-card">
+          <div class="rc-step-title" style="margin-bottom:14px;">Consultation Fees</div>
+          <div class="st-row"><label>In Clinic</label><span class="st-prefix">₹</span><input id="stFeeClinic" type="number" value="500"></div>
+          <div class="st-row"><label>Video</label><span class="st-prefix">₹</span><input id="stFeeVideo" type="number" value="400"></div>
+          <div class="st-row"><label>Audio</label><span class="st-prefix">₹</span><input id="stFeeAudio" type="number" value="300"></div>
+          <div class="st-row"><label>Walk-in</label><span class="st-prefix">₹</span><input id="stFeeWalkin" type="number" value="500"></div>
+          <div class="btn btn-primary" style="display:inline-flex;" onclick="saveFees()">Save Fees</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- floating menus reused for Export / Filter / page-size / row actions -->
+<div class="float-menu" id="exportMenu">
+  <div class="fm-item" onclick="closeFloatMenu('exportMenu');openExportModal('all','pdf')">
+    <div class="fm-icon" style="background:var(--danger-50);color:var(--danger);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+    <div><div class="fm-title">Export Today's Queue (PDF)</div><div class="fm-sub">Share or print today's patient list</div></div>
+  </div>
+  <div class="fm-item" onclick="closeFloatMenu('exportMenu');openExportModal('all','csv')">
+    <div class="fm-icon" style="background:var(--success-50);color:var(--success);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+    <div><div class="fm-title">Export as Excel (.xlsx)</div><div class="fm-sub">For billing, records, or reporting</div></div>
+  </div>
+  <div class="fm-item" onclick="closeFloatMenu('exportMenu');printQueueNow()">
+    <div class="fm-icon" style="background:var(--primary-50);color:var(--primary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg></div>
+    <div><div class="fm-title">Print Queue</div><div class="fm-sub">Print today's appointment schedule</div></div>
+  </div>
+  <div class="fm-item" onclick="closeFloatMenu('exportMenu');requestExportSelected()">
+    <div class="fm-icon" style="background:var(--violet-50);color:var(--violet);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+    <div><div class="fm-title">Export Selected Patients</div><div class="fm-sub">Export only selected or filtered patients</div></div>
+  </div>
+  <div class="fm-cancel" onclick="closeFloatMenu('exportMenu')">Cancel</div>
+</div>
+
+<div class="float-menu" id="dashFilterMenu" style="width:260px;">
+  <div class="fp-head" style="padding:2px 2px 8px;">
+    <div class="fp-title" style="font-size:14px;">Filter Queue</div>
+    <div class="fp-clear" onclick="clearDashFilters()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>Clear</div>
+  </div>
+  <div class="fp-section" style="padding-top:6px;">
+    <div class="fp-section-title">Consultation Type</div>
+    <label class="fp-check"><input type="checkbox" class="dash-type" value="clinic" checked onchange="previewDashFilterCount()"><div class="fp-swatch" style="background:var(--primary-50);color:var(--primary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M3 10l9-7 9 7v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>In Clinic</label>
+    <label class="fp-check"><input type="checkbox" class="dash-type" value="video" checked onchange="previewDashFilterCount()"><div class="fp-swatch" style="background:var(--violet-50);color:var(--violet);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M22 8.5l-6 3.5 6 3.5z"/></svg></div>Video</label>
+    <label class="fp-check"><input type="checkbox" class="dash-type" value="audio" checked onchange="previewDashFilterCount()"><div class="fp-swatch" style="background:var(--teal-50);color:var(--teal);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"/></svg></div>Audio</label>
+  </div>
+  <div class="fp-section" style="border-bottom:none;">
+    <div class="fp-section-title">Patient Frequency</div>
+    <label class="fp-check fp-first"><input type="checkbox" class="dash-freq" value="first" checked onchange="previewDashFilterCount()"><div class="fp-swatch"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6L22 9.3l-5 4.9L18.2 22 12 18.3 5.8 22 7 14.2l-5-4.9 7.1-.7z"/></svg></div>First Visit</label>
+    <label class="fp-check"><input type="checkbox" class="dash-freq" value="monthly" checked onchange="previewDashFilterCount()"><div class="fp-swatch" style="background:var(--ink-100);color:var(--ink-500);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>Monthly (1 visit)</label>
+    <label class="fp-check"><input type="checkbox" class="dash-freq" value="quarterly" checked onchange="previewDashFilterCount()"><div class="fp-swatch" style="background:var(--ink-100);color:var(--ink-500);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>Quarterly</label>
+    <label class="fp-check"><input type="checkbox" class="dash-freq" value="twiceyear" checked onchange="previewDashFilterCount()"><div class="fp-swatch" style="background:var(--ink-100);color:var(--ink-500);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>Twice / Year</label>
+  </div>
+  <div class="fp-foot" style="padding:10px 2px 2px;">
+    <div class="fp-match" id="dashFilterMatchCount"><b>5</b> patients match</div>
+    <div class="fp-foot-btns">
+      <div class="btn btn-ghost" onclick="closeFloatMenu('dashFilterMenu')">Cancel</div>
+      <div class="btn btn-primary" onclick="applyDashFilters()">Apply</div>
+    </div>
+  </div>
+  <div style="font-size:11px;color:var(--ink-400);text-align:center;margin-top:8px;">Need more? <span style="color:var(--primary);font-weight:600;cursor:pointer;" onclick="closeFloatMenu('dashFilterMenu');showPage('queue');">Open full queue filters →</span></div>
+</div>
+
+<div class="float-menu" id="filterMenu">
+  <div class="filter-panel">
+    <div class="fp-head">
+      <div class="fp-title">Filters</div>
+      <div class="fp-clear" onclick="clearAllFilters()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>Clear all</div>
+    </div>
+    <div class="fp-body">
+
+      <div class="fp-section">
+        <div class="fp-section-title">Consultation Type</div>
+        <label class="fp-check"><input type="checkbox" class="fp-type" value="clinic" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--primary-50);color:var(--primary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M3 10l9-7 9 7v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>In Clinic</label>
+        <label class="fp-check"><input type="checkbox" class="fp-type" value="video" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--violet-50);color:var(--violet);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M22 8.5l-6 3.5 6 3.5z"/></svg></div>Video</label>
+        <label class="fp-check"><input type="checkbox" class="fp-type" value="audio" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--teal-50);color:var(--teal);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"/></svg></div>Audio</label>
+        <label class="fp-check"><input type="checkbox" class="fp-type" value="walkin" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--ink-100);color:var(--ink-500);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg></div>Walk-in</label>
+      </div>
+
+      <div class="fp-section">
+        <div class="fp-section-title">Status</div>
+        <label class="fp-check"><input type="checkbox" class="fp-status" value="yts" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--ink-100);color:var(--ink-500);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="9"/></svg></div>Yet to Start</label>
+        <label class="fp-check"><input type="checkbox" class="fp-status" value="progress" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--success-50);color:var(--success);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>In Progress</label>
+        <label class="fp-check"><input type="checkbox" class="fp-status" value="completed" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--primary-50);color:var(--primary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div>Completed</label>
+        <label class="fp-check"><input type="checkbox" class="fp-status" value="cancelled" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--danger-50);color:var(--danger);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M15 9l-6 6M9 9l6 6"/><circle cx="12" cy="12" r="9"/></svg></div>Cancelled</label>
+      </div>
+
+      <div class="fp-section">
+        <div class="fp-section-title">Patient Frequency</div>
+        <label class="fp-check fp-first"><input type="checkbox" class="fp-freq" value="first" checked onchange="previewFilterCount()"><div class="fp-swatch"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6L22 9.3l-5 4.9L18.2 22 12 18.3 5.8 22 7 14.2l-5-4.9 7.1-.7z"/></svg></div>First Visit</label>
+        <label class="fp-check"><input type="checkbox" class="fp-freq" value="monthly" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--ink-100);color:var(--ink-500);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>Monthly (1 visit)</label>
+        <label class="fp-check"><input type="checkbox" class="fp-freq" value="quarterly" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--ink-100);color:var(--ink-500);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>Quarterly</label>
+        <label class="fp-check"><input type="checkbox" class="fp-freq" value="twiceyear" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--ink-100);color:var(--ink-500);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>Twice / Year</label>
+      </div>
+
+      <div class="fp-section" style="padding-top:2px;padding-bottom:2px;border-bottom:none;">
+        <div class="fp-more-toggle" onclick="toggleMoreFilters()" id="moreFiltersToggle">
+          More filters (Reason, Age, Gender, Time, Doctor)
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+
+      <div class="fp-more-body" id="moreFiltersBody">
+        <div class="fp-section">
+          <div class="fp-section-title">Reason for Visit</div>
+          <div class="fp-reason-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input id="reasonSearchInput" placeholder="Search reasons…" oninput="filterReasonList()">
+          </div>
+          <div class="fp-reason-list" id="reasonList">
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="checkup" checked onchange="previewFilterCount()">General Checkup</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="fever" checked onchange="previewFilterCount()">Fever</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="cough" checked onchange="previewFilterCount()">Cough &amp; Cold</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="body ache" checked onchange="previewFilterCount()">Body Ache</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="chest pain" checked onchange="previewFilterCount()">Chest Pain</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="breath" checked onchange="previewFilterCount()">Shortness of Breath</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="hypertension" checked onchange="previewFilterCount()">Hypertension</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="diabetes" checked onchange="previewFilterCount()">Diabetes Follow-up</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="cardiac" checked onchange="previewFilterCount()">Cardiac / Heart Issues</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="back pain" checked onchange="previewFilterCount()">Back / Joint Pain</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="skin" checked onchange="previewFilterCount()">Skin Rash</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="migraine" checked onchange="previewFilterCount()">Migraine</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="anxiety" checked onchange="previewFilterCount()">Anxiety</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="follow-up" checked onchange="previewFilterCount()">Follow-up Consultation</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="other" checked onchange="previewFilterCount()">Other</label>
+          </div>
+        </div>
+
+        <div class="fp-section">
+          <div class="fp-section-title">Patient Age</div>
+          <div class="fp-age-row">
+            <input type="number" id="ageMinInput" placeholder="Min age" min="0" max="120" oninput="previewFilterCount()">
+            <span>to</span>
+            <input type="number" id="ageMaxInput" placeholder="Max age" min="0" max="120" oninput="previewFilterCount()">
+          </div>
+        </div>
+
+        <div class="fp-section">
+          <div class="fp-section-title">Patient Gender</div>
+          <div class="fp-radio-row">
+            <label class="fp-radio"><input type="radio" name="fpGender" value="all" checked onchange="previewFilterCount()">All</label>
+            <label class="fp-radio"><input type="radio" name="fpGender" value="Male" onchange="previewFilterCount()">Male</label>
+            <label class="fp-radio"><input type="radio" name="fpGender" value="Female" onchange="previewFilterCount()">Female</label>
+          </div>
+        </div>
+
+        <div class="fp-section">
+          <div class="fp-section-title">Time Range</div>
+          <select class="fp-select" id="timeRangeSelect" onchange="previewFilterCount()">
+            <option value="all">All Day</option>
+            <option value="morning">Morning (before 12 PM)</option>
+            <option value="afternoon">Afternoon (12–5 PM)</option>
+            <option value="evening">Evening (after 5 PM)</option>
+          </select>
+        </div>
+
+        <div class="fp-section" style="border-bottom:none;">
+          <div class="fp-section-title">Doctor</div>
+          <select class="fp-select" id="doctorSelect" onchange="previewFilterCount()">
+            <option value="all">All Doctors</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="fp-foot">
+      <div class="fp-match" id="filterMatchCount"><b>24</b> patients match these filters</div>
+      <div class="fp-foot-btns">
+        <div class="btn btn-ghost" onclick="closeFloatMenu('filterMenu')">Cancel</div>
+        <div class="btn btn-primary" onclick="applyAllFilters()">Apply Filters</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="float-menu" id="pageSizeMenu" style="min-width:120px;">
+  <div class="fm-item" style="padding:8px 10px;" onclick="setPageSize(10)"><div class="fm-title">10 / page</div></div>
+  <div class="fm-item" style="padding:8px 10px;" onclick="setPageSize(25)"><div class="fm-title">25 / page</div></div>
+  <div class="fm-item" style="padding:8px 10px;" onclick="setPageSize(50)"><div class="fm-title">50 / page</div></div>
+</div>

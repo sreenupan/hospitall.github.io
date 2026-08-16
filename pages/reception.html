@@ -1,0 +1,141 @@
+    <div class="content-wrap" id="page-reception" style="display:none;grid-template-columns:1fr;">
+      <div class="rc-wrap">
+        <div class="breadcrumb" onclick="showPage('dashboard')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Dashboard</div>
+        <div class="page-header">
+          <div>
+            <div class="page-title">Reception Check-In</div>
+            <div class="page-sub">Register the patient and collect payment in one step — they join the doctor's queue immediately after</div>
+          </div>
+        </div>
+
+        <!-- Online bookings awaiting check-in and payment -->
+        <div class="rc-card" id="rcBookingsCard" style="display:none;">
+          <div class="rc-step-title" style="margin-bottom:10px;">Upcoming Online Bookings</div>
+          <div class="page-sub" style="margin-bottom:14px;">Booked by patients through the portal — tap Check In to confirm payment and add them to the doctor's queue.</div>
+          <div class="rc-recent" id="rcBookingsList"></div>
+        </div>
+
+        <!-- STEP 1: Find or add patient -->
+        <div class="rc-card">
+          <div class="rc-step-title"><div class="rc-step-num">1</div>Find or Add Patient</div>
+          <div class="rc-search-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input id="rcSearchInput" placeholder="Search by name, phone, or UHID…" oninput="searchReceptionPatients()">
+          </div>
+          <div class="rc-results" id="rcResults"></div>
+
+          <div class="rc-newpatient-toggle" id="rcNewToggle" onclick="toggleNewPatientForm()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 5v14M5 12h14"/></svg>Add Patient
+          </div>
+          <div class="rc-newpatient-form" id="rcNewForm">
+            <div class="full"><label>Full Name</label><input id="rcNewName" placeholder="e.g. Sunita Rao" oninput="validateReceptionForm()"></div>
+            <div><label>Age</label><input id="rcNewAge" type="number" min="0" max="120" placeholder="Age" oninput="validateReceptionForm()"></div>
+            <div><label>Gender</label><select id="rcNewGender" onchange="validateReceptionForm()"><option>Male</option><option>Female</option><option>Other</option></select></div>
+            <div class="full"><label>Phone Number</label><input id="rcNewPhone" placeholder="98765 43210" oninput="validateReceptionForm()"></div>
+          </div>
+
+          <div class="rc-selected-patient" id="rcSelectedPatient">
+            <div class="rc-chip" id="rcSelChip">RS</div>
+            <div><div class="rc-sp-name" id="rcSelName">Patient Name</div><div class="rc-sp-sub" id="rcSelSub">UHID · Age · Gender</div></div>
+            <div class="rc-sp-clear" onclick="clearSelectedPatient()">Change</div>
+          </div>
+        </div>
+
+        <!-- STEP 2: Visit details -->
+        <div class="rc-card">
+          <div class="rc-step-title"><div class="rc-step-num">2</div>Visit Details</div>
+          <div class="rc-type-row">
+            <div class="rc-type-pill active" data-type="clinic" onclick="selectVisitType(this,'clinic')">
+              <div class="rt-icon" style="background:var(--primary-50);color:var(--primary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M3 10l9-7 9 7v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+              <div class="rt-label">In Clinic</div>
+            </div>
+            <div class="rc-type-pill" data-type="video" onclick="selectVisitType(this,'video')">
+              <div class="rt-icon" style="background:var(--violet-50);color:var(--violet);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M22 8.5l-6 3.5 6 3.5z"/></svg></div>
+              <div class="rt-label">Video</div>
+            </div>
+            <div class="rc-type-pill" data-type="audio" onclick="selectVisitType(this,'audio')">
+              <div class="rt-icon" style="background:var(--teal-50);color:var(--teal);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"/></svg></div>
+              <div class="rt-label">Audio</div>
+            </div>
+            <div class="rc-type-pill" data-type="walkin" onclick="selectVisitType(this,'walkin')">
+              <div class="rt-icon" style="background:var(--ink-100);color:var(--ink-500);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg></div>
+              <div class="rt-label">Walk-in</div>
+            </div>
+          </div>
+          <label style="font-size:11.5px;font-weight:600;color:var(--ink-700);display:block;margin-bottom:6px;">See Which Doctor?</label>
+          <select id="rcDoctorSelect" class="fp-select" style="margin-bottom:16px;" onchange="onRcDoctorChange()"></select>
+
+          <label style="font-size:11.5px;font-weight:600;color:var(--ink-700);display:block;margin-bottom:6px;">When?</label>
+          <div class="when-toggle-row">
+            <div class="when-toggle active" id="whenNowBtn" onclick="setRcWhenMode('now')">Now</div>
+            <div class="when-toggle" id="whenLaterBtn" onclick="setRcWhenMode('later')">Schedule a Time</div>
+          </div>
+          <div id="rcSlotWrap" style="display:none;margin-bottom:16px;">
+            <div class="slot-grid" id="rcSlotGrid"></div>
+          </div>
+
+          <label style="font-size:11.5px;font-weight:600;color:var(--ink-700);display:block;margin-bottom:6px;">Reason for Visit</label>
+          <input id="rcReasonInput" placeholder="e.g. Fever, Chest Pain, Regular Checkup…" style="width:100%;border:1px solid var(--ink-200);border-radius:8px;padding:10px 12px;font-size:13px;font-family:var(--font-ui);color:var(--ink-900);" oninput="validateReceptionForm()">
+          <div class="rc-reason-chips">
+            <div class="rc-chip-btn" onclick="pickReasonChip(this,'Fever')">Fever</div>
+            <div class="rc-chip-btn" onclick="pickReasonChip(this,'Regular Checkup')">Regular Checkup</div>
+            <div class="rc-chip-btn" onclick="pickReasonChip(this,'Chest Pain')">Chest Pain</div>
+            <div class="rc-chip-btn" onclick="pickReasonChip(this,'Follow-up Consultation')">Follow-up</div>
+            <div class="rc-chip-btn" onclick="pickReasonChip(this,'Body Ache')">Body Ache</div>
+          </div>
+        </div>
+
+        <!-- STEP 3: Payment -->
+        <div class="rc-card">
+          <div class="rc-step-title"><div class="rc-step-num">3</div>Payment</div>
+          <div id="rcPayMainView">
+            <div class="pm-fee-row">
+              <div class="pm-fee-label">Consultation Fee<div class="pm-fee-sub" id="rcFeeSub">In Clinic visit</div></div>
+              <div class="pm-fee-amount" id="rcFeeAmount">₹500</div>
+            </div>
+            <div class="pm-method-label">Collect payment via</div>
+            <div class="pm-method-row">
+              <div class="pm-method active" data-method="Cash" onclick="selectRcMethod(this,'Cash')">Cash</div>
+              <div class="pm-method" data-method="Card" onclick="selectRcMethod(this,'Card')">Card</div>
+              <div class="pm-method" data-method="UPI" onclick="selectRcMethod(this,'UPI')">UPI</div>
+            </div>
+            <div class="receipt-upi-box" id="rcUpiBox" style="display:none;">
+              <div class="upi-qr"></div>
+              <div class="upi-txt">Scan with any UPI app<br>(GPay, PhonePe, Paytm)<br><b>₹<span id="rcUpiAmt">500</span></b> — <span id="rcUpiClinicName">CityCare Clinic</span></div>
+            </div>
+            <div class="pm-exception-link">Can't collect payment? <span onclick="showRcException()">Apply admin exception</span></div>
+          </div>
+          <div id="rcPayExceptionView" style="display:none;">
+            <div class="pm-back-link" onclick="showRcMainPay()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to payment</div>
+            <div class="pm-exception-box">
+              <div class="pe-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>Requires clinic admin authorization</div>
+              <label>Authorizing Admin</label>
+              <select id="rcAdminSelect">
+                <option value="">Select admin…</option>
+                <option>Dr. Arjun Patel (Owner)</option>
+                <option>Meena Iyer (Front Desk Lead)</option>
+                <option>Ravi Krishnan (Clinic Manager)</option>
+              </select>
+              <label>Admin PIN</label>
+              <input type="password" id="rcAdminPin" placeholder="4-digit PIN" maxlength="4">
+              <label>Reason for exception</label>
+              <input type="text" id="rcAdminReason" placeholder="e.g. Insurance approval pending">
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="rc-card">
+          <div class="rc-submit-row">
+            <div class="btn btn-ghost" onclick="resetReceptionForm()">Clear Form</div>
+            <div class="btn btn-primary disabled" id="rcSubmitBtn" onclick="submitCheckIn()">Select or add a patient first</div>
+          </div>
+        </div>
+
+        <!-- Recently checked in (this session) -->
+        <div class="rc-card" id="rcRecentCard" style="display:none;">
+          <div class="rc-step-title" style="margin-bottom:10px;">Recently Checked In</div>
+          <div class="rc-recent" id="rcRecentList"></div>
+        </div>
+      </div>
+    </div>

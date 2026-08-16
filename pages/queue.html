@@ -1,0 +1,55 @@
+    <div class="content-wrap" id="page-queue" style="display:none;grid-template-columns:1fr;">
+      <div>
+        <div class="breadcrumb" onclick="showPage('dashboard')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Dashboard</div>
+
+        <div class="page-header">
+          <div>
+            <div class="page-title" id="queueTitle">Consultation Queue (24)</div>
+            <div class="page-sub">All appointment requests and consultations for today</div>
+          </div>
+          <div class="header-spacer"></div>
+          <div class="search-input-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input id="queueSearchInput" placeholder="Search in queue" oninput="onQueueSearch()">
+          </div>
+          <div class="toolbar-btn" onclick="toggleFilterMenu(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 3H2l8 9.46V19l4 2v-8.54z"/></svg>Filter</div>
+          <div class="toolbar-btn" onclick="toggleExportMenu(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Export<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+
+        <div class="queue-tabs" style="margin-top:0;padding:0;border-bottom:1px solid var(--ink-200);">
+          <div class="qtab active" data-filter="all" onclick="filterFullQueue(this,'all')">All (<span id="fqCountAll">24</span>)</div>
+          <div class="qtab" data-filter="clinic" onclick="filterFullQueue(this,'clinic')">In Clinic (<span id="fqCountClinic">10</span>)</div>
+          <div class="qtab" data-filter="video" onclick="filterFullQueue(this,'video')">Video (<span id="fqCountVideo">6</span>)</div>
+          <div class="qtab" data-filter="audio" onclick="filterFullQueue(this,'audio')">Audio (<span id="fqCountAudio">5</span>)</div>
+          <div class="qtab" data-filter="walkin" onclick="filterFullQueue(this,'walkin')">Walk-in (<span id="fqCountWalkin">3</span>)</div>
+        </div>
+
+        <div class="qstat-row">
+          <div class="qstat-tile"><div class="qstat-icon total"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><div><div class="qstat-val" id="statTotal">24</div><div class="qstat-label">Total</div></div></div>
+          <div class="qstat-tile"><div class="qstat-icon completed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></div><div><div class="qstat-val" id="statCompleted">4</div><div class="qstat-label">Completed</div></div></div>
+          <div class="qstat-tile"><div class="qstat-icon progress"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div><div><div class="qstat-val" id="statProgress">2</div><div class="qstat-label">In Progress</div></div></div>
+          <div class="qstat-tile"><div class="qstat-icon yts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg></div><div><div class="qstat-val" id="statYts">16</div><div class="qstat-label">Yet to Start</div></div></div>
+          <div class="qstat-tile"><div class="qstat-icon cancelled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg></div><div><div class="qstat-val" id="statCancelled">2</div><div class="qstat-label">Cancelled</div></div></div>
+        </div>
+
+        <div class="queue-card">
+          <div class="selection-bar" id="selectionBar">
+            <div class="sel-count" id="selCountLabel">0 selected</div>
+            <div class="sel-clear" onclick="clearSelection()">Clear selection</div>
+            <div class="spacer"></div>
+            <div class="btn btn-primary" onclick="openExportModal('selected')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Export Selected</div>
+          </div>
+          <table>
+            <thead>
+              <tr><th class="sel-cell"><input type="checkbox" class="row-check" id="selectAllBox" onclick="toggleSelectAll(this)"></th><th>Time</th><th>Patient</th><th>Doctor</th><th>Type</th><th>Patient Frequency</th><th>Status</th><th>Reason for Visit</th><th>Action</th><th></th></tr>
+            </thead>
+            <tbody id="fullQueueBody"></tbody>
+          </table>
+          <div class="pagination-row">
+            <div class="pg-info" id="pgInfo">Showing 1 to 10 of 24 results</div>
+            <div class="pg-controls" id="pgControls"></div>
+            <div class="pg-size" onclick="togglePageSizeMenu(event)"><span id="pgSizeLabel">10 / page</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,66 @@
+            <div class="stat-value">3</div>
+            <div class="modality-legend">
+              <div class="item"><span class="dot video"></span>2 Video</div>
+              <div class="item"><span class="dot audio"></span>1 Audio</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="queue-card">
+          <div class="queue-head">
+            <div class="queue-title">Today's Consultation Queue (8)</div>
+            <div class="qh-spacer"></div>
+            <div class="search-input-wrap" style="min-width:200px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input id="dashSearchInput" placeholder="Search in Queue" oninput="onDashSearch()">
+            </div>
+            <div class="toolbar-btn" onclick="toggleDashFilterMenu(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 3H2l8 9.46V19l4 2v-8.54z"/></svg>Filter</div>
+          </div>
+          <div class="queue-tabs">
+            <div class="qtab active" data-filter="all" onclick="filterQueue(this,'all')">All (<span id="dashCountAll">5</span>)</div>
+            <div class="qtab" data-filter="clinic" onclick="filterQueue(this,'clinic')">In Clinic (<span id="dashCountClinic">2</span>)</div>
+            <div class="qtab" data-filter="video" onclick="filterQueue(this,'video')">Video (<span id="dashCountVideo">2</span>)</div>
+            <div class="qtab" data-filter="audio" onclick="filterQueue(this,'audio')">Audio (<span id="dashCountAudio">1</span>)</div>
+          </div>
+
+          <table>
+            <thead>
+              <tr><th>Time</th><th>Patient</th><th>Type</th><th>Patient Frequency</th><th>Action</th><th></th></tr>
+            </thead>
+            <tbody id="queueBody"></tbody>
+          </table>
+
+          <div class="queue-foot">
+            <a class="view-all-link" href="#" onclick="showPage('queue');return false;">View full queue<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="side-col">
+        <div class="card">
+          <div class="card-title" style="margin-bottom:12px;">Quick Actions</div>
+          <div class="qa-grid">
+            <a class="qa-btn" href="#" onclick="quickAddPatient();return false;">
+              <div class="qicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg></div>
+              <div class="qa-text"><div class="t1">Add Patient</div><div class="t2">Register a new patient</div></div>
+              <svg class="qa-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+            <a class="qa-btn" href="#" onclick="quickScheduleAppointment();return false;">
+              <div class="qicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16l2 2 4-4"/></svg></div>
+              <div class="qa-text"><div class="t1">Schedule Appointment</div><div class="t2">Book a future time slot</div></div>
+              <svg class="qa-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+            <a class="qa-btn" href="#" onclick="showPage('patients');return false;">
+              <div class="qicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg></div>
+              <div class="qa-text"><div class="t1">Search Records</div><div class="t2">Find a patient &amp; visit history</div></div>
+              <svg class="qa-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+            <a class="qa-btn" href="#" onclick="showPage('reports');return false;">
+              <div class="qicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M18 17V9M13 17V5M8 17v-3"/></svg></div>
+              <div class="qa-text"><div class="t1">Generate Report</div><div class="t2">Today's revenue &amp; activity</div></div>
+              <svg class="qa-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>

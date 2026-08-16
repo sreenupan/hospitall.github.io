@@ -1,0 +1,37 @@
+    <div class="content-wrap" id="page-adminOverview" style="display:none;grid-template-columns:1fr;">
+      <div class="rc-wrap" style="max-width:800px;">
+        <div class="page-header">
+          <div>
+            <div class="page-title">Admin Overview</div>
+            <div class="page-sub">Today's clinic activity at a glance — <span id="adminOverviewClinicName">CityCare Clinic</span></div>
+          </div>
+        </div>
+
+        <div class="admin-stat-row">
+          <div class="qstat-tile"><div class="qstat-icon completed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><div class="qstat-val" id="adminRevenue">₹0</div><div class="qstat-label">Revenue Collected</div></div></div>
+          <div class="qstat-tile"><div class="qstat-icon total"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div><div class="qstat-val" id="adminCheckedIn">0</div><div class="qstat-label">Patients Checked In</div></div></div>
+          <div class="qstat-tile"><div class="qstat-icon yts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg></div><div><div class="qstat-val" id="adminExceptions">0</div><div class="qstat-label">Exceptions Approved</div></div></div>
+          <div class="qstat-tile"><div class="qstat-icon progress"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div><div><div class="qstat-val" id="adminStaffCount">2</div><div class="qstat-label">Staff On Duty</div></div></div>
+        </div>
+
+        <div class="rc-card">
+          <div class="rc-step-title" style="margin-bottom:2px;display:flex;align-items:center;">
+            <span style="flex:1;">Manage Staff</span>
+            <div class="btn btn-primary" style="padding:8px 14px;font-size:12.5px;" onclick="openAddStaffModal()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:5px;"><path d="M12 5v14M5 12h14"/></svg>Add Staff Member</div>
+          </div>
+          <div class="page-sub" style="margin-bottom:14px;">Staff accounts are created here by an admin — they can't self-register, since access to patient data needs to stay controlled.</div>
+          <div class="rc-recent" id="staffManageList"></div>
+        </div>
+
+        <div class="admin-quick-links">
+          <div class="admin-link-card" onclick="showPage('reception')">
+            <div class="al-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div><div class="al-title">Go to Check-In</div><div class="al-sub">Front desk &amp; payments</div></div>
+          </div>
+          <div class="admin-link-card" onclick="showPage('dashboard')">
+            <div class="al-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+            <div><div class="al-title">Go to Doctor's Dashboard</div><div class="al-sub">Consultation queue</div></div>
+          </div>
+        </div>
+      </div>
+    </div>

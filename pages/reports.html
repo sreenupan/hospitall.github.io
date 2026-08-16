@@ -1,0 +1,38 @@
+    <div class="content-wrap" id="page-reports" style="display:none;grid-template-columns:1fr;">
+      <div class="rc-wrap" style="max-width:760px;">
+        <div class="breadcrumb" onclick="goHome()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</div>
+        <div class="page-header">
+          <div>
+            <div class="page-title">Reports</div>
+            <div class="page-sub">Today's clinic activity, broken down — <span id="reportsClinicName">CityCare Clinic</span></div>
+          </div>
+        </div>
+
+        <div class="admin-stat-row" id="rpStatRow"></div>
+
+        <div class="rp-two-col">
+          <div class="rc-card rp-bar-card">
+            <div class="rp-bar-title">Revenue by Payment Method</div>
+            <div id="rpByMethod"></div>
+          </div>
+          <div class="rc-card rp-bar-card">
+            <div class="rp-bar-title">Consultations by Type</div>
+            <div id="rpByType"></div>
+          </div>
+        </div>
+        <div class="rp-two-col">
+          <div class="rc-card rp-bar-card">
+            <div class="rp-bar-title">Consultations by Status</div>
+            <div id="rpByStatus"></div>
+          </div>
+          <div class="rc-card rp-bar-card">
+            <div class="rp-bar-title">By Doctor</div>
+            <div id="rpByDoctor"></div>
+          </div>
+        </div>
+        <div class="rc-card rp-bar-card">
+          <div class="rp-bar-title">Top Reasons for Visit</div>
+          <div id="rpByReason"></div>
+        </div>
+      </div>
+    </div>

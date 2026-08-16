@@ -1,0 +1,1029 @@
+﻿<div class="app" id="mainApp" style="display:none;">
+
+  <nav class="nav">
+    <div class="brand" onclick="goHome()">
+      <div class="brand-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/><path d="M3.5 12h4l1.5-3 2 6 1.5-3h8"/></svg>
+      </div>
+      <div class="brand-name">Hospitall</div>
+    </div>
+
+    <div class="nav-item active" id="navDashboard" onclick="showPage('dashboard')" title="Dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span class="nav-label">Dashboard</span></div>
+    <div class="nav-item" id="navReception" onclick="showPage('reception')" title="Check-In"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M22 10h-4M20 8v4"/></svg><span class="nav-label">Check-In</span></div>
+    <div class="nav-item" id="navPatients" onclick="showPage('patients')" title="Patients"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span class="nav-label">Patients</span></div>
+    <div class="nav-item" id="navPrescriptions" onclick="showPage('prescriptions')" title="Prescriptions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg><span class="nav-label">Prescriptions</span></div>
+    <div class="nav-item" id="navReports" onclick="showPage('reports')" title="Reports"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M18 17V9M13 17V5M8 17v-3"/></svg><span class="nav-label">Reports</span></div>
+    <div class="nav-item" id="navSettings" onclick="showPage('settings')" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="nav-label">Settings</span></div>
+
+    <div class="nav-spacer"></div>
+
+    <div class="clinic-card">
+      <div class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 22s8-4.5 8-11V5l-8-3-8 3v6c0 6.5 8 11 8 11z"/></svg></div>
+      <div class="meta"><b id="sidebarClinicName">CityCare Clinic</b>Multi-speciality Clinic<br><span class="status-dot"></span>Online</div>
+    </div>
+    <button class="quick-add" onclick="showPage('reception')" title="Quick Add"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg><span class="qa-label">Quick Add</span></button>
+  </nav>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="menu-btn" onclick="toggleSidebar()" title="Toggle sidebar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></div>
+      <div class="search" style="position:relative;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="globalSearchInput" placeholder="Search patient by name, UHID, phone numberâ€¦" oninput="onGlobalSearch()" onfocus="onGlobalSearch()">
+        <span class="kbd">âŒ˜K</span>
+        <div class="gs-results" id="gsResults"></div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-clock" id="topbarClock"><div class="tc-date">Thu, 30 Jul</div><div class="tc-time">10:30 AM</div></div>
+        <div class="icon-btn" onclick="toggleTopPanel(event,'notifPanel')" title="Notifications"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="dot-badge" id="notifBadge" style="display:none;">0</span></div>
+        <div class="icon-btn" onclick="toggleTopPanel(event,'quickMsgPanel')" title="Quick Message"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="icon-btn" onclick="toggleTopPanel(event,'schedulePanel')" title="Today's Schedule"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span class="dot-badge" id="scheduleBadge" style="display:none;">0</span></div>
+        <div class="doctor" onclick="toggleTopUserMenu(event)" style="position:relative;">
+          <div class="avatar" id="topUserAvatar" style="background:linear-gradient(135deg,#2563EB,#1E3A8A);">AP</div>
+          <div><div class="name" id="topUserName">Dr. Arjun Patel</div><div class="role" id="topUserRole">Cardiologist</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-wrap dash-wrap" id="page-dashboard">
+      <div>
+        <div class="page-header">
+          <div>
+            <div class="page-title" id="dashGreeting">Good morning, Dr. Patel</div>
+            <div class="page-sub">Thursday, 30 July 2026 &nbsp;Â·&nbsp; 5 of 8 consultations shown below</div>
+          </div>
+          <div class="header-spacer"></div>
+          <div class="btn btn-ghost" onclick="showPage('queue')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>View Full Queue</div>
+          <div class="btn btn-primary" onclick="quickScheduleAppointment()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 5v14M5 12h14"/></svg>Schedule Appointment</div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+              <div class="stat-label">Patients Today</div>
+            </div>
+            <div class="stat-value">24</div>
+            <div class="stat-tags">
+              <span class="tag tag-success">+3 New Patients</span>
+              <span class="tag tag-danger">2 Cancelled</span>
+            </div>
+            <div class="stat-foot trend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>12% from yesterday</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16l2 2 4-4"/></svg></div>
+              <div class="stat-label">Follow-up Consultations</div>
+            </div>
+            <div class="stat-value">7</div>
+            <div class="stat-foot">Patients returning for follow-up</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M22 8.5l-6 3.5 6 3.5z"/></svg></div>
+              <div class="stat-label">Online Consults</div>
+            </div>
+            <div class="stat-value">3</div>
+            <div class="modality-legend">
+              <div class="item"><span class="dot video"></span>2 Video</div>
+              <div class="item"><span class="dot audio"></span>1 Audio</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="queue-card">
+          <div class="queue-head">
+            <div class="queue-title">Today's Consultation Queue (8)</div>
+            <div class="qh-spacer"></div>
+            <div class="search-input-wrap" style="min-width:200px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input id="dashSearchInput" placeholder="Search in Queue" oninput="onDashSearch()">
+            </div>
+            <div class="toolbar-btn" onclick="toggleDashFilterMenu(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 3H2l8 9.46V19l4 2v-8.54z"/></svg>Filter</div>
+          </div>
+          <div class="queue-tabs">
+            <div class="qtab active" data-filter="all" onclick="filterQueue(this,'all')">All (<span id="dashCountAll">5</span>)</div>
+            <div class="qtab" data-filter="clinic" onclick="filterQueue(this,'clinic')">In Clinic (<span id="dashCountClinic">2</span>)</div>
+            <div class="qtab" data-filter="video" onclick="filterQueue(this,'video')">Video (<span id="dashCountVideo">2</span>)</div>
+            <div class="qtab" data-filter="audio" onclick="filterQueue(this,'audio')">Audio (<span id="dashCountAudio">1</span>)</div>
+          </div>
+
+          <table>
+            <thead>
+              <tr><th>Time</th><th>Patient</th><th>Type</th><th>Patient Frequency</th><th>Action</th><th></th></tr>
+            </thead>
+            <tbody id="queueBody"></tbody>
+          </table>
+
+          <div class="queue-foot">
+            <a class="view-all-link" href="#" onclick="showPage('queue');return false;">View full queue<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="side-col">
+        <div class="card">
+          <div class="card-title" style="margin-bottom:12px;">Quick Actions</div>
+          <div class="qa-grid">
+            <a class="qa-btn" href="#" onclick="quickAddPatient();return false;">
+              <div class="qicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg></div>
+              <div class="qa-text"><div class="t1">Add Patient</div><div class="t2">Register a new patient</div></div>
+              <svg class="qa-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+            <a class="qa-btn" href="#" onclick="quickScheduleAppointment();return false;">
+              <div class="qicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16l2 2 4-4"/></svg></div>
+              <div class="qa-text"><div class="t1">Schedule Appointment</div><div class="t2">Book a future time slot</div></div>
+              <svg class="qa-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+            <a class="qa-btn" href="#" onclick="showPage('patients');return false;">
+              <div class="qicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg></div>
+              <div class="qa-text"><div class="t1">Search Records</div><div class="t2">Find a patient &amp; visit history</div></div>
+              <svg class="qa-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+            <a class="qa-btn" href="#" onclick="showPage('reports');return false;">
+              <div class="qicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M18 17V9M13 17V5M8 17v-3"/></svg></div>
+              <div class="qa-text"><div class="t1">Generate Report</div><div class="t2">Today's revenue &amp; activity</div></div>
+              <svg class="qa-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-wrap" id="page-consultation" style="display:none;">
+      <div>
+        <div class="breadcrumb" onclick="showPage('dashboard')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Queue</div>
+
+        <div class="page-header">
+          <div class="page-title">Consultation in Progress</div>
+          <div class="status-card">
+            <div class="s-top"><span class="dot"></span>In Progress</div>
+            <div class="s-row">Started: <b id="startedValue">09:00 AM</b></div>
+            <div class="s-row">Duration: <b>05:32</b></div>
+          </div>
+          <div class="header-spacer"></div>
+          <div class="btn btn-ghost btn-icon-only" title="More options"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></div>
+        </div>
+
+        <div class="patient-card">
+          <div class="patient-photo" id="patientPhoto" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#60A5FA,#2563EB);color:#fff;font-weight:700;font-size:18px;">RS</div>
+          <div class="patient-id-block">
+            <div class="pname"><span id="patientName" class="link-name" style="color:var(--violet);" onclick="openMedicalProfile(currentPatientUhid)">Rahul Sharma</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.3"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div>
+            <div class="psub" id="patientSub">UHID: HSP24-00123 &nbsp;Â·&nbsp; 34Y &nbsp;Â·&nbsp; Male &nbsp;Â·&nbsp; 98765 43210</div>
+          </div>
+          <div class="divider-v"></div>
+          <div class="info-grid">
+            <div class="info-item"><div class="label">Last Visit</div><div class="value">12 Jun 2026</div></div>
+            <div class="info-item"><div class="label">Known Allergies</div><div class="value">None</div></div>
+            <div class="info-item"><div class="label">Blood Group</div><div class="value">B+</div></div>
+            <div class="info-item"><div class="label">Insurance</div><div class="value tag">Star Health</div></div>
+            <div class="info-item"><div class="label">Payment</div><div class="value tag" id="patientPaymentStatus"><span style="width:6px;height:6px;border-radius:50%;background:var(--success);display:inline-block;"></span>Paid</div></div>
+          </div>
+          <button class="btn btn-ghost" onclick="openAdminProfile(currentPatientUhid)">View Full Profile</button>
+        </div>
+
+        <div class="stepper">
+          <div class="step done"><div class="step-circle">âœ“</div><div class="step-label">Complaints</div></div>
+          <div class="step-line-wrap"><div class="step-line"></div></div>
+          <div class="step done"><div class="step-circle">âœ“</div><div class="step-label">Findings</div></div>
+          <div class="step-line-wrap"><div class="step-line"></div></div>
+          <div class="step current"><div class="step-circle">3</div><div class="step-label">Diagnosis</div></div>
+          <div class="step-line-wrap"><div class="step-line"></div></div>
+          <div class="step"><div class="step-circle">4</div><div class="step-label">Treatment Plan</div></div>
+        </div>
+
+        <div class="tabs">
+          <div class="tab active" id="ctabVitals" onclick="switchConsultTab('vitals')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Vitals</div>
+          <div class="tab" id="ctabNotes" onclick="switchConsultTab('notes')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>Clinical Notes</div>
+          <div class="tab" id="ctabDx" onclick="switchConsultTab('dx')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Diagnosis</div>
+          <div class="tab" id="ctabMeds" onclick="switchConsultTab('meds')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg>Medications</div>
+          <div class="tab" id="ctabLab" onclick="switchConsultTab('lab')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 2v6L4 20a1 1 0 0 0 1 2h14a1 1 0 0 0 1-2L15 8V2M9 2h6"/></svg>Lab Orders</div>
+          <div class="tab" id="ctabOldRx" onclick="switchConsultTab('oldrx')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>Old Prescriptions</div>
+          <div class="tab" id="ctabBilling" onclick="switchConsultTab('billing')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>Billing &amp; Payments</div>
+        </div>
+
+        <div class="panel" id="panelClinicalNotes" style="display:none;">
+          <div class="field-group">
+            <div class="field-top">
+              <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg></div>
+              <div class="field-title-row">
+                <div>
+                  <div class="field-name">Complaints <span class="req-tag">REQUIRED</span></div>
+                  <div class="field-desc">What the patient is experiencing</div>
+                </div>
+                <button class="mic-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg>Dictate</button>
+              </div>
+            </div>
+            <textarea rows="2">Intermittent chest tightness on exertion for 3 days, mild breathlessness climbing stairs. No radiating pain.</textarea>
+          </div>
+
+          <div class="field-group">
+            <div class="field-top">
+              <div class="field-icon" style="background:var(--violet-50);color:var(--violet);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+              <div class="field-title-row">
+                <div>
+                  <div class="field-name">History</div>
+                  <div class="field-desc">Past medical, surgical, family and social history</div>
+                </div>
+                <button class="mic-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg>Dictate</button>
+              </div>
+            </div>
+            <textarea placeholder="e.g. Hypertension since 2018, Type 2 DM, Appendectomy 2015, Father â€” MI at 55..."></textarea>
+          </div>
+
+          <div class="field-group">
+            <div class="field-top">
+              <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+              <div class="field-title-row">
+                <div>
+                  <div class="field-name">Investigations &amp; Findings <span class="req-tag">REQUIRED</span></div>
+                  <div class="field-desc">Examination findings, test results, observations</div>
+                </div>
+                <button class="mic-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg>Dictate</button>
+              </div>
+            </div>
+            <textarea rows="2">BP mildly elevated at 120/80 baseline noted. Chest auscultation clear, no murmurs. ECG ordered for review.</textarea>
+          </div>
+
+          <div class="field-group">
+            <div class="field-top">
+              <div class="field-icon" style="background:var(--primary-100)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg></div>
+              <div class="field-title-row">
+                <div>
+                  <div class="field-name">Diagnosis <span class="req-tag">REQUIRED</span></div>
+                  <div class="field-desc">Your clinical impression / diagnosis</div>
+                </div>
+                <button class="mic-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg>Dictate</button>
+              </div>
+            </div>
+            <textarea rows="2" placeholder="Enter diagnosis or clinical impressionâ€¦" style="background:var(--ink-50)"></textarea>
+          </div>
+
+          <div class="field-group">
+            <div class="field-top">
+              <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg></div>
+              <div class="field-title-row">
+                <div>
+                  <div class="field-name">Treatment Plan &amp; Referrals</div>
+                  <div class="field-desc">General advice and referrals \u2014 use the Medications tab to prescribe, and Diagnosis to add codes</div>
+                </div>
+                <button class="mic-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg>Dictate</button>
+              </div>
+            </div>
+            <textarea rows="2" placeholder="e.g. Advised low-salt diet, referred to cardiology for further evaluationâ€¦" style="background:var(--ink-50)"></textarea>
+          </div>
+
+          <div class="follow-row">
+            <div class="follow-field" id="dateField">
+              <label>Follow-up Date <span class="opt">(optional)</span></label>
+              <div class="select-like" id="dateTrigger" onclick="togglePanel('dateField')">
+                <span id="dateValue">Select date</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              </div>
+              <div class="dropdown-panel" id="datePanel" style="width:280px;">
+                <div class="cal-quick">
+                  <div class="cal-quick-btn" onclick="pickQuickDate(this,'Tomorrow')">Tomorrow</div>
+                  <div class="cal-quick-btn" onclick="pickQuickDate(this,'In 3 days')">In 3 days</div>
+                  <div class="cal-quick-btn" onclick="pickQuickDate(this,'In 1 week')">In 1 week</div>
+                  <div class="cal-quick-btn" onclick="pickQuickDate(this,'In 2 weeks')">In 2 weeks</div>
+                </div>
+                <div class="cal-head">
+                  <div class="cal-nav" onclick="shiftMonth(-1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M15 18l-6-6 6-6"/></svg></div>
+                  <div class="cal-month" id="calMonthLabel">August 2026</div>
+                  <div class="cal-nav" onclick="shiftMonth(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M9 18l6-6-6-6"/></svg></div>
+                </div>
+                <div class="cal-grid" id="calGrid"></div>
+              </div>
+            </div>
+            <div class="follow-field" id="typeField">
+              <label>Follow-up Type</label>
+              <div class="select-like" id="typeTrigger" onclick="togglePanel('typeField')">
+                <span id="typeValue">Select type</span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="dropdown-panel" id="typePanel">
+                <div class="type-option" onclick="pickType(this,'In-person Visit')">
+                  <div class="topt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>In-person Visit
+                </div>
+                <div class="type-option" onclick="pickType(this,'Video Consultation')">
+                  <div class="topt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M22 8.5l-6 3.5 6 3.5z"/></svg></div>Video Consultation
+                </div>
+                <div class="type-option" onclick="pickType(this,'Phone Follow-up')">
+                  <div class="topt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"/></svg></div>Phone Follow-up
+                </div>
+                <div class="type-option" onclick="pickType(this,'Lab Review Only')">
+                  <div class="topt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 2v6L4 20a1 1 0 0 0 1 2h14a1 1 0 0 0 1-2L15 8V2"/></svg></div>Lab Review Only
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="follow-row" style="margin-top:14px;">
+            <div class="follow-field-plain" style="flex:2;">
+              <label>Follow-up Purpose <span class="opt">(optional)</span></label>
+              <textarea id="followPurpose" rows="2" placeholder="e.g. Review BP, sugar and test reports" style="width:100%;border:1px solid var(--ink-200);border-radius:8px;padding:9px 11px;font-size:13px;font-family:var(--font-ui);color:var(--ink-900);resize:vertical;"></textarea>
+            </div>
+            <div class="follow-field-plain">
+              <label>Priority</label>
+              <select id="followPriority" style="width:100%;border:1px solid var(--ink-200);border-radius:8px;padding:10px 11px;font-size:13px;color:var(--ink-900);">
+                <option>Normal</option>
+                <option>Urgent</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ===== VITALS PANEL ===== -->
+        <div class="panel" id="panelVitals">
+          <div class="ctab-section-title">Vitals <span style="font-size:11px;font-weight:600;color:var(--ink-500);text-transform:none;">All fields are optional</span></div>
+          <div class="vt-grid">
+            <div class="vt-card" id="vtCardPulse">
+              <div class="vt-label"><div class="vt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>Pulse (bpm)</div>
+              <div class="vt-stepper"><button onclick="vtStep('vtPulse',-1)">âˆ’</button><input id="vtPulse" value="" placeholder="â€”" oninput="vtCheck('vtPulse','vtCardPulse')"><button onclick="vtStep('vtPulse',1)">+</button></div>
+              <div class="vt-range">Normal: 60â€“100 bpm</div>
+            </div>
+            <div class="vt-card" id="vtCardBp">
+              <div class="vt-label"><div class="vt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 6 4 10.5 4 14a8 8 0 0 0 16 0c0-3.5-4-8-8-12z"/></svg></div>Blood Pressure</div>
+              <div class="vt-bp-row">
+                <input id="vtBpSys" placeholder="120" oninput="vtCheck('vtBpSys','vtCardBp')">
+                <span class="vt-bp-sep">/</span>
+                <input id="vtBpDia" placeholder="80" oninput="vtCheck('vtBpDia','vtCardBp')">
+              </div>
+              <div class="vt-range">Normal: 90-120 / 60-80 mmHg</div>
+            </div>
+            <div class="vt-card" id="vtCardSpo2">
+              <div class="vt-label"><div class="vt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 6 4 10.5 4 14a8 8 0 0 0 16 0c0-3.5-4-8-8-12z"/></svg></div>SpOâ‚‚ (%)</div>
+              <div class="vt-stepper"><button onclick="vtStep('vtSpo2',-1)">âˆ’</button><input id="vtSpo2" value="" placeholder="â€”" oninput="vtCheck('vtSpo2','vtCardSpo2')"><button onclick="vtStep('vtSpo2',1)">+</button></div>
+              <div class="vt-range">Normal: 95â€“100%</div>
+            </div>
+            <div class="vt-card" id="vtCardTemp">
+              <div class="vt-label"><div class="vt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/></svg></div>Temp (Â°F)</div>
+              <div class="vt-stepper"><button onclick="vtStep('vtTemp',-0.1)">âˆ’</button><input id="vtTemp" value="" placeholder="â€”" oninput="vtCheck('vtTemp','vtCardTemp')"><button onclick="vtStep('vtTemp',0.1)">+</button></div>
+              <div class="vt-range">Normal: 97.0â€“99.0Â°F</div>
+            </div>
+            <div class="vt-card">
+              <div class="vt-label"><div class="vt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>Resp. Rate</div>
+              <div class="vt-stepper"><button onclick="vtStep('vtResp',-1)">âˆ’</button><input id="vtResp" placeholder="â€”"><button onclick="vtStep('vtResp',1)">+</button></div>
+              <div class="vt-range">Normal: 12â€“20/min</div>
+            </div>
+            <div class="vt-card">
+              <div class="vt-label"><div class="vt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg></div>Weight (kg)</div>
+              <div class="vt-stepper"><input id="vtWeight" placeholder="â€”" style="text-align:center;" oninput="calcBmi()"></div>
+              <div class="vt-range">&nbsp;</div>
+            </div>
+            <div class="vt-card">
+              <div class="vt-label"><div class="vt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg></div>Height (cm)</div>
+              <div class="vt-stepper"><input id="vtHeight" placeholder="â€”" style="text-align:center;" oninput="calcBmi()"></div>
+              <div class="vt-range">&nbsp;</div>
+            </div>
+            <div class="vt-card">
+              <div class="vt-label"><div class="vt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg></div>BMI (auto)</div>
+              <div class="vt-stepper"><input id="vtBmi" value="â€”" style="text-align:center;color:var(--ink-500);" disabled></div>
+              <div class="vt-range">Auto-calculated</div>
+            </div>
+          </div>
+          <div class="btn btn-primary" style="display:inline-flex;margin-top:18px;" onclick="saveVitals()">Save Vitals</div>
+        </div>
+
+        <!-- ===== MEDICATIONS PANEL ===== -->
+        <div class="panel" id="panelMedications" style="display:none;">
+          <div class="ctab-section-title">Medications for This Consultation</div>
+          <div id="medCardsWrap"></div>
+          <div class="med-add-link" onclick="addMedRow()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 5v14M5 12h14"/></svg>Add another medication</div>
+          <div class="btn btn-primary" style="display:inline-flex;margin-bottom:24px;" onclick="saveMedications()">Save to Prescription</div>
+
+          <div class="ctab-section-title">Patient Instructions <span style="font-size:11px;font-weight:600;color:var(--ink-500);text-transform:none;">Shown on the printed prescription</span></div>
+          <div class="pi-list" id="piList"></div>
+          <div class="pi-add-link" onclick="addInstructionRow()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 5v14M5 12h14"/></svg>Add instruction</div>
+          <div class="pi-template-row">
+            <select id="piTemplateSelect">
+              <option value="">Use a template\u2026</option>
+              <option value="diabetes">Diabetes Follow-up</option>
+              <option value="hypertension">Hypertension Follow-up</option>
+              <option value="general">General Wellness</option>
+            </select>
+            <div class="btn btn-ghost" style="padding:8px 14px;font-size:12.5px;" onclick="applyInstructionTemplate()">Apply</div>
+          </div>
+        </div>
+
+        <!-- ===== LAB ORDERS PANEL ===== -->
+        <div class="panel" id="panelLabOrders" style="display:none;">
+          <div class="ctab-section-title">Order a Test</div>
+          <div class="lab-chip-row">
+            <div class="lab-chip" onclick="quickAddLabOrder('CBC')">CBC</div>
+            <div class="lab-chip" onclick="quickAddLabOrder('Blood Sugar (Fasting)')">Blood Sugar (Fasting)</div>
+            <div class="lab-chip" onclick="quickAddLabOrder('Lipid Profile')">Lipid Profile</div>
+            <div class="lab-chip" onclick="quickAddLabOrder('Urine Routine')">Urine Routine</div>
+            <div class="lab-chip" onclick="quickAddLabOrder('Thyroid Profile')">Thyroid Profile</div>
+            <div class="lab-chip" onclick="quickAddLabOrder('ECG')">ECG</div>
+            <div class="lab-chip" onclick="quickAddLabOrder('Chest X-Ray')">Chest X-Ray</div>
+          </div>
+          <div class="login-field" style="max-width:420px;">
+            <input id="labCustomInput" placeholder="Or type a custom test nameâ€¦" style="width:100%;border:1px solid var(--ink-200);border-radius:8px;padding:10px 12px;font-size:13px;">
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;margin:12px 0 20px;">
+            <label style="font-size:12.5px;font-weight:600;color:var(--ink-700);display:flex;align-items:center;gap:6px;"><input type="checkbox" id="labUrgentCheck" style="width:15px;height:15px;">Mark Urgent</label>
+            <div class="btn btn-primary" style="padding:8px 16px;font-size:12.5px;" onclick="addCustomLabOrder()">Add Order</div>
+          </div>
+          <div class="ctab-section-title">Ordered Tests <span id="labOrderCount" style="font-size:11px;color:var(--ink-500);font-weight:600;">0</span></div>
+          <div id="labOrdersList"><div class="ctab-empty">No tests ordered yet for this consultation.</div></div>
+        </div>
+
+        <!-- ===== DIAGNOSIS PANEL ===== -->
+        <div class="panel" id="panelDiagnosis" style="display:none;">
+          <div class="ctab-section-title">Add Diagnosis Code</div>
+          <div class="dx-search-wrap">
+            <input id="dxSearchInput" placeholder="Search by code or description â€” e.g. J06.9, fever, hypertensionâ€¦" style="width:100%;border:1px solid var(--ink-200);border-radius:8px;padding:10px 12px;font-size:13px;" oninput="renderDxResults()" onfocus="renderDxResults()">
+            <div class="dx-results" id="dxResults"></div>
+          </div>
+          <div class="ctab-section-title">Diagnoses Added <span id="dxCount" style="font-size:11px;color:var(--ink-500);font-weight:600;">0</span></div>
+          <div class="dx-chip-list" id="dxChipList"><div class="ctab-empty">No diagnosis codes added yet.</div></div>
+        </div>
+
+        <!-- ===== OLD PRESCRIPTIONS PANEL ===== -->
+        <div class="panel" id="panelOldRx" style="display:none;">
+          <div class="ctab-section-title">Full Prescription History</div>
+          <div id="oldRxList"></div>
+        </div>
+
+        <!-- ===== BILLING & PAYMENTS PANEL ===== -->
+        <div class="panel" id="panelBilling" style="display:none;">
+          <div class="ctab-section-title">Consultation Payment</div>
+          <div class="bill-summary-card">
+            <div class="bill-row"><div class="br-label">Consultation Type</div><div class="br-value" id="billType">\u2014</div></div>
+            <div class="bill-row"><div class="br-label">Consultation Fee</div><div class="br-value" id="billFee">\u20140</div></div>
+            <div class="bill-row"><div class="br-label">Payment Status</div><div class="br-value" id="billStatus">\u2014</div></div>
+            <div class="bill-row"><div class="br-label">Payment Method</div><div class="br-value" id="billMethod">\u2014</div></div>
+          </div>
+
+          <div class="ctab-section-title">Additional Charges <span style="font-size:11px;font-weight:600;color:var(--ink-500);text-transform:none;">Collected at reception on checkout</span></div>
+          <div id="billChargesList" style="margin-bottom:10px;"></div>
+          <div class="bill-charge-add">
+            <input id="billChargeDesc" placeholder="e.g. Minor procedure, extra test">
+            <input id="billChargeAmt" type="number" placeholder="â‚¹ amount">
+            <div class="btn btn-ghost" style="padding:8px 14px;font-size:12.5px;" onclick="addBillCharge()">Add</div>
+          </div>
+
+          <div class="bill-total-row">
+            <div class="bt-label">Total Due</div>
+            <div class="bt-value" id="billTotal">\u20140</div>
+          </div>
+          <div class="profile-foot-note" style="margin-top:14px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 17h.01"/></svg>
+            <div>The base consultation fee is collected by reception before the visit. Any additional charges added here are settled at checkout, not by the doctor.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="side-col">
+        <div class="card">
+          <div class="card-head"><div class="card-title">Patient Snapshot</div><div class="card-link">Edit</div></div>
+          <div class="snap-row"><div class="snap-label">Email</div><div class="snap-value">rahul.sharma@email.com</div></div>
+          <div class="snap-row"><div class="snap-label">Phone</div><div class="snap-value">98765 43210</div></div>
+          <div class="snap-row"><div class="snap-label">Address</div><div class="snap-value">250, Hitech City, Hyderabad â€“ 500081</div></div>
+          <div class="snap-row"><div class="snap-label">Occupation</div><div class="snap-value">Software Engineer</div></div>
+          <div class="snap-row"><div class="snap-label">Marital Status</div><div class="snap-value">Married</div></div>
+          <div class="snap-row"><div class="snap-label">Primary Physician</div><div class="snap-value" id="patientPhysician">Dr. Arjun Patel</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div class="card-title">Previous Consultations</div><div class="card-link" id="prevConsultCount">0</div></div>
+          <div id="prevConsultList"><div class="pc-empty-note">No previous consultations on file yet.</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div class="card-title">Quick Actions</div></div>
+          <div class="qa2-grid">
+            <div class="qa2-btn"><div class="qa2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg></div><span>Add Medication</span></div>
+            <div class="qa2-btn"><div class="qa2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 2v6L4 20a1 1 0 0 0 1 2h14a1 1 0 0 0 1-2L15 8V2"/></svg></div><span>Lab Order</span></div>
+            <div class="qa2-btn"><div class="qa2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15V8a2 2 0 0 0-2-2h-6l-2-2H5a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h5m5-1v-4m-2 2h4"/></svg></div><span>Upload Doc</span></div>
+            <div class="qa2-btn" onclick="openPrescriptionModal(document.getElementById('patientName').textContent)"><div class="qa2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div><span>Prescription</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-bar">
+        <button class="btn btn-ghost">Save as Draft</button>
+        <div class="save-status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Saved 09:00 AM</div>
+        <div class="spacer"></div>
+        <button class="btn btn-primary btn-lg" onclick="completeConsultation()">Complete Consultation<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+
+    <!-- ================= PAGE: FULL QUEUE ================= -->
+    <div class="content-wrap" id="page-queue" style="display:none;grid-template-columns:1fr;">
+      <div>
+        <div class="breadcrumb" onclick="showPage('dashboard')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Dashboard</div>
+
+        <div class="page-header">
+          <div>
+            <div class="page-title" id="queueTitle">Consultation Queue (24)</div>
+            <div class="page-sub">All appointment requests and consultations for today</div>
+          </div>
+          <div class="header-spacer"></div>
+          <div class="search-input-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input id="queueSearchInput" placeholder="Search in queue" oninput="onQueueSearch()">
+          </div>
+          <div class="toolbar-btn" onclick="toggleFilterMenu(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 3H2l8 9.46V19l4 2v-8.54z"/></svg>Filter</div>
+          <div class="toolbar-btn" onclick="toggleExportMenu(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Export<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+
+        <div class="queue-tabs" style="margin-top:0;padding:0;border-bottom:1px solid var(--ink-200);">
+          <div class="qtab active" data-filter="all" onclick="filterFullQueue(this,'all')">All (<span id="fqCountAll">24</span>)</div>
+          <div class="qtab" data-filter="clinic" onclick="filterFullQueue(this,'clinic')">In Clinic (<span id="fqCountClinic">10</span>)</div>
+          <div class="qtab" data-filter="video" onclick="filterFullQueue(this,'video')">Video (<span id="fqCountVideo">6</span>)</div>
+          <div class="qtab" data-filter="audio" onclick="filterFullQueue(this,'audio')">Audio (<span id="fqCountAudio">5</span>)</div>
+          <div class="qtab" data-filter="walkin" onclick="filterFullQueue(this,'walkin')">Walk-in (<span id="fqCountWalkin">3</span>)</div>
+        </div>
+
+        <div class="qstat-row">
+          <div class="qstat-tile"><div class="qstat-icon total"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><div><div class="qstat-val" id="statTotal">24</div><div class="qstat-label">Total</div></div></div>
+          <div class="qstat-tile"><div class="qstat-icon completed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></div><div><div class="qstat-val" id="statCompleted">4</div><div class="qstat-label">Completed</div></div></div>
+          <div class="qstat-tile"><div class="qstat-icon progress"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div><div><div class="qstat-val" id="statProgress">2</div><div class="qstat-label">In Progress</div></div></div>
+          <div class="qstat-tile"><div class="qstat-icon yts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg></div><div><div class="qstat-val" id="statYts">16</div><div class="qstat-label">Yet to Start</div></div></div>
+          <div class="qstat-tile"><div class="qstat-icon cancelled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg></div><div><div class="qstat-val" id="statCancelled">2</div><div class="qstat-label">Cancelled</div></div></div>
+        </div>
+
+        <div class="queue-card">
+          <div class="selection-bar" id="selectionBar">
+            <div class="sel-count" id="selCountLabel">0 selected</div>
+            <div class="sel-clear" onclick="clearSelection()">Clear selection</div>
+            <div class="spacer"></div>
+            <div class="btn btn-primary" onclick="openExportModal('selected')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Export Selected</div>
+          </div>
+          <table>
+            <thead>
+              <tr><th class="sel-cell"><input type="checkbox" class="row-check" id="selectAllBox" onclick="toggleSelectAll(this)"></th><th>Time</th><th>Patient</th><th>Doctor</th><th>Type</th><th>Patient Frequency</th><th>Status</th><th>Reason for Visit</th><th>Action</th><th></th></tr>
+            </thead>
+            <tbody id="fullQueueBody"></tbody>
+          </table>
+          <div class="pagination-row">
+            <div class="pg-info" id="pgInfo">Showing 1 to 10 of 24 results</div>
+            <div class="pg-controls" id="pgControls"></div>
+            <div class="pg-size" onclick="togglePageSizeMenu(event)"><span id="pgSizeLabel">10 / page</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= PAGE: RECEPTION CHECK-IN ================= -->
+    <div class="content-wrap" id="page-reception" style="display:none;grid-template-columns:1fr;">
+      <div class="rc-wrap">
+        <div class="breadcrumb" onclick="showPage('dashboard')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Dashboard</div>
+        <div class="page-header">
+          <div>
+            <div class="page-title">Reception Check-In</div>
+            <div class="page-sub">Register the patient and collect payment in one step â€” they join the doctor's queue immediately after</div>
+          </div>
+        </div>
+
+        <!-- Online bookings awaiting check-in and payment -->
+        <div class="rc-card" id="rcBookingsCard" style="display:none;">
+          <div class="rc-step-title" style="margin-bottom:10px;">Upcoming Online Bookings</div>
+          <div class="page-sub" style="margin-bottom:14px;">Booked by patients through the portal â€” tap Check In to confirm payment and add them to the doctor's queue.</div>
+          <div class="rc-recent" id="rcBookingsList"></div>
+        </div>
+
+        <!-- STEP 1: Find or add patient -->
+        <div class="rc-card">
+          <div class="rc-step-title"><div class="rc-step-num">1</div>Find or Add Patient</div>
+          <div class="rc-search-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input id="rcSearchInput" placeholder="Search by name, phone, or UHIDâ€¦" oninput="searchReceptionPatients()">
+          </div>
+          <div class="rc-results" id="rcResults"></div>
+
+          <div class="rc-newpatient-toggle" id="rcNewToggle" onclick="toggleNewPatientForm()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 5v14M5 12h14"/></svg>Add Patient
+          </div>
+          <div class="rc-newpatient-form" id="rcNewForm">
+            <div class="full"><label>Full Name</label><input id="rcNewName" placeholder="e.g. Sunita Rao" oninput="validateReceptionForm()"></div>
+            <div><label>Age</label><input id="rcNewAge" type="number" min="0" max="120" placeholder="Age" oninput="validateReceptionForm()"></div>
+            <div><label>Gender</label><select id="rcNewGender" onchange="validateReceptionForm()"><option>Male</option><option>Female</option><option>Other</option></select></div>
+            <div class="full"><label>Phone Number</label><input id="rcNewPhone" placeholder="98765 43210" oninput="validateReceptionForm()"></div>
+          </div>
+
+          <div class="rc-selected-patient" id="rcSelectedPatient">
+            <div class="rc-chip" id="rcSelChip">RS</div>
+            <div><div class="rc-sp-name" id="rcSelName">Patient Name</div><div class="rc-sp-sub" id="rcSelSub">UHID Â· Age Â· Gender</div></div>
+            <div class="rc-sp-clear" onclick="clearSelectedPatient()">Change</div>
+          </div>
+        </div>
+
+        <!-- STEP 2: Visit details -->
+        <div class="rc-card">
+          <div class="rc-step-title"><div class="rc-step-num">2</div>Visit Details</div>
+          <div class="rc-type-row">
+            <div class="rc-type-pill active" data-type="clinic" onclick="selectVisitType(this,'clinic')">
+              <div class="rt-icon" style="background:var(--primary-50);color:var(--primary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M3 10l9-7 9 7v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+              <div class="rt-label">In Clinic</div>
+            </div>
+            <div class="rc-type-pill" data-type="video" onclick="selectVisitType(this,'video')">
+              <div class="rt-icon" style="background:var(--violet-50);color:var(--violet);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M22 8.5l-6 3.5 6 3.5z"/></svg></div>
+              <div class="rt-label">Video</div>
+            </div>
+            <div class="rc-type-pill" data-type="audio" onclick="selectVisitType(this,'audio')">
+              <div class="rt-icon" style="background:var(--teal-50);color:var(--teal);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"/></svg></div>
+              <div class="rt-label">Audio</div>
+            </div>
+            <div class="rc-type-pill" data-type="walkin" onclick="selectVisitType(this,'walkin')">
+              <div class="rt-icon" style="background:var(--ink-100);color:var(--ink-500);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg></div>
+              <div class="rt-label">Walk-in</div>
+            </div>
+          </div>
+          <label style="font-size:11.5px;font-weight:600;color:var(--ink-700);display:block;margin-bottom:6px;">See Which Doctor?</label>
+          <select id="rcDoctorSelect" class="fp-select" style="margin-bottom:16px;" onchange="onRcDoctorChange()"></select>
+
+          <label style="font-size:11.5px;font-weight:600;color:var(--ink-700);display:block;margin-bottom:6px;">When?</label>
+          <div class="when-toggle-row">
+            <div class="when-toggle active" id="whenNowBtn" onclick="setRcWhenMode('now')">Now</div>
+            <div class="when-toggle" id="whenLaterBtn" onclick="setRcWhenMode('later')">Schedule a Time</div>
+          </div>
+          <div id="rcSlotWrap" style="display:none;margin-bottom:16px;">
+            <div class="slot-grid" id="rcSlotGrid"></div>
+          </div>
+
+          <label style="font-size:11.5px;font-weight:600;color:var(--ink-700);display:block;margin-bottom:6px;">Reason for Visit</label>
+          <input id="rcReasonInput" placeholder="e.g. Fever, Chest Pain, Regular Checkupâ€¦" style="width:100%;border:1px solid var(--ink-200);border-radius:8px;padding:10px 12px;font-size:13px;font-family:var(--font-ui);color:var(--ink-900);" oninput="validateReceptionForm()">
+          <div class="rc-reason-chips">
+            <div class="rc-chip-btn" onclick="pickReasonChip(this,'Fever')">Fever</div>
+            <div class="rc-chip-btn" onclick="pickReasonChip(this,'Regular Checkup')">Regular Checkup</div>
+            <div class="rc-chip-btn" onclick="pickReasonChip(this,'Chest Pain')">Chest Pain</div>
+            <div class="rc-chip-btn" onclick="pickReasonChip(this,'Follow-up Consultation')">Follow-up</div>
+            <div class="rc-chip-btn" onclick="pickReasonChip(this,'Body Ache')">Body Ache</div>
+          </div>
+        </div>
+
+        <!-- STEP 3: Payment -->
+        <div class="rc-card">
+          <div class="rc-step-title"><div class="rc-step-num">3</div>Payment</div>
+          <div id="rcPayMainView">
+            <div class="pm-fee-row">
+              <div class="pm-fee-label">Consultation Fee<div class="pm-fee-sub" id="rcFeeSub">In Clinic visit</div></div>
+              <div class="pm-fee-amount" id="rcFeeAmount">â‚¹500</div>
+            </div>
+            <div class="pm-method-label">Collect payment via</div>
+            <div class="pm-method-row">
+              <div class="pm-method active" data-method="Cash" onclick="selectRcMethod(this,'Cash')">Cash</div>
+              <div class="pm-method" data-method="Card" onclick="selectRcMethod(this,'Card')">Card</div>
+              <div class="pm-method" data-method="UPI" onclick="selectRcMethod(this,'UPI')">UPI</div>
+            </div>
+            <div class="receipt-upi-box" id="rcUpiBox" style="display:none;">
+              <div class="upi-qr"></div>
+              <div class="upi-txt">Scan with any UPI app<br>(GPay, PhonePe, Paytm)<br><b>â‚¹<span id="rcUpiAmt">500</span></b> â€” <span id="rcUpiClinicName">CityCare Clinic</span></div>
+            </div>
+            <div class="pm-exception-link">Can't collect payment? <span onclick="showRcException()">Apply admin exception</span></div>
+          </div>
+          <div id="rcPayExceptionView" style="display:none;">
+            <div class="pm-back-link" onclick="showRcMainPay()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to payment</div>
+            <div class="pm-exception-box">
+              <div class="pe-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>Requires clinic admin authorization</div>
+              <label>Authorizing Admin</label>
+              <select id="rcAdminSelect">
+                <option value="">Select adminâ€¦</option>
+                <option>Dr. Arjun Patel (Owner)</option>
+                <option>Meena Iyer (Front Desk Lead)</option>
+                <option>Ravi Krishnan (Clinic Manager)</option>
+              </select>
+              <label>Admin PIN</label>
+              <input type="password" id="rcAdminPin" placeholder="4-digit PIN" maxlength="4">
+              <label>Reason for exception</label>
+              <input type="text" id="rcAdminReason" placeholder="e.g. Insurance approval pending">
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="rc-card">
+          <div class="rc-submit-row">
+            <div class="btn btn-ghost" onclick="resetReceptionForm()">Clear Form</div>
+            <div class="btn btn-primary disabled" id="rcSubmitBtn" onclick="submitCheckIn()">Select or add a patient first</div>
+          </div>
+        </div>
+
+        <!-- Recently checked in (this session) -->
+        <div class="rc-card" id="rcRecentCard" style="display:none;">
+          <div class="rc-step-title" style="margin-bottom:10px;">Recently Checked In</div>
+          <div class="rc-recent" id="rcRecentList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= PAGE: ADMIN OVERVIEW ================= -->
+    <div class="content-wrap" id="page-adminOverview" style="display:none;grid-template-columns:1fr;">
+      <div class="rc-wrap" style="max-width:800px;">
+        <div class="page-header">
+          <div>
+            <div class="page-title">Admin Overview</div>
+            <div class="page-sub">Today's clinic activity at a glance â€” <span id="adminOverviewClinicName">CityCare Clinic</span></div>
+          </div>
+        </div>
+
+        <div class="admin-stat-row">
+          <div class="qstat-tile"><div class="qstat-icon completed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><div class="qstat-val" id="adminRevenue">â‚¹0</div><div class="qstat-label">Revenue Collected</div></div></div>
+          <div class="qstat-tile"><div class="qstat-icon total"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div><div class="qstat-val" id="adminCheckedIn">0</div><div class="qstat-label">Patients Checked In</div></div></div>
+          <div class="qstat-tile"><div class="qstat-icon yts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg></div><div><div class="qstat-val" id="adminExceptions">0</div><div class="qstat-label">Exceptions Approved</div></div></div>
+          <div class="qstat-tile"><div class="qstat-icon progress"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div><div><div class="qstat-val" id="adminStaffCount">2</div><div class="qstat-label">Staff On Duty</div></div></div>
+        </div>
+
+        <div class="rc-card">
+          <div class="rc-step-title" style="margin-bottom:2px;display:flex;align-items:center;">
+            <span style="flex:1;">Manage Staff</span>
+            <div class="btn btn-primary" style="padding:8px 14px;font-size:12.5px;" onclick="openAddStaffModal()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:5px;"><path d="M12 5v14M5 12h14"/></svg>Add Staff Member</div>
+          </div>
+          <div class="page-sub" style="margin-bottom:14px;">Staff accounts are created here by an admin â€” they can't self-register, since access to patient data needs to stay controlled.</div>
+          <div class="rc-recent" id="staffManageList"></div>
+        </div>
+
+        <div class="admin-quick-links">
+          <div class="admin-link-card" onclick="showPage('reception')">
+            <div class="al-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div><div class="al-title">Go to Check-In</div><div class="al-sub">Front desk &amp; payments</div></div>
+          </div>
+          <div class="admin-link-card" onclick="showPage('dashboard')">
+            <div class="al-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+            <div><div class="al-title">Go to Doctor's Dashboard</div><div class="al-sub">Consultation queue</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= PAGE: PATIENTS DIRECTORY ================= -->
+    <div class="content-wrap" id="page-patients" style="display:none;grid-template-columns:1fr;">
+      <div class="rc-wrap" style="max-width:760px;">
+        <div class="breadcrumb" onclick="goHome()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</div>
+        <div class="page-header">
+          <div>
+            <div class="page-title">Patients</div>
+            <div class="page-sub" id="ptCountSub">All patients who have visited or registered with the clinic</div>
+          </div>
+        </div>
+        <div class="search-input-wrap" style="max-width:100%;margin-bottom:16px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input id="ptSearchInput" placeholder="Search by name, phone, or UHIDâ€¦" oninput="renderPatientsDirectory()">
+        </div>
+        <div id="ptList"></div>
+      </div>
+    </div>
+
+    <!-- ================= PAGE: PRESCRIPTIONS ================= -->
+    <div class="content-wrap" id="page-prescriptions" style="display:none;grid-template-columns:1fr;">
+      <div class="rc-wrap" style="max-width:760px;">
+        <div class="breadcrumb" onclick="goHome()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</div>
+        <div class="page-header">
+          <div>
+            <div class="page-title">Prescriptions</div>
+            <div class="page-sub">Every prescription issued, searchable by patient</div>
+          </div>
+          <div class="header-spacer"></div>
+          <div class="btn btn-primary" onclick="openPrescriptionModal(null)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 5v14M5 12h14"/></svg>Write Prescription</div>
+        </div>
+        <div class="search-input-wrap" style="max-width:100%;margin-bottom:16px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input id="rxSearchInput" placeholder="Search by patient nameâ€¦" oninput="renderPrescriptionsList()">
+        </div>
+        <div id="rxList"></div>
+      </div>
+    </div>
+
+    <!-- ================= PAGE: REPORTS ================= -->
+    <div class="content-wrap" id="page-reports" style="display:none;grid-template-columns:1fr;">
+      <div class="rc-wrap" style="max-width:760px;">
+        <div class="breadcrumb" onclick="goHome()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</div>
+        <div class="page-header">
+          <div>
+            <div class="page-title">Reports</div>
+            <div class="page-sub">Today's clinic activity, broken down â€” <span id="reportsClinicName">CityCare Clinic</span></div>
+          </div>
+        </div>
+
+        <div class="admin-stat-row" id="rpStatRow"></div>
+
+        <div class="rp-two-col">
+          <div class="rc-card rp-bar-card">
+            <div class="rp-bar-title">Revenue by Payment Method</div>
+            <div id="rpByMethod"></div>
+          </div>
+          <div class="rc-card rp-bar-card">
+            <div class="rp-bar-title">Consultations by Type</div>
+            <div id="rpByType"></div>
+          </div>
+        </div>
+        <div class="rp-two-col">
+          <div class="rc-card rp-bar-card">
+            <div class="rp-bar-title">Consultations by Status</div>
+            <div id="rpByStatus"></div>
+          </div>
+          <div class="rc-card rp-bar-card">
+            <div class="rp-bar-title">By Doctor</div>
+            <div id="rpByDoctor"></div>
+          </div>
+        </div>
+        <div class="rc-card rp-bar-card">
+          <div class="rp-bar-title">Top Reasons for Visit</div>
+          <div id="rpByReason"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= PAGE: SETTINGS ================= -->
+    <div class="content-wrap" id="page-settings" style="display:none;grid-template-columns:1fr;">
+      <div class="rc-wrap" style="max-width:640px;">
+        <div class="breadcrumb" onclick="goHome()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</div>
+        <div class="page-header">
+          <div>
+            <div class="page-title">Settings</div>
+            <div class="page-sub">Clinic information and consultation fees</div>
+          </div>
+        </div>
+
+        <div class="rc-card" style="margin-bottom:16px;">
+          <div class="rc-step-title" style="margin-bottom:14px;">Clinic Information</div>
+          <div class="st-row"><label>Clinic Name</label><input id="stClinicName" value="CityCare Clinic"></div>
+          <div class="st-row"><label>Address</label><input id="stClinicAddress" value="250, Hitech City, Hyderabad â€“ 500081"></div>
+          <div class="btn btn-primary" style="display:inline-flex;" onclick="saveClinicInfo()">Save Clinic Info</div>
+        </div>
+
+        <div class="rc-card">
+          <div class="rc-step-title" style="margin-bottom:14px;">Consultation Fees</div>
+          <div class="st-row"><label>In Clinic</label><span class="st-prefix">â‚¹</span><input id="stFeeClinic" type="number" value="500"></div>
+          <div class="st-row"><label>Video</label><span class="st-prefix">â‚¹</span><input id="stFeeVideo" type="number" value="400"></div>
+          <div class="st-row"><label>Audio</label><span class="st-prefix">â‚¹</span><input id="stFeeAudio" type="number" value="300"></div>
+          <div class="st-row"><label>Walk-in</label><span class="st-prefix">â‚¹</span><input id="stFeeWalkin" type="number" value="500"></div>
+          <div class="btn btn-primary" style="display:inline-flex;" onclick="saveFees()">Save Fees</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- floating menus reused for Export / Filter / page-size / row actions -->
+<div class="float-menu" id="exportMenu">
+  <div class="fm-item" onclick="closeFloatMenu('exportMenu');openExportModal('all','pdf')">
+    <div class="fm-icon" style="background:var(--danger-50);color:var(--danger);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+    <div><div class="fm-title">Export Today's Queue (PDF)</div><div class="fm-sub">Share or print today's patient list</div></div>
+  </div>
+  <div class="fm-item" onclick="closeFloatMenu('exportMenu');openExportModal('all','csv')">
+    <div class="fm-icon" style="background:var(--success-50);color:var(--success);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+    <div><div class="fm-title">Export as Excel (.xlsx)</div><div class="fm-sub">For billing, records, or reporting</div></div>
+  </div>
+  <div class="fm-item" onclick="closeFloatMenu('exportMenu');printQueueNow()">
+    <div class="fm-icon" style="background:var(--primary-50);color:var(--primary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg></div>
+    <div><div class="fm-title">Print Queue</div><div class="fm-sub">Print today's appointment schedule</div></div>
+  </div>
+  <div class="fm-item" onclick="closeFloatMenu('exportMenu');requestExportSelected()">
+    <div class="fm-icon" style="background:var(--violet-50);color:var(--violet);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+    <div><div class="fm-title">Export Selected Patients</div><div class="fm-sub">Export only selected or filtered patients</div></div>
+  </div>
+  <div class="fm-cancel" onclick="closeFloatMenu('exportMenu')">Cancel</div>
+</div>
+
+<div class="float-menu" id="dashFilterMenu" style="width:260px;">
+  <div class="fp-head" style="padding:2px 2px 8px;">
+    <div class="fp-title" style="font-size:14px;">Filter Queue</div>
+    <div class="fp-clear" onclick="clearDashFilters()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>Clear</div>
+  </div>
+  <div class="fp-section" style="padding-top:6px;">
+    <div class="fp-section-title">Consultation Type</div>
+    <label class="fp-check"><input type="checkbox" class="dash-type" value="clinic" checked onchange="previewDashFilterCount()"><div class="fp-swatch" style="background:var(--primary-50);color:var(--primary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M3 10l9-7 9 7v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>In Clinic</label>
+    <label class="fp-check"><input type="checkbox" class="dash-type" value="video" checked onchange="previewDashFilterCount()"><div class="fp-swatch" style="background:var(--violet-50);color:var(--violet);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M22 8.5l-6 3.5 6 3.5z"/></svg></div>Video</label>
+    <label class="fp-check"><input type="checkbox" class="dash-type" value="audio" checked onchange="previewDashFilterCount()"><div class="fp-swatch" style="background:var(--teal-50);color:var(--teal);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"/></svg></div>Audio</label>
+  </div>
+  <div class="fp-section" style="border-bottom:none;">
+    <div class="fp-section-title">Patient Frequency</div>
+    <label class="fp-check fp-first"><input type="checkbox" class="dash-freq" value="first" checked onchange="previewDashFilterCount()"><div class="fp-swatch"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6L22 9.3l-5 4.9L18.2 22 12 18.3 5.8 22 7 14.2l-5-4.9 7.1-.7z"/></svg></div>First Visit</label>
+    <label class="fp-check"><input type="checkbox" class="dash-freq" value="monthly" checked onchange="previewDashFilterCount()"><div class="fp-swatch" style="background:var(--ink-100);color:var(--ink-500);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>Monthly (1 visit)</label>
+    <label class="fp-check"><input type="checkbox" class="dash-freq" value="quarterly" checked onchange="previewDashFilterCount()"><div class="fp-swatch" style="background:var(--ink-100);color:var(--ink-500);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>Quarterly</label>
+    <label class="fp-check"><input type="checkbox" class="dash-freq" value="twiceyear" checked onchange="previewDashFilterCount()"><div class="fp-swatch" style="background:var(--ink-100);color:var(--ink-500);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>Twice / Year</label>
+  </div>
+  <div class="fp-foot" style="padding:10px 2px 2px;">
+    <div class="fp-match" id="dashFilterMatchCount"><b>5</b> patients match</div>
+    <div class="fp-foot-btns">
+      <div class="btn btn-ghost" onclick="closeFloatMenu('dashFilterMenu')">Cancel</div>
+      <div class="btn btn-primary" onclick="applyDashFilters()">Apply</div>
+    </div>
+  </div>
+  <div style="font-size:11px;color:var(--ink-400);text-align:center;margin-top:8px;">Need more? <span style="color:var(--primary);font-weight:600;cursor:pointer;" onclick="closeFloatMenu('dashFilterMenu');showPage('queue');">Open full queue filters â†’</span></div>
+</div>
+
+<div class="float-menu" id="filterMenu">
+  <div class="filter-panel">
+    <div class="fp-head">
+      <div class="fp-title">Filters</div>
+      <div class="fp-clear" onclick="clearAllFilters()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>Clear all</div>
+    </div>
+    <div class="fp-body">
+
+      <div class="fp-section">
+        <div class="fp-section-title">Consultation Type</div>
+        <label class="fp-check"><input type="checkbox" class="fp-type" value="clinic" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--primary-50);color:var(--primary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M3 10l9-7 9 7v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>In Clinic</label>
+        <label class="fp-check"><input type="checkbox" class="fp-type" value="video" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--violet-50);color:var(--violet);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M22 8.5l-6 3.5 6 3.5z"/></svg></div>Video</label>
+        <label class="fp-check"><input type="checkbox" class="fp-type" value="audio" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--teal-50);color:var(--teal);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"/></svg></div>Audio</label>
+        <label class="fp-check"><input type="checkbox" class="fp-type" value="walkin" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--ink-100);color:var(--ink-500);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg></div>Walk-in</label>
+      </div>
+
+      <div class="fp-section">
+        <div class="fp-section-title">Status</div>
+        <label class="fp-check"><input type="checkbox" class="fp-status" value="yts" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--ink-100);color:var(--ink-500);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="9"/></svg></div>Yet to Start</label>
+        <label class="fp-check"><input type="checkbox" class="fp-status" value="progress" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--success-50);color:var(--success);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>In Progress</label>
+        <label class="fp-check"><input type="checkbox" class="fp-status" value="completed" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--primary-50);color:var(--primary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div>Completed</label>
+        <label class="fp-check"><input type="checkbox" class="fp-status" value="cancelled" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--danger-50);color:var(--danger);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M15 9l-6 6M9 9l6 6"/><circle cx="12" cy="12" r="9"/></svg></div>Cancelled</label>
+      </div>
+
+      <div class="fp-section">
+        <div class="fp-section-title">Patient Frequency</div>
+        <label class="fp-check fp-first"><input type="checkbox" class="fp-freq" value="first" checked onchange="previewFilterCount()"><div class="fp-swatch"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6L22 9.3l-5 4.9L18.2 22 12 18.3 5.8 22 7 14.2l-5-4.9 7.1-.7z"/></svg></div>First Visit</label>
+        <label class="fp-check"><input type="checkbox" class="fp-freq" value="monthly" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--ink-100);color:var(--ink-500);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>Monthly (1 visit)</label>
+        <label class="fp-check"><input type="checkbox" class="fp-freq" value="quarterly" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--ink-100);color:var(--ink-500);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>Quarterly</label>
+        <label class="fp-check"><input type="checkbox" class="fp-freq" value="twiceyear" checked onchange="previewFilterCount()"><div class="fp-swatch" style="background:var(--ink-100);color:var(--ink-500);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>Twice / Year</label>
+      </div>
+
+      <div class="fp-section" style="padding-top:2px;padding-bottom:2px;border-bottom:none;">
+        <div class="fp-more-toggle" onclick="toggleMoreFilters()" id="moreFiltersToggle">
+          More filters (Reason, Age, Gender, Time, Doctor)
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+
+      <div class="fp-more-body" id="moreFiltersBody">
+        <div class="fp-section">
+          <div class="fp-section-title">Reason for Visit</div>
+          <div class="fp-reason-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input id="reasonSearchInput" placeholder="Search reasonsâ€¦" oninput="filterReasonList()">
+          </div>
+          <div class="fp-reason-list" id="reasonList">
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="checkup" checked onchange="previewFilterCount()">General Checkup</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="fever" checked onchange="previewFilterCount()">Fever</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="cough" checked onchange="previewFilterCount()">Cough &amp; Cold</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="body ache" checked onchange="previewFilterCount()">Body Ache</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="chest pain" checked onchange="previewFilterCount()">Chest Pain</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="breath" checked onchange="previewFilterCount()">Shortness of Breath</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="hypertension" checked onchange="previewFilterCount()">Hypertension</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="diabetes" checked onchange="previewFilterCount()">Diabetes Follow-up</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="cardiac" checked onchange="previewFilterCount()">Cardiac / Heart Issues</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="back pain" checked onchange="previewFilterCount()">Back / Joint Pain</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="skin" checked onchange="previewFilterCount()">Skin Rash</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="migraine" checked onchange="previewFilterCount()">Migraine</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="anxiety" checked onchange="previewFilterCount()">Anxiety</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="follow-up" checked onchange="previewFilterCount()">Follow-up Consultation</label>
+            <label class="fp-check" data-reason-row><input type="checkbox" class="fp-reason" value="other" checked onchange="previewFilterCount()">Other</label>
+          </div>
+        </div>
+
+        <div class="fp-section">
+          <div class="fp-section-title">Patient Age</div>
+          <div class="fp-age-row">
+            <input type="number" id="ageMinInput" placeholder="Min age" min="0" max="120" oninput="previewFilterCount()">
+            <span>to</span>
+            <input type="number" id="ageMaxInput" placeholder="Max age" min="0" max="120" oninput="previewFilterCount()">
+          </div>
+        </div>
+
+        <div class="fp-section">
+          <div class="fp-section-title">Patient Gender</div>
+          <div class="fp-radio-row">
+            <label class="fp-radio"><input type="radio" name="fpGender" value="all" checked onchange="previewFilterCount()">All</label>
+            <label class="fp-radio"><input type="radio" name="fpGender" value="Male" onchange="previewFilterCount()">Male</label>
+            <label class="fp-radio"><input type="radio" name="fpGender" value="Female" onchange="previewFilterCount()">Female</label>
+          </div>
+        </div>
+
+        <div class="fp-section">
+          <div class="fp-section-title">Time Range</div>
+          <select class="fp-select" id="timeRangeSelect" onchange="previewFilterCount()">
+            <option value="all">All Day</option>
+            <option value="morning">Morning (before 12 PM)</option>
+            <option value="afternoon">Afternoon (12â€“5 PM)</option>
+            <option value="evening">Evening (after 5 PM)</option>
+          </select>
+        </div>
+
+        <div class="fp-section" style="border-bottom:none;">
+          <div class="fp-section-title">Doctor</div>
+          <select class="fp-select" id="doctorSelect" onchange="previewFilterCount()">
+            <option value="all">All Doctors</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="fp-foot">
+      <div class="fp-match" id="filterMatchCount"><b>24</b> patients match these filters</div>
+      <div class="fp-foot-btns">
+        <div class="btn btn-ghost" onclick="closeFloatMenu('filterMenu')">Cancel</div>
+        <div class="btn btn-primary" onclick="applyAllFilters()">Apply Filters</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="float-menu" id="pageSizeMenu" style="min-width:120px;">
+  <div class="fm-item" style="padding:8px 10px;" onclick="setPageSize(10)"><div class="fm-title">10 / page</div></div>
+  <div class="fm-item" style="padding:8px 10px;" onclick="setPageSize(25)"><div class="fm-title">25 / page</div></div>
+  <div class="fm-item" style="padding:8px 10px;" onclick="setPageSize(50)"><div class="fm-title">50 / page</div></div>
+</div>
