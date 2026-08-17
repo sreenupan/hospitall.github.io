@@ -642,42 +642,9 @@
       </div>
 
       <div class="side-col">
-        <!-- ===== HEALTH CONDITIONS ===== -->
-        <div class="card">
-          <div class="card-head" style="cursor:pointer;" onclick="var b=document.getElementById('healthCondBody');b.style.display=b.style.display==='none'?'block':'none';this.querySelector('.collapse-icon').style.transform=b.style.display==='none'?'rotate(-90deg)':'';">
-            <div class="card-title">Health Conditions</div>
-            <svg class="collapse-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--ink-400);transition:transform .15s;"><path d="M6 9l6 6 6-6"/></svg>
-          </div>
-          <div id="healthCondBody">
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--warning-50);border:1px solid var(--warning-100);border-radius:8px;">
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M12 9v4M12 17h.01"/></svg>
-                  <span style="font-size:12.5px;font-weight:600;color:var(--ink-900);">Diabetes</span>
-                </div>
-                <span style="font-size:11px;color:var(--ink-500);">Since 2 years</span>
-              </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--danger-50);border:1px solid var(--danger-100);border-radius:8px;">
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                  <span style="font-size:12.5px;font-weight:600;color:var(--ink-900);">Hypertension</span>
-                </div>
-                <span style="font-size:11px;color:var(--ink-500);">Since 3 years</span>
-              </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--violet-50);border:1px solid var(--violet-100);border-radius:8px;">
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-                  <span style="font-size:12.5px;font-weight:600;color:var(--ink-900);">Thyroid</span>
-                </div>
-                <span style="font-size:11px;color:var(--ink-500);">Since 1 year</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div class="card">
           <div class="card-head"><div class="card-title">Medical Records</div><div class="card-link" style="cursor:pointer;">Upload</div></div>
-          <div style="display:flex;flex-direction:column;gap:6px;max-height:220px;overflow-y:auto;padding-right:4px;">
+          <div style="display:flex;flex-direction:column;gap:6px;">
             <a href="#" onclick="return false;" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--ink-100);border-radius:8px;text-decoration:none;">
               <div style="width:30px;height:30px;border-radius:7px;background:var(--danger-50);color:var(--danger);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
               <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;color:var(--ink-900);">CBP Report</div><div style="font-size:11px;color:var(--ink-500);">12 Jun 2026</div></div>
@@ -696,26 +663,6 @@
             <a href="#" onclick="return false;" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--ink-100);border-radius:8px;text-decoration:none;">
               <div style="width:30px;height:30px;border-radius:7px;background:var(--violet-50);color:var(--violet);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
               <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;color:var(--ink-900);">Thyroid Profile</div><div style="font-size:11px;color:var(--ink-500);">18 Mar 2026</div></div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            </a>
-            <a href="#" onclick="return false;" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--ink-100);border-radius:8px;text-decoration:none;">
-              <div style="width:30px;height:30px;border-radius:7px;background:var(--warning-50);color:var(--warning);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;color:var(--ink-900);">Lipid Profile</div><div style="font-size:11px;color:var(--ink-500);">10 Feb 2026</div></div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            </a>
-            <a href="#" onclick="return false;" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--ink-100);border-radius:8px;text-decoration:none;">
-              <div style="width:30px;height:30px;border-radius:7px;background:var(--primary-50);color:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;color:var(--ink-900);">HbA1c Report</div><div style="font-size:11px;color:var(--ink-500);">28 Jan 2026</div></div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            </a>
-            <a href="#" onclick="return false;" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--ink-100);border-radius:8px;text-decoration:none;">
-              <div style="width:30px;height:30px;border-radius:7px;background:var(--success-50);color:var(--success);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;color:var(--ink-900);">Chest X-Ray</div><div style="font-size:11px;color:var(--ink-500);">15 Dec 2025</div></div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            </a>
-            <a href="#" onclick="return false;" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--ink-100);border-radius:8px;text-decoration:none;">
-              <div style="width:30px;height:30px;border-radius:7px;background:var(--danger-50);color:var(--danger);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;color:var(--ink-900);">Blood Sugar (Fasting)</div><div style="font-size:11px;color:var(--ink-500);">01 Nov 2025</div></div>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             </a>
           </div>
@@ -785,6 +732,38 @@
           </div>
         </div>
 
+        <!-- ===== HEALTH CONDITIONS ===== -->
+        <div class="card">
+          <div class="card-head" style="cursor:pointer;" onclick="var b=document.getElementById('healthCondBody');b.style.display=b.style.display==='none'?'block':'none';this.querySelector('.collapse-icon').style.transform=b.style.display==='none'?'rotate(-90deg)':'';">
+            <div class="card-title">Health Conditions</div>
+            <svg class="collapse-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--ink-400);transition:transform .15s;"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div id="healthCondBody">
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--warning-50);border:1px solid var(--warning-100);border-radius:8px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M12 9v4M12 17h.01"/></svg>
+                  <span style="font-size:12.5px;font-weight:600;color:var(--ink-900);">Diabetes</span>
+                </div>
+                <span style="font-size:11px;color:var(--ink-500);">Since 2 years</span>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--danger-50);border:1px solid var(--danger-100);border-radius:8px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  <span style="font-size:12.5px;font-weight:600;color:var(--ink-900);">Hypertension</span>
+                </div>
+                <span style="font-size:11px;color:var(--ink-500);">Since 3 years</span>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--violet-50);border:1px solid var(--violet-100);border-radius:8px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+                  <span style="font-size:12.5px;font-weight:600;color:var(--ink-900);">Thyroid</span>
+                </div>
+                <span style="font-size:11px;color:var(--ink-500);">Since 1 year</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="action-bar">
