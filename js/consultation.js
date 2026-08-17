@@ -542,10 +542,15 @@
 
   // ================= SECTION NAV (scroll-spy + click) =================
   function scrollToPanel(e, id){
-    e.preventDefault();
+    if(e){ e.preventDefault(); e.stopPropagation(); }
     var el = document.getElementById(id);
     var container = document.getElementById('consultSectionsScroll');
-    if(el && container) container.scrollTo({top: el.offsetTop - container.offsetTop, behavior:'smooth'});
+    if(!el || !container) return;
+    // Calculate the element's position within the scroll container
+    var containerRect = container.getBoundingClientRect();
+    var elRect = el.getBoundingClientRect();
+    var scrollOffset = elRect.top - containerRect.top + container.scrollTop;
+    container.scrollTo({top: scrollOffset, behavior:'smooth'});
   }
   (function(){
     var ticking = false;
@@ -554,14 +559,16 @@
       var nav = document.getElementById('consultSectionNav');
       var container = document.getElementById('consultSectionsScroll');
       if(!nav || !container) return;
+      var containerRect = container.getBoundingClientRect();
       var currentIdx = 0;
-      panels.forEach(function(id, i){
-        var el = document.getElementById(id);
+      for(var i = 0; i < panels.length; i++){
+        var el = document.getElementById(panels[i]);
         if(el){
-          var top = el.offsetTop - container.offsetTop - container.scrollTop;
-          if(top <= 20) currentIdx = i;
+          var elRect = el.getBoundingClientRect();
+          // Section is "current" if its top is at or above the container top + 40px threshold
+          if(elRect.top <= containerRect.top + 40) currentIdx = i;
         }
-      });
+      }
       var steps = nav.querySelectorAll('.pbar-step');
       var lines = nav.querySelectorAll('.pbar-line');
       steps.forEach(function(step, i){
@@ -583,7 +590,15 @@
         });
       }
     }
-    setTimeout(function(){ attachScrollSpy(); updateProgressBar(); }, 500);
+    // Re-attach when consultation page becomes visible
+    var origShowPage = window.showPage;
+    if(origShowPage){
+      window.showPage = function(name){
+        origShowPage(name);
+        if(name==='consultation'){ setTimeout(function(){ attachScrollSpy(); updateProgressBar(); }, 200); }
+      };
+    }
+    setTimeout(function(){ attachScrollSpy(); updateProgressBar(); }, 800);
   })();
 
   // ================= VITALS MODAL =================
