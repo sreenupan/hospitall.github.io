@@ -339,7 +339,7 @@
               </div>
             </div>
             <div class="info-grid">
-              <div class="info-item"><div class="label">Temp</div><div class="value">98.6 &deg;F</div></div>
+              <div class="info-item"><div class="label">Temp</div><div class="value">98.6&deg;F <span style="font-size:11px;color:var(--ink-400);font-weight:500;">(37&deg;C)</span></div></div>
               <div class="info-item"><div class="label">Pulse</div><div class="value">72 bpm</div></div>
               <div class="info-item"><div class="label">BP</div><div class="value">120/80 mmHg</div></div>
               <div class="info-item"><div class="label">SpO2</div><div class="value">98%</div></div>
@@ -383,7 +383,7 @@
         </div>
 
         <!-- Scrollable sections container -->
-        <div id="consultSectionsScroll" style="position:relative;overflow-y:auto;max-height:calc(100vh - 280px);border-radius:var(--radius);padding-right:4px;">
+        <div id="consultSectionsScroll" style="position:relative;overflow-y:auto;max-height:calc(100vh - 220px);border-radius:var(--radius);padding-right:4px;">
 
         <div class="panel" id="panelClinicalNotes" style="border-radius:var(--radius);border:1px solid var(--ink-200);margin-bottom:16px;scroll-margin-top:0;">
           <div class="field-group">
@@ -526,6 +526,7 @@
               <option value="general">General Wellness</option>
             </select>
             <div class="btn btn-ghost" style="padding:8px 14px;font-size:12.5px;" onclick="applyInstructionTemplate()">Apply</div>
+            <div class="btn btn-ghost" style="padding:8px 14px;font-size:12.5px;" onclick="saveInstructionsAsTemplate()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg> Save Template</div>
           </div>
         </div>
 
@@ -729,7 +730,7 @@
               <svg class="collapse-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--ink-400);transition:transform .15s;"><path d="M6 9l6 6 6-6"/></svg>
             </div>
           </div>
-          <div id="prevConsultBody">
+          <div id="prevConsultBody" style="display:none;">
             <div id="prevConsultList"><div class="pc-empty-note">No previous consultations on file yet.</div></div>
           </div>
         </div>
@@ -740,7 +741,7 @@
             <div class="card-title">Known Allergies</div>
             <svg class="collapse-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--ink-400);transition:transform .15s;"><path d="M6 9l6 6 6-6"/></svg>
           </div>
-          <div id="allergiesBody">
+          <div id="allergiesBody" style="display:none;">
             <div style="font-size:13px;color:var(--ink-500);padding:4px 0;">None reported</div>
           </div>
         </div>
@@ -751,7 +752,7 @@
             <div class="card-title">Habits</div>
             <svg class="collapse-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--ink-400);transition:transform .15s;"><path d="M6 9l6 6 6-6"/></svg>
           </div>
-          <div id="habitsBody" style="display:flex;flex-direction:column;gap:10px;">
+          <div id="habitsBody" style="display:none;flex-direction:column;gap:10px;">
             <!-- Tobacco -->
             <div style="border:1px solid var(--warning-100);background:var(--warning-50);border-radius:9px;padding:12px 14px;">
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
@@ -791,7 +792,8 @@
         <button class="btn btn-ghost">Save as Draft</button>
         <div class="save-status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Saved 09:00 AM</div>
         <div class="spacer"></div>
-        <button class="btn btn-primary btn-lg" onclick="completeConsultation()">Complete Consultation<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <button class="btn btn-ghost" onclick="printPrescription()" style="margin-right:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> Print Prescription</button>
+        <button class="btn btn-primary btn-lg" onclick="confirmCompleteConsultation()">Complete Consultation<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       </div>
     </div>
 
@@ -1970,7 +1972,7 @@
 
 <!-- ================= VITALS EDIT MODAL ================= -->
 <div class="modal-overlay" id="vitalsModalOverlay" onclick="if(event.target===this) closeVitalsModal()" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.4);z-index:200;align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:14px;padding:24px 28px;width:100%;max-width:720px;box-shadow:0 20px 60px rgba(15,23,42,.2);position:relative;max-height:90vh;overflow-y:auto;">
+  <div style="background:#fff;border-radius:14px;padding:24px 28px;width:95%;max-width:720px;box-shadow:0 20px 60px rgba(15,23,42,.2);position:relative;max-height:90vh;overflow-y:auto;margin:20px;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
       <div style="font-size:17px;font-weight:700;color:var(--ink-900);">Vitals</div>
       <div style="display:flex;align-items:center;gap:12px;">

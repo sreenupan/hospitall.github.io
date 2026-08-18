@@ -51,7 +51,7 @@
   .topbar-clock .tc-date{font-size:11px;color:var(--ink-500);font-weight:600;}
   .topbar-clock .tc-time{font-size:13px;color:var(--ink-900);font-weight:700;font-family:var(--font-data);}
 
-  .nav{background:linear-gradient(180deg,#1E3A8A 0%,#1E40AF 100%);color:#fff;display:flex;flex-direction:column;padding:20px 14px;}
+  .nav{background:linear-gradient(180deg,#1E3A8A 0%,#1E40AF 100%);color:#fff;display:flex;flex-direction:column;padding:20px 14px;position:sticky;top:0;height:100vh;overflow-y:auto;}
   .brand{display:flex;align-items:center;gap:10px;padding:6px 10px 22px;cursor:pointer;text-decoration:none;color:inherit;}
   .brand-icon{width:34px;height:34px;background:rgba(255,255,255,.15);border-radius:9px;display:flex;align-items:center;justify-content:center;}
   .brand-name{font-weight:700;font-size:15.5px;letter-spacing:-.2px;}
@@ -1237,3 +1237,10 @@
   .pbar-step.current .pbar-circle{background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:0 0 0 4px var(--primary-100);}
   .pbar-step.current .pbar-label{color:var(--primary);font-weight:700;}
   .pbar-step:hover .pbar-label{color:var(--primary);}
+
+
+  /* ===== Responsive vitals modal ===== */
+  @media (max-width: 768px) {
+    #vitalsModalOverlay > div { padding:18px 16px; }
+    #vitalsModalOverlay .pbar-step .pbar-label { font-size:10px; }
+  }

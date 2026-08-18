@@ -135,8 +135,9 @@
         </datalist>
         <div class="med-card-remove" onclick="removeMedRow(${n})" style="width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--danger);cursor:pointer;flex-shrink:0;" title="Remove"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14z"/></svg></div>
       </div>
-      <div style="padding-left:28px;margin-top:4px;">
-        <input class="med-card-instr" placeholder="Instructions, e.g. Take after food" style="width:100%;border:1px solid var(--ink-200);border-radius:6px;padding:6px 8px;font-size:11.5px;color:var(--ink-700);" onkeydown="medInstrKeydown(event,${n})">
+      <div style="padding-left:28px;margin-top:4px;display:flex;align-items:center;gap:12px;">
+        <input class="med-card-instr" placeholder="Instructions, e.g. Take after food" style="flex:1;border:1px solid var(--ink-200);border-radius:6px;padding:6px 8px;font-size:11.5px;color:var(--ink-700);" onkeydown="medInstrKeydown(event,${n})">
+        <label style="display:flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:var(--ink-500);white-space:nowrap;cursor:pointer;"><input type="checkbox" class="med-sos-check" style="width:14px;height:14px;">SOS</label>
       </div>
     `;
     wrap.appendChild(card);
@@ -367,6 +368,27 @@
   }
 
   // ================= COMPLETE CONSULTATION =================
+  function confirmCompleteConsultation(){
+    if(confirm('Are you sure you want to complete this consultation? This will finalize all notes, prescriptions, and diagnosis for this visit.')){
+      completeConsultation();
+    }
+  }
+  function printPrescription(){
+    showToast('Generating prescription for print...');
+    setTimeout(function(){ window.print(); }, 300);
+  }
+  function saveInstructionsAsTemplate(){
+    var instructions = Array.from(document.querySelectorAll('#piList input')).map(function(i){return i.value.trim();}).filter(Boolean);
+    if(instructions.length===0){ showToast('Add at least one instruction before saving as template.', true); return; }
+    var name = prompt('Enter a name for this template:');
+    if(!name) return;
+    var select = document.getElementById('piTemplateSelect');
+    var opt = document.createElement('option');
+    opt.value = name.toLowerCase().replace(/\s+/g,'-');
+    opt.textContent = name;
+    select.appendChild(opt);
+    showToast('Template "'+name+'" saved successfully.');
+  }
   function completeConsultation(){
     const uhid = currentPatientUhid;
     // mark this visit completed in both data sources
