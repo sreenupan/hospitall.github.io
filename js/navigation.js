@@ -199,7 +199,7 @@
     const ini = initials(name);
     document.getElementById('patientName').textContent = name;
     document.getElementById('patientPhoto').textContent = ini;
-    const bits=['<span class="link-uhid" onclick="openAdminProfile(\''+p.uhid+'\')">UHID: '+p.uhid+'</span>', p.age+'Y', p.gender, p.phone];
+    const bits=['<span class="link-uhid" onclick="openAdminProfile(\''+p.uhid+'\')">'+p.uhid+'</span>', p.age+'Y', p.gender, (p.bloodGroup||'B+'), p.phone];
     document.getElementById('patientSub').innerHTML = bits.join(' &nbsp;\u00B7&nbsp; ');
     var startEl = document.getElementById('startedValue');
     if(startEl) startEl.textContent = p.time;
