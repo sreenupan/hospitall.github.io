@@ -1244,3 +1244,8 @@
     #vitalsModalOverlay > div { padding:18px 16px; }
     #vitalsModalOverlay .pbar-step .pbar-label { font-size:10px; }
   }
+
+
+  /* Fix dropdown panels inside scroll container - ensure they're visible */
+  #consultSectionsScroll .dropdown-panel{z-index:60;}
+  #consultSectionsScroll .dropdown-panel.open{position:absolute;}

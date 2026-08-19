@@ -567,12 +567,15 @@
     if(e){ e.preventDefault(); e.stopPropagation(); }
     var el = document.getElementById(id);
     var container = document.getElementById('consultSectionsScroll');
+    var navBar = document.getElementById('consultSectionNav');
     if(!el || !container) return;
     // Calculate the element's position within the scroll container
+    // Offset by the sticky nav bar height so the section title is visible below it
     var containerRect = container.getBoundingClientRect();
     var elRect = el.getBoundingClientRect();
-    var scrollOffset = elRect.top - containerRect.top + container.scrollTop;
-    container.scrollTo({top: scrollOffset, behavior:'smooth'});
+    var navHeight = navBar ? navBar.offsetHeight + 14 : 60; // 14px for margin
+    var scrollOffset = elRect.top - containerRect.top + container.scrollTop - navHeight;
+    container.scrollTo({top: Math.max(0, scrollOffset), behavior:'smooth'});
   }
   (function(){
     var ticking = false;
