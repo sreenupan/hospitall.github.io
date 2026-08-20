@@ -396,7 +396,12 @@
   function initLoginFromHash(){
     const raw = location.hash.replace('#','').trim();
     const [role, personParam] = raw.split('=');
-    if(['doctor','admin','reception','patient'].includes(role)){
+    // Doctor deep-link: skip the sign-in form entirely and land directly in the doctor module
+    if(role==='doctor'){
+      completeLogin('doctor', 'Dr. Arjun Patel', 'Cardiologist', 'AP', 'linear-gradient(135deg,#2563EB,#1E3A8A)');
+      return;
+    }
+    if(['admin','reception','patient'].includes(role)){
       selectLoginRole(role);
       if(role==='reception' && personParam){
         const person = staffList.find(s=>s.name===decodeURIComponent(personParam));

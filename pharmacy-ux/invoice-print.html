@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tax Invoice - INV-1005</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Arial', sans-serif; background: #fff; color: #111; font-size: 12px; line-height: 1.4; padding: 20px; max-width: 800px; margin: 0 auto; }
+@media print { 
+  body { padding: 0; } 
+  .no-print { display: none !important; }
+  .page { border: none; box-shadow: none; }
+}
+.no-print { background: #1a237e; color: #fff; padding: 10px 20px; border-radius: 8px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
+.no-print button { background: #fff; color: #1a237e; border: none; border-radius: 6px; padding: 8px 16px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.page { border: 1px solid #ddd; padding: 24px; }
+
+/* Header */
+.inv-header { display: flex; justify-content: space-between; border-bottom: 2px solid #1a237e; padding-bottom: 12px; margin-bottom: 12px; }
+.inv-header .left { }
+.inv-header .left .name { font-size: 18px; font-weight: 700; color: #1a237e; }
+.inv-header .left .addr { font-size: 11px; color: #555; margin-top: 4px; line-height: 1.5; }
+.inv-header .right { text-align: right; }
+.inv-header .right .title { font-size: 14px; font-weight: 700; text-transform: uppercase; color: #1a237e; }
+.inv-header .right .num { font-size: 16px; font-weight: 800; margin-top: 2px; }
+
+/* License bar */
+.license-bar { background: #f5f5f5; border: 1px solid #e0e0e0; border-radius: 4px; padding: 8px 12px; margin-bottom: 12px; display: flex; justify-content: space-between; font-size: 10px; }
+.license-bar .item { }
+.license-bar .item .lbl { color: #777; text-transform: uppercase; font-weight: 600; }
+.license-bar .item .val { font-weight: 700; color: #111; margin-top: 1px; }
+
+/* Customer info */
+.cust-info { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; padding: 10px 12px; border: 1px solid #eee; border-radius: 4px; }
+.cust-info .lbl { font-size: 9px; color: #777; text-transform: uppercase; font-weight: 600; }
+.cust-info .val { font-size: 12px; font-weight: 600; margin-top: 1px; }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+th { background: #1a237e; color: #fff; padding: 6px 8px; font-size: 9px; text-transform: uppercase; text-align: left; font-weight: 600; }
+td { padding: 6px 8px; border-bottom: 1px solid #eee; font-size: 11px; }
+tr:nth-child(even) td { background: #fafafa; }
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+.schedule-h { background: #fff3cd; color: #856404; padding: 1px 5px; border-radius: 3px; font-size: 9px; font-weight: 700; }
+
+/* Totals */
+.totals-section { display: flex; justify-content: flex-end; }
+.totals-table { width: 280px; }
+.totals-table tr td { padding: 4px 8px; font-size: 11px; border-bottom: 1px solid #f0f0f0; }
+.totals-table tr.grand td { font-size: 13px; font-weight: 800; border-top: 2px solid #1a237e; border-bottom: none; padding-top: 8px; }
+
+/* Footer */
+.inv-footer { margin-top: 16px; padding-top: 12px; border-top: 1px solid #ddd; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 10px; color: #555; }
+.inv-footer .sig { text-align: right; }
+.inv-footer .sig .line { border-top: 1px solid #999; margin-top: 30px; padding-top: 4px; font-size: 10px; color: #777; }
+
+/* Rx note */
+.rx-note { background: #fff8e1; border: 1px solid #ffe082; border-radius: 4px; padding: 8px 12px; margin-bottom: 12px; font-size: 10px; color: #e65100; display: flex; align-items: center; gap: 6px; }
+</style>
+</head>
+<body>
+
+<!-- Print controls (hidden on print) -->
+<div class="no-print">
+  <span>Invoice Preview — INV-1005 | <a href="sales.html" style="color:#bbdefb;">Back to Sales</a></span>
+  <div style="display:flex;gap:8px;">
+    <button onclick="window.print()">&#x1F5A8; Print</button>
+    <button>&#x1F4E5; Download PDF</button>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="inv-header">
+    <div class="left">
+      <div class="name">MedPlus Pharmacy</div>
+      <div class="addr">
+        Plot 42, Road No. 10, Banjara Hills<br>
+        Hyderabad, Telangana - 500034<br>
+        Ph: 040-23456789
+      </div>
+    </div>
+    <div class="right">
+      <div class="title">Tax Invoice</div>
+      <div class="num">INV-1005</div>
+      <div style="font-size:11px; color:#555; margin-top:4px;">Date: 18 Aug 2026, 10:30 AM</div>
+    </div>
+  </div>
+
+  <!-- License & Regulatory Bar -->
+  <div class="license-bar">
+    <div class="item"><div class="lbl">Drug License No.</div><div class="val">TG/RET/2024/001234</div></div>
+    <div class="item"><div class="lbl">GSTIN</div><div class="val">36AABCU9603R1ZM</div></div>
+    <div class="item"><div class="lbl">Pharmacist</div><div class="val">Ravi Kumar (TS-PH-4521)</div></div>
+    <div class="item"><div class="lbl">State</div><div class="val">Telangana (36)</div></div>
+  </div>
+
+  <!-- Customer Info -->
+  <div class="cust-info">
+    <div><div class="lbl">Customer</div><div class="val">Srinivas Reddy</div></div>
+    <div><div class="lbl">Phone</div><div class="val">9876543210</div></div>
+    <div><div class="lbl">Payment Method</div><div class="val">UPI</div></div>
+    <div><div class="lbl">Prescription Ref</div><div class="val">RX-2026-0045 (Dr. Venkat Rao)</div></div>
+  </div>
+
+  <!-- Schedule H Note -->
+  <div class="rx-note">
+    &#9888; This invoice contains Schedule H drug(s) — Dispensed against valid prescription RX-2026-0045. Pharmacist verification: Ravi Kumar.
+  </div>
+
+  <!-- Line Items -->
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Item</th>
+        <th>Batch</th>
+        <th>Expiry</th>
+        <th>HSN</th>
+        <th>Sch</th>
+        <th class="text-center">Qty</th>
+        <th class="text-right">MRP</th>
+        <th class="text-right">Rate</th>
+        <th class="text-right">Disc%</th>
+        <th class="text-right">CGST</th>
+        <th class="text-right">SGST</th>
+        <th class="text-right">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Paracetamol tab 650 mg</td>
+        <td>BT-2026-A1</td>
+        <td>Jun 2028</td>
+        <td>3004</td>
+        <td>—</td>
+        <td class="text-center">10</td>
+        <td class="text-right">69.40</td>
+        <td class="text-right">65.00</td>
+        <td class="text-right">5%</td>
+        <td class="text-right">16.25</td>
+        <td class="text-right">16.25</td>
+        <td class="text-right">682.50</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Alprazolam tab I.P 0.25 mg <span class="schedule-h">H</span></td>
+        <td>BT-2026-C2</td>
+        <td>Dec 2027</td>
+        <td>3004</td>
+        <td><span class="schedule-h">H</span></td>
+        <td class="text-center">10</td>
+        <td class="text-right">36.10</td>
+        <td class="text-right">34.00</td>
+        <td class="text-right">5%</td>
+        <td class="text-right">8.50</td>
+        <td class="text-right">8.50</td>
+        <td class="text-right">357.00</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Amoxycillin + Clavulanic acid tab</td>
+        <td>BT-2026-D5</td>
+        <td>Mar 2028</td>
+        <td>3004</td>
+        <td>—</td>
+        <td class="text-center">6</td>
+        <td class="text-right">324.70</td>
+        <td class="text-right">310.00</td>
+        <td class="text-right">5%</td>
+        <td class="text-right">46.50</td>
+        <td class="text-right">46.50</td>
+        <td class="text-right">1953.00</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Diclofenac sodium spray</td>
+        <td>BT-2026-E1</td>
+        <td>Sep 2027</td>
+        <td>3004</td>
+        <td>—</td>
+        <td class="text-center">1</td>
+        <td class="text-right">230.50</td>
+        <td class="text-right">220.00</td>
+        <td class="text-right">0%</td>
+        <td class="text-right">5.50</td>
+        <td class="text-right">5.50</td>
+        <td class="text-right">231.00</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Totals -->
+  <div class="totals-section">
+    <table class="totals-table">
+      <tr><td>Subtotal</td><td class="text-right">&#x20B9;3,092.50</td></tr>
+      <tr><td>Discount (line-level)</td><td class="text-right">- &#x20B9;131.00</td></tr>
+      <tr><td>Taxable Amount</td><td class="text-right">&#x20B9;2,961.50</td></tr>
+      <tr><td>CGST Total</td><td class="text-right">&#x20B9;76.75</td></tr>
+      <tr><td>SGST Total</td><td class="text-right">&#x20B9;76.75</td></tr>
+      <tr class="grand"><td>Grand Total</td><td class="text-right">&#x20B9;3,115.00</td></tr>
+    </table>
+  </div>
+
+  <!-- Amount in words -->
+  <div style="margin-top:8px; font-size:10px; color:#555; font-style:italic;">
+    Amount in words: Rupees Three Thousand One Hundred and Fifteen Only
+  </div>
+
+  <!-- Footer -->
+  <div class="inv-footer">
+    <div>
+      <div><strong>Terms &amp; Conditions:</strong></div>
+      <div style="margin-top:4px;">1. Goods once sold will not be taken back.</div>
+      <div>2. Schedule H drugs sold only against valid prescription.</div>
+      <div>3. Subject to Hyderabad jurisdiction.</div>
+      <div style="margin-top:8px;"><strong>E&amp;OE</strong> — Errors and Omissions Excepted</div>
+    </div>
+    <div class="sig">
+      <div style="font-size:9px; color:#777;">For MedPlus Pharmacy</div>
+      <div class="line">Authorized Signatory</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rx Pharmacy - Sales</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: #f8fafc; color: #1e293b; font-size: 14px; }
+.header { background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: #fff; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.header-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
+.header-brand .icon { width: 28px; height: 28px; background: rgba(255,255,255,0.15); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+.header-version { font-size: 10px; background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; margin-left: 8px; }
+.header-actions { display: flex; gap: 8px; }
+.header-actions button { background: #fff; border: none; border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.header-actions .btn-reset { background: #fbbf24; color: #92400e; }
+.header-actions .btn-logout { background: #ef4444; color: #fff; }
+.nav { display: flex; gap: 4px; padding: 8px 20px; background: #fff; border-bottom: 1px solid #e2e8f0; overflow-x: auto; position: sticky; top: 46px; z-index: 90; }
+.nav a { padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 500; color: #475569; text-decoration: none; white-space: nowrap; }
+.nav a.active { background: #2563eb; color: #fff; font-weight: 600; }
+.nav a:hover:not(.active) { background: #f1f5f9; }
+.content { padding: 20px; margin: 0 auto; }
+.page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.page-title { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; }
+.card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 16px; overflow: hidden; }
+.card-header { background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 12px 16px; font-size: 13px; font-weight: 700; color: #475569; display: flex; align-items: center; gap: 8px; }
+.card-header .step-num { width: 22px; height: 22px; background: #2563eb; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+.card-body { padding: 16px; }
+.form-row { display: grid; gap: 12px; align-items: end; }
+.form-row-3 { grid-template-columns: 3fr 1fr auto; }
+.form-row-4 { grid-template-columns: 1fr 1fr 1fr auto; }
+.form-group { display: flex; flex-direction: column; }
+.form-group label { font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
+.form-group input, .form-group select { border: 1px solid #e2e8f0; border-radius: 7px; padding: 9px 12px; font-size: 13px; outline: none; width: 100%; }
+.form-group input:focus, .form-group select:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+.btn { display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: 7px; padding: 9px 16px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.btn-primary { background: #2563eb; color: #fff; }
+.btn-primary:hover { background: #1d4ed8; }
+.btn-success { background: #16a34a; color: #fff; }
+.btn-success:hover { background: #15803d; }
+.btn-outline { background: #fff; color: #475569; border: 1px solid #e2e8f0; }
+.btn-danger-sm { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; border-radius: 5px; padding: 4px 10px; font-size: 11px; font-weight: 600; cursor: pointer; }
+.btn-link { background: none; border: none; color: #2563eb; font-size: 12px; font-weight: 600; cursor: pointer; padding: 0; text-decoration: underline; }
+.badge { display: inline-flex; align-items: center; gap: 6px; background: #dbeafe; color: #1e40af; padding: 6px 12px; border-radius: 99px; font-size: 12px; font-weight: 600; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; padding: 10px 14px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #64748b; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
+td { padding: 10px 14px; border-bottom: 1px solid #f1f5f9; }
+tr:hover td { background: #fafbfd; }
+.totals { display: flex; flex-direction: column; align-items: flex-end; margin-top: 12px; gap: 4px; }
+.totals .row { display: flex; gap: 20px; padding: 4px 0; font-size: 13px; min-width: 200px; justify-content: space-between; }
+.totals .row.grand { font-size: 15px; font-weight: 800; border-top: 2px solid #e2e8f0; padding-top: 8px; margin-top: 4px; }
+.shortcuts { font-size: 11px; color: #94a3b8; margin-top: 8px; }
+.shortcuts kbd { background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 3px; padding: 1px 5px; font-family: monospace; font-size: 10px; }
+.invoice-row { cursor: pointer; }
+.invoice-row:hover td { background: #eff6ff; }
+.status-badge { padding: 3px 8px; border-radius: 99px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+.status-paid { background: #dcfce7; color: #16a34a; }
+.status-draft { background: #fef3c7; color: #d97706; }
+.empty-state { text-align: center; padding: 40px; color: #94a3b8; }
+.back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #2563eb; text-decoration: none; margin-bottom: 16px; cursor: pointer; }
+.back-link:hover { text-decoration: underline; }
+
+/* View switching */
+.view { display: none; }
+.view.active { display: block; }
+
+/* Detail panel */
+.detail-panel { border: 2px solid #2563eb; border-radius: 10px; overflow: hidden; }
+.detail-header { background: #eff6ff; padding: 14px 16px; display: flex; align-items: center; gap: 8px; font-weight: 700; color: #1e40af; font-size: 14px; border-bottom: 1px solid #bfdbfe; }
+.detail-meta { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; padding: 16px; font-size: 13px; border-bottom: 1px solid #f1f5f9; }
+.detail-meta .label { font-size: 11px; color: #64748b; text-transform: uppercase; font-weight: 600; }
+.detail-actions { display: flex; gap: 8px; padding: 16px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-brand"><div class="icon">Rx</div> Pharmacy Admin <span class="header-version">v1.0</span></div>
+  <div class="header-actions">
+    <button>&darr; Export</button>
+    <button>&uarr; Import</button>
+    <button class="btn-reset">&#8635; Reset</button>
+    <button class="btn-logout">Logout</button>
+  </div>
+</div>
+
+<div class="nav">
+  <a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="sales.html" class="active">Sales</a><a href="purchases.html">Purchases</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="prescription-dispense.html">Rx Dispense</a>
+</div>
+
+<div class="content">
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       VIEW 1: INVOICE LIST
+       ═══════════════════════════════════════════════════════════════ -->
+  <div class="view" id="view-list">
+    <div class="page-header">
+      <div class="page-title">Sale Invoices</div>
+      <button class="btn btn-primary" onclick="showView('view-new')">+ New Sale</button>
+    </div>
+    <div style="margin-bottom:12px;"><input type="text" placeholder="Search by invoice #, customer, date..." style="width:300px; border:1px solid #e2e8f0; border-radius:7px; padding:8px 12px; font-size:12px; outline:none;"></div>
+
+    <div class="card">
+      <div class="card-body" style="padding:0;">
+        <table>
+          <thead>
+            <tr><th>Invoice #</th><th>Date</th><th>Customer</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr class="invoice-row" onclick="showView('view-detail')">
+              <td><strong>INV-1001</strong></td>
+              <td>28 Jun 2026, 10:15 AM</td>
+              <td>Alice Smith</td>
+              <td>3</td>
+              <td>&#x20B9;516.81</td>
+              <td>Cash</td>
+              <td><span class="status-badge status-paid">Paid</span></td>
+            </tr>
+            <tr class="invoice-row">
+              <td><strong>INV-1002</strong></td>
+              <td>28 Jun 2026, 11:30 AM</td>
+              <td>Bob Johnson</td>
+              <td>1</td>
+              <td>&#x20B9;240.00</td>
+              <td>UPI</td>
+              <td><span class="status-badge status-paid">Paid</span></td>
+            </tr>
+            <tr class="invoice-row">
+              <td><strong>INV-1003</strong></td>
+              <td>28 Jun 2026, 02:45 PM</td>
+              <td>Charlie Davis</td>
+              <td>2</td>
+              <td>&#x20B9;100.00</td>
+              <td>Card</td>
+              <td><span class="status-badge status-paid">Paid</span></td>
+            </tr>
+            <tr class="invoice-row">
+              <td><strong>INV-1004</strong></td>
+              <td>29 Jun 2026, 09:20 AM</td>
+              <td>Priya Sharma</td>
+              <td>5</td>
+              <td>&#x20B9;1,245.00</td>
+              <td>Cash</td>
+              <td><span class="status-badge status-paid">Paid</span></td>
+            </tr>
+            <tr class="invoice-row">
+              <td><strong>INV-1005</strong></td>
+              <td>29 Jun 2026, 03:10 PM</td>
+              <td>Rahul Verma</td>
+              <td>2</td>
+              <td>&#x20B9;380.50</td>
+              <td>UPI</td>
+              <td><span class="status-badge status-draft">Draft</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div style="font-size:11px; color:#94a3b8;">Showing 5 of 5 invoices &middot; Click any row to view details</div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       VIEW 2: NEW SALE (Landing — Default View)
+       ═══════════════════════════════════════════════════════════════ -->
+  <div class="view active" id="view-new">
+    <div class="page-header">
+      <div class="page-title">New Sale Invoice</div>
+      <button class="btn btn-outline" onclick="showView('view-list')">View All Invoices</button>
+    </div>
+
+    <!-- Step 1: Customer -->
+    <div class="card">
+      <div class="card-header"><div class="step-num">1</div> Walk-in Customer</div>
+      <div class="card-body">
+        <input type="text" id="custInput" placeholder="Search customer by name or phone..." style="width:100%; border:1px solid #e2e8f0; border-radius:7px; padding:9px 12px; font-size:13px;" oninput="handleCustomerSearch(this.value)">
+
+        <!-- Dropdown area (dynamic) -->
+        <div id="custDropdown"></div>
+
+        <!-- Selected customer display -->
+        <div id="custSelected" style="display:none; margin-top:10px;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div class="badge">
+              <span id="custAvatar" style="width:24px; height:24px; background:#1e40af; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700;"></span>
+              <span id="custName"></span>
+            </div>
+            <button class="btn-danger-sm" onclick="clearCustomer()" title="Remove and search again">&times; Remove</button>
+          </div>
+        </div>
+
+        <p style="font-size:11px; color:#94a3b8; margin-top:8px;">
+          Type at least 2 characters to search. Select from results or add new if not found.
+        </p>
+
+        <!-- Prescription Link (optional) -->
+        <div style="margin-top:12px; padding-top:12px; border-top:1px dashed #e2e8f0;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="flex:1;">
+              <label style="font-size:10px; font-weight:600; color:#64748b; text-transform:uppercase; display:block; margin-bottom:4px;">Link Prescription (optional)</label>
+              <input type="text" placeholder="e.g. RX-2026-0045 or search by patient..." style="width:100%; border:1px solid #e2e8f0; border-radius:7px; padding:8px 12px; font-size:12px;">
+            </div>
+            <div style="padding-top:18px;">
+              <a href="prescription-dispense.html" style="font-size:11px; color:#1565c0; font-weight:600; text-decoration:none;">View Rx Queue &rarr;</a>
+            </div>
+          </div>
+          <p style="font-size:10px; color:#94a3b8; margin-top:4px;">Required for Schedule H drugs. Links this sale to a doctor's prescription for audit trail.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Add Products -->
+    <div class="card">
+      <div class="card-header"><div class="step-num">2</div> Add Products</div>
+      <div class="card-body">
+        <div class="form-row" style="grid-template-columns: 3fr 1fr 1fr auto;">
+          <div class="form-group">
+            <label>Product (Alt+N)</label>
+            <input type="text" placeholder="Search medicine by name or code...">
+          </div>
+          <div class="form-group">
+            <label>Qty</label>
+            <input type="number" value="1" min="1" style="width:80px;">
+          </div>
+          <div class="form-group">
+            <label>Disc %</label>
+            <input type="number" value="0" min="0" max="100" style="width:70px;">
+          </div>
+          <div class="form-group" style="justify-content:flex-end;">
+            <button class="btn btn-primary">+ Add</button>
+          </div>
+        </div>
+        <div class="shortcuts">Shortcuts: <kbd>Alt+N</kbd> focus product &middot; <kbd>Alt+S</kbd> finalize invoice</div>
+      </div>
+    </div>
+
+    <!-- Step 3: Line Items -->
+    <div class="card">
+      <div class="card-header"><div class="step-num">3</div> Line Items</div>
+      <div class="card-body">
+        <table>
+          <thead><tr><th>Item</th><th>Qty</th><th>MRP</th><th>Rate</th><th>Disc%</th><th>GST%</th><th>Amount</th><th></th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Paracetamol tab 650 mg</td><td>2</td><td>&#x20B9;69.40</td><td>&#x20B9;65.00</td><td>5%</td><td>5%</td><td>&#x20B9;130.00</td>
+              <td><button class="btn-danger-sm">Remove</button></td>
+            </tr>
+            <tr>
+              <td>Amoxycillin DT I.P 250 mg</td><td>1</td><td>&#x20B9;317.30</td><td>&#x20B9;310.00</td><td>5%</td><td>5%</td><td>&#x20B9;310.00</td>
+              <td><button class="btn-danger-sm">Remove</button></td>
+            </tr>
+            <tr>
+              <td>Alprazolam tab I.P 0.25 mg <span style="background:#ffebee;color:#c62828;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700;">H</span></td><td>1</td><td>&#x20B9;36.10</td><td>&#x20B9;34.00</td><td>5%</td><td>5%</td><td>&#x20B9;34.00</td>
+              <td><button class="btn-danger-sm">Remove</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="totals">
+          <div class="row"><span>Subtotal</span><strong>&#x20B9;474.00</strong></div>
+          <div class="row"><span>Discount</span><strong>- &#x20B9;23.70</strong></div>
+          <div class="row"><span>CGST (2.5%)</span><strong>&#x20B9;11.26</strong></div>
+          <div class="row"><span>SGST (2.5%)</span><strong>&#x20B9;11.26</strong></div>
+          <div class="row grand"><span>Grand Total</span><strong>&#x20B9;472.82</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4: Payment -->
+    <div class="card">
+      <div class="card-header"><div class="step-num">4</div> Payment &amp; Finalize</div>
+      <div class="card-body">
+        <div class="form-row form-row-4">
+          <div class="form-group">
+            <label>Payment Method</label>
+            <select>
+              <option value="CASH" selected>Cash</option>
+              <option value="UPI">UPI</option>
+              <option value="CARD">Card</option>
+              <option value="WALLET">Wallet</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Reference</label>
+            <input type="text" placeholder="Txn ref #">
+          </div>
+          <div class="form-group">
+            <label>Notes</label>
+            <input type="text" placeholder="Optional notes">
+          </div>
+          <div class="form-group" style="justify-content:flex-end;">
+            <button class="btn btn-success" onclick="showView('view-list')">&#10003; Finalize &amp; Pay</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       VIEW 3: INVOICE DETAIL (shown when clicking a row)
+       ═══════════════════════════════════════════════════════════════ -->
+  <div class="view" id="view-detail">
+    <div class="back-link" onclick="showView('view-list')">&larr; Back to Invoices</div>
+
+    <div class="detail-panel">
+      <div class="detail-header">
+        &#x1F4C4; Invoice INV-1001
+        <span class="status-badge status-paid" style="margin-left:12px;">Paid</span>
+      </div>
+
+      <div class="detail-meta">
+        <div>
+          <div class="label">Customer</div>
+          <div style="font-weight:600; margin-top:4px;">Alice Smith</div>
+          <div style="color:#64748b;">9998887776</div>
+        </div>
+        <div>
+          <div class="label">Date</div>
+          <div style="font-weight:600; margin-top:4px;">28 Jun 2026, 10:15 AM</div>
+        </div>
+        <div>
+          <div class="label">Payment</div>
+          <div style="font-weight:600; margin-top:4px;">Cash</div>
+          <div style="color:#64748b;">Ref: &mdash;</div>
+        </div>
+      </div>
+
+      <div style="padding: 0;">
+        <table>
+          <thead><tr><th>Item</th><th>Batch</th><th>Qty</th><th>MRP</th><th>Rate</th><th>Disc%</th><th>CGST</th><th>SGST</th><th>Amount</th></tr></thead>
+          <tbody>
+            <tr><td>Paracetamol tab 650 mg</td><td>BT-2026-A1</td><td>2</td><td>69.40</td><td>65.00</td><td>5%</td><td>3.09</td><td>3.09</td><td>&#x20B9;130.00</td></tr>
+            <tr><td>Amoxycillin DT I.P 250 mg</td><td>BT-2026-D5</td><td>1</td><td>317.30</td><td>310.00</td><td>5%</td><td>7.36</td><td>7.36</td><td>&#x20B9;310.00</td></tr>
+            <tr><td>Alprazolam tab I.P 0.25 mg <span style="background:#ffebee;color:#c62828;padding:1px 4px;border-radius:3px;font-size:8px;font-weight:700;">H</span></td><td>BT-2026-C2</td><td>1</td><td>36.10</td><td>34.00</td><td>5%</td><td>0.81</td><td>0.81</td><td>&#x20B9;34.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="padding: 16px;">
+        <div class="totals">
+          <div class="row"><span>Subtotal</span><strong>&#x20B9;474.00</strong></div>
+          <div class="row"><span>Discount</span><strong>- &#x20B9;23.70</strong></div>
+          <div class="row"><span>CGST</span><strong>&#x20B9;11.26</strong></div>
+          <div class="row"><span>SGST</span><strong>&#x20B9;11.26</strong></div>
+          <div class="row grand"><span>Grand Total</span><strong>&#x20B9;472.82</strong></div>
+        </div>
+      </div>
+
+      <div class="detail-actions">
+        <button class="btn btn-primary" style="font-size:12px; padding:8px 14px;" onclick="window.open('invoice-print.html')">&#x1F5A8; Print Invoice</button>
+        <button class="btn btn-outline" style="font-size:12px; padding:8px 14px;">&#x1F4E4; Share via WhatsApp</button>
+        <button class="btn btn-outline" style="font-size:12px; padding:8px 14px;">&#x1F4E5; Download PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       VIEW 4: ADD NEW CUSTOMER (inline from sales)
+       Pre-fills the searched name that wasn't found.
+       ═══════════════════════════════════════════════════════════════ -->
+  <div class="view" id="view-add-customer">
+    <div class="back-link" onclick="showView('view-new')">&larr; Back to New Sale</div>
+    <div class="page-title" style="margin-bottom:16px;">Add New Customer</div>
+
+    <div class="card">
+      <div class="card-header">Customer Details</div>
+      <div class="card-body">
+        <div class="form-row" style="grid-template-columns: 1fr 1fr;">
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" id="newCustName" value="" placeholder="e.g. Priya Sharma">
+          </div>
+          <div class="form-group">
+            <label>Phone *</label>
+            <input type="text" placeholder="e.g. 9876543210">
+          </div>
+        </div>
+        <div class="form-row" style="grid-template-columns: 1fr 1fr 1fr;">
+          <div class="form-group">
+            <label>Age</label>
+            <input type="number" placeholder="e.g. 32">
+          </div>
+          <div class="form-group">
+            <label>Gender</label>
+            <select>
+              <option value="">Select...</option>
+              <option value="M">Male</option>
+              <option value="F">Female</option>
+              <option value="O">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Address</label>
+            <input type="text" placeholder="Optional address">
+          </div>
+        </div>
+        <div style="margin-top:16px; display:flex; gap:10px;">
+          <button class="btn btn-success" onclick="showView('view-new')">&#10003; Save &amp; Select Customer</button>
+          <button class="btn btn-outline" onclick="showView('view-new')">Cancel</button>
+        </div>
+        <p style="font-size:11px; color:#94a3b8; margin-top:10px;">
+          After saving, this customer will be auto-selected for the current sale and available for future sales.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Simple view switching + customer search for prototype -->
+<script>
+// Dummy customer data
+const CUSTOMERS = [
+  { id: 1, name: 'Alice Smith', phone: '9998887776', age: 28, gender: 'F', address: '101 Maple St', code: 'C001' },
+  { id: 2, name: 'Bob Johnson', phone: '8887776665', age: 52, gender: 'M', address: '202 Oak St', code: 'C002' },
+  { id: 3, name: 'Charlie Davis', phone: '7776665554', age: 40, gender: 'M', address: '303 Pine St', code: 'C003' },
+  { id: 4, name: 'Alice Patel', phone: '8765432100', age: 35, gender: 'F', address: '45 MG Road', code: 'C012' },
+  { id: 5, name: 'Priya Sharma', phone: '9012345678', age: 30, gender: 'F', address: '12 Nehru Nagar', code: 'C015' },
+];
+
+let searchTimeout;
+let lastSearch = '';
+
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function handleCustomerSearch(val) {
+  clearTimeout(searchTimeout);
+  const q = val.trim().toLowerCase();
+  lastSearch = val.trim();
+
+  if (q.length < 2) {
+    document.getElementById('custDropdown').innerHTML = '';
+    return;
+  }
+
+  searchTimeout = setTimeout(() => {
+    const results = CUSTOMERS.filter(c =>
+      c.name.toLowerCase().includes(q) || c.phone.includes(q)
+    );
+    renderDropdown(results, lastSearch);
+  }, 200);
+}
+
+function renderDropdown(results, query) {
+  const el = document.getElementById('custDropdown');
+
+  if (results.length > 0) {
+    // FOUND scenario
+    let html = '<div style="margin-top:4px; border:1px solid #e2e8f0; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.08); overflow:hidden;">';
+    results.forEach(c => {
+      html += `
+        <div onclick="selectCustomer(${c.id})" style="padding:10px 14px; cursor:pointer; border-bottom:1px solid #f1f5f9; display:flex; align-items:center; justify-content:space-between;" onmouseover="this.style.background='#f0f7ff'" onmouseout="this.style.background=''">
+          <div>
+            <div style="font-weight:600; font-size:13px;">${c.name}</div>
+            <div style="font-size:11px; color:#64748b; margin-top:2px;">${c.phone} &middot; ${c.gender}, ${c.age} yrs &middot; ${c.address}</div>
+          </div>
+          <span style="background:#f1f5f9; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:600; color:#64748b;">${c.code}</span>
+        </div>`;
+    });
+    // Always show "Add new" at the bottom
+    html += `
+      <div onclick="goAddCustomer('${query}')" style="padding:10px 14px; cursor:pointer; display:flex; align-items:center; gap:8px; background:#f8fafc; border-top:1px solid #e2e8f0; font-size:12px; font-weight:600; color:#16a34a;" onmouseover="this.style.background='#f0fdf4'" onmouseout="this.style.background='#f8fafc'">
+        <span style="width:18px; height:18px; background:#dcfce7; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px;">+</span>
+        Add "${query}" as new customer
+      </div>`;
+    html += '</div>';
+    el.innerHTML = html;
+  } else {
+    // NOT FOUND scenario
+    el.innerHTML = `
+      <div style="margin-top:4px; border:1px solid #e2e8f0; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.08); overflow:hidden;">
+        <div style="padding:14px; color:#94a3b8; font-size:12px; text-align:center; border-bottom:1px solid #f1f5f9;">
+          No customers found for "<strong style="color:#1e293b;">${query}</strong>"
+        </div>
+        <div onclick="goAddCustomer('${query}')" style="padding:12px 14px; cursor:pointer; display:flex; align-items:center; gap:8px; background:#f0fdf4; font-size:13px; font-weight:600; color:#16a34a;" onmouseover="this.style.background='#dcfce7'" onmouseout="this.style.background='#f0fdf4'">
+          <span style="width:20px; height:20px; background:#dcfce7; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px;">+</span>
+          Add "${query}" as new customer
+        </div>
+      </div>`;
+  }
+}
+
+function selectCustomer(id) {
+  const c = CUSTOMERS.find(x => x.id === id);
+  if (!c) return;
+  const initials = c.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+
+  document.getElementById('custInput').style.display = 'none';
+  document.getElementById('custDropdown').innerHTML = '';
+  document.getElementById('custSelected').style.display = 'block';
+  document.getElementById('custAvatar').textContent = initials;
+  document.getElementById('custName').textContent = c.name + ' \u00B7 ' + c.phone;
+}
+
+function clearCustomer() {
+  document.getElementById('custInput').style.display = '';
+  document.getElementById('custInput').value = '';
+  document.getElementById('custSelected').style.display = 'none';
+  document.getElementById('custDropdown').innerHTML = '';
+}
+
+function goAddCustomer(name) {
+  // Pre-fill name in add customer form
+  document.getElementById('newCustName').value = name;
+  showView('view-add-customer');
+}
+</script>
+
+</body>
+</html>

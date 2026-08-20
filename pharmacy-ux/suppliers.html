@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rx Pharmacy - Suppliers</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: #f5f5f5; color: #1a1a2e; font-size: 14px; }
+.header { background: #1a237e; color: #fff; padding: 0 20px; height: 44px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.header-brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; }
+.header-brand .icon { width: 26px; height: 26px; background: #3949ab; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; }
+.header-version { font-size: 9px; background: rgba(255,255,255,0.15); padding: 2px 7px; border-radius: 10px; margin-left: 6px; }
+.header-actions { display: flex; gap: 6px; }
+.header-actions button { border: none; border-radius: 6px; padding: 5px 12px; font-size: 11px; font-weight: 600; cursor: pointer; }
+.btn-export { background: #4caf50; color: #fff; }
+.btn-import { background: #4caf50; color: #fff; }
+.btn-reset { background: #ffc107; color: #333; }
+.btn-logout { background: #f44336; color: #fff; }
+.nav { display: flex; gap: 0; padding: 6px 16px; background: #fff; border-bottom: 1px solid #e0e0e0; overflow-x: auto; position: sticky; top: 44px; z-index: 90; }
+.nav a { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; color: #555; text-decoration: none; white-space: nowrap; }
+.nav a.active { background: #1565c0; color: #fff; font-weight: 600; }
+.nav a:hover:not(.active) { background: #f0f0f0; }
+.content { padding: 16px 20px; margin: 0 auto; }
+.page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.page-title { font-size: 16px; font-weight: 800; }
+.card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; }
+.btn-add { background: #1565c0; color: #fff; border: none; border-radius: 6px; padding: 7px 14px; font-size: 11px; font-weight: 600; cursor: pointer; }
+.btn-del { background: #ffebee; color: #e53935; border: 1px solid #ffcdd2; border-radius: 5px; padding: 3px 10px; font-size: 10px; font-weight: 600; cursor: pointer; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th { text-align: left; padding: 9px 14px; font-size: 10px; font-weight: 600; color: #777; border-bottom: 1px solid #eee; }
+td { padding: 9px 14px; border-bottom: 1px solid #f5f5f5; }
+tr:hover td { background: #fafafa; }
+.row-count { padding: 10px 14px; font-size: 11px; color: #aaa; border-top: 1px solid #f0f0f0; }
+</style>
+</head>
+<body>
+<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-export">&#9650; Export</button><button class="btn-import">&#9660; Import</button><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
+<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html" class="active">Suppliers</a><a href="customers.html">Customers</a><a href="sales.html">Sales</a><a href="purchases.html">Purchases</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="prescription-dispense.html">Rx Dispense</a></div>
+<div class="content">
+  <div class="page-header"><div class="page-title">Suppliers</div><button class="btn-add" onclick="document.getElementById('addForm').style.display=document.getElementById('addForm').style.display==='none'?'block':'none'">+ Add</button></div>
+  <div style="margin-bottom:12px;"><input type="text" placeholder="Search by name, phone, GSTIN..." style="width:300px; border:1px solid #e0e0e0; border-radius:8px; padding:8px 12px; font-size:12px; outline:none;"></div>
+  <div class="card" id="addForm" style="display:none; margin-bottom:16px;">
+    <div style="padding:14px 18px; font-size:12px; font-weight:700; border-bottom:1px solid #f0f0f0;">NEW SUPPLIER</div>
+    <div style="padding:16px 18px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px; margin-bottom:12px;">
+        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Name *</label><input style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="Supplier name"></div>
+        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Phone</label><input style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="Phone"></div>
+        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Type</label><select style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;"><option>Distributor</option><option>Wholesaler</option><option>Manufacturer</option></select></div>
+        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">GSTIN</label><input style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="GST number"></div>
+      </div>
+      <div style="display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:12px; margin-bottom:12px;">
+        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Address</label><input style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="Address"></div>
+        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Credit Days</label><input type="number" style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" value="30"></div>
+        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Lead Days</label><input type="number" style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" value="5"></div>
+        <div style="display:flex;align-items:flex-end;gap:8px;"><button onclick="document.getElementById('addForm').style.display='none'" style="background:#43a047;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:11px;font-weight:600;cursor:pointer;">&#10003; Save</button><button onclick="document.getElementById('addForm').style.display='none'" style="background:#f5f5f5;color:#555;border:1px solid #e0e0e0;border-radius:6px;padding:8px 16px;font-size:11px;font-weight:600;cursor:pointer;">Cancel</button></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Code</th><th>Name</th><th>Address</th><th>Phone</th><th>Type</th><th>GSTIN</th><th>Credit Days</th><th>Lead Days</th><th></th></tr></thead>
+      <tbody>
+        <tr><td>S001</td><td><strong>Global Meds</strong></td><td>123 Ind. Area</td><td>9876543210</td><td>Distributor</td><td>GST001</td><td>30</td><td>5</td><td><button class="btn-del">del</button></td></tr>
+        <tr><td>S002</td><td><strong>Local Pharma</strong></td><td>456 City Center</td><td>9123456789</td><td>Wholesaler</td><td>GST002</td><td>15</td><td>2</td><td><button class="btn-del">del</button></td></tr>
+      </tbody>
+    </table>
+    <div class="row-count">Showing 2 of 2 rows</div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rx Pharmacy - Products</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: #f5f5f5; color: #1a1a2e; font-size: 14px; }
+.header { background: #1a237e; color: #fff; padding: 0 20px; height: 44px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.header-brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; }
+.header-brand .icon { width: 26px; height: 26px; background: #3949ab; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; }
+.header-version { font-size: 9px; background: rgba(255,255,255,0.15); padding: 2px 7px; border-radius: 10px; margin-left: 6px; }
+.header-actions { display: flex; gap: 6px; }
+.header-actions button { border: none; border-radius: 6px; padding: 5px 12px; font-size: 11px; font-weight: 600; cursor: pointer; }
+.btn-export { background: #4caf50; color: #fff; }
+.btn-import { background: #4caf50; color: #fff; }
+.btn-reset { background: #ffc107; color: #333; }
+.btn-logout { background: #f44336; color: #fff; }
+.nav { display: flex; gap: 0; padding: 6px 16px; background: #fff; border-bottom: 1px solid #e0e0e0; overflow-x: auto; position: sticky; top: 44px; z-index: 90; }
+.nav a { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; color: #555; text-decoration: none; white-space: nowrap; }
+.nav a.active { background: #1565c0; color: #fff; font-weight: 600; }
+.nav a:hover:not(.active) { background: #f0f0f0; }
+.content { padding: 16px 20px; margin: 0 auto; }
+.page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.page-title { font-size: 16px; font-weight: 800; }
+.card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+.card-header { padding: 12px 18px; font-size: 12px; font-weight: 700; color: #333; border-bottom: 1px solid #f0f0f0; text-transform: uppercase; letter-spacing: 0.04em; }
+.card-body { padding: 16px 18px; }
+.btn-add { background: #1565c0; color: #fff; border: none; border-radius: 6px; padding: 7px 14px; font-size: 11px; font-weight: 600; cursor: pointer; }
+.btn-del { background: #ffebee; color: #e53935; border: 1px solid #ffcdd2; border-radius: 5px; padding: 3px 10px; font-size: 10px; font-weight: 600; cursor: pointer; }
+.btn-cancel { background: #f5f5f5; color: #555; border: 1px solid #e0e0e0; border-radius: 6px; padding: 7px 14px; font-size: 11px; font-weight: 600; cursor: pointer; }
+.btn-save { background: #43a047; color: #fff; border: none; border-radius: 6px; padding: 7px 14px; font-size: 11px; font-weight: 600; cursor: pointer; }
+table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+th { text-align: left; padding: 8px 10px; font-size: 9.5px; font-weight: 600; color: #777; border-bottom: 1px solid #eee; white-space: nowrap; }
+td { padding: 8px 10px; border-bottom: 1px solid #f5f5f5; }
+tr:hover td { background: #fafafa; }
+.row-count { padding: 10px 14px; font-size: 11px; color: #aaa; border-top: 1px solid #f0f0f0; }
+.form-row { display: grid; gap: 12px; align-items: end; margin-bottom: 12px; }
+.form-row-3 { grid-template-columns: 1fr 1fr 1fr; }
+.form-row-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+.form-group { display: flex; flex-direction: column; }
+.form-group label { font-size: 10px; font-weight: 600; color: #777; text-transform: uppercase; margin-bottom: 4px; }
+.form-group input, .form-group select { border: 1px solid #e0e0e0; border-radius: 8px; padding: 8px 12px; font-size: 13px; outline: none; }
+.form-group input:focus, .form-group select:focus { border-color: #1565c0; box-shadow: 0 0 0 2px rgba(21,101,192,0.1); }
+.view { display: none; }
+.view.active { display: block; }
+.back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #1565c0; cursor: pointer; margin-bottom: 14px; }
+.back-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-export">&#9650; Export</button><button class="btn-import">&#9660; Import</button><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
+<div class="nav"><a href="overview.html">Overview</a><a href="products.html" class="active">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="sales.html">Sales</a><a href="purchases.html">Purchases</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="prescription-dispense.html">Rx Dispense</a></div>
+
+<div class="content">
+
+  <!-- VIEW: Product List -->
+  <div class="view active" id="view-list">
+    <div class="page-header"><div class="page-title">Products</div><button class="btn-add" onclick="showView('view-add')">+ Add</button></div>
+
+    <!-- Search -->
+    <div style="margin-bottom:12px;">
+      <input type="text" placeholder="Search by rack, generic, name, code..." style="width:300px; border:1px solid #e0e0e0; border-radius:8px; padding:8px 12px; font-size:12px; outline:none;">
+    </div>
+
+    <div class="card">
+      <table>
+        <thead><tr><th>Code</th><th>Name</th><th>Sch</th><th>HSN</th><th>Pack/Unit</th><th>Rack</th><th>Company</th><th>Form</th><th>MRP</th><th>GST%</th><th>Stock</th><th>Reorder</th><th></th></tr></thead>
+        <tbody>
+          <tr onclick="showView('view-detail')" style="cursor:pointer;"><td>MED001</td><td>Lignocaine HCl injection LP 1%</td><td>—</td><td>3004</td><td>1 Ampoule/Vial</td><td>A-01</td><td>Cipla Ltd</td><td>Injection</td><td>85</td><td>12</td><td>5</td><td>15</td><td><button class="btn-del">del</button></td></tr>
+          <tr style="cursor:pointer;"><td>MED004</td><td>Alprazolam tab I.P 0.25 mg</td><td><span style="background:#ffebee;color:#c62828;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700;">H</span></td><td>3004</td><td>10x10 Tablets</td><td>B-01</td><td>Lupin Pharma</td><td>Tablet</td><td>36.1</td><td>5</td><td>25</td><td>15</td><td><button class="btn-del">del</button></td></tr>
+          <tr style="cursor:pointer;"><td>MED013</td><td>Paracetamol tab 650 mg</td><td>—</td><td>3004</td><td>10x10 Tablets</td><td>E-02</td><td>Sanofi India</td><td>Tablet</td><td>69.4</td><td>5</td><td>48</td><td>20</td><td><button class="btn-del">del</button></td></tr>
+          <tr style="cursor:pointer;"><td>MED035</td><td>Tramadol tab 50 mg</td><td><span style="background:#ffebee;color:#c62828;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700;">H</span></td><td>3004</td><td>10x10 Tablets</td><td>B-02</td><td>Zydus</td><td>Tablet</td><td>150.8</td><td>5</td><td>20</td><td>15</td><td><button class="btn-del">del</button></td></tr>
+          <tr style="cursor:pointer;"><td>MED062</td><td>Diazepam tab I.P 5 mg</td><td><span style="background:#ffebee;color:#c62828;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700;">H</span></td><td>3004</td><td>10x10 Tablets</td><td>A-02</td><td>Sun Pharma</td><td>Tablet</td><td>250.7</td><td>5</td><td>12</td><td>15</td><td><button class="btn-del">del</button></td></tr>
+          <tr style="cursor:pointer;"><td>MED082</td><td>Amoxycillin + Clavulanic acid tab</td><td>—</td><td>3004</td><td>10x10 Tablets</td><td>C-01</td><td>Alkem Labs</td><td>Tablet</td><td>324.7</td><td>5</td><td>30</td><td>15</td><td><button class="btn-del">del</button></td></tr>
+          <tr style="cursor:pointer;"><td>MED016</td><td>Diclofenac sodium spray</td><td>—</td><td>3004</td><td>1 Canister</td><td>A-01</td><td>Cipla Ltd</td><td>Spray</td><td>230.5</td><td>5</td><td>8</td><td>10</td><td><button class="btn-del">del</button></td></tr>
+        </tbody>
+      </table>
+      <div class="row-count">Showing 10 of 439 rows</div>
+    </div>
+  </div>
+
+  <!-- VIEW: Add New Product -->
+  <div class="view" id="view-add">
+    <div class="back-link" onclick="showView('view-list')">&larr; Back to Products</div>
+    <div class="page-title" style="margin-bottom:14px;">New Product</div>
+    <div class="card">
+      <div class="card-header">Product Details</div>
+      <div class="card-body">
+        <div class="form-row form-row-3">
+          <div class="form-group"><label>Code</label><input type="text" placeholder="e.g. MED440"></div>
+          <div class="form-group"><label>Name *</label><input type="text" placeholder="Medicine name"></div>
+          <div class="form-group"><label>Generic Name</label><input type="text" placeholder="Generic / Salt name"></div>
+        </div>
+        <div class="form-row form-row-4">
+          <div class="form-group"><label>Form</label><select><option>Tablet</option><option>Injection</option><option>Syrup</option><option>Ointment</option><option>Capsule</option><option>Inhaler/Spray</option><option>Suppository</option><option>Solution</option></select></div>
+          <div class="form-group"><label>Pack/Unit</label><input type="text" placeholder="e.g. 10x10 Tablets"></div>
+          <div class="form-group"><label>Rack Location</label><input type="text" placeholder="e.g. A-01"></div>
+          <div class="form-group"><label>Company</label><input type="text" placeholder="Manufacturer"></div>
+        </div>
+        <div class="form-row form-row-4">
+          <div class="form-group"><label>Category</label><input type="text" placeholder="e.g. NSAIDS"></div>
+          <div class="form-group"><label>HSN Code</label><input type="text" value="3004"></div>
+          <div class="form-group"><label>Schedule Type</label><select><option selected>None</option><option>H</option><option>H1</option><option>X (Narcotic)</option></select></div>
+          <div class="form-group"><label>Barcode</label><input type="text" placeholder="Scan or enter"></div>
+        </div>
+        <div class="form-row form-row-4">
+          <div class="form-group"><label>MRP (&#x20B9;)</label><input type="number" placeholder="0.00"></div>
+          <div class="form-group"><label>Selling Rate (&#x20B9;)</label><input type="number" placeholder="0.00"><span style="font-size:9px;color:#e53935;margin-top:2px;">Must not exceed MRP</span></div>
+          <div class="form-group"><label>GST %</label><select><option>5</option><option>12</option><option>18</option><option>0</option></select></div>
+          <div class="form-group"><label>Max Discount %</label><input type="number" value="10"></div>
+        </div>
+        <div class="form-row form-row-4">
+          <div class="form-group"><label>Stock</label><input type="number" value="0"></div>
+          <div class="form-group"><label>Reorder Level</label><input type="number" value="15"></div>
+          <div class="form-group"><label>Mfg License No</label><input type="text" placeholder="Manufacturer DL#"></div>
+          <div class="form-group"></div>
+        </div>
+        <div style="margin-top:16px; display:flex; gap:10px;">
+          <button class="btn-save" onclick="showView('view-list')">&#10003; Save Product</button>
+          <button class="btn-cancel" onclick="showView('view-list')">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW: Product Detail (replaces old Medicines Info) -->
+  <div class="view" id="view-detail">
+    <div class="back-link" onclick="showView('view-list')">&larr; Back to Products</div>
+    <div class="page-title" style="margin-bottom:14px;">MED001 &mdash; Lignocaine HCl injection LP 1%</div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header">Specification</div>
+      <div class="card-body">
+        <div class="form-row" style="grid-template-columns:1fr 1fr 1fr 1fr; margin-bottom:0;">
+          <div class="form-group"><label>Code</label><div style="font-weight:600;">MED001</div></div>
+          <div class="form-group"><label>Form</label><div style="font-weight:600;">Injection</div></div>
+          <div class="form-group"><label>Company</label><div style="font-weight:600;">Cipla Ltd</div></div>
+          <div class="form-group"><label>Schedule</label><div style="font-weight:600;">None</div></div>
+        </div>
+        <div class="form-row" style="grid-template-columns:1fr 1fr 1fr 1fr; margin-bottom:0; margin-top:12px;">
+          <div class="form-group"><label>MRP</label><div style="font-weight:600;">&#x20B9;85.00</div></div>
+          <div class="form-group"><label>Selling Rate</label><div style="font-weight:600;">&#x20B9;72.00</div></div>
+          <div class="form-group"><label>GST</label><div style="font-weight:600;">12% (CGST 6% + SGST 6%)</div></div>
+          <div class="form-group"><label>Stock</label><div style="font-weight:600; color:#43a047;">5 units</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header">Inventory Audit (Stock = Purchases - Sales - Damages &plusmn; Adjustments)</div>
+      <div class="card-body" style="padding:0;">
+        <table>
+          <thead><tr><th>Transaction</th><th>Date</th><th>Batch</th><th>Qty Change</th><th>Reference</th></tr></thead>
+          <tbody>
+            <tr><td>Purchase (GRN)</td><td>15 Aug 2026</td><td>BT-2026-A1</td><td style="color:#43a047; font-weight:700;">+10</td><td>PUR-5001</td></tr>
+            <tr><td>Sale</td><td>16 Aug 2026</td><td>BT-2026-A1</td><td style="color:#e53935; font-weight:700;">-3</td><td>INV-1002</td></tr>
+            <tr><td>Damage</td><td>17 Aug 2026</td><td>BT-2026-A1</td><td style="color:#e53935; font-weight:700;">-1</td><td>DMG-004</td></tr>
+            <tr><td>Adjustment</td><td>17 Aug 2026</td><td>BT-2026-A1</td><td style="color:#e53935; font-weight:700;">-1</td><td>ADJ-002</td></tr>
+          </tbody>
+        </table>
+        <div style="padding:10px 14px; font-size:11px; background:#f8f9fa; border-top:1px solid #eee;"><strong>Computed Stock:</strong> 10 - 3 - 1 - 1 = <strong>5 units</strong></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">Batches</div>
+      <div class="card-body" style="padding:0;">
+        <table>
+          <thead><tr><th>Batch No</th><th>Expiry</th><th>Purchase Rate</th><th>Selling Rate</th><th>MRP</th><th>Qty On Hand</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>BT-2026-A1</td><td>Jun 2028</td><td>&#x20B9;55.00</td><td>&#x20B9;72.00</td><td>&#x20B9;85.00</td><td style="font-weight:700;">5</td><td><span style="background:#d4edda;color:#155724;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:600;">Active</span></td></tr>
+            <tr><td>BT-2025-X1</td><td>Jan 2026</td><td>&#x20B9;50.00</td><td>&#x20B9;70.00</td><td>&#x20B9;82.00</td><td style="font-weight:700; color:#e53935;">0</td><td><span style="background:#ffebee;color:#c62828;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:600;">Expired</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rx Pharmacy - Stock Adjustments</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: #f5f5f5; color: #1a1a2e; font-size: 14px; }
+.header { background: #1a237e; color: #fff; padding: 0 20px; height: 44px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.header-brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; }
+.header-brand .icon { width: 26px; height: 26px; background: #3949ab; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; }
+.header-version { font-size: 9px; background: rgba(255,255,255,0.15); padding: 2px 7px; border-radius: 10px; margin-left: 6px; }
+.header-actions { display: flex; gap: 6px; }
+.header-actions button { border: none; border-radius: 6px; padding: 5px 12px; font-size: 11px; font-weight: 600; cursor: pointer; }
+.btn-export { background: #4caf50; color: #fff; }
+.btn-import { background: #4caf50; color: #fff; }
+.btn-reset { background: #ffc107; color: #333; }
+.btn-logout { background: #f44336; color: #fff; }
+.nav { display: flex; gap: 0; padding: 6px 16px; background: #fff; border-bottom: 1px solid #e0e0e0; overflow-x: auto; position: sticky; top: 44px; z-index: 90; }
+.nav a { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; color: #555; text-decoration: none; white-space: nowrap; }
+.nav a.active { background: #1565c0; color: #fff; font-weight: 600; }
+.nav a:hover:not(.active) { background: #f0f0f0; }
+.content { padding: 16px 20px; margin: 0 auto; }
+.page-title { font-size: 16px; font-weight: 800; margin-bottom: 14px; }
+.card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+.card-header { padding: 12px 18px; font-size: 12px; font-weight: 700; color: #333; border-bottom: 1px solid #f0f0f0; text-transform: uppercase; letter-spacing: 0.04em; }
+.card-body { padding: 16px 18px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr 1fr 2fr; gap: 12px; align-items: end; }
+.form-group { display: flex; flex-direction: column; }
+.form-group label { font-size: 10px; font-weight: 600; color: #777; text-transform: uppercase; margin-bottom: 4px; }
+.form-group input { border: 1px solid #e0e0e0; border-radius: 8px; padding: 9px 12px; font-size: 13px; outline: none; }
+.form-group input:focus { border-color: #1565c0; box-shadow: 0 0 0 2px rgba(21,101,192,0.1); }
+.form-group input:disabled { background: #f5f5f5; color: #aaa; }
+.btn-add { background: #1565c0; color: #fff; border: none; border-radius: 6px; padding: 8px 16px; font-size: 11px; font-weight: 600; cursor: pointer; margin-top: 12px; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th { text-align: left; padding: 9px 14px; font-size: 10px; font-weight: 600; color: #777; border-bottom: 1px solid #eee; }
+td { padding: 9px 14px; border-bottom: 1px solid #f5f5f5; }
+tr:hover td { background: #fafafa; }
+.adj-pos { color: #43a047; font-weight: 700; }
+.adj-neg { color: #e53935; font-weight: 700; }
+.row-count { padding: 10px 14px; font-size: 11px; color: #aaa; border-top: 1px solid #f0f0f0; }
+</style>
+</head>
+<body>
+<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-export">&#9650; Export</button><button class="btn-import">&#9660; Import</button><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
+<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="sales.html">Sales</a><a href="purchases.html">Purchases</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html" class="active">Stock Adj.</a><a href="reports.html">Reports</a><a href="prescription-dispense.html">Rx Dispense</a></div>
+<div class="content">
+  <div class="page-title">Stock Adjustments</div>
+  <div style="margin-bottom:12px;"><input type="text" placeholder="Search by product, batch, reason..." style="width:300px; border:1px solid #e0e0e0; border-radius:8px; padding:8px 12px; font-size:12px; outline:none;"></div>
+  <div class="card">
+    <div class="card-header">New Stock Adjustment</div>
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-group"><label>Product Code</label><input type="text" placeholder="e.g. P001"></div>
+        <div class="form-group"><label>Current Stock</label><input type="number" value="0" disabled></div>
+        <div class="form-group"><label>Adjustment (&plusmn;)</label><input type="number" value="0"></div>
+        <div class="form-group"><label>Reason</label><input type="text" placeholder="Reason..."></div>
+      </div>
+      <button class="btn-add">+ Adjust</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">Stock Adjustments</div>
+    <table>
+      <thead><tr><th>Date</th><th>Product</th><th>Adjustment</th><th>Reason</th></tr></thead>
+      <tbody>
+        <tr><td>2026-06-28</td><td>P001</td><td class="adj-neg">-1</td><td>Inventory count mismatch</td></tr>
+        <tr><td>2026-06-28</td><td>P003</td><td class="adj-pos">+5</td><td>Physical stock count update</td></tr>
+      </tbody>
+    </table>
+    <div class="row-count">Showing 2 of 2 rows</div>
+  </div>
+</div>
+</body>
+</html>

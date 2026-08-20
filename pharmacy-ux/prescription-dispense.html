@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rx Pharmacy - Prescription Dispense</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: #f5f5f5; color: #1a1a2e; font-size: 14px; }
+.header { background: #1a237e; color: #fff; padding: 0 20px; height: 44px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.header-brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; }
+.header-brand .icon { width: 26px; height: 26px; background: #3949ab; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; }
+.header-version { font-size: 9px; background: rgba(255,255,255,0.15); padding: 2px 7px; border-radius: 10px; margin-left: 6px; }
+.header-actions { display: flex; gap: 6px; }
+.header-actions button { border: none; border-radius: 6px; padding: 5px 12px; font-size: 11px; font-weight: 600; cursor: pointer; }
+.btn-export { background: #4caf50; color: #fff; }
+.btn-import { background: #4caf50; color: #fff; }
+.btn-reset { background: #ffc107; color: #333; }
+.btn-logout { background: #f44336; color: #fff; }
+.nav { display: flex; gap: 0; padding: 6px 16px; background: #fff; border-bottom: 1px solid #e0e0e0; overflow-x: auto; position: sticky; top: 44px; z-index: 90; }
+.nav a { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; color: #555; text-decoration: none; white-space: nowrap; }
+.nav a.active { background: #1565c0; color: #fff; font-weight: 600; }
+.nav a:hover:not(.active) { background: #f0f0f0; }
+.content { padding: 16px 20px; margin: 0 auto; }
+.page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.page-title { font-size: 16px; font-weight: 800; }
+.card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+.card-header { padding: 12px 18px; font-size: 12px; font-weight: 700; color: #333; border-bottom: 1px solid #f0f0f0; text-transform: uppercase; letter-spacing: 0.04em; display: flex; align-items: center; justify-content: space-between; }
+.card-body { padding: 16px 18px; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th { text-align: left; padding: 9px 12px; font-size: 10px; font-weight: 600; color: #777; border-bottom: 1px solid #eee; }
+td { padding: 9px 12px; border-bottom: 1px solid #f5f5f5; }
+tr:hover td { background: #fafafa; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; }
+.badge-pending { background: #fff3cd; color: #856404; }
+.badge-dispensed { background: #d4edda; color: #155724; }
+.badge-partial { background: #e3f2fd; color: #1565c0; }
+.badge-h { background: #ffebee; color: #c62828; }
+.btn { display: inline-flex; align-items: center; gap: 5px; border: none; border-radius: 6px; padding: 6px 14px; font-size: 11px; font-weight: 600; cursor: pointer; }
+.btn-primary { background: #1565c0; color: #fff; }
+.btn-success { background: #43a047; color: #fff; }
+.btn-outline { background: #fff; color: #555; border: 1px solid #e0e0e0; }
+.view { display: none; }
+.view.active { display: block; }
+.back-link { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: #1565c0; cursor: pointer; margin-bottom: 14px; }
+.back-link:hover { text-decoration: underline; }
+.rx-card { border: 2px solid #1a237e; border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
+.rx-card-header { background: #e8eaf6; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; }
+.rx-card-header .title { font-weight: 700; color: #1a237e; font-size: 14px; }
+.rx-card-body { padding: 16px 18px; }
+.rx-meta { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; font-size: 12px; }
+.rx-meta .lbl { font-size: 9px; color: #777; text-transform: uppercase; font-weight: 600; }
+.rx-meta .val { font-weight: 600; margin-top: 2px; }
+.dispense-line { border: 1px solid #e8e8e8; border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; }
+.dispense-line .top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.dispense-line .drug-name { font-weight: 700; font-size: 13px; }
+.dispense-line .prescribed { font-size: 11px; color: #555; }
+.dispense-line .fields { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 10px; align-items: end; }
+.dispense-line .fields label { font-size: 9px; font-weight: 600; color: #777; text-transform: uppercase; display: block; margin-bottom: 3px; }
+.dispense-line .fields input, .dispense-line .fields select { border: 1px solid #e0e0e0; border-radius: 6px; padding: 7px 10px; font-size: 12px; width: 100%; }
+.schedule-h-check { background: #fff8e1; border: 1px solid #ffe082; border-radius: 6px; padding: 10px 14px; margin-top: 8px; display: flex; align-items: center; gap: 8px; font-size: 11px; color: #e65100; }
+.schedule-h-check input[type="checkbox"] { width: 16px; height: 16px; }
+.row-clickable { cursor: pointer; }
+.row-clickable:hover td { background: #e8eaf6; }
+.stats-row { display: flex; gap: 10px; margin-bottom: 14px; }
+.stat-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; padding: 12px 16px; flex: 1; text-align: center; }
+.stat-card .val { font-size: 22px; font-weight: 800; }
+.stat-card .lbl { font-size: 9px; font-weight: 600; color: #777; text-transform: uppercase; margin-top: 2px; }
+.stat-card .val.orange { color: #ef6c00; }
+.stat-card .val.green { color: #43a047; }
+.stat-card .val.blue { color: #1565c0; }
+</style>
+</head>
+<body>
+<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-export">&#9650; Export</button><button class="btn-import">&#9660; Import</button><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
+<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="sales.html">Sales</a><a href="purchases.html">Purchases</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="prescription-dispense.html" class="active">Rx Dispense</a></div>
+
+<div class="content">
+
+  <!-- VIEW 1: Prescription Queue -->
+  <div class="view active" id="view-queue">
+    <div class="page-header">
+      <div class="page-title">Prescription Dispense Queue</div>
+      <button class="btn btn-outline">&#8635; Refresh</button>
+    </div>
+
+    <!-- Search -->
+    <div style="margin-bottom:12px;"><input type="text" placeholder="Search by Rx #, patient, doctor..." style="width:300px; border:1px solid #e8e8e8; border-radius:8px; padding:8px 12px; font-size:12px; outline:none;"></div>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="val orange">3</div><div class="lbl">Pending</div></div>
+      <div class="stat-card"><div class="val green">12</div><div class="lbl">Dispensed Today</div></div>
+      <div class="stat-card"><div class="val blue">1</div><div class="lbl">Partial</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span>Pending Prescriptions</span>
+        <span style="font-size:10px; color:#777; text-transform:none; font-weight:500;">From doctor consultations — click to dispense</span>
+      </div>
+      <table>
+        <thead><tr><th>Rx #</th><th>Patient</th><th>Doctor</th><th>Date</th><th>Items</th><th>Schedule H</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr class="row-clickable" onclick="showView('view-dispense')">
+            <td><strong>RX-2026-0045</strong></td>
+            <td>Srinivas Reddy</td>
+            <td>Dr. Venkat Rao (GP)</td>
+            <td>18 Aug 2026, 09:15</td>
+            <td>4 items</td>
+            <td><span class="badge badge-h">1 H drug</span></td>
+            <td><span class="badge badge-pending">Pending</span></td>
+          </tr>
+          <tr class="row-clickable">
+            <td><strong>RX-2026-0046</strong></td>
+            <td>Lakshmi Devi</td>
+            <td>Dr. Swathi Reddy (Ortho)</td>
+            <td>18 Aug 2026, 09:45</td>
+            <td>3 items</td>
+            <td>—</td>
+            <td><span class="badge badge-pending">Pending</span></td>
+          </tr>
+          <tr class="row-clickable">
+            <td><strong>RX-2026-0044</strong></td>
+            <td>Rajesh Kumar</td>
+            <td>Dr. Venkat Rao (GP)</td>
+            <td>18 Aug 2026, 08:30</td>
+            <td>2 items</td>
+            <td>—</td>
+            <td><span class="badge badge-partial">Partial</span></td>
+          </tr>
+          <tr>
+            <td>RX-2026-0043</td>
+            <td>Priya Sharma</td>
+            <td>Dr. Venkat Rao (GP)</td>
+            <td>17 Aug 2026, 16:20</td>
+            <td>5 items</td>
+            <td>—</td>
+            <td><span class="badge badge-dispensed">Dispensed</span></td>
+          </tr>
+          <tr>
+            <td>RX-2026-0042</td>
+            <td>Anil Reddy</td>
+            <td>Dr. Swathi Reddy (Ortho)</td>
+            <td>17 Aug 2026, 15:00</td>
+            <td>3 items</td>
+            <td><span class="badge badge-h">1 H drug</span></td>
+            <td><span class="badge badge-dispensed">Dispensed</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- VIEW 2: Dispense Flow -->
+  <div class="view" id="view-dispense">
+    <div class="back-link" onclick="showView('view-queue')">&larr; Back to Queue</div>
+
+    <!-- Prescription Card -->
+    <div class="rx-card">
+      <div class="rx-card-header">
+        <div class="title">&#x1F4CB; Prescription RX-2026-0045</div>
+        <span class="badge badge-pending">Pending Dispensing</span>
+      </div>
+      <div class="rx-card-body">
+        <div class="rx-meta">
+          <div><div class="lbl">Patient</div><div class="val">Srinivas Reddy</div></div>
+          <div><div class="lbl">Doctor</div><div class="val">Dr. Venkat Rao (GP)</div></div>
+          <div><div class="lbl">Diagnosis</div><div class="val">Acute anxiety + Infection</div></div>
+          <div><div class="lbl">Date</div><div class="val">18 Aug 2026, 09:15 AM</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dispense Lines -->
+    <div class="card">
+      <div class="card-header">Dispense Items</div>
+      <div class="card-body">
+
+        <!-- Item 1 -->
+        <div class="dispense-line">
+          <div class="top">
+            <div>
+              <div class="drug-name">Paracetamol tab 650 mg</div>
+              <div class="prescribed">Prescribed: 10 tabs | 1 tab TID x 3 days | After food</div>
+            </div>
+            <span style="font-size:11px; color:#43a047; font-weight:600;">&#10003; In Stock (48)</span>
+          </div>
+          <div class="fields">
+            <div><label>Batch</label><select><option>BT-2026-A1 (Exp: Jun 2028, Stock: 48)</option><option>BT-2025-X3 (Exp: Dec 2026, Stock: 12)</option></select></div>
+            <div><label>Qty</label><input type="number" value="10"></div>
+            <div><label>Rate (&#x20B9;)</label><input type="number" value="65.00"></div>
+            <div><label>Disc %</label><input type="number" value="5"></div>
+          </div>
+        </div>
+
+        <!-- Item 2 - Schedule H -->
+        <div class="dispense-line" style="border-color: #ffcdd2;">
+          <div class="top">
+            <div>
+              <div class="drug-name">Alprazolam tab I.P 0.25 mg <span class="badge badge-h">Schedule H</span></div>
+              <div class="prescribed">Prescribed: 10 tabs | 1 tab HS x 10 days | Before sleep</div>
+            </div>
+            <span style="font-size:11px; color:#43a047; font-weight:600;">&#10003; In Stock (25)</span>
+          </div>
+          <div class="fields">
+            <div><label>Batch</label><select><option>BT-2026-C2 (Exp: Dec 2027, Stock: 25)</option></select></div>
+            <div><label>Qty</label><input type="number" value="10"></div>
+            <div><label>Rate (&#x20B9;)</label><input type="number" value="34.00"></div>
+            <div><label>Disc %</label><input type="number" value="5"></div>
+          </div>
+          <div class="schedule-h-check">
+            <input type="checkbox" id="sch-h-verify" checked>
+            <label for="sch-h-verify"><strong>&#9888; Schedule H Verification:</strong> I confirm this drug is being dispensed against a valid prescription from Dr. Venkat Rao. Patient identity verified.</label>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="dispense-line">
+          <div class="top">
+            <div>
+              <div class="drug-name">Amoxycillin + Clavulanic acid tab 625 mg</div>
+              <div class="prescribed">Prescribed: 6 tabs | 1 tab BID x 3 days | After food</div>
+            </div>
+            <span style="font-size:11px; color:#43a047; font-weight:600;">&#10003; In Stock (30)</span>
+          </div>
+          <div class="fields">
+            <div><label>Batch</label><select><option>BT-2026-D5 (Exp: Mar 2028, Stock: 30)</option></select></div>
+            <div><label>Qty</label><input type="number" value="6"></div>
+            <div><label>Rate (&#x20B9;)</label><input type="number" value="310.00"></div>
+            <div><label>Disc %</label><input type="number" value="5"></div>
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="dispense-line">
+          <div class="top">
+            <div>
+              <div class="drug-name">Diclofenac sodium spray</div>
+              <div class="prescribed">Prescribed: 1 spray | Apply locally TID | External use</div>
+            </div>
+            <span style="font-size:11px; color:#43a047; font-weight:600;">&#10003; In Stock (8)</span>
+          </div>
+          <div class="fields">
+            <div><label>Batch</label><select><option>BT-2026-E1 (Exp: Sep 2027, Stock: 8)</option></select></div>
+            <div><label>Qty</label><input type="number" value="1"></div>
+            <div><label>Rate (&#x20B9;)</label><input type="number" value="220.00"></div>
+            <div><label>Disc %</label><input type="number" value="0"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Summary & Actions -->
+    <div class="card">
+      <div class="card-header">Bill Summary</div>
+      <div class="card-body">
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px; margin-bottom:14px;">
+          <div><div style="font-size:10px;color:#777;text-transform:uppercase;">Subtotal</div><div style="font-size:16px;font-weight:700;">&#x20B9;2,961.50</div></div>
+          <div><div style="font-size:10px;color:#777;text-transform:uppercase;">CGST</div><div style="font-size:16px;font-weight:700;">&#x20B9;76.75</div></div>
+          <div><div style="font-size:10px;color:#777;text-transform:uppercase;">SGST</div><div style="font-size:16px;font-weight:700;">&#x20B9;76.75</div></div>
+          <div><div style="font-size:10px;color:#777;text-transform:uppercase;">Grand Total</div><div style="font-size:20px;font-weight:800;color:#1a237e;">&#x20B9;3,115.00</div></div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:10px; align-items:end;">
+          <div><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;display:block;margin-bottom:4px;">Payment Method</label><select style="width:100%;border:1px solid #e0e0e0;border-radius:6px;padding:8px 10px;font-size:12px;"><option>Cash</option><option selected>UPI</option><option>Card</option></select></div>
+          <div><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;display:block;margin-bottom:4px;">Reference</label><input style="width:100%;border:1px solid #e0e0e0;border-radius:6px;padding:8px 10px;font-size:12px;" placeholder="Txn ref"></div>
+          <div><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;display:block;margin-bottom:4px;">Notes</label><input style="width:100%;border:1px solid #e0e0e0;border-radius:6px;padding:8px 10px;font-size:12px;" placeholder="Optional"></div>
+          <button class="btn btn-success" onclick="showView('view-done')" style="padding:8px 20px;">&#10003; Dispense &amp; Generate Bill</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW 3: Dispensed Confirmation -->
+  <div class="view" id="view-done">
+    <div style="text-align:center; padding:40px 20px;">
+      <div style="font-size:48px; margin-bottom:12px;">&#10003;</div>
+      <div style="font-size:20px; font-weight:800; color:#43a047; margin-bottom:8px;">Prescription Dispensed Successfully</div>
+      <div style="font-size:13px; color:#555; margin-bottom:20px;">
+        Invoice <strong>INV-1005</strong> generated for <strong>Srinivas Reddy</strong><br>
+        Prescription RX-2026-0045 &middot; 4 items dispensed &middot; &#x20B9;3,115.00 paid via UPI
+      </div>
+      <div style="display:flex; justify-content:center; gap:10px;">
+        <button class="btn btn-primary" onclick="window.open('invoice-print.html')">&#x1F5A8; Print Invoice</button>
+        <button class="btn btn-outline">&#x1F4E4; Share via WhatsApp</button>
+        <button class="btn btn-outline" onclick="showView('view-queue')">Back to Queue</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>

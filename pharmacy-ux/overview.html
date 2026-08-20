@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rx Pharmacy - Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: #f5f5f5; color: #1a1a2e; font-size: 14px; line-height: 1.5; }
+
+/* Header - dark navy */
+.header { background: #1a237e; color: #fff; padding: 0 20px; height: 44px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.header-brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; letter-spacing: -0.2px; }
+.header-brand .icon { width: 26px; height: 26px; background: #3949ab; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; }
+.header-version { font-size: 9px; background: rgba(255,255,255,0.15); padding: 2px 7px; border-radius: 10px; margin-left: 6px; font-weight: 500; }
+.header-actions { display: flex; gap: 6px; }
+.header-actions button { border: none; border-radius: 6px; padding: 5px 12px; font-size: 11px; font-weight: 600; cursor: pointer; }
+.btn-export { background: #4caf50; color: #fff; }
+.btn-import { background: #4caf50; color: #fff; }
+.btn-reset { background: #ffc107; color: #333; }
+.btn-logout { background: #f44336; color: #fff; }
+
+/* Nav - white strip with pill tabs */
+.nav { display: flex; gap: 0; padding: 6px 16px; background: #fff; border-bottom: 1px solid #e0e0e0; overflow-x: auto; position: sticky; top: 44px; z-index: 90; }
+.nav a { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; color: #555; text-decoration: none; white-space: nowrap; transition: all 0.15s; }
+.nav a.active { background: #1565c0; color: #fff; font-weight: 600; }
+.nav a:hover:not(.active) { background: #f0f0f0; color: #1a1a2e; }
+
+/* Content */
+.content { padding: 16px 20px; margin: 0 auto; }
+
+/* KPI row */
+.kpi-row { display: flex; gap: 10px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 2px; }
+.kpi-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; padding: 14px 16px; min-width: 120px; flex: 1; }
+.kpi-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+.kpi-label .dot { width: 7px; height: 7px; border-radius: 50%; }
+.kpi-label .dot.blue { background: #1565c0; }
+.kpi-label .dot.teal { background: #00897b; }
+.kpi-label .dot.green { background: #43a047; }
+.kpi-label .dot.orange { background: #ef6c00; }
+.kpi-label .dot.red { background: #e53935; }
+.kpi-label .dot.purple { background: #7b1fa2; }
+.kpi-value { font-size: 28px; font-weight: 800; color: #1a1a2e; }
+
+/* Revenue banner */
+.revenue-banner { background: linear-gradient(135deg, #1a237e 0%, #283593 100%); border-radius: 12px; padding: 18px 24px; color: #fff; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
+.revenue-banner .left .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.8; font-weight: 600; }
+.revenue-banner .left .value { font-size: 30px; font-weight: 800; margin-top: 2px; }
+.revenue-banner .right { text-align: right; }
+.revenue-banner .right .label { font-size: 9px; text-transform: uppercase; opacity: 0.7; font-weight: 600; }
+.revenue-banner .right .value { font-size: 18px; font-weight: 700; margin-top: 2px; }
+
+/* Two column layout */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+@media(max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+/* Cards */
+.card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; }
+.card-header-orange { background: linear-gradient(135deg, #e65100, #f4511e); color: #fff; padding: 12px 18px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; display: flex; align-items: center; justify-content: space-between; }
+.card-header-red { background: linear-gradient(135deg, #b71c1c, #e53935); color: #fff; padding: 12px 18px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; display: flex; align-items: center; justify-content: space-between; }
+.card-header-navy { background: #1a237e; color: #fff; padding: 12px 18px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; display: flex; align-items: center; justify-content: space-between; }
+.card-header-amber { background: linear-gradient(135deg, #e65100, #ff8f00); color: #fff; padding: 12px 18px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; display: flex; align-items: center; justify-content: space-between; }
+.card-header-green { background: linear-gradient(135deg, #1b5e20, #43a047); color: #fff; padding: 12px 18px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+.card-badge { background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 12px; font-size: 10px; font-weight: 600; }
+.card-body { padding: 16px 18px; }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th { text-align: left; padding: 8px 12px; font-size: 10px; font-weight: 600; color: #777; border-bottom: 1px solid #eee; }
+td { padding: 10px 12px; border-bottom: 1px solid #f5f5f5; }
+tr:hover td { background: #fafafa; }
+.stock-zero { color: #e53935; font-weight: 700; }
+.btn-auto-order { background: #1565c0; color: #fff; border: none; border-radius: 5px; padding: 4px 12px; font-size: 10px; font-weight: 600; cursor: pointer; }
+
+/* Expiry card */
+.expiry-block { padding: 16px 18px; }
+.expiry-block .label { font-size: 10px; color: #999; text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em; }
+.expiry-block .value { font-size: 28px; font-weight: 800; color: #e53935; margin-top: 4px; }
+.expiry-block .link { font-size: 11px; color: #1565c0; font-weight: 600; cursor: pointer; margin-top: 6px; }
+
+/* Reconciliation */
+.recon-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
+.recon-row:last-child { border-bottom: none; }
+.recon-label { font-size: 11px; color: #777; }
+.recon-value { font-size: 18px; font-weight: 800; }
+.status-pending { background: #fff3cd; color: #856404; padding: 3px 10px; border-radius: 12px; font-size: 10px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+.form-group { margin-bottom: 12px; }
+.form-group label { display: block; font-size: 10px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
+.form-group input, .form-group textarea { width: 100%; border: 1px solid #e0e0e0; border-radius: 8px; padding: 9px 12px; font-size: 13px; outline: none; font-family: inherit; }
+.form-group input:focus, .form-group textarea:focus { border-color: #1565c0; box-shadow: 0 0 0 2px rgba(21,101,192,0.1); }
+.form-group textarea { resize: vertical; min-height: 60px; }
+.btn-submit { background: #1565c0; color: #fff; border: none; border-radius: 8px; padding: 10px 20px; font-size: 12px; font-weight: 700; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 6px; }
+
+/* Schedule H */
+.audit-empty { text-align: center; padding: 24px; color: #aaa; font-size: 12px; font-style: italic; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-brand">
+    <div class="icon">Rx</div>
+    Pharmacy Admin
+    <span class="header-version">v1.0</span>
+  </div>
+  <div class="header-actions">
+    <button class="btn-export">&#9650; Export</button>
+    <button class="btn-import">&#9660; Import</button>
+    <button class="btn-reset">&#8634; Reset</button>
+    <button class="btn-logout">Logout</button>
+  </div>
+</div>
+
+<div class="nav">
+  <a href="overview.html" class="active">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="sales.html">Sales</a><a href="purchases.html">Purchases</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="prescription-dispense.html">Rx Dispense</a>
+</div>
+
+<div class="content">
+
+  <!-- Org & License Info Bar -->
+  <div style="background:#fff; border:1px solid #e8e8e8; border-radius:10px; padding:10px 16px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; font-size:11px;">
+    <div style="display:flex; gap:16px;">
+      <span><strong>Drug License:</strong> TG/RET/2024/001234</span>
+      <span><strong>Pharmacist:</strong> Ravi Kumar (TS-PH-4521)</span>
+      <span><strong>GSTIN:</strong> 36AABCU9603R1ZM</span>
+    </div>
+    <a href="settings.html" style="color:#1565c0; font-weight:600; text-decoration:none;">Org Settings &rarr;</a>
+  </div>
+
+  <!-- KPI Row -->
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-label"><span class="dot blue"></span> PRODUCTS</div><div class="kpi-value">439</div></div>
+    <div class="kpi-card"><div class="kpi-label"><span class="dot teal"></span> SUPPLIERS</div><div class="kpi-value">2</div></div>
+    <div class="kpi-card"><div class="kpi-label"><span class="dot green"></span> CUSTOMERS</div><div class="kpi-value">4</div></div>
+    <div class="kpi-card"><div class="kpi-label"><span class="dot blue"></span> SALE INVOICES</div><div class="kpi-value">4</div></div>
+    <div class="kpi-card"><div class="kpi-label"><span class="dot teal"></span> PURCHASE INVOICES</div><div class="kpi-value">2</div></div>
+    <div class="kpi-card"><div class="kpi-label"><span class="dot orange"></span> SALE RETURNS</div><div class="kpi-value">1</div></div>
+    <div class="kpi-card"><div class="kpi-label"><span class="dot red"></span> DAMAGES</div><div class="kpi-value">2</div></div>
+    <div class="kpi-card"><div class="kpi-label"><span class="dot purple"></span> STOCK ADJ.</div><div class="kpi-value">2</div></div>
+  </div>
+
+  <!-- Revenue Banner -->
+  <div class="revenue-banner">
+    <div class="left">
+      <div class="label">Cumulative System Revenue</div>
+      <div class="value">&#x20B9;452.00</div>
+    </div>
+    <div class="right">
+      <div class="label">Today's Transactions</div>
+      <div class="value">&#x20B9;0.00</div>
+    </div>
+  </div>
+
+  <!-- Two Column: Alerts + Expiry/Reconciliation -->
+  <div class="two-col">
+
+    <!-- Left Column -->
+    <div>
+      <!-- Re-Order Alerts -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-header-orange">
+          <span>&#9888; RE-ORDER LEVEL ALERTS</span>
+          <span class="card-badge">Threshold: &lt;15 Units</span>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <table>
+            <thead><tr><th>Medicine Description</th><th>Rack Location</th><th>Current Stock</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Paracetamol suppository 100 mg</strong><br><span style="font-size:10px;color:#999;">Code: MED011</span></td><td>D-02</td><td class="stock-zero">-1 Units</td><td><button class="btn-auto-order">Auto-Order</button></td></tr>
+              <tr><td><strong>Lignocaine HCl injection LP 1%</strong><br><span style="font-size:10px;color:#999;">Code: MED001</span></td><td>A-01</td><td class="stock-zero">0 Units</td><td><button class="btn-auto-order">Auto-Order</button></td></tr>
+              <tr><td><strong>Lignocaine +nifedipine ointment</strong><br><span style="font-size:10px;color:#999;">Code: MED002</span></td><td>A-02</td><td class="stock-zero">0 Units</td><td><button class="btn-auto-order">Auto-Order</button></td></tr>
+              <tr><td><strong>Prilocaine lignocaine inj</strong><br><span style="font-size:10px;color:#999;">Code: MED003</span></td><td>A-03</td><td class="stock-zero">0 Units</td><td><button class="btn-auto-order">Auto-Order</button></td></tr>
+              <tr><td><strong>Alprazolam tab I.P 0.25 mg</strong><br><span style="font-size:10px;color:#999;">Code: MED004</span></td><td>B-01</td><td class="stock-zero">0 Units</td><td><button class="btn-auto-order">Auto-Order</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Schedule H Audit -->
+      <div class="card">
+        <div class="card-header-amber">
+          <span>&#9888; SCHEDULE H / RESTRICTED DRUGS AUDIT LOG</span>
+          <span class="card-badge">Prescription Verified</span>
+        </div>
+        <div class="card-body">
+          <div class="audit-empty">No restricted drugs dispensed today.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div>
+      <!-- Expiry -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-header-red">
+          <span>EXPIRING SOON (FINANCIAL LOSS PREVENTION)</span>
+        </div>
+        <div class="expiry-block">
+          <div class="label">Estimated Expiry Exposure</div>
+          <div class="value">&#x20B9;0</div>
+          <div class="link">Report Batches &lt;90 days &rarr;</div>
+        </div>
+      </div>
+
+      <!-- Cash Drawer Reconciliation -->
+      <div class="card">
+        <div class="card-header-navy">
+          <span>&#9881; DAY-END CASH DRAWER RECONCILIATION</span>
+        </div>
+        <div class="card-body">
+          <div class="recon-row">
+            <div><div class="recon-label">Software Expected Sales:</div><div class="recon-value">&#x20B9;0.00</div></div>
+            <div style="text-align:right;"><div class="recon-label">Reconciliation Status:</div><div style="margin-top:4px;"><span class="status-pending">&#x23F3; Pending Action</span></div></div>
+          </div>
+          <div style="margin-top:14px;">
+            <div class="form-group">
+              <label>Physical Cash in Drawer (&#x20B9;)</label>
+              <input type="text" placeholder="Enter total physical cash counted">
+            </div>
+            <div class="form-group">
+              <label>Physical UPI &amp; Card Slips (&#x20B9;)</label>
+              <input type="text" placeholder="Enter digital statements total">
+            </div>
+            <div class="form-group">
+              <label>Reconciliation Notes (optional)</label>
+              <textarea placeholder="e.g. drawer difference comments..."></textarea>
+            </div>
+            <button class="btn-submit">&#x21BB; Submit Daily Reconciliation Log</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prescription Queue (from doctors) -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-header-navy" style="background:#1a237e;">
+      <span>&#x1F4CB; PRESCRIPTION QUEUE (Pending Dispense)</span>
+      <a href="prescription-dispense.html" style="color:#bbdefb; font-size:10px; font-weight:600; text-decoration:none;">View All &rarr;</a>
+    </div>
+    <div style="padding:0;">
+      <table>
+        <thead><tr><th>Rx #</th><th>Patient</th><th>Doctor</th><th>Items</th><th>Sch H</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr style="cursor:pointer;"><td><strong>RX-2026-0045</strong></td><td>Srinivas Reddy</td><td>Dr. Venkat Rao</td><td>4</td><td style="color:#c62828; font-weight:600;">1 H drug</td><td><span style="background:#fff3cd;color:#856404;padding:2px 7px;border-radius:8px;font-size:9px;font-weight:600;">Pending</span></td></tr>
+          <tr style="cursor:pointer;"><td><strong>RX-2026-0046</strong></td><td>Lakshmi Devi</td><td>Dr. Swathi Reddy</td><td>3</td><td>—</td><td><span style="background:#fff3cd;color:#856404;padding:2px 7px;border-radius:8px;font-size:9px;font-weight:600;">Pending</span></td></tr>
+          <tr style="cursor:pointer;"><td>RX-2026-0044</td><td>Rajesh Kumar</td><td>Dr. Venkat Rao</td><td>2</td><td>—</td><td><span style="background:#e3f2fd;color:#1565c0;padding:2px 7px;border-radius:8px;font-size:9px;font-weight:600;">Partial</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Live Stock Register -->
+  <div class="card">
+    <div class="card-header-green">REAL-TIME LIVE STOCK INVENTORY REGISTER</div>
+    <div class="card-body" style="padding:0;">
+      <table>
+        <thead><tr><th>Code</th><th>Medicine</th><th>Category</th><th>Rack</th><th>Stock</th></tr></thead>
+        <tbody>
+          <tr><td>MED001</td><td>Lignocaine HCl injection LP 1%</td><td>Anaesthetics</td><td>A-01</td><td class="stock-zero">0 Units</td></tr>
+          <tr><td>MED002</td><td>Lignocaine +nifedipine ointment</td><td>Anaesthetics</td><td>A-02</td><td class="stock-zero">0 Units</td></tr>
+          <tr><td>MED003</td><td>Prilocaine lignocaine inj</td><td>Anaesthetics</td><td>A-03</td><td class="stock-zero">0 Units</td></tr>
+          <tr><td>MED004</td><td>Alprazolam tab I.P 0.25 mg,</td><td>Preanaesthetic medications</td><td>B-01</td><td class="stock-zero">0 Units</td></tr>
+          <tr><td>MED005</td><td>Alprazolam tab I.P 0.5 mg</td><td>Preanaesthetic medications</td><td>B-02</td><td class="stock-zero">0 Units</td></tr>
+          <tr><td>MED006</td><td>Amitriptyline tab I.P 10 mg</td><td>Preanaesthetic medications</td><td>B-03</td><td class="stock-zero">0 Units</td></tr>
+          <tr><td>MED007</td><td>Midazolam inj 5 mg/ml</td><td>Preanaesthetic medications</td><td>C-01</td><td class="stock-zero">0 Units</td></tr>
+          <tr><td>MED008</td><td>Midazolam I nj 5 mg/5 ml</td><td>Preanaesthetic medications</td><td>C-02</td><td class="stock-zero">0 Units</td></tr>
+          <tr><td>MED009</td><td>Midazolam nasal spray 5 mg/ml</td><td>Preanaesthetic medications</td><td>C-03</td><td class="stock-zero">0 Units</td></tr>
+          <tr><td>MED010</td><td>Propantheline tab 15 mg</td><td>Preanaesthetic medications</td><td>D-01</td><td class="stock-zero">0 Units</td></tr>
+        </tbody>
+      </table>
+      <div style="padding:10px 14px; font-size:11px; color:#aaa; border-top:1px solid #f0f0f0;">Showing 10 of 439 items</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
