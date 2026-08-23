@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HospitAll - Patient Role Prototype (Developer Reference)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#2563EB;--primary-dark:#1D4ED8;--primary-50:#EFF6FF;--primary-100:#DBEAFE;--success:#16A34A;--success-50:#F0FDF4;--success-100:#DCFCE7;--warning:#D97706;--warning-50:#FFFBEB;--warning-100:#FEF3C7;--danger:#DC2626;--danger-50:#FEF2F2;--danger-100:#FEE2E2;--violet:#7C3AED;--violet-50:#F5F3FF;--teal:#0D9488;--teal-50:#F0FDFA;--ink-900:#0F172A;--ink-700:#334155;--ink-500:#64748B;--ink-400:#94A3B8;--ink-300:#CBD5E1;--ink-200:#E2E8F0;--ink-100:#F1F5F9;--ink-50:#F8FAFC;--white:#FFFFFF;--radius:10px;--font-ui:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-data:'IBM Plex Mono',ui-monospace,monospace;}
+*{box-sizing:border-box;margin:0;padding:0;}body{font-family:var(--font-ui);background:var(--ink-50);color:var(--ink-900);font-size:14px;}a{text-decoration:none;color:inherit;}
+.app{display:grid;grid-template-columns:248px 1fr;min-height:100vh;}
+.nav{background:linear-gradient(180deg,#1E3A8A 0%,#1E40AF 100%);color:#fff;display:flex;flex-direction:column;padding:20px 14px;position:sticky;top:0;height:100vh;}.brand{display:flex;align-items:center;gap:10px;padding:6px 10px 22px;}.brand-icon{width:34px;height:34px;background:rgba(255,255,255,.15);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;}.brand-name{font-weight:700;font-size:15.5px;}.nav-section{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.4);padding:16px 12px 6px;}.nav-item{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:8px;color:rgba(255,255,255,.78);font-weight:500;font-size:13.5px;cursor:pointer;margin-bottom:2px;position:relative;}.nav-item:hover{background:rgba(255,255,255,.08);color:#fff;}.nav-item.active{background:rgba(255,255,255,.16);color:#fff;font-weight:600;}.nav-item.active::before{content:'';position:absolute;left:-14px;top:8px;bottom:8px;width:3px;background:#fff;border-radius:2px;}.nav-badge{margin-left:auto;background:#EF4444;color:#fff;font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:99px;}.nav-spacer{flex:1;}.switch-role{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:10px 12px;color:#fff;font-size:12px;cursor:pointer;text-align:center;font-weight:600;}
+.main{display:flex;flex-direction:column;min-height:100vh;}.topbar{display:flex;align-items:center;gap:16px;padding:14px 28px;background:#fff;border-bottom:1px solid var(--ink-200);position:sticky;top:0;z-index:20;}.topbar-title{font-size:16px;font-weight:700;}.topbar-spacer{flex:1;}.avatar{width:36px;height:36px;border-radius:9px;background:var(--violet);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;}
+.card{background:#fff;border:1px solid var(--ink-200);border-radius:var(--radius);padding:20px;margin-bottom:16px;}.card-title{font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:20px;}.stat-card{background:#fff;border:1px solid var(--ink-200);border-radius:var(--radius);padding:16px;text-align:center;cursor:pointer;}.stat-card:hover{border-color:var(--primary);}.stat-value{font-size:28px;font-weight:800;font-family:var(--font-data);color:var(--primary);}.stat-label{font-size:12px;color:var(--ink-500);font-weight:600;margin-top:4px;}
+table{width:100%;border-collapse:collapse;font-size:13px;}th{text-align:left;padding:10px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-500);border-bottom:1px solid var(--ink-200);background:var(--ink-50);}td{padding:10px 12px;border-bottom:1px solid var(--ink-100);}tr:hover td{background:var(--primary-50);}
+.badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:99px;font-size:11px;font-weight:700;}.badge-blue{background:var(--primary-50);color:var(--primary);}.badge-green{background:var(--success-50);color:var(--success);}.badge-yellow{background:var(--warning-50);color:var(--warning);}.badge-red{background:var(--danger-50);color:var(--danger);}.badge-gray{background:var(--ink-100);color:var(--ink-500);}
+.btn{display:inline-flex;align-items:center;gap:7px;border-radius:9px;font-weight:600;font-size:13px;padding:9px 15px;cursor:pointer;border:1px solid transparent;white-space:nowrap;}.btn-primary{background:var(--primary);color:#fff;}.btn-ghost{background:#fff;border-color:var(--ink-200);color:var(--ink-700);}.btn-success{background:var(--success);color:#fff;}.btn-sm{padding:6px 10px;font-size:12px;}
+.form-group{margin-bottom:14px;}.form-label{display:block;font-size:12px;font-weight:600;color:var(--ink-700);margin-bottom:6px;}.form-control{width:100%;border:1px solid var(--ink-200);border-radius:8px;padding:9px 12px;font-size:13px;font-family:var(--font-ui);color:var(--ink-900);background:#fff;outline:none;}.form-control:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-100);}select.form-control{appearance:auto;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.page-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;}.page-title-lg{font-size:22px;font-weight:800;}.header-spacer{flex:1;}
+.wizard-steps{display:flex;gap:0;margin-bottom:20px;}.wizard-step{flex:1;text-align:center;padding:12px;background:var(--ink-100);font-size:12px;font-weight:600;color:var(--ink-500);}.wizard-step.active{background:var(--primary-50);color:var(--primary);}.wizard-step.done{background:var(--success-50);color:var(--success);}.wizard-step:first-child{border-radius:8px 0 0 8px;}.wizard-step:last-child{border-radius:0 8px 8px 0;}
+.new-feature{position:relative;border:2px dashed #DC2626 !important;opacity:0.6;}.new-feature::after{content:'NEW - Not in current code';position:absolute;top:-10px;right:10px;background:#DC2626;color:#fff;font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;z-index:5;}
+</style>
+</head>
+<body>
+<div class="app">
+<nav class="nav">
+  <div class="brand"><div class="brand-icon">H</div><div class="brand-name">HospitAll</div></div>
+  <div class="nav-section">Health</div>
+  <div class="nav-item active" data-screen="dashboard">Dashboard</div>
+  <div class="nav-item" data-screen="find-doctor">Find a Doctor</div>
+  <div class="nav-item" data-screen="appointments">My Appointments</div>
+  <div class="nav-item" data-screen="book-online">Book Online Consult</div>
+  <div class="nav-item" data-screen="book-inperson">Book In-Person Visit <span style="font-size:9px;background:#D97706;color:#fff;padding:1px 4px;border-radius:3px;margin-left:2px;">UX NEW</span></div>
+  <div class="nav-section">Records</div>
+  <div class="nav-item" data-screen="records">My Records</div>
+  <div class="nav-item" data-screen="my-health">Health Profile</div>
+  <div class="nav-item" data-screen="prescriptions">Prescriptions</div>
+  <div class="nav-item" data-screen="lab-orders">Lab Orders</div>
+  <div class="nav-item" data-screen="claim">Claim Records</div>
+  <div class="nav-section">Services</div>
+  <div class="nav-item" data-screen="emergency">Emergency</div>
+  <div class="nav-item" data-screen="support">Support</div>
+  <div class="nav-spacer"></div>
+  <a class="switch-role" href="index.html">Switch Role</a>
+</nav>
+<main class="main">
+  <div class="topbar"><div style="cursor:pointer;color:var(--ink-500);padding:6px;" title="Toggle sidebar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></div><div class="topbar-title" id="page-title">Dashboard</div><div class="topbar-spacer"></div><div style="flex:1;max-width:380px;display:flex;align-items:center;gap:10px;background:var(--ink-100);border:1px solid var(--ink-200);border-radius:9px;padding:8px 14px;margin:0 16px;"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color:var(--ink-400);flex-shrink:0;"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><input type="text" placeholder="Search appointments, doctors..." style="border:none;background:none;outline:none;flex:1;font-size:13px;font-family:var(--font-ui);color:var(--ink-900);"></div><div style="text-align:right;padding-right:10px;margin-right:6px;border-right:1px solid var(--ink-200);line-height:1.3;"><div style="font-size:10px;color:var(--ink-500);font-weight:600;">04 Aug 2026</div><div style="font-size:12px;color:var(--ink-900);font-weight:700;font-family:var(--font-data);">09:28</div></div><div style="position:relative;width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:var(--ink-500);cursor:pointer;" title="Notifications"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><div style="position:absolute;top:4px;right:5px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #fff;">1</div></div><div style="font-size:12px;color:var(--ink-500);margin-left:8px;">Ravi Kumar | Patient</div><div class="avatar">RK</div></div>
+  <div id="screen-content" style="flex:1;padding:24px 28px;"></div>
+</main>
+</div>
+
+<script>
+const SCREENS = {};
+
+SCREENS.dashboard = () => `
+<div class="stat-grid">
+  <div class="stat-card" onclick="showScreen('appointments')"><div class="stat-value">2</div><div class="stat-label">Upcoming Appointments</div></div>
+  <div class="stat-card" onclick="showScreen('prescriptions')"><div class="stat-value" style="color:var(--success)">3</div><div class="stat-label">Active Prescriptions</div></div>
+  <div class="stat-card" onclick="showScreen('lab-orders')"><div class="stat-value" style="color:var(--warning)">1</div><div class="stat-label">Pending Lab Orders</div></div>
+  <div class="stat-card" onclick="showScreen('records')"><div class="stat-value" style="color:var(--violet)">5</div><div class="stat-label">Documents</div></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+  <div class="card">
+    <div class="card-title">Quick Actions</div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;">
+      <button class="btn btn-primary" onclick="showScreen('book-inperson')">Book In-Person Appointment</button>
+      <button class="btn btn-ghost" onclick="showScreen('book-online')">Book Online Consultation</button>
+      <button class="btn btn-ghost" onclick="showScreen('lab-orders')">Order Lab Tests</button>
+      <button class="btn btn-ghost" onclick="showScreen('emergency')">Emergency Help</button>
+      <button class="btn btn-ghost" onclick="showScreen('claim')">Claim Records</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Upcoming Appointments</div>
+    <div style="font-size:13px;line-height:2;">
+      <div style="display:flex;justify-content:space-between;"><span><b>11 Aug 2026, 09:30</b> - Dr. Priya Sharma</span><span class="badge badge-blue">SCHEDULED</span></div>
+      <div style="display:flex;justify-content:space-between;"><span><b>18 Aug 2026, 14:00</b> - Dr. Amit Joshi</span><span class="badge badge-blue">SCHEDULED</span></div>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-title">Report Access Requests (from Doctors)</div>
+  <div style="font-size:12px;color:var(--ink-500);margin-bottom:10px;">Doctors request access to your reports. You can approve or deny.</div>
+  <table>
+    <thead><tr><th>Doctor</th><th>Reason</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody>
+      <tr><td>Dr. Priya Sharma</td><td>Need previous blood work for comparison</td><td><span class="badge badge-yellow">PENDING</span></td><td><button class="btn btn-sm btn-success" onclick="alert('Report access approved')">Approve</button> <button class="btn btn-sm" style="color:var(--danger)" onclick="alert('Report access denied')">Deny</button></td></tr>
+    </tbody>
+  </table>
+  <div style="font-size:11px;color:var(--ink-400);margin-top:6px;">API: GET /api/patients/{id}/report-requests | PUT /api/report-requests/{id}/approve | PUT /api/report-requests/{id}/deny</div>
+</div>`;
+
+SCREENS.appointments = () => `
+<div class="page-header"><div class="page-title-lg">My Appointments</div><div class="header-spacer"></div><button class="btn btn-primary" onclick="showScreen('book-inperson')">Book In-Person</button><button class="btn btn-ghost" style="margin-left:8px;" onclick="showScreen('book-online')">Book Online</button></div>
+<div class="card" style="padding:0;"><table>
+  <thead><tr><th>Date/Time</th><th>Doctor</th><th>Type</th><th>Status</th><th>Payment</th><th>Actions</th></tr></thead>
+  <tbody>
+    <tr><td style="font-family:var(--font-data)">04 Aug 09:30</td><td>Dr. Priya Sharma (General Medicine)</td><td>IN_PERSON</td><td><span class="badge badge-green">COMPLETED</span></td><td><span class="badge badge-green">PAID</span></td><td><button class="btn btn-sm btn-ghost" onclick="showScreen('appt-summary')">View Summary</button> <button class="btn btn-sm btn-ghost" onclick="showScreen('appt-summary')">Download Rx</button></td></tr>
+    <tr><td style="font-family:var(--font-data)">11 Aug 09:30</td><td>Dr. Priya Sharma (General Medicine)</td><td>IN_PERSON</td><td><span class="badge badge-blue">SCHEDULED</span></td><td><span class="badge badge-green">PAID</span></td><td><button class="btn btn-sm btn-ghost" onclick="showScreen('book-online')">Reschedule</button> <button class="btn btn-sm" style="color:var(--danger)" onclick="showScreen('cancel-confirm')">Cancel</button></td></tr>
+    <tr><td style="font-family:var(--font-data)">18 Aug 14:00</td><td>Dr. Amit Joshi (Cardiology)</td><td>ONLINE</td><td><span class="badge badge-blue">SCHEDULED</span></td><td><span class="badge badge-yellow">PENDING</span></td><td><button class="btn btn-sm btn-primary" onclick="showScreen('pay-appointment')">Pay Now</button> <button class="btn btn-sm btn-ghost" onclick="showScreen('video-room')">Join Video</button></td></tr>
+  </tbody>
+</table></div>`;
+
+// --- FIND A DOCTOR (Search + Profile + Book) ---
+// Source: doctorAPI.getAll, organizationAPI.getNearby, DoctorPublicProfile.js
+SCREENS['find-doctor'] = () => `
+<div class="page-header"><div class="page-title-lg">Find a Doctor</div></div>
+<div class="card">
+  <div class="card-title">Search Doctors
+    <span style="margin-left:auto;font-size:11px;color:var(--ink-400);">API: GET /api/doctors?specialty=&org=&q= | GET /api/organizations/nearby?lat=&lng=</span>
+  </div>
+  <div class="form-row-3">
+    <div class="form-group"><label class="form-label">Specialty</label>
+      <select class="form-control">
+        <option value="">All Specialties</option>
+        <option selected>General Medicine (Internal Medicine)</option>
+        <option>Cardiology</option>
+        <option>Dermatology</option>
+        <option>Orthopedics</option>
+        <option>Pediatrics</option>
+        <option>ENT (Otorhinolaryngology)</option>
+        <option>Obstetrics and Gynecology</option>
+        <option>Ophthalmology</option>
+        <option>Psychiatry</option>
+        <option>Pulmonology</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Hospital / Clinic</label>
+      <select class="form-control">
+        <option value="">All Hospitals</option>
+        <option selected>City Health Clinic</option>
+        <option>MedPlus Hospital</option>
+        <option>Apollo Diagnostics</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Location (Nearby)</label>
+      <input class="form-control" placeholder="Enter area, city or use GPS" value="Bangalore, MG Road">
+      <div style="font-size:10px;color:var(--ink-400);margin-top:3px;">Uses geolocation for nearby results</div>
+    </div>
+  </div>
+  <button class="btn btn-primary" onclick="showScreen('find-doctor')">Search</button>
+</div>
+
+<!-- Search Results: Doctor Profile Cards -->
+<div style="font-size:12px;color:var(--ink-500);margin-bottom:12px;">Showing 3 doctors matching your criteria</div>
+
+<!-- Doctor 1 -->
+<div class="card" style="display:flex;gap:20px;align-items:flex-start;">
+  <div style="width:64px;height:64px;border-radius:14px;background:var(--primary-50);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;flex-shrink:0;">PS</div>
+  <div style="flex:1;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+      <div style="font-size:16px;font-weight:800;">Dr. Priya Sharma</div>
+      <span class="badge badge-green">Available</span>
+    </div>
+    <div style="font-size:13px;color:var(--ink-700);margin-bottom:2px;"><b>General Medicine (Internal Medicine)</b></div>
+    <div style="font-size:12px;color:var(--ink-500);margin-bottom:8px;">MBBS, MD (Internal Medicine) | 12 years experience</div>
+    <div style="display:flex;gap:16px;font-size:12px;color:var(--ink-500);margin-bottom:10px;">
+      <span>City Health Clinic, MG Road, Bangalore</span>
+      <span>|</span>
+      <span>0.8 km away</span>
+      <span>|</span>
+      <span style="color:var(--warning);font-weight:600;">4.6/5 (23 reviews)</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <span style="font-family:var(--font-data);font-size:14px;font-weight:800;color:var(--primary);">INR 500</span>
+      <span style="font-size:11px;color:var(--ink-400);">per consultation</span>
+      <div style="margin-left:auto;display:flex;gap:8px;">
+        <button class="btn btn-primary btn-sm" onclick="showScreen('book-inperson')">Book In-Person</button>
+        <button class="btn btn-ghost btn-sm" onclick="showScreen('book-online')">Book Online</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Doctor 2 -->
+<div class="card" style="display:flex;gap:20px;align-items:flex-start;">
+  <div style="width:64px;height:64px;border-radius:14px;background:var(--violet-50);color:var(--violet);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;flex-shrink:0;">AJ</div>
+  <div style="flex:1;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+      <div style="font-size:16px;font-weight:800;">Dr. Amit Joshi</div>
+      <span class="badge badge-green">Available</span>
+    </div>
+    <div style="font-size:13px;color:var(--ink-700);margin-bottom:2px;"><b>Cardiology</b></div>
+    <div style="font-size:12px;color:var(--ink-500);margin-bottom:8px;">MBBS, DM (Cardiology), FACC | 18 years experience</div>
+    <div style="display:flex;gap:16px;font-size:12px;color:var(--ink-500);margin-bottom:10px;">
+      <span>City Health Clinic, MG Road, Bangalore</span>
+      <span>|</span>
+      <span>0.8 km away</span>
+      <span>|</span>
+      <span style="color:var(--warning);font-weight:600;">4.8/5 (45 reviews)</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <span style="font-family:var(--font-data);font-size:14px;font-weight:800;color:var(--primary);">INR 800</span>
+      <span style="font-size:11px;color:var(--ink-400);">per consultation</span>
+      <div style="margin-left:auto;display:flex;gap:8px;">
+        <button class="btn btn-primary btn-sm" onclick="showScreen('book-inperson')">Book In-Person</button>
+        <button class="btn btn-ghost btn-sm" onclick="showScreen('book-online')">Book Online</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Doctor 3 -->
+<div class="card" style="display:flex;gap:20px;align-items:flex-start;">
+  <div style="width:64px;height:64px;border-radius:14px;background:var(--teal-50);color:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;flex-shrink:0;">NG</div>
+  <div style="flex:1;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+      <div style="font-size:16px;font-weight:800;">Dr. Neha Gupta</div>
+      <span class="badge badge-gray">Next available: Tomorrow</span>
+    </div>
+    <div style="font-size:13px;color:var(--ink-700);margin-bottom:2px;"><b>Dermatology</b></div>
+    <div style="font-size:12px;color:var(--ink-500);margin-bottom:8px;">MBBS, MD (Dermatology) | 8 years experience</div>
+    <div style="display:flex;gap:16px;font-size:12px;color:var(--ink-500);margin-bottom:10px;">
+      <span>MedPlus Hospital, Ring Road, Bangalore</span>
+      <span>|</span>
+      <span>2.1 km away</span>
+      <span>|</span>
+      <span style="color:var(--warning);font-weight:600;">4.4/5 (18 reviews)</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <span style="font-family:var(--font-data);font-size:14px;font-weight:800;color:var(--primary);">INR 600</span>
+      <span style="font-size:11px;color:var(--ink-400);">per consultation</span>
+      <div style="margin-left:auto;display:flex;gap:8px;">
+        <button class="btn btn-primary btn-sm" onclick="showScreen('book-inperson')">Book In-Person</button>
+        <button class="btn btn-ghost btn-sm" onclick="showScreen('book-online')">Book Online</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="font-size:11px;color:var(--ink-400);margin-top:12px;">
+  APIs: GET /api/doctors (list all with filters) | GET /api/organizations/nearby?lat=&lng= (geo search)<br>
+  Doctor profile: GET /api/doctors/{id} | Reviews: GET /api/doctors/{id}/rating-summary<br>
+  Fee: GET /api/organizations/{orgId}/doctors/{doctorId}/fee | Public profile route: /doctor/{id}/public
+</div>`;
+
+// --- IN-PERSON APPOINTMENT BOOKING ---
+// Source: AppointmentForm.js - channel: IN_PERSON
+// Flow: Select Org -> Select Doctor -> Pick Date/Slot -> Pay -> Confirmation
+SCREENS['book-inperson'] = () => `
+<div class="page-header"><div class="page-title-lg">Book In-Person Appointment</div></div>
+<div class="wizard-steps">
+  <div class="wizard-step active">1. Select Clinic/Doctor</div>
+  <div class="wizard-step">2. Pick Date/Slot</div>
+  <div class="wizard-step">3. Pay</div>
+</div>
+<div class="card">
+  <div class="card-title">Step 1: Select Organization and Doctor
+    <span style="margin-left:auto;font-size:11px;color:var(--ink-400);">API: GET /api/organizations/nearby?lat=&lng= | GET /api/organizations/{orgId}/doctors</span>
+  </div>
+  <div style="font-size:12px;color:var(--ink-500);margin-bottom:12px;">
+    Channel: <span class="badge badge-blue">IN_PERSON</span> | Type: CONSULTATION<br>
+    Nearby clinics detected via geolocation. Doctor list scoped to selected organization.
+  </div>
+  <div class="form-row-3">
+    <div class="form-group"><label class="form-label">Organization (Nearby)</label>
+      <select class="form-control"><option value="">Select Clinic/Hospital</option><option selected>City Health Clinic (0.8 km)</option><option>MedPlus Hospital (2.1 km)</option><option>Apollo Diagnostics (3.5 km)</option></select>
+      <div style="font-size:10px;color:var(--ink-400);margin-top:3px;">Geolocation: GET /api/organizations/nearby?lat=12.97&lng=77.59</div>
+    </div>
+    <div class="form-group"><label class="form-label">Doctor</label>
+      <select class="form-control"><option value="">-- Select Doctor --</option><option selected>Dr. Priya Sharma (General Medicine)</option><option>Dr. Amit Joshi (Cardiology)</option><option>Dr. Neha Gupta (Dermatology)</option></select>
+      <div style="font-size:10px;color:var(--ink-400);margin-top:3px;">Filtered by org. Shows specialty.</div>
+    </div>
+    <div class="form-group"><label class="form-label">Patient Profile</label>
+      <select class="form-control"><option selected>Ravi Kumar (Self)</option><option>Anita Kumar (Spouse)</option><option>Arjun Kumar (Child)</option></select>
+      <div style="font-size:10px;color:var(--ink-400);margin-top:3px;">Patients linked to user account (GET /api/users/{id}/linked-patients)</div>
+    </div>
+  </div>
+  <div class="form-group"><label class="form-label">Reason for Visit</label><input class="form-control" type="text" placeholder="e.g. Fever, Annual checkup, Follow-up" value="Fever and body ache"></div>
+</div>
+<div class="card">
+  <div class="card-title">Step 2: Pick Date and Time Slot
+    <span style="margin-left:auto;font-size:11px;color:var(--ink-400);">API: GET /api/slots?orgId=1&doctorId=1&date=2026-08-06</span>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Date</label><input class="form-control" type="date" value="2026-08-06">
+      <div style="font-size:10px;color:var(--ink-400);margin-top:3px;">Only future dates. Availability from doctor schedule.</div>
+    </div>
+    <div class="form-group"><label class="form-label">Available Slots</label>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;">
+        <span style="padding:6px 12px;border-radius:6px;background:var(--ink-100);color:var(--ink-400);font-size:12px;font-family:var(--font-data);text-decoration:line-through;">09:00</span>
+        <span style="padding:6px 12px;border-radius:6px;background:var(--ink-100);color:var(--ink-400);font-size:12px;font-family:var(--font-data);text-decoration:line-through;">09:15</span>
+        <span style="padding:6px 12px;border-radius:6px;background:var(--ink-100);color:var(--ink-400);font-size:12px;font-family:var(--font-data);text-decoration:line-through;">09:30</span>
+        <span style="padding:6px 12px;border-radius:6px;background:var(--primary);color:#fff;font-size:12px;font-family:var(--font-data);font-weight:700;cursor:pointer;">09:45</span>
+        <span style="padding:6px 12px;border-radius:6px;background:var(--ink-50);border:1px solid var(--ink-200);color:var(--ink-700);font-size:12px;font-family:var(--font-data);cursor:pointer;">10:00</span>
+        <span style="padding:6px 12px;border-radius:6px;background:var(--ink-50);border:1px solid var(--ink-200);color:var(--ink-700);font-size:12px;font-family:var(--font-data);cursor:pointer;">10:15</span>
+        <span style="padding:6px 12px;border-radius:6px;background:var(--ink-50);border:1px solid var(--ink-200);color:var(--ink-700);font-size:12px;font-family:var(--font-data);cursor:pointer;">10:30</span>
+        <span style="padding:6px 12px;border-radius:6px;background:var(--ink-50);border:1px solid var(--ink-200);color:var(--ink-700);font-size:12px;font-family:var(--font-data);cursor:pointer;">10:45</span>
+        <span style="padding:6px 12px;border-radius:6px;background:var(--ink-50);border:1px solid var(--ink-200);color:var(--ink-700);font-size:12px;font-family:var(--font-data);cursor:pointer;">11:00</span>
+        <span style="padding:6px 12px;border-radius:6px;background:var(--ink-50);border:1px solid var(--ink-200);color:var(--ink-700);font-size:12px;font-family:var(--font-data);cursor:pointer;">11:15</span>
+      </div>
+      <div style="font-size:10px;color:var(--ink-400);margin-top:6px;">Struck-through = already booked | Blue = your selection | White = available<br>Slot duration from doctor availability config (e.g. 15 min intervals)</div>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-title">Step 3: Confirm and Pay</div>
+  <div style="background:var(--ink-50);border-radius:8px;padding:14px;margin-bottom:14px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px;">
+      <div><b>Patient:</b> Ravi Kumar (Self)</div>
+      <div><b>Doctor:</b> Dr. Priya Sharma (General Medicine)</div>
+      <div><b>Organization:</b> City Health Clinic</div>
+      <div><b>Date/Time:</b> 06 Aug 2026, 09:45 AM</div>
+      <div><b>Channel:</b> <span class="badge badge-blue">IN_PERSON</span></div>
+      <div><b>Fee:</b> <span style="font-family:var(--font-data);font-size:16px;font-weight:800;color:var(--primary);">INR 500</span></div>
+    </div>
+  </div>
+  <div style="font-size:12px;color:var(--ink-500);margin-bottom:12px;">Choose payment method:</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px;">
+    <div style="border:2px solid var(--primary);border-radius:8px;padding:12px;cursor:pointer;background:var(--primary-50);text-align:center;">
+      <div style="font-weight:700;color:var(--primary);font-size:13px;">Razorpay</div>
+      <div style="font-size:10px;color:var(--ink-500);">Card / UPI / NetBanking</div>
+    </div>
+    <div style="border:1px solid var(--ink-200);border-radius:8px;padding:12px;cursor:pointer;text-align:center;">
+      <div style="font-weight:700;font-size:13px;">UPI Direct</div>
+      <div style="font-size:10px;color:var(--ink-500);">Scan QR or enter VPA</div>
+    </div>
+    <div style="border:1px solid var(--ink-200);border-radius:8px;padding:12px;cursor:pointer;text-align:center;">
+      <div style="font-weight:700;font-size:13px;">Pay at Clinic</div>
+      <div style="font-size:10px;color:var(--ink-500);">Cash/UPI when you visit</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:10px;">
+    <button class="btn btn-primary" onclick="showScreen('inperson-success')">Confirm and Pay INR 500</button>
+    <button class="btn btn-ghost" onclick="showScreen('inperson-success')">Book Now, Pay at Clinic</button>
+  </div>
+  <div style="font-size:11px;color:var(--ink-400);margin-top:10px;">
+    API: POST /api/appointments { patientId, doctorId, organizationId, scheduledAt, type: "CONSULTATION", channel: "IN_PERSON", reason, status: "SCHEDULED" }<br>
+    Fee: GET /api/organizations/{orgId}/doctors/{doctorId}/fee<br>
+    Payment: POST /api/payments/appointments/{id}/razorpay-intent OR POST .../manual (method: CASH)
+  </div>
+</div>`;
+
+// --- IN-PERSON BOOKING SUCCESS ---
+SCREENS['inperson-success'] = () => `
+<div class="card" style="text-align:center;padding:40px;">
+  <div style="width:64px;height:64px;border-radius:50%;background:var(--success-50);color:var(--success);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;font-weight:800;">OK</div>
+  <div style="font-size:20px;font-weight:700;margin-bottom:8px;">In-Person Appointment Booked</div>
+  <div style="color:var(--ink-500);margin-bottom:6px;">Your appointment has been scheduled. Please visit the clinic at the scheduled time.</div>
+  <div style="background:var(--ink-50);border-radius:8px;padding:14px;margin:16px auto;max-width:420px;text-align:left;font-size:13px;">
+    <div><b>Doctor:</b> Dr. Priya Sharma (General Medicine)</div>
+    <div><b>Clinic:</b> City Health Clinic, 123 MG Road, Bangalore</div>
+    <div><b>Date/Time:</b> 06 Aug 2026, 09:45 AM</div>
+    <div><b>Channel:</b> <span class="badge badge-blue">IN_PERSON</span></div>
+    <div><b>Status:</b> <span class="badge badge-green">CONFIRMED</span></div>
+    <div><b>Payment:</b> <span class="badge badge-green">CAPTURED</span> INR 500</div>
+  </div>
+  <div style="font-size:12px;color:var(--ink-500);margin-bottom:16px;">Please carry your ID and any previous medical records. Arrive 10 minutes early.</div>
+  <div style="display:flex;gap:10px;justify-content:center;">
+    <button class="btn btn-primary" onclick="showScreen('appointments')">View My Appointments</button>
+    <button class="btn btn-ghost" onclick="showScreen('dashboard')">Back to Dashboard</button>
+  </div>
+</div>`;
+
+// --- ONLINE CONSULTATION BOOKING FLOW ---
+// Source: OCStart -> OCIntake -> OCBook -> AppointmentForm -> PaymentPage
+SCREENS['book-online'] = () => `
+<div class="page-header"><div class="page-title-lg">Book Online Consultation</div></div>
+<div class="wizard-steps">
+  <div class="wizard-step active">1. Choose Mode</div>
+  <div class="wizard-step">2. Intake/Triage</div>
+  <div class="wizard-step">3. Select Doctor</div>
+  <div class="wizard-step">4. Pick Slot and Pay</div>
+</div>
+<div class="card">
+  <div class="card-title">Step 1: How would you like to consult?</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div style="border:2px solid var(--primary);border-radius:10px;padding:20px;cursor:pointer;background:var(--primary-50);">
+      <div style="font-size:16px;font-weight:700;color:var(--primary);margin-bottom:6px;">Schedule a Teleconsult</div>
+      <div style="font-size:12px;color:var(--ink-500);">Pick a doctor, choose a time slot, and connect via video at the scheduled time.</div>
+    </div>
+    <div style="border:1px solid var(--ink-200);border-radius:10px;padding:20px;cursor:pointer;" onclick="showScreen('consult-now')">
+      <div style="font-size:16px;font-weight:700;margin-bottom:6px;">Consult Now</div>
+      <div style="font-size:12px;color:var(--ink-500);">Find an available doctor and start a video consultation immediately.</div>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-title">Step 2: Triage / Intake
+    <span style="margin-left:auto;font-size:11px;color:var(--ink-400);">Route: /online-consult/intake</span>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Symptoms *</label><input class="form-control" type="text" placeholder="e.g. Fever, headache, cough" value="Fever and sore throat"></div>
+    <div class="form-group"><label class="form-label">Duration</label><input class="form-control" type="text" placeholder="e.g. 3 days" value="3 days"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Current Medications</label><input class="form-control" type="text" placeholder="Any medicines you are taking"></div>
+    <div class="form-group"><label class="form-label">Allergies</label><input class="form-control" type="text" placeholder="Known allergies" value="Penicillin"></div>
+  </div>
+  <div class="form-group"><label class="form-label">Additional Notes</label><textarea class="form-control" style="min-height:60px;" placeholder="Anything the doctor should know..."></textarea></div>
+</div>
+<div class="card">
+  <div class="card-title">Step 3: Select Organization and Doctor
+    <span style="margin-left:auto;font-size:11px;color:var(--ink-400);">Route: /online-consult/book | API: GET /api/organizations/nearby, GET /api/organizations/{orgId}/doctors</span>
+  </div>
+  <div class="form-row-3">
+    <div class="form-group"><label class="form-label">Organization</label>
+      <select class="form-control"><option value="">Any / Nearby</option><option selected>City Health Clinic</option><option>MedPlus Hospital</option></select>
+      <div style="font-size:10px;color:var(--ink-400);margin-top:3px;">Uses geolocation: GET /api/organizations/nearby?lat=&lng=</div>
+    </div>
+    <div class="form-group"><label class="form-label">Doctor</label>
+      <select class="form-control"><option value="">Any available</option><option selected>Dr. Priya Sharma (General Medicine)</option><option>Dr. Amit Joshi (Cardiology)</option></select>
+    </div>
+    <div class="form-group"><label class="form-label">Patient Profile</label>
+      <select class="form-control"><option selected>Ravi Kumar (Self)</option><option>Anita Kumar (Spouse)</option></select>
+      <div style="font-size:10px;color:var(--ink-400);margin-top:3px;">Patients linked to user account</div>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-title">Step 4: Select Slot and Pay</div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Date</label><input class="form-control" type="date" value="2026-08-06"></div>
+    <div class="form-group"><label class="form-label">Available Slots (from doctor availability)</label>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;">
+        <span style="padding:6px 12px;border-radius:6px;background:var(--primary);color:#fff;font-size:12px;font-family:var(--font-data);font-weight:700;cursor:pointer;">10:00</span>
+        <span style="padding:6px 12px;border-radius:6px;background:var(--ink-50);border:1px solid var(--ink-200);font-size:12px;font-family:var(--font-data);cursor:pointer;">10:15</span>
+        <span style="padding:6px 12px;border-radius:6px;background:var(--ink-50);border:1px solid var(--ink-200);font-size:12px;font-family:var(--font-data);cursor:pointer;">10:30</span>
+        <span style="padding:6px 12px;border-radius:6px;background:var(--ink-50);border:1px solid var(--ink-200);font-size:12px;font-family:var(--font-data);cursor:pointer;">11:00</span>
+      </div>
+    </div>
+  </div>
+  <div style="background:var(--ink-50);border-radius:8px;padding:14px;margin:14px 0;">
+    <div style="font-size:13px;"><b>Fee:</b> INR 500 | <b>Doctor:</b> Dr. Priya Sharma | <b>Slot:</b> 06 Aug 2026, 10:00 AM</div>
+  </div>
+  <div style="display:flex;gap:10px;">
+    <button class="btn btn-primary" onclick="showScreen('booking-success')">Pay and Book (Razorpay/UPI)</button>
+    <button class="btn btn-ghost" onclick="showScreen('booking-success')">Pay at Center</button>
+  </div>
+  <div style="font-size:11px;color:var(--ink-400);margin-top:8px;">
+    Flow: POST /api/appointments -> POST /api/payments/appointments/{id}/razorpay-intent -> Razorpay Checkout -> verify<br>
+    After booking, patient joins via: POST /api/appointments/{id}/video/join (returns joinUrl for WebRTC room)
+  </div>
+</div>`;
+
+SCREENS.records = () => `
+<div class="page-header"><div class="page-title-lg">My Health Records</div><div class="header-spacer"></div><button class="btn btn-primary" onclick="showScreen('upload-doc')">Upload Document</button></div>
+<div class="card">
+  <div class="card-title">Documents
+    <span style="margin-left:auto;font-size:11px;color:var(--ink-400);">API: GET /api/patients/{id}/documents | POST upload (multipart)</span>
+  </div>
+  <div style="font-size:12px;color:var(--ink-500);margin-bottom:12px;">Categories: LAB_REPORT, PRESCRIPTION, IMAGING, DISCHARGE_SUMMARY, INSURANCE, OTHER</div>
+  <table>
+    <thead><tr><th>Date</th><th>Name</th><th>Category</th><th>OCR Status</th><th>Actions</th></tr></thead>
+    <tbody>
+      <tr><td>04 Aug 2026</td><td>CBC Report</td><td>LAB_REPORT</td><td><span class="badge badge-green">Extracted</span></td><td><button class="btn btn-sm btn-ghost" onclick="showScreen('doc-preview')">View</button> <button class="btn btn-sm btn-ghost" onclick="showScreen('doc-preview')">Download</button></td></tr>
+      <tr><td>01 Aug 2026</td><td>Prescription - Dr. Priya</td><td>PRESCRIPTION</td><td><span class="badge badge-green">Extracted</span></td><td><button class="btn btn-sm btn-ghost" onclick="showScreen('doc-preview')">View</button> <button class="btn btn-sm btn-ghost" onclick="showScreen('doc-preview')">Download</button></td></tr>
+      <tr><td>28 Jul 2026</td><td>Chest X-Ray</td><td>IMAGING</td><td><span class="badge badge-yellow">Processing</span></td><td><button class="btn btn-sm btn-ghost" onclick="showScreen('doc-preview')">View</button></td></tr>
+    </tbody>
+  </table>
+  <div style="font-size:11px;color:var(--ink-400);margin-top:8px;">
+    OCR/Smart Reports: GET /api/patients/{id}/documents/{docId}/text | GET .../extraction<br>
+    Preview: GET .../preview?page=1 | Download: GET .../download
+  </div>
+</div>`;
+
+SCREENS.prescriptions = () => `
+<div class="page-header"><div class="page-title-lg">My Prescriptions</div></div>
+<div class="card">
+  <div style="font-size:12px;color:var(--ink-500);margin-bottom:12px;">API: GET /api/patients/{id}/prescriptions?signedOnly=true</div>
+  <table>
+    <thead><tr><th>Date</th><th>Doctor</th><th>Medications</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody>
+      <tr><td>04 Aug 2026</td><td>Dr. Priya Sharma</td><td>Paracetamol 500mg, Azithromycin 500mg, Cetirizine 10mg</td><td><span class="badge badge-green">Signed</span></td><td><button class="btn btn-sm btn-ghost" onclick="showScreen('appt-summary')">View</button> <button class="btn btn-sm btn-ghost" onclick="showScreen('appt-summary')">Download PDF</button></td></tr>
+      <tr><td>15 Jul 2026</td><td>Dr. Amit Joshi</td><td>Amlodipine 5mg, Metformin 500mg</td><td><span class="badge badge-green">Signed</span></td><td><button class="btn btn-sm btn-ghost" onclick="showScreen('appt-summary')">View</button> <button class="btn btn-sm btn-ghost" onclick="showScreen('appt-summary')">Download PDF</button></td></tr>
+    </tbody>
+  </table>
+</div>`;
+
+// --- LAB ORDERS ---
+// Source: LabsHome, LabsCatalog, LabsCheckout, LabsOrders
+SCREENS['lab-orders'] = () => `
+<div class="page-header"><div class="page-title-lg">Lab Orders</div><div class="header-spacer"></div><button class="btn btn-primary" onclick="showScreen('book-lab')">Order New Lab Test</button></div>
+<div class="card">
+  <div class="card-title">My Lab Orders
+    <span style="margin-left:auto;font-size:11px;color:var(--ink-400);">API: GET /api/labs/orders/mine</span>
+  </div>
+  <table>
+    <thead><tr><th>Date</th><th>Tests</th><th>Lab/Center</th><th>Status</th><th>Payment</th><th>Actions</th></tr></thead>
+    <tbody>
+      <tr><td>04 Aug 2026</td><td>CBC, HbA1c</td><td>City Diagnostics</td><td><span class="badge badge-blue">ORDERED</span></td><td><span class="badge badge-green">PAID</span></td><td><button class="btn btn-sm btn-ghost" onclick="showScreen('lab-order-detail')">View Details</button></td></tr>
+      <tr><td>20 Jul 2026</td><td>Lipid Panel</td><td>MedPlus Labs</td><td><span class="badge badge-green">COMPLETED</span></td><td><span class="badge badge-green">PAID</span></td><td><button class="btn btn-sm btn-ghost" onclick="showScreen('lab-order-detail')">View Report</button></td></tr>
+    </tbody>
+  </table>
+  <div style="font-size:11px;color:var(--ink-400);margin-top:8px;">
+    Patient lab ordering flow:<br>
+    1. GET /api/organizations/nearby?types=DIAGNOSTICS (geo-based center discovery)<br>
+    2. GET /api/labs/catalog?orgId= (browse available tests + prices)<br>
+    3. POST /api/labs/orders (create order with selected tests)<br>
+    4. Payment: POST /api/payments/labs/{orderId}/razorpay-intent<br>
+    Statuses: ORDERED -> IN_PROGRESS -> COMPLETED
+  </div>
+</div>`;
+
+SCREENS['book-lab'] = () => `
+<div class="page-header"><div class="page-title-lg">Order Lab Tests</div></div>
+<div class="wizard-steps">
+  <div class="wizard-step active">1. Find Lab Center</div>
+  <div class="wizard-step">2. Select Tests</div>
+  <div class="wizard-step">3. Pay</div>
+</div>
+<div class="card">
+  <div class="card-title">Nearby Diagnostic Centers
+    <span style="margin-left:auto;font-size:11px;color:var(--ink-400);">API: GET /api/organizations/nearby?lat=&lng=&types=DIAGNOSTICS</span>
+  </div>
+  <table>
+    <thead><tr><th></th><th>Center</th><th>Distance</th><th>Rating</th><th>Tests Available</th></tr></thead>
+    <tbody>
+      <tr style="background:var(--primary-50);"><td><input type="radio" checked></td><td><b>City Diagnostics</b></td><td>0.8 km</td><td>4.5/5</td><td>120+</td></tr>
+      <tr><td><input type="radio"></td><td>MedPlus Labs</td><td>1.2 km</td><td>4.2/5</td><td>85+</td></tr>
+      <tr><td><input type="radio"></td><td>PathCare Diagnostics</td><td>2.5 km</td><td>4.7/5</td><td>200+</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <div class="card-title">Select Tests from Catalog
+    <span style="margin-left:auto;font-size:11px;color:var(--ink-400);">API: GET /api/labs/catalog?orgId=&type=LAB|SCAN</span>
+  </div>
+  <div class="form-group"><input class="form-control" placeholder="Search tests... e.g. CBC, Thyroid, MRI"></div>
+  <table>
+    <thead><tr><th></th><th>Test Name</th><th>Type</th><th>Price (INR)</th></tr></thead>
+    <tbody>
+      <tr><td><input type="checkbox" checked></td><td>Complete Blood Count (CBC)</td><td>LAB</td><td style="font-family:var(--font-data)">350</td></tr>
+      <tr><td><input type="checkbox" checked></td><td>HbA1c</td><td>LAB</td><td style="font-family:var(--font-data)">450</td></tr>
+      <tr><td><input type="checkbox"></td><td>Thyroid Profile (T3, T4, TSH)</td><td>LAB</td><td style="font-family:var(--font-data)">600</td></tr>
+      <tr><td><input type="checkbox"></td><td>Chest X-Ray PA View</td><td>SCAN</td><td style="font-family:var(--font-data)">500</td></tr>
+    </tbody>
+  </table>
+  <div style="background:var(--ink-50);border-radius:8px;padding:12px;margin-top:14px;display:flex;justify-content:space-between;align-items:center;">
+    <div><b>Total:</b> <span style="font-family:var(--font-data);font-size:18px;font-weight:800;color:var(--primary);">INR 800</span> (2 tests)</div>
+    <button class="btn btn-primary" onclick="showScreen('lab-pay-success')">Proceed to Payment</button>
+  </div>
+</div>`;
+
+// --- CLAIM RECORDS ---
+// Source: ClaimRecords.js - OTP verification flow
+SCREENS.claim = () => `
+<div class="page-header"><div class="page-title-lg">Claim Medical Records</div></div>
+<div class="card">
+  <div class="card-title">Link Existing Patient Records to Your Account</div>
+  <div style="font-size:12px;color:var(--ink-500);margin-bottom:14px;">
+    If you visited a clinic before registering on HospitAll, your records may exist under your phone number. Verify your identity to claim them.
+  </div>
+  <div class="wizard-steps" style="margin-bottom:16px;">
+    <div class="wizard-step active">1. Verify Phone (OTP)</div>
+    <div class="wizard-step">2. Search Records</div>
+    <div class="wizard-step">3. Confirm Claim</div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Mobile Number</label><input class="form-control" type="tel" placeholder="Your registered phone" value="9876543210"></div>
+    <div class="form-group"><label class="form-label">Email (optional)</label><input class="form-control" type="email" placeholder="For additional verification"></div>
+  </div>
+  <button class="btn btn-primary">Send OTP</button>
+  <div style="margin-top:14px;">
+    <div class="form-group"><label class="form-label">Enter OTP</label><input class="form-control" type="text" placeholder="6-digit code" style="max-width:200px;"></div>
+    <button class="btn btn-success">Verify and Search</button>
+  </div>
+  <div style="font-size:11px;color:var(--ink-400);margin-top:10px;">
+    API Flow: POST /api/auth/otp/start -> POST /api/auth/otp/verify -> POST /api/auth/claim/candidates -> POST /api/auth/claim/confirm
+  </div>
+</div>`;
+
+SCREENS.emergency = () => `
+<div class="page-header"><div class="page-title-lg">Emergency Services</div></div>
+<div class="card">
+  <div class="card-title">Request Ambulance</div>
+  <div style="font-size:12px;color:var(--ink-500);margin-bottom:12px;">API: POST /api/ambulance/requests (uses geolocation)</div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Emergency Type</label><select class="form-control"><option>Medical Emergency</option><option>Accident/Trauma</option><option>Cardiac</option><option>Breathing Difficulty</option></select></div>
+    <div class="form-group"><label class="form-label">Additional Info</label><input class="form-control" type="text" placeholder="Brief description"></div>
+  </div>
+  <div class="form-group"><label class="form-label">Location</label><input class="form-control" type="text" placeholder="Auto-detected via GPS" value="12.9716, 77.5946 (Bangalore)"></div>
+  <button class="btn btn-danger" style="font-size:15px;padding:12px 24px;">Request Ambulance Now</button>
+  <div style="margin-top:16px;">
+    <div class="card-title">My Ambulance Requests</div>
+    <div style="font-size:11px;color:var(--ink-400);margin-bottom:8px;">API: GET /api/ambulance/requests/mine</div>
+    <table>
+      <thead><tr><th>Date</th><th>Type</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody><tr><td>No active requests</td><td></td><td></td><td></td></tr></tbody>
+    </table>
+  </div>
+</div>`;
+
+SCREENS.support = () => `
+<div class="page-header"><div class="page-title-lg">Support</div></div>
+<div class="card">
+  <div class="card-title">Contact Support</div>
+  <div class="form-group"><label class="form-label">Subject</label><input class="form-control" type="text"></div>
+  <div class="form-group"><label class="form-label">Message</label><textarea class="form-control" style="min-height:80px;"></textarea></div>
+  <div class="form-row"><div class="form-group"><label class="form-label">Category</label><select class="form-control"><option>Technical</option><option>Billing</option><option>Appointment</option><option>GDPR (Account Deletion)</option></select></div><div class="form-group"><label class="form-label">Priority</label><select class="form-control"><option>LOW</option><option selected>MEDIUM</option><option>HIGH</option></select></div></div>
+  <button class="btn btn-primary">Submit Ticket</button>
+</div>`;
+
+// --- PATIENT MEDICAL HISTORY (Items 198-202) ---
+// Source: PatientViewWizard.js - Tabs: Identity, Contact, Medical History, Family & Vaccines, Prescriptions
+// APIs: patientAPI.listAllergies, listMedications, listFamilyHistory, listVaccines, listSubstanceUse
+SCREENS['my-health'] = () => `
+<div class="page-header"><div class="page-title-lg">My Health Profile</div><div class="header-spacer"></div><button class="btn btn-ghost" onclick="showScreen('dashboard')">Back</button></div>
+<div class="card" style="padding:0;">
+  <div style="display:flex;border-bottom:1px solid var(--ink-200);">
+    <div style="padding:12px 18px;font-size:13px;font-weight:700;color:var(--primary);border-bottom:2px solid var(--primary);cursor:pointer;">Allergies</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-meds')">Medications</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-family')">Family History</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-vaccines')">Vaccines</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-substance')">Substance Use</div>
+  </div>
+  <div style="padding:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <div style="font-size:14px;font-weight:700;">My Allergies</div>
+      <button class="btn btn-sm btn-primary" onclick="showScreen('my-health')">Add Allergy</button>
+    </div>
+    <table><thead><tr><th>Allergen</th><th>Reaction</th><th>Severity</th><th>Status</th><th>Onset</th></tr></thead><tbody>
+      <tr><td><b>Penicillin</b></td><td>Rash, Hives</td><td><span class="badge badge-red">Severe</span></td><td><span class="badge badge-green">Active</span></td><td>2018</td></tr>
+      <tr><td><b>Dust mites</b></td><td>Sneezing, Rhinitis</td><td><span class="badge badge-yellow">Mild</span></td><td><span class="badge badge-green">Active</span></td><td>Childhood</td></tr>
+    </tbody></table>
+    <div style="font-size:11px;color:var(--ink-400);margin-top:10px;">API: GET/POST/PUT/DELETE /api/patients/{id}/allergies | Dictionary: GET /api/dictionary/allergens?q=</div>
+  </div>
+</div>`;
+
+SCREENS['my-meds'] = () => `
+<div class="page-header"><div class="page-title-lg">My Health Profile</div><div class="header-spacer"></div><button class="btn btn-ghost" onclick="showScreen('dashboard')">Back</button></div>
+<div class="card" style="padding:0;">
+  <div style="display:flex;border-bottom:1px solid var(--ink-200);">
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-health')">Allergies</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:700;color:var(--primary);border-bottom:2px solid var(--primary);cursor:pointer;">Medications</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-family')">Family History</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-vaccines')">Vaccines</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-substance')">Substance Use</div>
+  </div>
+  <div style="padding:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <div style="font-size:14px;font-weight:700;">Current Medications</div>
+      <button class="btn btn-sm btn-primary" onclick="showScreen('my-meds')">Add Medication</button>
+    </div>
+    <table><thead><tr><th>Drug</th><th>Dose</th><th>Frequency</th><th>Reason</th><th>Since</th><th>Status</th></tr></thead><tbody>
+      <tr><td><b>Amlodipine 5mg</b></td><td>1 tab</td><td>QD (Once daily)</td><td>Hypertension</td><td>Jan 2025</td><td><span class="badge badge-green">Active</span></td></tr>
+      <tr><td><b>Metformin 500mg</b></td><td>1 tab</td><td>BID (Twice daily)</td><td>Type 2 DM</td><td>Mar 2024</td><td><span class="badge badge-green">Active</span></td></tr>
+    </tbody></table>
+    <div style="font-size:11px;color:var(--ink-400);margin-top:10px;">API: GET/POST/PUT/DELETE /api/patients/{id}/medications</div>
+  </div>
+</div>`;
+
+SCREENS['my-family'] = () => `
+<div class="page-header"><div class="page-title-lg">My Health Profile</div><div class="header-spacer"></div><button class="btn btn-ghost" onclick="showScreen('dashboard')">Back</button></div>
+<div class="card" style="padding:0;">
+  <div style="display:flex;border-bottom:1px solid var(--ink-200);">
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-health')">Allergies</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-meds')">Medications</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:700;color:var(--primary);border-bottom:2px solid var(--primary);cursor:pointer;">Family History</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-vaccines')">Vaccines</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-substance')">Substance Use</div>
+  </div>
+  <div style="padding:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <div style="font-size:14px;font-weight:700;">Family Medical History</div>
+      <button class="btn btn-sm btn-primary" onclick="showScreen('my-family')">Add Entry</button>
+    </div>
+    <table><thead><tr><th>Relation</th><th>Condition</th><th>Age at Onset</th><th>Notes</th></tr></thead><tbody>
+      <tr><td><b>Father</b></td><td>Type 2 Diabetes</td><td>45</td><td>On insulin since 55</td></tr>
+      <tr><td><b>Mother</b></td><td>Hypertension</td><td>50</td><td>Controlled with medication</td></tr>
+      <tr><td><b>Paternal Grandfather</b></td><td>Coronary Artery Disease</td><td>60</td><td>Bypass surgery at 65</td></tr>
+    </tbody></table>
+    <div style="font-size:11px;color:var(--ink-400);margin-top:10px;">API: GET/POST/PUT/DELETE /api/patients/{id}/family-history | Fields: relation, condition, ageAtOnset, deceased, causeOfDeath, notes</div>
+  </div>
+</div>`;
+
+SCREENS['my-vaccines'] = () => `
+<div class="page-header"><div class="page-title-lg">My Health Profile</div><div class="header-spacer"></div><button class="btn btn-ghost" onclick="showScreen('dashboard')">Back</button></div>
+<div class="card" style="padding:0;">
+  <div style="display:flex;border-bottom:1px solid var(--ink-200);">
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-health')">Allergies</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-meds')">Medications</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-family')">Family History</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:700;color:var(--primary);border-bottom:2px solid var(--primary);cursor:pointer;">Vaccines</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-substance')">Substance Use</div>
+  </div>
+  <div style="padding:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <div style="font-size:14px;font-weight:700;">Vaccination Record</div>
+      <button class="btn btn-sm btn-primary" onclick="showScreen('my-vaccines')">Add Vaccine</button>
+    </div>
+    <table><thead><tr><th>Vaccine</th><th>Date</th><th>Dose #</th><th>Provider</th><th>Lot #</th></tr></thead><tbody>
+      <tr><td><b>COVID-19 (Covishield)</b></td><td>15 Mar 2021</td><td>1st</td><td>City Health Clinic</td><td>ABV1234</td></tr>
+      <tr><td><b>COVID-19 (Covishield)</b></td><td>10 Jun 2021</td><td>2nd</td><td>City Health Clinic</td><td>ABV5678</td></tr>
+      <tr><td><b>Influenza</b></td><td>01 Oct 2025</td><td>Annual</td><td>MedPlus Hospital</td><td>FLU2025</td></tr>
+      <tr><td><b>Tetanus (TdaP)</b></td><td>20 Jan 2020</td><td>Booster</td><td>PHC</td><td>--</td></tr>
+    </tbody></table>
+    <div style="font-size:11px;color:var(--ink-400);margin-top:10px;">API: GET/POST/PUT/DELETE /api/patients/{id}/vaccines | Dictionary: GET /api/dictionary/vaccines?q=</div>
+  </div>
+</div>`;
+
+SCREENS['my-substance'] = () => `
+<div class="page-header"><div class="page-title-lg">My Health Profile</div><div class="header-spacer"></div><button class="btn btn-ghost" onclick="showScreen('dashboard')">Back</button></div>
+<div class="card" style="padding:0;">
+  <div style="display:flex;border-bottom:1px solid var(--ink-200);">
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-health')">Allergies</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-meds')">Medications</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-family')">Family History</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:600;color:var(--ink-500);cursor:pointer;" onclick="showScreen('my-vaccines')">Vaccines</div>
+    <div style="padding:12px 18px;font-size:13px;font-weight:700;color:var(--primary);border-bottom:2px solid var(--primary);cursor:pointer;">Substance Use</div>
+  </div>
+  <div style="padding:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <div style="font-size:14px;font-weight:700;">Substance Use History</div>
+      <button class="btn btn-sm btn-primary" onclick="showScreen('my-substance')">Add Entry</button>
+    </div>
+    <table><thead><tr><th>Substance</th><th>Status</th><th>Frequency</th><th>Duration</th><th>Notes</th></tr></thead><tbody>
+      <tr><td><b>Tobacco (Smoking)</b></td><td><span class="badge badge-gray">Former</span></td><td>10/day</td><td>2010-2020</td><td>Quit 6 years ago</td></tr>
+      <tr><td><b>Alcohol</b></td><td><span class="badge badge-yellow">Occasional</span></td><td>2-3 drinks/week</td><td>Social</td><td>Weekend only</td></tr>
+    </tbody></table>
+    <div style="font-size:11px;color:var(--ink-400);margin-top:10px;">API: GET/POST/PUT/DELETE /api/patients/{id}/substance-use | Fields: substance, status, frequency, startDate, endDate, notes</div>
+  </div>
+</div>`;
+
+// --- LAB ORDER DETAIL + REPORT VIEW (Items 186-187) ---
+// Source: LabsOrderDetail.js
+SCREENS['lab-order-detail'] = () => `
+<div class="page-header"><div class="page-title-lg">Lab Order #LO-2891</div><div class="header-spacer"></div><button class="btn btn-ghost" onclick="showScreen('lab-orders')">Back to Orders</button></div>
+<div class="card">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+    <div>
+      <div style="font-size:12px;font-weight:700;color:var(--ink-500);margin-bottom:6px;">ORDER INFO</div>
+      <div style="font-size:13px;line-height:2;">
+        <div><b>Order #:</b> LO-2891</div>
+        <div><b>Date:</b> 04 Aug 2026</div>
+        <div><b>Center:</b> City Diagnostics</div>
+        <div><b>Status:</b> <span class="badge badge-yellow">IN_PROGRESS</span></div>
+        <div><b>Payment:</b> <span class="badge badge-green">PAID</span> INR 800</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:700;color:var(--ink-500);margin-bottom:6px;">TESTS ORDERED</div>
+      <table style="font-size:12px;"><thead><tr><th>Test</th><th>Type</th><th>Status</th></tr></thead><tbody>
+        <tr><td>Complete Blood Count (CBC)</td><td>LAB</td><td><span class="badge badge-green">COMPLETED</span></td></tr>
+        <tr><td>HbA1c</td><td>LAB</td><td><span class="badge badge-yellow">IN_PROGRESS</span></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-title">Report - CBC<span style="margin-left:auto;font-size:11px;color:var(--ink-400);">Uploaded by lab staff via POST /api/labs/orders/{id}/report</span></div>
+  <div style="background:var(--ink-50);border-radius:8px;padding:14px;margin-bottom:12px;">
+    <div style="font-size:12px;font-weight:700;margin-bottom:8px;">Results</div>
+    <table style="font-size:12px;">
+      <thead><tr><th>Parameter</th><th>Result</th><th>Unit</th><th>Reference Range</th><th>Flag</th></tr></thead>
+      <tbody>
+        <tr><td>Hemoglobin</td><td style="font-family:var(--font-data);font-weight:700;">13.2</td><td>g/dL</td><td>12.0-16.0</td><td><span class="badge badge-green">Normal</span></td></tr>
+        <tr><td>WBC Count</td><td style="font-family:var(--font-data);font-weight:700;color:var(--danger);">12,800</td><td>/cumm</td><td>4,000-11,000</td><td><span class="badge badge-red">High</span></td></tr>
+        <tr><td>Platelet Count</td><td style="font-family:var(--font-data);font-weight:700;">2,45,000</td><td>/cumm</td><td>1,50,000-4,00,000</td><td><span class="badge badge-green">Normal</span></td></tr>
+        <tr><td>RBC Count</td><td style="font-family:var(--font-data);font-weight:700;">4.8</td><td>million/cumm</td><td>4.5-5.5</td><td><span class="badge badge-green">Normal</span></td></tr>
+        <tr><td>ESR</td><td style="font-family:var(--font-data);font-weight:700;color:var(--warning);">22</td><td>mm/hr</td><td>0-15</td><td><span class="badge badge-yellow">Elevated</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="display:flex;gap:10px;">
+    <button class="btn btn-primary" onclick="showScreen('lab-orders')">Download PDF Report</button>
+    <button class="btn btn-ghost" onclick="showScreen('lab-orders')">View Original Document</button>
+  </div>
+  <div style="font-size:11px;color:var(--ink-400);margin-top:10px;">
+    API: GET /api/labs/orders/{id} | Report upload: POST /api/labs/orders/{id}/report (multipart)<br>
+    Lab results (patient-level): GET /api/patients/{id}/labs | Trends: GET /api/patients/{id}/labs/trends?analyte=
+  </div>
+</div>`;
+
+// --- CONSULT NOW (immediate mode) ---
+// Source: OCStart with mode=now -> OCBook with autoPick=1, autoPay=1
+SCREENS['consult-now'] = () => `
+<div class="page-header"><div class="page-title-lg">Consult Now</div></div>
+<div class="card">
+  <div class="card-title">Finding Available Doctor...</div>
+  <div style="font-size:12px;color:var(--ink-500);margin-bottom:14px;">
+    System finds the next available doctor (online, with open slot in the next 15 minutes).<br>
+    API: GET /api/slots?orgId=&date=today + filter by earliest available slot with autoPick=1
+  </div>
+  <div style="background:var(--success-50);border:1px solid var(--success-100);border-radius:8px;padding:16px;margin-bottom:14px;">
+    <div style="font-size:14px;font-weight:700;color:var(--success);margin-bottom:6px;">Doctor Available</div>
+    <div style="font-size:13px;">Dr. Priya Sharma (General Medicine) - Available now</div>
+    <div style="font-size:12px;color:var(--ink-500);margin-top:4px;">City Health Clinic | Fee: INR 500</div>
+  </div>
+  <div style="display:flex;gap:10px;">
+    <button class="btn btn-primary" onclick="showScreen('booking-success')">Pay INR 500 and Start Consultation</button>
+    <button class="btn btn-ghost" onclick="showScreen('book-online')">Choose Different Doctor</button>
+  </div>
+  <div style="font-size:11px;color:var(--ink-400);margin-top:8px;">
+    Flow: POST /api/appointments (autoPick, channel=ONLINE) -> POST /api/payments/appointments/{id}/razorpay-intent -> verify -> POST /api/appointments/{id}/video/join
+  </div>
+</div>`;
+
+// --- BOOKING SUCCESS ---
+SCREENS['booking-success'] = () => `
+<div class="card" style="text-align:center;padding:40px;">
+  <div style="width:64px;height:64px;border-radius:50%;background:var(--success-50);color:var(--success);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;font-weight:800;">OK</div>
+  <div style="font-size:20px;font-weight:700;margin-bottom:8px;">Appointment Booked Successfully</div>
+  <div style="color:var(--ink-500);margin-bottom:6px;">Your appointment has been confirmed.</div>
+  <div style="background:var(--ink-50);border-radius:8px;padding:14px;margin:16px auto;max-width:400px;text-align:left;font-size:13px;">
+    <div><b>Doctor:</b> Dr. Priya Sharma</div>
+    <div><b>Date/Time:</b> 06 Aug 2026, 10:00 AM</div>
+    <div><b>Type:</b> ONLINE (Teleconsult)</div>
+    <div><b>Status:</b> <span class="badge badge-green">CONFIRMED</span></div>
+    <div><b>Payment:</b> <span class="badge badge-green">CAPTURED</span> INR 500</div>
+  </div>
+  <div style="display:flex;gap:10px;justify-content:center;">
+    <button class="btn btn-primary" onclick="showScreen('video-room')">Join Video Room</button>
+    <button class="btn btn-ghost" onclick="showScreen('appointments')">View My Appointments</button>
+    <button class="btn btn-ghost" onclick="showScreen('dashboard')">Back to Dashboard</button>
+  </div>
+  <div style="font-size:11px;color:var(--ink-400);margin-top:12px;">
+    Join window: 10 minutes before to 60 minutes after scheduled time<br>
+    Video join: POST /api/appointments/{id}/video/join -> returns joinUrl (WebRTC room)
+  </div>
+</div>`;
+
+// --- VIDEO ROOM ---
+// Source: OCVisitRoom.js - WebRTC video
+SCREENS['video-room'] = () => `
+<div class="page-header"><div class="page-title-lg">Video Consultation Room</div></div>
+<div class="card">
+  <div style="background:#111;border-radius:10px;height:400px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;margin-bottom:14px;">
+    <div style="text-align:center;">
+      <div style="font-size:14px;color:rgba(255,255,255,.6);margin-bottom:8px;">Video Preview</div>
+      <div style="font-size:18px;font-weight:700;">Waiting for doctor to join...</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:8px;">Dr. Priya Sharma | Appointment #1042</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:10px;justify-content:center;">
+    <button class="btn btn-ghost">Toggle Camera</button>
+    <button class="btn btn-ghost">Toggle Microphone</button>
+    <button class="btn btn-danger" onclick="showScreen('appointments')">Leave Room</button>
+  </div>
+  <div style="font-size:11px;color:var(--ink-400);margin-top:10px;">
+    API: POST /api/appointments/{id}/video/join -> { joinUrl } (opens WebRTC peer connection)<br>
+    Provider: webrtc (from featureFlags.ocFlags.video.provider)<br>
+    Join window: JOIN_BEFORE_MIN=10, JOIN_AFTER_MIN=60
+  </div>
+</div>`;
+
+// --- PAYMENT PAGE ---
+// Source: PaymentPage.js
+SCREENS['pay-appointment'] = () => `
+<div class="page-header"><div class="page-title-lg">Pay for Appointment</div></div>
+<div class="card">
+  <div style="background:var(--ink-50);border-radius:8px;padding:14px;margin-bottom:16px;">
+    <div style="font-size:13px;"><b>Doctor:</b> Dr. Amit Joshi | <b>Date:</b> 18 Aug 2026, 14:00 | <b>Amount:</b> <span style="font-family:var(--font-data);font-weight:800;color:var(--primary);">INR 800</span></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+    <div style="border:2px solid var(--primary);border-radius:8px;padding:14px;cursor:pointer;background:var(--primary-50);">
+      <div style="font-weight:700;color:var(--primary);">Razorpay (Card/UPI/NetBanking)</div>
+      <div style="font-size:11px;color:var(--ink-500);">Instant confirmation via payment gateway</div>
+    </div>
+    <div style="border:1px solid var(--ink-200);border-radius:8px;padding:14px;cursor:pointer;">
+      <div style="font-weight:700;">Pay at Center</div>
+      <div style="font-size:11px;color:var(--ink-500);">Pay cash/UPI when you visit the clinic</div>
+    </div>
+  </div>
+  <button class="btn btn-primary" onclick="showScreen('booking-success')">Pay INR 800</button>
+</div>`;
+
+// --- APPOINTMENT SUMMARY (completed) ---
+SCREENS['appt-summary'] = () => `
+<div class="page-header"><div class="page-title-lg">Appointment Summary</div><div class="header-spacer"></div><button class="btn btn-ghost" onclick="showScreen('appointments')">Back</button></div>
+<div class="card">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div>
+      <div style="font-size:12px;font-weight:700;color:var(--ink-500);margin-bottom:6px;">APPOINTMENT</div>
+      <div style="font-size:13px;line-height:2;">
+        <div><b>Date:</b> 04 Aug 2026, 09:30</div>
+        <div><b>Doctor:</b> Dr. Priya Sharma (General Medicine)</div>
+        <div><b>Status:</b> <span class="badge badge-green">COMPLETED</span></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:700;color:var(--ink-500);margin-bottom:6px;">DIAGNOSIS</div>
+      <div style="font-size:13px;line-height:2;">
+        <div>J02.9 - Acute pharyngitis, unspecified (Primary)</div>
+        <div>R50.9 - Fever, unspecified</div>
+      </div>
+    </div>
+  </div>
+  <div style="border-top:1px solid var(--ink-200);margin-top:14px;padding-top:14px;">
+    <div style="font-size:12px;font-weight:700;color:var(--ink-500);margin-bottom:6px;">PRESCRIPTION</div>
+    <table style="font-size:12px;"><thead><tr><th>Drug</th><th>Dose</th><th>Frequency</th><th>Duration</th><th>Route</th></tr></thead><tbody>
+      <tr><td>Paracetamol 500mg Tab</td><td>1</td><td>TID</td><td>5 Days</td><td>PO</td></tr>
+      <tr><td>Azithromycin 500mg Tab</td><td>1</td><td>QD</td><td>3 Days</td><td>PO</td></tr>
+      <tr><td>Cetirizine 10mg Tab</td><td>1</td><td>QHS</td><td>5 Days</td><td>PO</td></tr>
+    </tbody></table>
+  </div>
+  <div style="display:flex;gap:10px;margin-top:14px;">
+    <button class="btn btn-ghost" onclick="showScreen('prescriptions')">View All Prescriptions</button>
+    <button class="btn btn-ghost" onclick="showScreen('appointments')">Back to Appointments</button>
+  </div>
+</div>`;
+
+// --- CANCEL CONFIRM ---
+SCREENS['cancel-confirm'] = () => `
+<div class="card" style="text-align:center;padding:40px;max-width:500px;margin:0 auto;">
+  <div style="font-size:20px;font-weight:700;margin-bottom:12px;color:var(--danger);">Cancel Appointment?</div>
+  <div style="color:var(--ink-500);margin-bottom:20px;">This will cancel your appointment on 11 Aug 2026 with Dr. Priya Sharma. Refund will be processed if payment was made.</div>
+  <div style="display:flex;gap:10px;justify-content:center;">
+    <button class="btn btn-danger" onclick="showScreen('appointments')">Yes, Cancel</button>
+    <button class="btn btn-ghost" onclick="showScreen('appointments')">Keep Appointment</button>
+  </div>
+  <div style="font-size:11px;color:var(--ink-400);margin-top:10px;">API: PUT /api/appointments/{id} (status: CANCELED)</div>
+</div>`;
+
+// --- UPLOAD DOCUMENT ---
+SCREENS['upload-doc'] = () => `
+<div class="page-header"><div class="page-title-lg">Upload Document</div></div>
+<div class="card">
+  <div class="card-title">Upload Medical Document
+    <span style="margin-left:auto;font-size:11px;color:var(--ink-400);">API: POST /api/patients/{id}/documents (multipart file + category)</span>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">File</label><input class="form-control" type="file" accept=".pdf,.jpg,.png,.jpeg"></div>
+    <div class="form-group"><label class="form-label">Category</label><select class="form-control"><option>LAB_REPORT</option><option>PRESCRIPTION</option><option>IMAGING</option><option>DISCHARGE_SUMMARY</option><option>INSURANCE</option><option>OTHER</option></select></div>
+  </div>
+  <div style="display:flex;gap:10px;">
+    <button class="btn btn-primary" onclick="showScreen('records')">Upload</button>
+    <button class="btn btn-ghost" onclick="showScreen('records')">Cancel</button>
+  </div>
+  <div style="font-size:11px;color:var(--ink-400);margin-top:8px;">After upload, OCR extraction runs automatically. Status: PROCESSING -> EXTRACTED</div>
+</div>`;
+
+// --- DOCUMENT PREVIEW ---
+SCREENS['doc-preview'] = () => `
+<div class="page-header"><div class="page-title-lg">Document Viewer</div><div class="header-spacer"></div><button class="btn btn-ghost" onclick="showScreen('records')">Back to Records</button></div>
+<div class="card">
+  <div style="background:var(--ink-100);border-radius:8px;height:400px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;">
+    <div style="text-align:center;color:var(--ink-500);">
+      <div style="font-size:16px;font-weight:700;">CBC Report Preview</div>
+      <div style="font-size:12px;margin-top:4px;">Page 1 of 1 | PDF rendered via API</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:10px;">
+    <button class="btn btn-primary" onclick="showScreen('records')">Download Original</button>
+    <button class="btn btn-ghost">View OCR Text</button>
+    <button class="btn btn-ghost">View Extracted Data</button>
+  </div>
+  <div style="font-size:11px;color:var(--ink-400);margin-top:8px;">
+    Preview: GET /api/patients/{id}/documents/{docId}/preview?page=1<br>
+    Download: GET .../download | Text: GET .../text | Extraction: GET .../extraction
+  </div>
+</div>`;
+
+// --- LAB PAYMENT SUCCESS ---
+SCREENS['lab-pay-success'] = () => `
+<div class="card" style="text-align:center;padding:40px;">
+  <div style="width:64px;height:64px;border-radius:50%;background:var(--success-50);color:var(--success);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;font-weight:800;">OK</div>
+  <div style="font-size:20px;font-weight:700;margin-bottom:8px;">Lab Order Placed Successfully</div>
+  <div style="color:var(--ink-500);margin-bottom:16px;">Your tests (CBC, HbA1c) have been ordered at City Diagnostics.</div>
+  <div style="background:var(--ink-50);border-radius:8px;padding:14px;margin:0 auto;max-width:400px;text-align:left;font-size:13px;">
+    <div><b>Order #:</b> LO-2892</div>
+    <div><b>Tests:</b> CBC, HbA1c</div>
+    <div><b>Center:</b> City Diagnostics (0.8 km)</div>
+    <div><b>Payment:</b> <span class="badge badge-green">CAPTURED</span> INR 800</div>
+    <div><b>Status:</b> <span class="badge badge-blue">ORDERED</span></div>
+  </div>
+  <div style="display:flex;gap:10px;justify-content:center;margin-top:16px;">
+    <button class="btn btn-primary" onclick="showScreen('lab-orders')">View My Orders</button>
+    <button class="btn btn-ghost" onclick="showScreen('dashboard')">Dashboard</button>
+  </div>
+</div>`;
+
+function showScreen(name) {
+  const content = document.getElementById('screen-content');
+  const title = document.getElementById('page-title');
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  const navItem = document.querySelector(`.nav-item[data-screen="${name}"]`);
+  if (navItem) navItem.classList.add('active');
+  if (SCREENS[name]) content.innerHTML = SCREENS[name]();
+  title.textContent = name.replace(/-/g,' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+document.querySelectorAll('.nav-item[data-screen]').forEach(item => {
+  item.addEventListener('click', () => showScreen(item.dataset.screen));
+});
+showScreen('dashboard');
+</script>
+</body>
+</html>
