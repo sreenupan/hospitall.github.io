@@ -42,59 +42,164 @@ tr:hover td { background: #fafafa; }
 </style>
 </head>
 <body>
-<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-export">&#9650; Export</button><button class="btn-import">&#9660; Import</button><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
-<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="sales.html">Sales</a><a href="purchases.html">Purchases</a><a href="returns.html" class="active">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="prescription-dispense.html">Rx Dispense</a></div>
+<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
+<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="purchase-orders.html">Purchase Orders</a><a href="purchases.html">GRN</a><a href="sales.html">Sales</a><a href="prescription-dispense.html">Rx Dispense</a><a href="returns.html" class="active">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="audit-trail.html">Audit Trail</a><a href="settings.html">Settings</a><a href="documentation.html">Documentation</a></div>
 <div class="content">
   <div class="page-title">Returns</div>
+  <div style="background:#e3f2fd; border:1px solid #bbdefb; border-radius:8px; padding:10px 14px; font-size:12px; color:#1565c0; margin:10px 0 14px;">
+    &#128260; Two kinds of returns. <strong>Sale Return</strong>: a customer brings medicine back — reference the original invoice; stock goes back in (unless expired/damaged). <strong>Purchase Return</strong>: send goods back to the supplier against a GRN (short-expiry, wrong item) — creates a debit note and reduces stock.
+  </div>
   <div style="margin-bottom:12px;"><input type="text" placeholder="Search by invoice, product, reason..." style="width:300px; border:1px solid #e0e0e0; border-radius:8px; padding:8px 12px; font-size:12px; outline:none;"></div>
 
   <div class="card">
-    <div class="card-header">New Sale Return</div>
+    <div class="card-header">New Sale Return <span style="font-size:10px; font-weight:500; color:#94a3b8; text-transform:none;">customer &rarr; pharmacy</span></div>
     <div class="card-body">
       <div class="form-row">
-        <div class="form-group"><label>Invoice #</label><select><option>Select invoice...</option><option>INV-1001</option><option>INV-1002</option></select></div>
-        <div class="form-group"><label>Product</label><select><option>Select product...</option></select></div>
-        <div class="form-group"><label>Quantity</label><input type="number" value="1"></div>
-        <div class="form-group"><label>Reason</label><input type="text" placeholder="Reason..."></div>
+        <div class="form-group"><label>Invoice #</label><select id="sr-invoice"><option>Select invoice...</option><option>INV-1001</option><option>INV-1002</option><option>INV-1003</option></select></div>
+        <div class="form-group"><label>Product</label><select id="sr-product"><option>Select product...</option><option>MED013 · Paracetamol tab 650 mg</option><option>MED082 · Amoxycillin + Clavulanic acid tab 625 mg</option><option>MED004 · Alprazolam tab I.P 0.25 mg</option></select></div>
+        <div class="form-group"><label>Batch</label><select id="sr-batch"><option>BT-2026-P7</option><option>BT-2026-D9</option><option>BT-2026-C2</option></select></div>
+        <div class="form-group"><label>Quantity</label><input type="number" id="sr-qty" value="1"></div>
       </div>
-      <button class="btn-add">+ Add Return</button>
+      <div class="form-row" style="margin-top:0;">
+        <div class="form-group"><label>Reason</label><input type="text" id="sr-reason" placeholder="e.g. wrong item, reaction, doctor changed Rx"></div>
+        <div class="form-group"><label>Disposition</label>
+          <select id="sr-disp">
+            <option value="restock">Restock (resalable) — add back to batch</option>
+            <option value="writeoff">Write-off (expired/damaged) — send to Damages</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Refund</label>
+          <select id="sr-refund"><option>Cash</option><option>UPI</option><option>Store credit</option></select>
+        </div>
+        <div class="form-group" style="justify-content:flex-end;"><button class="btn-add" onclick="addSaleReturn()">+ Add Return</button></div>
+      </div>
+      <div id="sr-effect" style="display:none; margin-top:12px; border-radius:8px; padding:10px 14px; font-size:12px;"></div>
     </div>
   </div>
   <div class="card">
     <div class="card-header">Sale Returns</div>
     <table>
-      <thead><tr><th>Return #</th><th>Invoice</th><th>Date</th><th>Product</th><th>Qty</th><th>Reason</th></tr></thead>
-      <tbody>
-        <tr><td><strong>RET-001</strong></td><td>INV-1001</td><td>2026-06-28</td><td>P001</td><td>1</td><td>Damaged packing</td></tr>
+      <thead><tr><th>Return #</th><th>Invoice</th><th>Date</th><th>Product</th><th>Batch</th><th>Qty</th><th>Reason</th><th>Stock Effect</th><th>Refund</th></tr></thead>
+      <tbody id="sr-body">
+        <tr><td><strong>RET-001</strong></td><td>INV-1001</td><td>2026-06-28</td><td>MED013 &middot; Paracetamol tab 650 mg</td><td>BT-2026-P7</td><td>1</td><td>Damaged packing</td><td><span style="color:#d97706; font-weight:600;">Written off &rarr; Damages</span></td><td>Cash</td></tr>
       </tbody>
     </table>
-    <div class="row-count">Showing 1 of 1 rows</div>
+    <div class="row-count" id="sr-count">Showing 1 of 1 rows</div>
   </div>
 
   <div class="divider"></div>
 
   <div class="card">
-    <div class="card-header">New Purchase Return</div>
+    <div class="card-header">New Purchase Return <span style="font-size:10px; font-weight:500; color:#94a3b8; text-transform:none;">pharmacy &rarr; supplier</span></div>
     <div class="card-body">
       <div class="form-row">
-        <div class="form-group"><label>Invoice #</label><select><option>Select invoice...</option><option>PUR-5001</option><option>PUR-5002</option></select></div>
-        <div class="form-group"><label>Product</label><select><option>Select product...</option></select></div>
-        <div class="form-group"><label>Quantity</label><input type="number" value="1"></div>
-        <div class="form-group"><label>Reason</label><input type="text" placeholder="Reason..."></div>
+        <div class="form-group"><label>GRN #</label><select id="pr-grn"><option>Select GRN...</option><option>GRN-5001</option><option>GRN-5002</option><option>GRN-5003</option></select></div>
+        <div class="form-group"><label>Product</label><select id="pr-product"><option>Select product...</option><option>MED013 · Paracetamol tab 650 mg</option><option>MED082 · Amoxycillin + Clavulanic acid tab 625 mg</option></select></div>
+        <div class="form-group"><label>Batch</label><select id="pr-batch"><option>BT-2026-P7</option><option>BT-2026-D9</option></select></div>
+        <div class="form-group"><label>Quantity</label><input type="number" id="pr-qty" value="1"></div>
       </div>
-      <button class="btn-add">+ Add Return</button>
+      <div class="form-row" style="margin-top:0;">
+        <div class="form-group"><label>Reason</label><input type="text" id="pr-reason" placeholder="e.g. short expiry, damaged, wrong item"></div>
+        <div class="form-group"><label>Settlement</label>
+          <select id="pr-settle"><option>Debit note (credit to account)</option><option>Replacement stock</option><option>Cash refund</option></select>
+        </div>
+        <div class="form-group" style="justify-content:flex-end;"><button class="btn-add" onclick="addPurchaseReturn()">+ Add Return</button></div>
+      </div>
+      <div id="pr-effect" style="display:none; margin-top:12px; border-radius:8px; padding:10px 14px; font-size:12px;"></div>
     </div>
   </div>
   <div class="card">
     <div class="card-header">Purchase Returns</div>
     <table>
-      <thead><tr><th>Return #</th><th>Invoice</th><th>Date</th><th>Product</th><th>Qty</th><th>Reason</th></tr></thead>
-      <tbody>
-        <tr><td><strong>PRE-001</strong></td><td>PUR-5002</td><td>2026-06-27</td><td>P002</td><td>5</td><td>Short expiry</td></tr>
+      <thead><tr><th>Return #</th><th>GRN</th><th>Date</th><th>Product</th><th>Batch</th><th>Qty</th><th>Reason</th><th>Stock Effect</th><th>Settlement</th></tr></thead>
+      <tbody id="pr-body">
+        <tr><td><strong>PRE-001</strong></td><td>GRN-5002</td><td>2026-06-27</td><td>MED082 &middot; Amoxycillin + Clavulanic acid tab 625 mg</td><td>BT-2026-D9</td><td>5</td><td>Short expiry</td><td><span style="color:#c62828; font-weight:600;">Stock removed</span></td><td>Debit note DN-001</td></tr>
       </tbody>
     </table>
-    <div class="row-count">Showing 1 of 1 rows</div>
+    <div class="row-count" id="pr-count">Showing 1 of 1 rows</div>
   </div>
 </div>
+
+<script>
+var srSeq = 1, prSeq = 1;
+
+function today() {
+  var d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function addSaleReturn() {
+  var inv = document.getElementById('sr-invoice').value;
+  var prod = document.getElementById('sr-product').value;
+  var batch = document.getElementById('sr-batch').value;
+  var qty = document.getElementById('sr-qty').value || '1';
+  var reason = document.getElementById('sr-reason').value || '—';
+  var disp = document.getElementById('sr-disp').value;
+  var refund = document.getElementById('sr-refund').value;
+
+  if (inv.indexOf('Select') === 0 || prod.indexOf('Select') === 0) {
+    if (window.pharmacyToast) pharmacyToast('Select an invoice and product first.');
+    return;
+  }
+
+  srSeq++;
+  var retNo = 'RET-' + String(srSeq).padStart(3,'0');
+  var restock = disp === 'restock';
+  var effectCell = restock
+    ? '<span style="color:#16a34a; font-weight:600;">Restocked &rarr; ' + batch + '</span>'
+    : '<span style="color:#d97706; font-weight:600;">Written off &rarr; Damages</span>';
+
+  var tr = document.createElement('tr');
+  tr.innerHTML = '<td><strong>' + retNo + '</strong></td><td>' + inv + '</td><td>' + today() + '</td><td>' + prod + '</td><td>' + batch + '</td><td>' + qty + '</td><td>' + reason + '</td><td>' + effectCell + '</td><td>' + refund + '</td>';
+  document.getElementById('sr-body').appendChild(tr);
+  document.getElementById('sr-count').textContent = 'Showing ' + document.querySelectorAll('#sr-body tr').length + ' rows';
+
+  // Explicit effect banner
+  var box = document.getElementById('sr-effect');
+  box.style.display = 'block';
+  if (restock) {
+    box.style.background = '#f0fdf4'; box.style.border = '1px solid #bbf7d0'; box.style.color = '#166534';
+    box.innerHTML = '&#10003; <strong>' + retNo + '</strong> recorded. ' + qty + ' unit(s) of ' + prod + ' <strong>returned to stock</strong> (batch ' + batch + '). Refund of via ' + refund + ' issued to customer.';
+  } else {
+    box.style.background = '#fff8e1'; box.style.border = '1px solid #ffe082'; box.style.color = '#e65100';
+    box.innerHTML = '&#9888; <strong>' + retNo + '</strong> recorded. ' + qty + ' unit(s) <strong>not resalable</strong> — routed to <a href="damages.html" style="color:#b45309; font-weight:700;">Damages</a> (not added back to stock). Refund via ' + refund + ' issued.';
+  }
+  if (window.pharmacyToast) pharmacyToast(restock ? 'Sale return: stock returned to ' + batch + '. (demo)' : 'Sale return: written off to Damages. (demo)');
+}
+
+function addPurchaseReturn() {
+  var grn = document.getElementById('pr-grn').value;
+  var prod = document.getElementById('pr-product').value;
+  var batch = document.getElementById('pr-batch').value;
+  var qty = document.getElementById('pr-qty').value || '1';
+  var reason = document.getElementById('pr-reason').value || '—';
+  var settle = document.getElementById('pr-settle').value;
+
+  if (grn.indexOf('Select') === 0 || prod.indexOf('Select') === 0) {
+    if (window.pharmacyToast) pharmacyToast('Select a GRN and product first.');
+    return;
+  }
+
+  prSeq++;
+  var retNo = 'PRE-' + String(prSeq).padStart(3,'0');
+  var dnNo = 'DN-' + String(prSeq).padStart(3,'0');
+  var settleCell = settle.indexOf('Debit') === 0 ? 'Debit note ' + dnNo : settle;
+
+  var tr = document.createElement('tr');
+  tr.innerHTML = '<td><strong>' + retNo + '</strong></td><td>' + grn + '</td><td>' + today() + '</td><td>' + prod + '</td><td>' + batch + '</td><td>' + qty + '</td><td>' + reason + '</td><td><span style="color:#c62828; font-weight:600;">Stock removed</span></td><td>' + settleCell + '</td>';
+  document.getElementById('pr-body').appendChild(tr);
+  document.getElementById('pr-count').textContent = 'Showing ' + document.querySelectorAll('#pr-body tr').length + ' rows';
+
+  var box = document.getElementById('pr-effect');
+  box.style.display = 'block';
+  box.style.background = '#eff6ff'; box.style.border = '1px solid #bfdbfe'; box.style.color = '#1e40af';
+  var settleMsg = settle.indexOf('Debit') === 0
+    ? '<strong>' + dnNo + '</strong> (debit note) raised against the supplier.'
+    : settle + ' agreed with the supplier.';
+  box.innerHTML = '&#10003; <strong>' + retNo + '</strong> recorded. ' + qty + ' unit(s) of ' + prod + ' (batch ' + batch + ') <strong>removed from stock</strong> and returned against ' + grn + '. ' + settleMsg;
+  if (window.pharmacyToast) pharmacyToast('Purchase return: stock removed, ' + (settle.indexOf('Debit') === 0 ? dnNo + ' raised' : settle) + '. (demo)');
+}
+</script>
+<script src="pharmacy-ux.js"></script>
 </body>
 </html>

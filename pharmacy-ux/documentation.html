@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rx Pharmacy - Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: #f5f5f5; color: #1a1a2e; font-size: 14px; line-height: 1.6; }
+.header { background: #1a237e; color: #fff; padding: 0 20px; height: 44px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.header-brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; }
+.header-brand .icon { width: 26px; height: 26px; background: #3949ab; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; }
+.header-version { font-size: 9px; background: rgba(255,255,255,0.15); padding: 2px 7px; border-radius: 10px; margin-left: 6px; }
+.header-actions { display: flex; gap: 6px; }
+.header-actions button { border: none; border-radius: 6px; padding: 5px 12px; font-size: 11px; font-weight: 600; cursor: pointer; }
+.btn-reset { background: #ffc107; color: #333; }
+.btn-logout { background: #f44336; color: #fff; }
+.nav { display: flex; gap: 0; padding: 6px 16px; background: #fff; border-bottom: 1px solid #e0e0e0; overflow-x: auto; position: sticky; top: 44px; z-index: 90; }
+.nav a { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; color: #555; text-decoration: none; white-space: nowrap; }
+.nav a.active { background: #1565c0; color: #fff; font-weight: 600; }
+.nav a:hover:not(.active) { background: #f0f0f0; }
+
+.layout { display: grid; grid-template-columns: 240px 1fr; gap: 0; align-items: start; }
+@media(max-width: 860px){ .layout { grid-template-columns: 1fr; } .toc { display:none; } }
+
+/* Sidebar TOC */
+.toc { position: sticky; top: 92px; height: calc(100vh - 92px); overflow-y: auto; padding: 18px 12px; border-right: 1px solid #e8e8e8; background: #fff; }
+.toc .toc-title { font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.06em; margin: 14px 8px 6px; }
+.toc a { display: block; padding: 6px 10px; border-radius: 6px; font-size: 12.5px; color: #475569; text-decoration: none; }
+.toc a:hover { background: #f1f5f9; color: #1565c0; }
+
+.content { padding: 22px 28px; max-width: 900px; }
+h1 { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
+.subtitle { color: #64748b; font-size: 13px; margin-bottom: 20px; }
+h2 { font-size: 18px; font-weight: 800; margin: 30px 0 10px; padding-top: 10px; border-top: 2px solid #eef2f7; }
+h3 { font-size: 14px; font-weight: 700; margin: 18px 0 6px; color: #1e293b; }
+p { margin-bottom: 10px; }
+ul, ol { margin: 6px 0 12px 22px; }
+li { margin-bottom: 5px; }
+code { background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 4px; padding: 1px 6px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; color: #b91c1c; }
+.card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 16px 18px; margin-bottom: 16px; }
+.role-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 12px 0; }
+@media(max-width: 720px){ .role-cards { grid-template-columns: 1fr; } }
+.role-card { border: 1px solid #e8e8e8; border-radius: 10px; padding: 14px; }
+.role-card .rc-icon { font-size: 22px; }
+.role-card .rc-title { font-weight: 700; margin: 6px 0 4px; }
+.role-card .rc-desc { font-size: 12px; color: #64748b; }
+.callout { border-radius: 8px; padding: 12px 14px; font-size: 13px; margin: 12px 0; }
+.callout.blue { background: #e3f2fd; border: 1px solid #bbdefb; color: #1565c0; }
+.callout.amber { background: #fff8e1; border: 1px solid #ffe082; color: #92400e; }
+.callout.green { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+.callout.red { background: #fff5f5; border: 1px solid #fecaca; color: #b91c1c; }
+table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 10px 0 16px; }
+th { text-align: left; padding: 8px 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; color: #64748b; background: #f8fafc; border-bottom: 1px solid #e5e7eb; }
+td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+.badge-h { background: #ffebee; color: #c62828; padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+.step { display: flex; gap: 10px; margin-bottom: 8px; }
+.step .num { flex: 0 0 22px; height: 22px; background: #1565c0; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+.tab-link { color: #1565c0; font-weight: 600; text-decoration: none; }
+.tab-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
+<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="purchase-orders.html">Purchase Orders</a><a href="purchases.html">GRN</a><a href="sales.html">Sales</a><a href="prescription-dispense.html">Rx Dispense</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="audit-trail.html">Audit Trail</a><a href="settings.html">Settings</a><a href="documentation.html" class="active">Documentation</a></div>
+
+<div class="layout">
+  <!-- Sidebar TOC -->
+  <nav class="toc">
+    <div class="toc-title">Start Here</div>
+    <a href="#intro">What is this app?</a>
+    <a href="#roles">Who uses it (roles)</a>
+    <a href="#daily">A typical day</a>
+    <div class="toc-title">Core Concepts</div>
+    <a href="#concepts">Stock, batches &amp; FEFO</a>
+    <a href="#compliance">Telangana compliance</a>
+    <div class="toc-title">Tab Guides</div>
+    <a href="#t-overview">Overview</a>
+    <a href="#t-products">Products</a>
+    <a href="#t-suppliers">Suppliers</a>
+    <a href="#t-customers">Customers</a>
+    <a href="#t-po">Purchase Orders</a>
+    <a href="#t-grn">GRN</a>
+    <a href="#t-sales">Sales</a>
+    <a href="#t-rx">Rx Dispense</a>
+    <a href="#t-returns">Returns</a>
+    <a href="#t-damages">Damages</a>
+    <a href="#t-adj">Stock Adjustments</a>
+    <a href="#t-reports">Reports</a>
+    <a href="#t-audit">Audit Trail</a>
+    <a href="#t-settings">Settings</a>
+    <div class="toc-title">For Developers</div>
+    <a href="#dev">Handoff notes</a>
+    <a href="#glossary">Glossary</a>
+  </nav>
+
+  <!-- Content -->
+  <div class="content">
+    <h1>Pharmacy Module — Documentation</h1>
+    <div class="subtitle">A single guide for everyone: pharmacists, store managers, cashiers, and developers. This is a UX prototype with dummy data — all actions are demo-only.</div>
+
+    <!-- INTRO -->
+    <h2 id="intro">What is this app?</h2>
+    <p>This is the pharmacy management module for a retail medical store (built for a Telangana, India pharmacy). It handles the full cycle of running a pharmacy: buying stock from suppliers, receiving and tracking it by batch &amp; expiry, selling to customers (walk-in and prescription), and staying compliant with drug-license and GST rules.</p>
+    <div class="callout blue">New here? Read <a class="tab-link" href="#roles">Who uses it</a> and <a class="tab-link" href="#daily">A typical day</a> first, then jump to the guide for whichever tab you're on.</div>
+
+    <!-- ROLES -->
+    <h2 id="roles">Who uses it (roles)</h2>
+    <div class="role-cards">
+      <div class="role-card">
+        <div class="rc-icon">&#128138;</div>
+        <div class="rc-title">Pharmacist</div>
+        <div class="rc-desc">Sells medicines, dispenses prescriptions, verifies Schedule&nbsp;H drugs, handles returns. Lives mostly in <b>Sales</b> and <b>Rx Dispense</b>.</div>
+      </div>
+      <div class="role-card">
+        <div class="rc-icon">&#128188;</div>
+        <div class="rc-title">Store Manager</div>
+        <div class="rc-desc">Orders stock, receives deliveries, monitors reorder &amp; expiry alerts, reconciles cash, runs reports. Uses <b>Purchase Orders</b>, <b>GRN</b>, <b>Overview</b>, <b>Reports</b>.</div>
+      </div>
+      <div class="role-card">
+        <div class="rc-icon">&#129302;</div>
+        <div class="rc-title">Developer</div>
+        <div class="rc-desc">Implements this UX. See <a class="tab-link" href="#dev">Handoff notes</a> for data flow, role-gating, and what each demo action should really do.</div>
+      </div>
+    </div>
+    <div class="callout amber"><b>Role access:</b> <b>Settings</b> and <b>Audit Trail</b> are <b>Org Admin only</b>. Cashiers/pharmacists should not see them. The developer will gate these by role.</div>
+
+    <!-- DAILY -->
+    <h2 id="daily">A typical day (end-to-end)</h2>
+    <div class="step"><div class="num">1</div><div><b>Open the store</b> — check <a class="tab-link" href="overview.html">Overview</a>: reorder alerts, expiring batches, pending prescriptions.</div></div>
+    <div class="step"><div class="num">2</div><div><b>Reorder low stock</b> — raise a <a class="tab-link" href="purchase-orders.html">Purchase Order</a> (medicine + qty) and send to the supplier.</div></div>
+    <div class="step"><div class="num">3</div><div><b>Receive a delivery</b> — record it in <a class="tab-link" href="purchases.html">GRN</a> with batch, expiry, cost &amp; MRP. This creates stock.</div></div>
+    <div class="step"><div class="num">4</div><div><b>Sell all day</b> — walk-in sales in <a class="tab-link" href="sales.html">Sales</a>; doctor prescriptions in <a class="tab-link" href="prescription-dispense.html">Rx Dispense</a>.</div></div>
+    <div class="step"><div class="num">5</div><div><b>Handle exceptions</b> — <a class="tab-link" href="returns.html">Returns</a> (customer/supplier), <a class="tab-link" href="damages.html">Damages</a> (breakage/expiry), <a class="tab-link" href="stock-adjustments.html">Stock Adj.</a> (count mismatch).</div></div>
+    <div class="step"><div class="num">6</div><div><b>Close the day</b> — cash reconciliation on Overview, and generate <a class="tab-link" href="reports.html">Reports</a> (GST, Schedule H, stock register).</div></div>
+
+    <!-- CONCEPTS -->
+    <h2 id="concepts">Core concept: stock, batches &amp; FEFO</h2>
+    <p>This is the single most important idea in the app:</p>
+    <div class="callout green"><b>Stock is tracked at the batch level, and the source of truth is GRN.</b> A product's on-hand quantity is derived, not typed.</div>
+    <p><code>Products.stock = SUM(GRN batches) − Sales − Damages ± Adjustments</code></p>
+    <ul>
+      <li><b>Products</b> is the <i>catalog</i> — what medicines exist (name, MRP, GST, schedule). It does <b>not</b> hold real stock.</li>
+      <li><b>GRN</b> (Goods Receipt) is where stock enters — each received line creates a <b>batch</b> with its own expiry and cost.</li>
+      <li><b>FEFO</b> (First Expiry First Out): at sale time the system auto-picks the batch nearest to expiry, so old stock sells first.</li>
+      <li><b>Expired batches are blocked</b> from sale and should be moved to Damages or returned to the supplier.</li>
+    </ul>
+
+    <!-- COMPLIANCE -->
+    <h2 id="compliance">Telangana / India compliance</h2>
+    <table>
+      <thead><tr><th>Requirement</th><th>What it means in the app</th></tr></thead>
+      <tbody>
+        <tr><td><b>Schedule H / H1 drugs</b> <span class="badge-h">H</span></td><td>Patient <b>name &amp; age are required</b> and the sale should link a doctor's prescription. Logged in the Schedule&nbsp;H register (Reports).</td></tr>
+        <tr><td><b>Drug license</b></td><td>Store DL, pharmacist registration &amp; validity stored in Settings; shown on invoices &amp; the Overview bar.</td></tr>
+        <tr><td><b>GST</b></td><td>CGST + SGST split for intra-state (Telangana). GST report is filing-ready.</td></tr>
+        <tr><td><b>Stock register</b></td><td>Opening/closing quantities are auditable (Reports &rarr; Stock Register).</td></tr>
+        <tr><td><b>Selling price</b></td><td>Cannot exceed printed MRP.</td></tr>
+        <tr><td><b>Audit trail</b></td><td>Every add/edit/delete/void is logged with who &amp; when.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout amber"><b>OTC vs Schedule H:</b> ordinary over-the-counter sales can be anonymous. The name/age requirement kicks in automatically only when a Schedule&nbsp;H item is in the cart.</div>
+
+    <!-- TAB GUIDES -->
+    <h2 id="t-overview">Overview (Dashboard)</h2>
+    <p><b>Who:</b> everyone. <b>Purpose:</b> the store at a glance.</p>
+    <ul>
+      <li>KPIs (products, suppliers, customers, invoices), today's revenue.</li>
+      <li><b>Reorder alerts</b> — items below their reorder level, with a one-click Auto-Order.</li>
+      <li><b>Expiring soon</b> — value exposure from batches nearing expiry.</li>
+      <li><b>Schedule H audit log</b> &amp; <b>pending prescription queue</b>.</li>
+      <li><b>Day-end cash reconciliation</b> — enter physical cash vs expected.</li>
+    </ul>
+
+    <h2 id="t-products">Products (Catalog)</h2>
+    <p><b>Who:</b> store manager / admin. <b>Purpose:</b> the master list of medicines you sell.</p>
+    <div class="step"><div class="num">1</div><div>Click <b>+ Add</b>, fill name, form, schedule, HSN, MRP, GST, reorder level.</div></div>
+    <div class="step"><div class="num">2</div><div>Save — the product joins the catalog. A row also shows its batches &amp; a stock audit.</div></div>
+    <div class="callout blue"><b>Import Catalog</b> bulk-loads the product master from Excel — it does <b>not</b> add stock. Stock always comes from GRN.</div>
+
+    <h2 id="t-suppliers">Suppliers</h2>
+    <p><b>Who:</b> store manager. Your distributors, wholesalers &amp; manufacturers. Add them here so they're selectable when raising a Purchase Order or recording a GRN. Keep GSTIN accurate for purchase tax records.</p>
+
+    <h2 id="t-customers">Customers</h2>
+    <p><b>Who:</b> pharmacist / manager. Registered/repeat customers for credit, loyalty and prescription-linked sales. Walk-in buyers don't need to be added — their name is entered directly at the Sale counter.</p>
+
+    <h2 id="t-po">Purchase Orders</h2>
+    <p><b>Who:</b> store manager. <b>Purpose:</b> tell a supplier what you want to buy.</p>
+    <div class="step"><div class="num">1</div><div>Pick the supplier, add lines (medicine name + quantity only — you don't know batch/expiry/cost yet).</div></div>
+    <div class="step"><div class="num">2</div><div><b>Save &amp; Send</b> (or export Excel/PDF) to the supplier. A new PO row appears in the list.</div></div>
+    <div class="step"><div class="num">3</div><div>When goods arrive, use <b>Receive against this PO</b> to pre-fill a GRN.</div></div>
+
+    <h2 id="t-grn">GRN — Goods Receipt</h2>
+    <p><b>Who:</b> store manager. <b>Purpose:</b> record what physically arrived. <b>This is where stock is created.</b></p>
+    <div class="step"><div class="num">1</div><div>Select supplier, enter their invoice number &amp; date.</div></div>
+    <div class="step"><div class="num">2</div><div>For each line enter <b>batch, expiry, quantity, cost &amp; MRP</b> straight from the supplier invoice (prior values auto-fill as hints).</div></div>
+    <div class="step"><div class="num">3</div><div><b>Save GRN &amp; Update Stock</b> — creates dated batches and increases on-hand stock. Use <b>Save as Partial</b> if only some items arrived.</div></div>
+    <div class="callout blue"><b>Import from Supplier Invoice</b> bulk-loads a large delivery from Excel — this import <b>adds stock</b> (unlike the Products catalog import).</div>
+
+    <h2 id="t-sales">Sales</h2>
+    <p><b>Who:</b> pharmacist / cashier. <b>Purpose:</b> bill a walk-in sale in four steps.</p>
+    <div class="step"><div class="num">1</div><div><b>Customer</b> — type a walk-in name, or switch to <b>Registered Customer</b> and pick one.</div></div>
+    <div class="step"><div class="num">2</div><div><b>Add products</b> — search shows live stock &amp; the FEFO batch; expired/out-of-stock items are blocked. Set qty, click <b>+ Add to Line Items</b>.</div></div>
+    <div class="step"><div class="num">3</div><div><b>Line items</b> — review; batch is auto-picked (editable). Remove any line.</div></div>
+    <div class="step"><div class="num">4</div><div><b>Payment</b> — choose method; for cash, enter amount tendered to see change. <b>Finalize &amp; Pay</b>, or <b>Hold</b> to park the bill.</div></div>
+    <div class="callout amber"><b>Schedule H:</b> if an <span class="badge-h">H</span> drug is in the cart, name &amp; age become mandatory and you should link the prescription.</div>
+
+    <h2 id="t-rx">Rx Dispense</h2>
+    <p><b>Who:</b> pharmacist. <b>Purpose:</b> fill prescriptions sent by doctors.</p>
+    <div class="step"><div class="num">1</div><div>Open a pending prescription from the queue.</div></div>
+    <div class="step"><div class="num">2</div><div>Verify each item, tick the <b>Schedule H verification</b>, pick batches (FEFO).</div></div>
+    <div class="step"><div class="num">3</div><div><b>Dispense &amp; Generate Bill</b> — creates an invoice stamped with the Rx for the audit trail.</div></div>
+    <p>You can also start from <a class="tab-link" href="sales.html">Sales</a> and use <b>Link Prescription</b> to pull a prescription's patient &amp; medicines into the sale.</p>
+
+    <h2 id="t-returns">Returns</h2>
+    <p><b>Who:</b> pharmacist / manager. Two opposite flows:</p>
+    <table>
+      <thead><tr><th></th><th>Sale Return</th><th>Purchase Return</th></tr></thead>
+      <tbody>
+        <tr><td><b>Direction</b></td><td>Customer &rarr; you</td><td>You &rarr; supplier</td></tr>
+        <tr><td><b>Reference</b></td><td>Original invoice</td><td>Original GRN</td></tr>
+        <tr><td><b>Stock</b></td><td>Back in (or write-off to Damages)</td><td>Removed</td></tr>
+        <tr><td><b>Money</b></td><td>Refund customer</td><td>Debit note from supplier</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="t-damages">Damages</h2>
+    <p><b>Who:</b> pharmacist / manager. Record stock that can no longer be sold — broken ampoules, spillage, expired batches. Pick the specific batch; on-hand stock is reduced and it feeds the expiry-loss figure on the dashboard.</p>
+
+    <h2 id="t-adj">Stock Adjustments</h2>
+    <p><b>Who:</b> manager. Use only when the physical count differs from the system (miscount, theft, found stock). Enter a + or − with a reason. For breakage/expiry use Damages; for deliveries use GRN.</p>
+
+    <h2 id="t-reports">Reports</h2>
+    <p><b>Who:</b> manager / admin. Pick a report, set a date range, then Generate or export CSV:</p>
+    <ul>
+      <li><b>Sales</b> &amp; <b>Purchases (GRN)</b> summaries</li>
+      <li><b>GST</b> — CGST/SGST for filing</li>
+      <li><b>Schedule H Log</b> — mandatory restricted-drug register</li>
+      <li><b>Expiry</b> — batches nearing expiry with value</li>
+      <li><b>Stock Register</b> — license-mandated opening/closing record</li>
+    </ul>
+
+    <h2 id="t-audit">Audit Trail <span class="badge-h">Admin</span></h2>
+    <p><b>Who:</b> admin only. A read-only, tamper-evident log of every create/update/delete/void/login — who, what, when, and before&rarr;after values. Filter by user, module, action, date, or record. Used for accountability, disputes and inspections.</p>
+
+    <h2 id="t-settings">Settings <span class="badge-h">Admin</span></h2>
+    <p><b>Who:</b> admin only. Store-wide configuration: pharmacy &amp; license details, tax/GST, invoice &amp; printing, inventory rules (reorder level, expiry window, FEFO/FIFO), compliance toggles, notifications.</p>
+
+    <!-- DEVELOPER -->
+    <h2 id="dev">For developers — handoff notes</h2>
+    <div class="card">
+      <h3>Data flow (must-honor)</h3>
+      <p><code>Products.stock = SUM(GRN batches) − Sales − Damages ± Adjustments</code></p>
+      <ul>
+        <li><b>Products import</b> = catalog master only, never stock.</li>
+        <li><b>GRN import/entry</b> = the only thing that creates stock (as batches).</li>
+        <li>Sale deducts from a specific batch (FEFO default, override allowed). Block expired batches.</li>
+        <li>PO carries name + qty only. GRN adds batch/expiry/cost/MRP.</li>
+      </ul>
+      <h3>Role gating</h3>
+      <ul>
+        <li><b>Settings</b> &amp; <b>Audit Trail</b>: Org Admin only.</li>
+        <li>Cashier/pharmacist: Sales, Rx Dispense, Returns, Overview (read).</li>
+        <li>Store manager: adds Products, Suppliers, PO, GRN, Damages, Stock Adj., Reports.</li>
+      </ul>
+      <h3>Compliance rules to enforce server-side</h3>
+      <ul>
+        <li>Require patient name + age (and Rx link) when a Schedule H/H1 item is billed; write to Schedule H register.</li>
+        <li>Block selling above MRP and selling expired batches.</li>
+        <li>Write an immutable audit-trail entry on every mutating action.</li>
+      </ul>
+      <div class="callout blue">All buttons in this prototype are demo-only (toast/inline feedback via <code>pharmacy-ux.js</code>). No network calls. Use each screen's visible effect as the spec for the real behavior. Full details live in <code>WORKFLOW_PLAN.md</code>.</div>
+    </div>
+
+    <!-- GLOSSARY -->
+    <h2 id="glossary">Glossary</h2>
+    <table>
+      <thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><b>GRN</b></td><td>Goods Receipt Note — record of stock received from a supplier.</td></tr>
+        <tr><td><b>PO</b></td><td>Purchase Order — request to a supplier to buy stock.</td></tr>
+        <tr><td><b>Batch</b></td><td>A specific lot of a medicine with its own expiry &amp; cost.</td></tr>
+        <tr><td><b>FEFO</b></td><td>First Expiry First Out — sell nearest-to-expiry stock first.</td></tr>
+        <tr><td><b>Schedule H / H1</b></td><td>Restricted drugs requiring a prescription &amp; register entry.</td></tr>
+        <tr><td><b>MRP</b></td><td>Maximum Retail Price — printed ceiling price.</td></tr>
+        <tr><td><b>CGST / SGST</b></td><td>Central/State GST components (intra-state split).</td></tr>
+        <tr><td><b>Debit note</b></td><td>Document raised when returning goods to a supplier.</td></tr>
+        <tr><td><b>Reconciliation</b></td><td>Matching physical cash/UPI against system-expected sales at day-end.</td></tr>
+      </tbody>
+    </table>
+
+    <div style="height:40px;"></div>
+  </div>
+</div>
+
+<script src="pharmacy-ux.js"></script>
+</body>
+</html>

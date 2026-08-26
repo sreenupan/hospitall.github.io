@@ -44,34 +44,77 @@ tr:hover td { background: #fafafa; }
 </style>
 </head>
 <body>
-<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-export">&#9650; Export</button><button class="btn-import">&#9660; Import</button><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
-<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="sales.html">Sales</a><a href="purchases.html">Purchases</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html" class="active">Stock Adj.</a><a href="reports.html">Reports</a><a href="prescription-dispense.html">Rx Dispense</a></div>
+<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
+<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="purchase-orders.html">Purchase Orders</a><a href="purchases.html">GRN</a><a href="sales.html">Sales</a><a href="prescription-dispense.html">Rx Dispense</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html" class="active">Stock Adj.</a><a href="reports.html">Reports</a><a href="audit-trail.html">Audit Trail</a><a href="settings.html">Settings</a><a href="documentation.html">Documentation</a></div>
 <div class="content">
   <div class="page-title">Stock Adjustments</div>
+  <div style="background:#e3f2fd; border:1px solid #bbdefb; border-radius:8px; padding:10px 14px; font-size:12px; color:#1565c0; margin:10px 0 14px;">
+    &#9878; Use only when the physical count differs from the system (miscount, theft, found stock). Enter a <strong>+</strong> or <strong>&minus;</strong> quantity with a reason for the audit trail. For breakage/expiry use <a href="damages.html" style="color:#0d47a1; font-weight:600;">Damages</a>; for deliveries use <a href="purchases.html" style="color:#0d47a1; font-weight:600;">GRN</a>.
+  </div>
   <div style="margin-bottom:12px;"><input type="text" placeholder="Search by product, batch, reason..." style="width:300px; border:1px solid #e0e0e0; border-radius:8px; padding:8px 12px; font-size:12px; outline:none;"></div>
   <div class="card">
     <div class="card-header">New Stock Adjustment</div>
     <div class="card-body">
       <div class="form-row">
-        <div class="form-group"><label>Product Code</label><input type="text" placeholder="e.g. P001"></div>
-        <div class="form-group"><label>Current Stock</label><input type="number" value="0" disabled></div>
-        <div class="form-group"><label>Adjustment (&plusmn;)</label><input type="number" value="0"></div>
-        <div class="form-group"><label>Reason</label><input type="text" placeholder="Reason..."></div>
+        <div class="form-group"><label>Product</label>
+          <input type="text" id="adj-product" list="productList" placeholder="Search product..." value="MED001 - Lignocaine HCl injection LP 1%">
+          <datalist id="productList">
+            <option value="MED001 - Lignocaine HCl injection LP 1%">
+            <option value="MED013 - Paracetamol tab 650 mg">
+            <option value="MED082 - Amoxycillin + Clavulanic acid tab">
+          </datalist>
+        </div>
+        <div class="form-group"><label>Current Stock</label><input type="number" id="adj-current" value="5" disabled></div>
+        <div class="form-group"><label>Adjustment (&plusmn;)</label><input type="number" id="adj-delta" value="0"></div>
+        <div class="form-group"><label>Reason</label><input type="text" id="adj-reason" placeholder="Reason..."></div>
       </div>
-      <button class="btn-add">+ Adjust</button>
+      <button class="btn-add" onclick="addAdjustment()">+ Adjust</button>
+      <div id="adj-effect" style="display:none; margin-top:12px; border-radius:8px; padding:10px 14px; font-size:12px;"></div>
     </div>
   </div>
   <div class="card">
     <div class="card-header">Stock Adjustments</div>
     <table>
-      <thead><tr><th>Date</th><th>Product</th><th>Adjustment</th><th>Reason</th></tr></thead>
-      <tbody>
-        <tr><td>2026-06-28</td><td>P001</td><td class="adj-neg">-1</td><td>Inventory count mismatch</td></tr>
-        <tr><td>2026-06-28</td><td>P003</td><td class="adj-pos">+5</td><td>Physical stock count update</td></tr>
+      <thead><tr><th>Date</th><th>Product</th><th>Adjustment</th><th>New On-Hand</th><th>Reason</th></tr></thead>
+      <tbody id="adj-body">
+        <tr><td>2026-06-28</td><td>MED001 &middot; Lignocaine HCl injection LP 1%</td><td class="adj-neg">-1</td><td>5</td><td>Inventory count mismatch</td></tr>
+        <tr><td>2026-06-28</td><td>MED013 &middot; Paracetamol tab 650 mg</td><td class="adj-pos">+5</td><td>48</td><td>Physical stock count update</td></tr>
       </tbody>
     </table>
-    <div class="row-count">Showing 2 of 2 rows</div>
+    <div class="row-count" id="adj-count">Showing 2 of 2 rows</div>
   </div>
 </div>
+
+<script>
+function adjToday() { var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+function addAdjustment() {
+  var prod = (document.getElementById('adj-product').value || '').trim();
+  var current = parseInt(document.getElementById('adj-current').value, 10) || 0;
+  var delta = parseInt(document.getElementById('adj-delta').value, 10) || 0;
+  var reason = (document.getElementById('adj-reason').value || '').trim() || '—';
+  if (!prod) { if (window.pharmacyToast) pharmacyToast('Select a product first.'); return; }
+  if (delta === 0) { if (window.pharmacyToast) pharmacyToast('Enter a non-zero + or − adjustment.'); return; }
+
+  var newStock = current + delta;
+  var cls = delta > 0 ? 'adj-pos' : 'adj-neg';
+  var sign = delta > 0 ? '+' : '';
+  var tr = document.createElement('tr');
+  tr.innerHTML = '<td>' + adjToday() + '</td><td>' + prod + '</td><td class="' + cls + '">' + sign + delta + '</td><td>' + newStock + '</td><td>' + reason + '</td>';
+  document.getElementById('adj-body').appendChild(tr);
+  document.getElementById('adj-count').textContent = 'Showing ' + document.querySelectorAll('#adj-body tr').length + ' rows';
+
+  var box = document.getElementById('adj-effect');
+  box.style.display = 'block';
+  if (delta > 0) {
+    box.style.background = '#f0fdf4'; box.style.border = '1px solid #bbf7d0'; box.style.color = '#166534';
+    box.innerHTML = '&#9650; Stock <strong>increased by ' + delta + '</strong> for ' + prod + ' &mdash; new on-hand <strong>' + newStock + '</strong>. Reason: ' + reason + '. Logged to audit trail.';
+  } else {
+    box.style.background = '#fff5f5'; box.style.border = '1px solid #fecaca'; box.style.color = '#c62828';
+    box.innerHTML = '&#9660; Stock <strong>reduced by ' + Math.abs(delta) + '</strong> for ' + prod + ' &mdash; new on-hand <strong>' + newStock + '</strong>. Reason: ' + reason + '. Logged to audit trail.';
+  }
+  if (window.pharmacyToast) pharmacyToast('Adjustment saved: new on-hand ' + newStock + '. (demo)');
+}
+</script>
+<script src="pharmacy-ux.js"></script>
 </body>
 </html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rx Pharmacy - Settings</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: #f5f5f5; color: #1a1a2e; font-size: 14px; }
+.header { background: #1a237e; color: #fff; padding: 0 20px; height: 44px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.header-brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; }
+.header-brand .icon { width: 26px; height: 26px; background: #3949ab; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; }
+.header-version { font-size: 9px; background: rgba(255,255,255,0.15); padding: 2px 7px; border-radius: 10px; margin-left: 6px; }
+.header-actions { display: flex; gap: 6px; }
+.header-actions button { border: none; border-radius: 6px; padding: 5px 12px; font-size: 11px; font-weight: 600; cursor: pointer; }
+.btn-reset { background: #ffc107; color: #333; }
+.btn-logout { background: #f44336; color: #fff; }
+.nav { display: flex; gap: 0; padding: 6px 16px; background: #fff; border-bottom: 1px solid #e0e0e0; overflow-x: auto; position: sticky; top: 44px; z-index: 90; }
+.nav a { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; color: #555; text-decoration: none; white-space: nowrap; }
+.nav a.active { background: #1565c0; color: #fff; font-weight: 600; }
+.nav a:hover:not(.active) { background: #f0f0f0; }
+.content { padding: 16px 20px; margin: 0 auto; }
+.page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.page-title { font-size: 16px; font-weight: 800; }
+.admin-note { background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #e65100; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+.card-header { padding: 12px 18px; font-size: 12px; font-weight: 700; color: #333; border-bottom: 1px solid #f0f0f0; text-transform: uppercase; letter-spacing: 0.04em; display: flex; align-items: center; gap: 8px; }
+.card-body { padding: 16px 18px; }
+.form-row { display: grid; gap: 14px; align-items: end; margin-bottom: 14px; }
+.form-row-2 { grid-template-columns: 1fr 1fr; }
+.form-row-3 { grid-template-columns: 1fr 1fr 1fr; }
+.form-group { display: flex; flex-direction: column; }
+.form-group label { font-size: 10px; font-weight: 600; color: #777; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
+.form-group input, .form-group select, .form-group textarea { border: 1px solid #e0e0e0; border-radius: 8px; padding: 8px 12px; font-size: 13px; outline: none; width: 100%; font-family: inherit; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #1565c0; box-shadow: 0 0 0 2px rgba(21,101,192,0.1); }
+.form-group .hint { font-size: 10px; color: #94a3b8; margin-top: 3px; }
+.btn { display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: 7px; padding: 9px 16px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.btn-primary { background: #1565c0; color: #fff; }
+.btn-outline { background: #fff; color: #555; border: 1px solid #e0e0e0; }
+.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f5f5f5; }
+.toggle-row:last-child { border-bottom: none; }
+.toggle-row .lbl { font-size: 13px; font-weight: 600; }
+.toggle-row .desc { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+.switch { position: relative; width: 42px; height: 22px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; inset: 0; background: #cbd5e1; border-radius: 22px; transition: .2s; }
+.slider:before { content: ''; position: absolute; height: 16px; width: 16px; left: 3px; bottom: 3px; background: #fff; border-radius: 50%; transition: .2s; }
+input:checked + .slider { background: #1565c0; }
+input:checked + .slider:before { transform: translateX(20px); }
+.save-bar { display: flex; gap: 10px; margin-bottom: 24px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media(max-width: 900px){ .two-col { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
+<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="purchase-orders.html">Purchase Orders</a><a href="purchases.html">GRN</a><a href="sales.html">Sales</a><a href="prescription-dispense.html">Rx Dispense</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="audit-trail.html">Audit Trail</a><a href="settings.html" class="active">Settings</a><a href="documentation.html">Documentation</a></div>
+
+<div class="content">
+
+  <div class="page-header"><div class="page-title">Pharmacy Settings</div></div>
+
+  <div class="admin-note">
+    &#128274; <strong>Admin only.</strong> This screen is visible to <strong>Org Admin</strong> roles only. In production, developer should gate access by role (pharmacist/cashier should not see this). Changes here affect billing, compliance &amp; inventory behaviour store-wide.
+  </div>
+
+  <div class="two-col">
+    <!-- LEFT COLUMN -->
+    <div>
+      <!-- Pharmacy / License Details -->
+      <div class="card">
+        <div class="card-header">&#127973; Pharmacy &amp; License Details</div>
+        <div class="card-body">
+          <div class="form-row form-row-2">
+            <div class="form-group"><label>Pharmacy Name</label><input type="text" value="MedPlus Pharmacy"></div>
+            <div class="form-group"><label>Branch</label><input type="text" value="Banjara Hills, Hyderabad"></div>
+          </div>
+          <div class="form-group" style="margin-bottom:14px;"><label>Address</label><textarea rows="2">Road No. 12, Banjara Hills, Hyderabad, Telangana - 500034</textarea></div>
+          <div class="form-row form-row-2">
+            <div class="form-group"><label>Drug License No</label><input type="text" value="TG/RET/2024/001234"><span class="hint">Retail drug license (Form 20/21)</span></div>
+            <div class="form-group"><label>License Valid Till</label><input type="date" value="2029-03-31"></div>
+          </div>
+          <div class="form-row form-row-2" style="margin-bottom:0;">
+            <div class="form-group"><label>Registered Pharmacist</label><input type="text" value="Ravi Kumar"></div>
+            <div class="form-group"><label>Pharmacist Reg No</label><input type="text" value="TS-PH-4521"><span class="hint">TS State Pharmacy Council</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tax / GST -->
+      <div class="card">
+        <div class="card-header">&#129534; Tax &amp; GST</div>
+        <div class="card-body">
+          <div class="form-row form-row-2">
+            <div class="form-group"><label>GSTIN</label><input type="text" value="36AABCU9603R1ZM"></div>
+            <div class="form-group"><label>State (Place of Supply)</label><input type="text" value="36 - Telangana"></div>
+          </div>
+          <div class="form-row form-row-2" style="margin-bottom:0;">
+            <div class="form-group"><label>Default GST Split</label><select><option selected>CGST + SGST (intra-state)</option><option>IGST (inter-state)</option></select><span class="hint">Telangana retail = CGST + SGST</span></div>
+            <div class="form-group"><label>Default GST Rate</label><select><option selected>5%</option><option>12%</option><option>18%</option><option>0%</option></select></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Invoice / Print -->
+      <div class="card">
+        <div class="card-header">&#128424; Invoice &amp; Printing</div>
+        <div class="card-body">
+          <div class="form-row form-row-2">
+            <div class="form-group"><label>Invoice Prefix</label><input type="text" value="INV-"></div>
+            <div class="form-group"><label>Next Invoice No</label><input type="number" value="1006"></div>
+          </div>
+          <div class="form-row form-row-2" style="margin-bottom:0;">
+            <div class="form-group"><label>Printer / Format</label><select><option selected>Thermal 80mm</option><option>A4 Tax Invoice</option><option>A5</option></select></div>
+            <div class="form-group"><label>Invoice Footer Note</label><input type="text" value="Get well soon. No returns on medicines."></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div>
+      <!-- Inventory Rules -->
+      <div class="card">
+        <div class="card-header">&#128230; Inventory Rules</div>
+        <div class="card-body">
+          <div class="form-row form-row-2">
+            <div class="form-group"><label>Default Reorder Level</label><input type="number" value="15"><span class="hint">Units below which reorder alert fires</span></div>
+            <div class="form-group"><label>Near-Expiry Warning</label><select><option>30 days</option><option selected>90 days</option><option>180 days</option></select></div>
+          </div>
+          <div class="form-row form-row-2" style="margin-bottom:0;">
+            <div class="form-group"><label>Batch Picking</label><select><option selected>FEFO (First Expiry First Out)</option><option>FIFO (First In First Out)</option></select></div>
+            <div class="form-group"><label>Max Discount %</label><input type="number" value="10"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Compliance Toggles -->
+      <div class="card">
+        <div class="card-header">&#9878; Compliance Controls</div>
+        <div class="card-body" style="padding:6px 18px;">
+          <div class="toggle-row">
+            <div><div class="lbl">Block sale of expired batches</div><div class="desc">Prevent expired stock from being billed</div></div>
+            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="lbl">Require patient name &amp; age for Schedule H</div><div class="desc">Enforce identity capture for restricted drugs</div></div>
+            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="lbl">Require prescription link for Schedule H1</div><div class="desc">H1 register mandates prescriber details</div></div>
+            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="lbl">Enforce selling rate &le; MRP</div><div class="desc">Block billing above printed MRP</div></div>
+            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="lbl">Day-end cash reconciliation reminder</div><div class="desc">Prompt reconciliation at close of day</div></div>
+            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notifications -->
+      <div class="card">
+        <div class="card-header">&#128276; Notifications</div>
+        <div class="card-body" style="padding:6px 18px;">
+          <div class="toggle-row">
+            <div><div class="lbl">WhatsApp invoice to customer</div><div class="desc">Send bill copy on finalize (if phone available)</div></div>
+            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="lbl">Low-stock alert to purchaser</div><div class="desc">Notify when items hit reorder level</div></div>
+            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="lbl">Expiry digest (weekly)</div><div class="desc">Email batches expiring in the warning window</div></div>
+            <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="save-bar">
+    <button class="btn btn-primary" onclick="if(window.pharmacyToast)pharmacyToast('Settings saved. (demo)')">&#10003; Save Settings</button>
+    <button class="btn btn-outline">Cancel</button>
+  </div>
+
+</div>
+
+<script src="pharmacy-ux.js"></script>
+</body>
+</html>

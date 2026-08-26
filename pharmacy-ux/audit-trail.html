@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rx Pharmacy - Audit Trail</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: #f5f5f5; color: #1a1a2e; font-size: 14px; }
+.header { background: #1a237e; color: #fff; padding: 0 20px; height: 44px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.header-brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; }
+.header-brand .icon { width: 26px; height: 26px; background: #3949ab; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; }
+.header-version { font-size: 9px; background: rgba(255,255,255,0.15); padding: 2px 7px; border-radius: 10px; margin-left: 6px; }
+.header-actions { display: flex; gap: 6px; }
+.header-actions button { border: none; border-radius: 6px; padding: 5px 12px; font-size: 11px; font-weight: 600; cursor: pointer; }
+.btn-reset { background: #ffc107; color: #333; }
+.btn-logout { background: #f44336; color: #fff; }
+.nav { display: flex; gap: 0; padding: 6px 16px; background: #fff; border-bottom: 1px solid #e0e0e0; overflow-x: auto; position: sticky; top: 44px; z-index: 90; }
+.nav a { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; color: #555; text-decoration: none; white-space: nowrap; }
+.nav a.active { background: #1565c0; color: #fff; font-weight: 600; }
+.nav a:hover:not(.active) { background: #f0f0f0; }
+.content { padding: 16px 20px; margin: 0 auto; }
+.page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.page-title { font-size: 16px; font-weight: 800; }
+.admin-note { background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #e65100; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.help-note { background: #e3f2fd; border: 1px solid #bbdefb; border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #1565c0; margin-bottom: 14px; }
+.card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+.filter-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; padding: 14px 16px; border-bottom: 1px solid #f0f0f0; }
+.fg { display: flex; flex-direction: column; }
+.fg label { font-size: 10px; font-weight: 600; color: #777; text-transform: uppercase; margin-bottom: 3px; }
+.fg input, .fg select { border: 1px solid #e0e0e0; border-radius: 6px; padding: 7px 10px; font-size: 12px; outline: none; }
+.fg input:focus, .fg select:focus { border-color: #1565c0; box-shadow: 0 0 0 2px rgba(21,101,192,0.1); }
+.btn-sm { background: #1565c0; color: #fff; border: none; border-radius: 6px; padding: 8px 14px; font-size: 11px; font-weight: 600; cursor: pointer; }
+.btn-csv { background: #43a047; color: #fff; border: none; border-radius: 6px; padding: 8px 14px; font-size: 11px; font-weight: 600; cursor: pointer; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th { text-align: left; padding: 9px 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; color: #777; background: #f8fafc; border-bottom: 1px solid #eee; white-space: nowrap; }
+td { padding: 9px 12px; border-bottom: 1px solid #f5f5f5; vertical-align: top; }
+tr:hover td { background: #fafafa; }
+.act { padding: 2px 8px; border-radius: 10px; font-size: 9px; font-weight: 700; text-transform: uppercase; }
+.act-create { background: #dcfce7; color: #16a34a; }
+.act-update { background: #dbeafe; color: #1e40af; }
+.act-delete { background: #ffebee; color: #c62828; }
+.act-login { background: #f1f5f9; color: #64748b; }
+.act-void { background: #fef3c7; color: #d97706; }
+.mono { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 11px; }
+.chg { font-size: 11px; }
+.chg .old { color: #c62828; text-decoration: line-through; }
+.chg .new { color: #16a34a; font-weight: 600; }
+.role-badge { font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 4px; background: #ede9fe; color: #6d28d9; margin-left: 4px; }
+.role-admin { background: #ede9fe; color: #6d28d9; }
+.role-pharm { background: #e0f2fe; color: #0369a1; }
+.role-cashier { background: #f0fdf4; color: #15803d; }
+.row-count { padding: 10px 14px; font-size: 11px; color: #aaa; border-top: 1px solid #f0f0f0; }
+</style>
+</head>
+<body>
+<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
+<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="purchase-orders.html">Purchase Orders</a><a href="purchases.html">GRN</a><a href="sales.html">Sales</a><a href="prescription-dispense.html">Rx Dispense</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="audit-trail.html" class="active">Audit Trail</a><a href="settings.html">Settings</a><a href="documentation.html">Documentation</a></div>
+
+<div class="content">
+
+  <div class="page-header"><div class="page-title">Audit Trail</div></div>
+
+  <div class="admin-note">
+    &#128274; <strong>Admin only.</strong> Visible to <strong>Org Admin</strong> roles. Developer should gate by role — this is a read-only, tamper-evident log and cannot be edited or deleted from the UI.
+  </div>
+
+  <div class="help-note">
+    &#128221; Every add / modify / delete / void / login across the system is recorded here with <strong>who, what, when</strong> and the <strong>before &rarr; after</strong> value. Use the filters to trace a specific user, module, record, or date range. Essential for accountability, dispute resolution &amp; drug-license inspections.
+  </div>
+
+  <div class="card">
+    <!-- Filters -->
+    <div class="filter-row">
+      <div class="fg"><label>User</label><select><option>All users</option><option>Ravi Kumar (Admin)</option><option>Suresh (Pharmacist)</option><option>Anita (Cashier)</option></select></div>
+      <div class="fg"><label>Module</label><select><option>All modules</option><option>Products</option><option>Sales</option><option>GRN</option><option>Purchase Orders</option><option>Customers</option><option>Suppliers</option><option>Returns</option><option>Damages</option><option>Stock Adjustments</option><option>Settings</option><option>Auth</option></select></div>
+      <div class="fg"><label>Action</label><select><option>All actions</option><option>Create</option><option>Update</option><option>Delete</option><option>Void</option><option>Login</option></select></div>
+      <div class="fg"><label>From</label><input type="date" value="2026-08-25"></div>
+      <div class="fg"><label>To</label><input type="date" value="2026-08-26"></div>
+      <div class="fg"><label>Record / Keyword</label><input type="text" placeholder="e.g. INV-1005, MED013"></div>
+      <button class="btn-sm">Apply Filters</button>
+      <button class="btn-csv">&#8595; Export CSV</button>
+    </div>
+
+    <!-- Log table -->
+    <table>
+      <thead>
+        <tr><th>Timestamp</th><th>User / Role</th><th>Module</th><th>Action</th><th>Record</th><th>Change (before &rarr; after)</th><th>IP / Device</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mono">26 Aug 2026<br>14:32:07</td>
+          <td>Suresh <span class="role-badge role-pharm">Pharmacist</span></td>
+          <td>Sales</td>
+          <td><span class="act act-create">Create</span></td>
+          <td class="mono">INV-1005</td>
+          <td class="chg">Sale invoice created — Cash Customer, 2 items, &#x20B9;380.50, UPI</td>
+          <td class="mono">192.168.1.24<br>POS-01</td>
+        </tr>
+        <tr>
+          <td class="mono">26 Aug 2026<br>13:58:41</td>
+          <td>Suresh <span class="role-badge role-pharm">Pharmacist</span></td>
+          <td>Rx Dispense</td>
+          <td><span class="act act-create">Dispense</span></td>
+          <td class="mono">RX-2026-0045</td>
+          <td class="chg">Dispensed 4 items incl. <strong>Alprazolam (Sch H)</strong> — logged to Schedule H register</td>
+          <td class="mono">192.168.1.24<br>POS-01</td>
+        </tr>
+        <tr>
+          <td class="mono">26 Aug 2026<br>12:10:55</td>
+          <td>Ravi Kumar <span class="role-badge role-admin">Admin</span></td>
+          <td>Products</td>
+          <td><span class="act act-update">Update</span></td>
+          <td class="mono">MED013 &middot; Paracetamol 650</td>
+          <td class="chg">MRP <span class="old">&#x20B9;68.00</span> &rarr; <span class="new">&#x20B9;69.40</span> &middot; Reorder <span class="old">15</span> &rarr; <span class="new">20</span></td>
+          <td class="mono">192.168.1.10<br>Admin-PC</td>
+        </tr>
+        <tr>
+          <td class="mono">26 Aug 2026<br>11:47:19</td>
+          <td>Anita <span class="role-badge role-cashier">Cashier</span></td>
+          <td>Sales</td>
+          <td><span class="act act-void">Void</span></td>
+          <td class="mono">INV-1003</td>
+          <td class="chg">Invoice voided — reason: "wrong item billed" (approved by Ravi Kumar)</td>
+          <td class="mono">192.168.1.25<br>POS-02</td>
+        </tr>
+        <tr>
+          <td class="mono">26 Aug 2026<br>10:22:03</td>
+          <td>Ravi Kumar <span class="role-badge role-admin">Admin</span></td>
+          <td>GRN</td>
+          <td><span class="act act-create">Create</span></td>
+          <td class="mono">GRN-5004</td>
+          <td class="chg">Goods received from MedCorp India — 4 products, 200 units, batches created</td>
+          <td class="mono">192.168.1.10<br>Admin-PC</td>
+        </tr>
+        <tr>
+          <td class="mono">26 Aug 2026<br>09:40:12</td>
+          <td>Suresh <span class="role-badge role-pharm">Pharmacist</span></td>
+          <td>Damages</td>
+          <td><span class="act act-create">Create</span></td>
+          <td class="mono">DMG-005</td>
+          <td class="chg">Write-off: Metformin 500 (BT-2025-OLD) &times;2 — reason: expired</td>
+          <td class="mono">192.168.1.24<br>POS-01</td>
+        </tr>
+        <tr>
+          <td class="mono">26 Aug 2026<br>09:15:38</td>
+          <td>Ravi Kumar <span class="role-badge role-admin">Admin</span></td>
+          <td>Settings</td>
+          <td><span class="act act-update">Update</span></td>
+          <td class="mono">Compliance</td>
+          <td class="chg">Near-expiry warning <span class="old">30 days</span> &rarr; <span class="new">90 days</span></td>
+          <td class="mono">192.168.1.10<br>Admin-PC</td>
+        </tr>
+        <tr>
+          <td class="mono">26 Aug 2026<br>09:02:00</td>
+          <td>Suresh <span class="role-badge role-pharm">Pharmacist</span></td>
+          <td>Auth</td>
+          <td><span class="act act-login">Login</span></td>
+          <td class="mono">&mdash;</td>
+          <td class="chg">Signed in</td>
+          <td class="mono">192.168.1.24<br>POS-01</td>
+        </tr>
+        <tr>
+          <td class="mono">25 Aug 2026<br>18:05:44</td>
+          <td>Anita <span class="role-badge role-cashier">Cashier</span></td>
+          <td>Stock Adjustments</td>
+          <td><span class="act act-update">Adjust</span></td>
+          <td class="mono">MED099 &middot; Cetirizine 10</td>
+          <td class="chg">Stock <span class="old">62</span> &rarr; <span class="new">60</span> &middot; reason: physical count mismatch</td>
+          <td class="mono">192.168.1.25<br>POS-02</td>
+        </tr>
+        <tr>
+          <td class="mono">25 Aug 2026<br>16:31:20</td>
+          <td>Ravi Kumar <span class="role-badge role-admin">Admin</span></td>
+          <td>Customers</td>
+          <td><span class="act act-delete">Delete</span></td>
+          <td class="mono">C099 &middot; Test User</td>
+          <td class="chg">Customer record deleted (duplicate)</td>
+          <td class="mono">192.168.1.10<br>Admin-PC</td>
+        </tr>
+        <tr>
+          <td class="mono">25 Aug 2026<br>15:12:09</td>
+          <td>Ravi Kumar <span class="role-badge role-admin">Admin</span></td>
+          <td>Purchase Orders</td>
+          <td><span class="act act-create">Create</span></td>
+          <td class="mono">PO-3004</td>
+          <td class="chg">PO raised to Global Meds Pvt Ltd — 2 products, 90 units</td>
+          <td class="mono">192.168.1.10<br>Admin-PC</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row-count">Showing 10 of 248 log entries &middot; Read-only &middot; Retained per drug-license record-keeping norms</div>
+  </div>
+
+</div>
+
+<script src="pharmacy-ux.js"></script>
+</body>
+</html>

@@ -47,16 +47,20 @@ tr:hover td { background: #fafafa; }
 </style>
 </head>
 <body>
-<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-export">&#9650; Export</button><button class="btn-import">&#9660; Import</button><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
-<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="sales.html">Sales</a><a href="purchases.html">Purchases</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html" class="active">Reports</a><a href="prescription-dispense.html">Rx Dispense</a></div>
+<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
+<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="purchase-orders.html">Purchase Orders</a><a href="purchases.html">GRN</a><a href="sales.html">Sales</a><a href="prescription-dispense.html">Rx Dispense</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html" class="active">Reports</a><a href="audit-trail.html">Audit Trail</a><a href="settings.html">Settings</a><a href="documentation.html">Documentation</a></div>
 
 <div class="content">
   <div class="page-title">Reports</div>
 
+  <div style="background:#e3f2fd; border:1px solid #bbdefb; border-radius:8px; padding:10px 14px; font-size:12px; color:#1565c0; margin:10px 0 14px;">
+    &#128202; Pick a report, set the date range, then <strong>Generate</strong> or export <strong>&darr; CSV</strong>. <strong>GST</strong> &amp; <strong>Schedule H Log</strong> are the compliance filings for Telangana; <strong>Stock Register</strong> is the drug-license-mandated opening/closing record; <strong>Expiry</strong> flags batches nearing expiry.
+  </div>
+
   <!-- Report Tabs -->
   <div class="tabs">
     <div class="tab active" onclick="switchTab('sales')">Sales</div>
-    <div class="tab" onclick="switchTab('purchases')">Purchases</div>
+    <div class="tab" onclick="switchTab('purchases')">Purchases (GRN)</div>
     <div class="tab" onclick="switchTab('gst')">GST Report</div>
     <div class="tab" onclick="switchTab('schedule-h')">Schedule H Log</div>
     <div class="tab" onclick="switchTab('expiry')">Expiry Report</div>
@@ -108,8 +112,8 @@ tr:hover td { background: #fafafa; }
       <table>
         <thead><tr><th>Invoice</th><th>Date</th><th>Supplier</th><th>Items</th><th>Value</th></tr></thead>
         <tbody>
-          <tr><td>PUR-5001</td><td>15 Aug 2026</td><td>Global Meds</td><td>12</td><td class="amount">&#x20B9;15,000.00</td></tr>
-          <tr><td>PUR-5002</td><td>10 Aug 2026</td><td>Local Pharma</td><td>8</td><td class="amount">&#x20B9;8,400.00</td></tr>
+          <tr><td>GRN-5001</td><td>15 Aug 2026</td><td>Global Meds Pvt Ltd</td><td>12</td><td class="amount">&#x20B9;15,000.00</td></tr>
+          <tr><td>GRN-5002</td><td>10 Aug 2026</td><td>Local Pharma</td><td>8</td><td class="amount">&#x20B9;8,400.00</td></tr>
         </tbody>
       </table>
     </div>
@@ -229,5 +233,6 @@ function switchTab(id) {
   document.getElementById('tab-' + id).classList.add('active');
 }
 </script>
+<script src="pharmacy-ux.js"></script>
 </body>
 </html>

@@ -36,37 +36,81 @@ tr:hover td { background: #fafafa; }
 </style>
 </head>
 <body>
-<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-export">&#9650; Export</button><button class="btn-import">&#9660; Import</button><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
-<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html" class="active">Customers</a><a href="sales.html">Sales</a><a href="purchases.html">Purchases</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="prescription-dispense.html">Rx Dispense</a></div>
+<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
+<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html" class="active">Customers</a><a href="purchase-orders.html">Purchase Orders</a><a href="purchases.html">GRN</a><a href="sales.html">Sales</a><a href="prescription-dispense.html">Rx Dispense</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="audit-trail.html">Audit Trail</a><a href="settings.html">Settings</a><a href="documentation.html">Documentation</a></div>
 <div class="content">
-  <div class="page-header"><div class="page-title">Customers</div><button class="btn-add" onclick="document.getElementById('addForm').style.display=document.getElementById('addForm').style.display==='none'?'block':'none'">+ Add</button></div>
+  <div class="page-header"><div class="page-title">Customers</div>
+    <div style="display:flex; gap:8px;">
+      <button class="btn-import" style="padding:7px 14px; border-radius:6px; font-size:11px; font-weight:600;">&#9660; Import</button>
+      <button class="btn-export" style="padding:7px 14px; border-radius:6px; font-size:11px; font-weight:600;">&#9650; Export</button>
+      <button class="btn-add" onclick="document.getElementById('addForm').style.display=document.getElementById('addForm').style.display==='none'?'block':'none'">+ Add</button>
+    </div>
+  </div>
+  <div style="background:#e3f2fd; border:1px solid #bbdefb; border-radius:8px; padding:10px 14px; font-size:12px; color:#1565c0; margin-bottom:14px;">
+    &#128100; Registered/repeat customers — used for credit, loyalty &amp; prescription-linked sales. Walk-in OTC buyers don't need to be added here; enter their name directly on the Sale screen. Name &amp; age are captured at the counter for Schedule H drugs.
+  </div>
   <div style="margin-bottom:12px;"><input type="text" placeholder="Search by name, phone, address..." style="width:300px; border:1px solid #e0e0e0; border-radius:8px; padding:8px 12px; font-size:12px; outline:none;"></div>
   <div class="card" id="addForm" style="display:none; margin-bottom:16px;">
     <div style="padding:14px 18px; font-size:12px; font-weight:700; border-bottom:1px solid #f0f0f0;">NEW CUSTOMER</div>
     <div style="padding:16px 18px;">
       <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:12px;">
-        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Name *</label><input style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="Full name"></div>
-        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Phone *</label><input style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="Mobile number"></div>
-        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Address</label><input style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="Address"></div>
+        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Name *</label><input id="cust-name" style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="Full name"></div>
+        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Phone *</label><input id="cust-phone" style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="Mobile number"></div>
+        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Address</label><input id="cust-address" style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="Address"></div>
       </div>
       <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:12px;">
-        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Age</label><input type="number" style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="Age"></div>
-        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Gender</label><select style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;"><option>M</option><option>F</option><option>O</option></select></div>
-        <div style="display:flex;align-items:flex-end;gap:8px;"><button onclick="document.getElementById('addForm').style.display='none'" style="background:#43a047;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:11px;font-weight:600;cursor:pointer;">&#10003; Save</button><button onclick="document.getElementById('addForm').style.display='none'" style="background:#f5f5f5;color:#555;border:1px solid #e0e0e0;border-radius:6px;padding:8px 16px;font-size:11px;font-weight:600;cursor:pointer;">Cancel</button></div>
+        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Age</label><input type="number" id="cust-age" style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="Age"></div>
+        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Gender</label><select id="cust-gender" style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;"><option>M</option><option>F</option><option>O</option></select></div>
+        <div style="display:flex;align-items:flex-end;gap:8px;"><button onclick="saveCustomer()" style="background:#43a047;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:11px;font-weight:600;cursor:pointer;">&#10003; Save</button><button onclick="document.getElementById('addForm').style.display='none'" style="background:#f5f5f5;color:#555;border:1px solid #e0e0e0;border-radius:6px;padding:8px 16px;font-size:11px;font-weight:600;cursor:pointer;">Cancel</button></div>
       </div>
+      <div id="cust-effect" style="display:none; border-radius:8px; padding:10px 14px; font-size:12px; background:#f0fdf4; border:1px solid #bbf7d0; color:#166534;"></div>
     </div>
   </div>
   <div class="card">
     <table>
       <thead><tr><th>Code</th><th>Name</th><th>Phone</th><th>Address</th><th>Age</th><th>Gender</th><th></th></tr></thead>
-      <tbody>
-        <tr><td>C001</td><td><strong>Alice Smith</strong></td><td>9998887776</td><td>101 Maple St</td><td>28</td><td>F</td><td><button class="btn-del">del</button></td></tr>
-        <tr><td>C002</td><td><strong>Bob Johnson</strong></td><td>8887776665</td><td>202 Oak St</td><td>52</td><td>M</td><td><button class="btn-del">del</button></td></tr>
-        <tr><td>C003</td><td><strong>Charlie Davis</strong></td><td>7776665554</td><td>303 Pine St</td><td>40</td><td>M</td><td><button class="btn-del">del</button></td></tr>
+      <tbody id="cust-body">
+        <tr><td>C001</td><td><strong>Srinivas Reddy</strong></td><td>9876543210</td><td>Banjara Hills, Rd 12</td><td>45</td><td>M</td><td><button class="btn-del">del</button></td></tr>
+        <tr><td>C002</td><td><strong>Lakshmi Devi</strong></td><td>9876501234</td><td>Jubilee Hills</td><td>62</td><td>F</td><td><button class="btn-del">del</button></td></tr>
+        <tr><td>C003</td><td><strong>Rajesh Kumar</strong></td><td>8765432109</td><td>Somajiguda</td><td>38</td><td>M</td><td><button class="btn-del">del</button></td></tr>
+        <tr><td>C004</td><td><strong>Priya Sharma</strong></td><td>9012345678</td><td>Ameerpet</td><td>30</td><td>F</td><td><button class="btn-del">del</button></td></tr>
+        <tr><td>C005</td><td><strong>Anil Reddy</strong></td><td>7654321098</td><td>Kukatpally</td><td>55</td><td>M</td><td><button class="btn-del">del</button></td></tr>
       </tbody>
     </table>
-    <div class="row-count">Showing 3 of 3 rows</div>
+    <div class="row-count" id="cust-count">Showing 5 of 5 rows</div>
   </div>
 </div>
+
+<script>
+var custSeq = 5;
+function saveCustomer() {
+  var name = (document.getElementById('cust-name').value || '').trim();
+  var phone = (document.getElementById('cust-phone').value || '').trim();
+  if (!name) { document.getElementById('cust-name').style.borderColor = '#dc2626'; if (window.pharmacyToast) pharmacyToast('Customer name is required.'); return; }
+  if (!phone) { document.getElementById('cust-phone').style.borderColor = '#dc2626'; if (window.pharmacyToast) pharmacyToast('Phone is required.'); return; }
+  document.getElementById('cust-name').style.borderColor = '';
+  document.getElementById('cust-phone').style.borderColor = '';
+
+  custSeq++;
+  var code = 'C' + String(custSeq).padStart(3,'0');
+  var address = (document.getElementById('cust-address').value || '').trim() || '—';
+  var age = document.getElementById('cust-age').value || '—';
+  var gender = document.getElementById('cust-gender').value;
+
+  var tr = document.createElement('tr');
+  tr.innerHTML = '<td>' + code + '</td><td><strong>' + name + '</strong></td><td>' + phone + '</td><td>' + address + '</td><td>' + age + '</td><td>' + gender + '</td><td><button class="btn-del">del</button></td>';
+  document.getElementById('cust-body').appendChild(tr);
+  document.getElementById('cust-count').textContent = 'Showing ' + document.querySelectorAll('#cust-body tr').length + ' rows';
+
+  ['cust-name','cust-phone','cust-address','cust-age'].forEach(function(id){ document.getElementById(id).value=''; });
+  document.getElementById('addForm').style.display = 'none';
+
+  var box = document.getElementById('cust-effect');
+  box.style.display = 'block';
+  box.innerHTML = '&#10003; <strong>' + name + '</strong> (' + code + ') added. Now available for credit/loyalty and prescription-linked sales at the <a href="sales.html" style="color:#15803d; font-weight:700;">Sale</a> counter.';
+  if (window.pharmacyToast) pharmacyToast('Customer ' + name + ' (' + code + ') added. (demo)');
+}
+</script>
+<script src="pharmacy-ux.js"></script>
 </body>
 </html>

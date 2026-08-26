@@ -41,34 +41,72 @@ tr:hover td { background: #fafafa; }
 </style>
 </head>
 <body>
-<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-export">&#9650; Export</button><button class="btn-import">&#9660; Import</button><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
-<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="sales.html">Sales</a><a href="purchases.html">Purchases</a><a href="returns.html">Returns</a><a href="damages.html" class="active">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="prescription-dispense.html">Rx Dispense</a></div>
+<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
+<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="purchase-orders.html">Purchase Orders</a><a href="purchases.html">GRN</a><a href="sales.html">Sales</a><a href="prescription-dispense.html">Rx Dispense</a><a href="returns.html">Returns</a><a href="damages.html" class="active">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="audit-trail.html">Audit Trail</a><a href="settings.html">Settings</a><a href="documentation.html">Documentation</a></div>
 <div class="content">
   <div class="page-title">Damages &amp; Breakage</div>
+  <div style="background:#e3f2fd; border:1px solid #bbdefb; border-radius:8px; padding:10px 14px; font-size:12px; color:#1565c0; margin:10px 0 14px;">
+    &#128165; Record stock that can no longer be sold — broken ampoules, spillage, or expired batches. Pick the specific <strong>batch</strong> so the right stock is written off. This reduces on-hand stock and feeds the expiry-loss figure on the dashboard.
+  </div>
   <div style="margin-bottom:12px;"><input type="text" placeholder="Search by item code, batch, notes..." style="width:300px; border:1px solid #e0e0e0; border-radius:8px; padding:8px 12px; font-size:12px; outline:none;"></div>
   <div class="card">
     <div class="card-header">New Damage / Breakage</div>
     <div class="card-body">
       <div class="form-row">
-        <div class="form-group"><label>Item Code</label><input type="text" placeholder="e.g. P001"></div>
-        <div class="form-group"><label>Batch No</label><input type="text" placeholder="e.g. B1"></div>
-        <div class="form-group"><label>Qty</label><input type="number" value="1"></div>
-        <div class="form-group"><label>Notes</label><input type="text" placeholder="Reason for damage..."></div>
+        <div class="form-group"><label>Product</label>
+          <input type="text" id="dmg-product" list="productList" placeholder="Search product...">
+          <datalist id="productList">
+            <option value="MED001 - Lignocaine HCl injection LP 1%">
+            <option value="MED013 - Paracetamol tab 650 mg">
+            <option value="MED082 - Amoxycillin + Clavulanic acid tab">
+            <option value="MED004 - Alprazolam tab I.P 0.25 mg">
+          </datalist>
+        </div>
+        <div class="form-group"><label>Batch No</label><input type="text" id="dmg-batch" placeholder="e.g. BT-2026-A1"></div>
+        <div class="form-group"><label>Qty</label><input type="number" id="dmg-qty" value="1"></div>
+        <div class="form-group"><label>Notes</label><input type="text" id="dmg-notes" placeholder="Reason for damage..."></div>
       </div>
-      <button class="btn-add">+ Add Damage</button>
+      <button class="btn-add" onclick="addDamage()">+ Add Damage</button>
+      <div id="dmg-effect" style="display:none; margin-top:12px; border-radius:8px; padding:10px 14px; font-size:12px;"></div>
     </div>
   </div>
   <div class="card">
     <div class="card-header">Damages &amp; Breakage</div>
     <table>
-      <thead><tr><th>Item</th><th>Batch</th><th>Qty</th><th>Date</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr><td>P002</td><td>B3</td><td>2</td><td>2026-06-28</td><td>Expired</td></tr>
-        <tr><td>P004</td><td>B4</td><td>1</td><td>2026-06-28</td><td>Bottle broken</td></tr>
+      <thead><tr><th>Damage #</th><th>Item</th><th>Batch</th><th>Qty</th><th>Date</th><th>Notes</th><th>Stock Effect</th></tr></thead>
+      <tbody id="dmg-body">
+        <tr><td><strong>DMG-001</strong></td><td>MED-EXP &middot; Metformin tab 500 mg</td><td>BT-2025-OLD</td><td>2</td><td>2026-06-28</td><td>Expired</td><td><span style="color:#c62828; font-weight:600;">Stock &minus;2</span></td></tr>
+        <tr><td><strong>DMG-002</strong></td><td>MED001 &middot; Lignocaine HCl injection LP 1%</td><td>BT-2026-A1</td><td>1</td><td>2026-06-28</td><td>Ampoule broken</td><td><span style="color:#c62828; font-weight:600;">Stock &minus;1</span></td></tr>
       </tbody>
     </table>
-    <div class="row-count">Showing 2 of 2 rows</div>
+    <div class="row-count" id="dmg-count">Showing 2 of 2 rows</div>
   </div>
 </div>
+
+<script>
+var dmgSeq = 2;
+function dmgToday() { var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+function addDamage() {
+  var prod = (document.getElementById('dmg-product').value || '').trim();
+  var batch = (document.getElementById('dmg-batch').value || '').trim();
+  var qty = document.getElementById('dmg-qty').value || '1';
+  var notes = (document.getElementById('dmg-notes').value || '').trim() || '—';
+  if (!prod || !batch) { if (window.pharmacyToast) pharmacyToast('Enter product and batch first.'); return; }
+
+  dmgSeq++;
+  var no = 'DMG-' + String(dmgSeq).padStart(3,'0');
+  var tr = document.createElement('tr');
+  tr.innerHTML = '<td><strong>' + no + '</strong></td><td>' + prod + '</td><td>' + batch + '</td><td>' + qty + '</td><td>' + dmgToday() + '</td><td>' + notes + '</td><td><span style="color:#c62828; font-weight:600;">Stock &minus;' + qty + '</span></td>';
+  document.getElementById('dmg-body').appendChild(tr);
+  document.getElementById('dmg-count').textContent = 'Showing ' + document.querySelectorAll('#dmg-body tr').length + ' rows';
+
+  var box = document.getElementById('dmg-effect');
+  box.style.display = 'block';
+  box.style.background = '#fff5f5'; box.style.border = '1px solid #fecaca'; box.style.color = '#c62828';
+  box.innerHTML = '&#9888; <strong>' + no + '</strong> recorded. ' + qty + ' unit(s) of ' + prod + ' (batch ' + batch + ') <strong>written off</strong> — on-hand stock reduced by ' + qty + '. This feeds the expiry/loss figure on the <a href="overview.html" style="color:#991b1b; font-weight:700;">dashboard</a>.';
+  if (window.pharmacyToast) pharmacyToast('Damage recorded: stock reduced by ' + qty + '. (demo)');
+}
+</script>
+<script src="pharmacy-ux.js"></script>
 </body>
 </html>

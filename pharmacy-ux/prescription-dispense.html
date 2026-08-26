@@ -73,8 +73,8 @@ tr:hover td { background: #fafafa; }
 </style>
 </head>
 <body>
-<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-export">&#9650; Export</button><button class="btn-import">&#9660; Import</button><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
-<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="sales.html">Sales</a><a href="purchases.html">Purchases</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="prescription-dispense.html" class="active">Rx Dispense</a></div>
+<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
+<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="purchase-orders.html">Purchase Orders</a><a href="purchases.html">GRN</a><a href="sales.html">Sales</a><a href="prescription-dispense.html" class="active">Rx Dispense</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="audit-trail.html">Audit Trail</a><a href="settings.html">Settings</a><a href="documentation.html">Documentation</a></div>
 
 <div class="content">
 
@@ -83,6 +83,10 @@ tr:hover td { background: #fafafa; }
     <div class="page-header">
       <div class="page-title">Prescription Dispense Queue</div>
       <button class="btn btn-outline">&#8635; Refresh</button>
+    </div>
+
+    <div style="background:#e3f2fd; border:1px solid #bbdefb; border-radius:8px; padding:10px 14px; font-size:12px; color:#1565c0; margin-bottom:14px;">
+      &#128203; Prescriptions sent by doctors land here. Click one to dispense: verify <strong>Schedule H</strong>, pick batches (FEFO), and generate the bill in one step — the invoice is stamped with the Rx for the audit trail. Alternatively, start from <a href="sales.html" style="color:#0d47a1; font-weight:600;">Sales</a> and link the prescription there.
     </div>
 
     <!-- Search -->
@@ -298,5 +302,6 @@ function showView(id) {
   window.scrollTo(0, 0);
 }
 </script>
+<script src="pharmacy-ux.js"></script>
 </body>
 </html>

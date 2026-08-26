@@ -105,18 +105,21 @@ tr:hover td { background: #fafafa; }
     <span class="header-version">v1.0</span>
   </div>
   <div class="header-actions">
-    <button class="btn-export">&#9650; Export</button>
-    <button class="btn-import">&#9660; Import</button>
     <button class="btn-reset">&#8634; Reset</button>
     <button class="btn-logout">Logout</button>
   </div>
 </div>
 
 <div class="nav">
-  <a href="overview.html" class="active">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="sales.html">Sales</a><a href="purchases.html">Purchases</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="prescription-dispense.html">Rx Dispense</a>
+  <a href="overview.html" class="active">Overview</a><a href="products.html">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="purchase-orders.html">Purchase Orders</a><a href="purchases.html">GRN</a><a href="sales.html">Sales</a><a href="prescription-dispense.html">Rx Dispense</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="audit-trail.html">Audit Trail</a><a href="settings.html">Settings</a><a href="documentation.html">Documentation</a>
 </div>
 
 <div class="content">
+
+  <!-- Dashboard help -->
+  <div style="background:#e3f2fd; border:1px solid #bbdefb; border-radius:8px; padding:10px 14px; font-size:12px; color:#1565c0; margin-bottom:14px;">
+    &#128200; Your store at a glance — today's revenue, reorder alerts, near-expiry exposure, the Schedule H audit log, pending prescriptions, day-end cash reconciliation, and live stock. Act on alerts here or jump to the relevant tab.
+  </div>
 
   <!-- Org & License Info Bar -->
   <div style="background:#fff; border:1px solid #e8e8e8; border-radius:10px; padding:10px 16px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; font-size:11px;">
@@ -125,16 +128,16 @@ tr:hover td { background: #fafafa; }
       <span><strong>Pharmacist:</strong> Ravi Kumar (TS-PH-4521)</span>
       <span><strong>GSTIN:</strong> 36AABCU9603R1ZM</span>
     </div>
-    <a href="settings.html" style="color:#1565c0; font-weight:600; text-decoration:none;">Org Settings &rarr;</a>
+    <a href="settings.html" style="color:#1565c0; font-weight:600; text-decoration:none;">Settings &rarr;</a>
   </div>
 
   <!-- KPI Row -->
   <div class="kpi-row">
     <div class="kpi-card"><div class="kpi-label"><span class="dot blue"></span> PRODUCTS</div><div class="kpi-value">439</div></div>
-    <div class="kpi-card"><div class="kpi-label"><span class="dot teal"></span> SUPPLIERS</div><div class="kpi-value">2</div></div>
-    <div class="kpi-card"><div class="kpi-label"><span class="dot green"></span> CUSTOMERS</div><div class="kpi-value">4</div></div>
-    <div class="kpi-card"><div class="kpi-label"><span class="dot blue"></span> SALE INVOICES</div><div class="kpi-value">4</div></div>
-    <div class="kpi-card"><div class="kpi-label"><span class="dot teal"></span> PURCHASE INVOICES</div><div class="kpi-value">2</div></div>
+    <div class="kpi-card"><div class="kpi-label"><span class="dot teal"></span> SUPPLIERS</div><div class="kpi-value">3</div></div>
+    <div class="kpi-card"><div class="kpi-label"><span class="dot green"></span> CUSTOMERS</div><div class="kpi-value">5</div></div>
+    <div class="kpi-card"><div class="kpi-label"><span class="dot blue"></span> SALE INVOICES</div><div class="kpi-value">5</div></div>
+    <div class="kpi-card"><div class="kpi-label"><span class="dot teal"></span> GRN / RECEIPTS</div><div class="kpi-value">4</div></div>
     <div class="kpi-card"><div class="kpi-label"><span class="dot orange"></span> SALE RETURNS</div><div class="kpi-value">1</div></div>
     <div class="kpi-card"><div class="kpi-label"><span class="dot red"></span> DAMAGES</div><div class="kpi-value">2</div></div>
     <div class="kpi-card"><div class="kpi-label"><span class="dot purple"></span> STOCK ADJ.</div><div class="kpi-value">2</div></div>
@@ -144,11 +147,11 @@ tr:hover td { background: #fafafa; }
   <div class="revenue-banner">
     <div class="left">
       <div class="label">Cumulative System Revenue</div>
-      <div class="value">&#x20B9;452.00</div>
+      <div class="value">&#x20B9;2,438.32</div>
     </div>
     <div class="right">
       <div class="label">Today's Transactions</div>
-      <div class="value">&#x20B9;0.00</div>
+      <div class="value">&#x20B9;812.82</div>
     </div>
   </div>
 
@@ -167,11 +170,9 @@ tr:hover td { background: #fafafa; }
           <table>
             <thead><tr><th>Medicine Description</th><th>Rack Location</th><th>Current Stock</th><th>Action</th></tr></thead>
             <tbody>
-              <tr><td><strong>Paracetamol suppository 100 mg</strong><br><span style="font-size:10px;color:#999;">Code: MED011</span></td><td>D-02</td><td class="stock-zero">-1 Units</td><td><button class="btn-auto-order">Auto-Order</button></td></tr>
-              <tr><td><strong>Lignocaine HCl injection LP 1%</strong><br><span style="font-size:10px;color:#999;">Code: MED001</span></td><td>A-01</td><td class="stock-zero">0 Units</td><td><button class="btn-auto-order">Auto-Order</button></td></tr>
-              <tr><td><strong>Lignocaine +nifedipine ointment</strong><br><span style="font-size:10px;color:#999;">Code: MED002</span></td><td>A-02</td><td class="stock-zero">0 Units</td><td><button class="btn-auto-order">Auto-Order</button></td></tr>
-              <tr><td><strong>Prilocaine lignocaine inj</strong><br><span style="font-size:10px;color:#999;">Code: MED003</span></td><td>A-03</td><td class="stock-zero">0 Units</td><td><button class="btn-auto-order">Auto-Order</button></td></tr>
-              <tr><td><strong>Alprazolam tab I.P 0.25 mg</strong><br><span style="font-size:10px;color:#999;">Code: MED004</span></td><td>B-01</td><td class="stock-zero">0 Units</td><td><button class="btn-auto-order">Auto-Order</button></td></tr>
+              <tr><td><strong>Lignocaine HCl injection LP 1%</strong><br><span style="font-size:10px;color:#999;">Code: MED001 &middot; Reorder: 15</span></td><td>A-01</td><td class="stock-zero">5 Units</td><td><button class="btn-auto-order">Auto-Order</button></td></tr>
+              <tr><td><strong>Diclofenac sodium spray</strong><br><span style="font-size:10px;color:#999;">Code: MED016 &middot; Reorder: 10</span></td><td>A-01</td><td class="stock-zero">8 Units</td><td><button class="btn-auto-order">Auto-Order</button></td></tr>
+              <tr><td><strong>Diazepam tab I.P 5 mg</strong><br><span style="font-size:10px;color:#999;">Code: MED062 &middot; Reorder: 15</span></td><td>A-02</td><td class="stock-zero">12 Units</td><td><button class="btn-auto-order">Auto-Order</button></td></tr>
             </tbody>
           </table>
         </div>
@@ -183,8 +184,15 @@ tr:hover td { background: #fafafa; }
           <span>&#9888; SCHEDULE H / RESTRICTED DRUGS AUDIT LOG</span>
           <span class="card-badge">Prescription Verified</span>
         </div>
-        <div class="card-body">
-          <div class="audit-empty">No restricted drugs dispensed today.</div>
+        <div style="padding:0;">
+          <table>
+            <thead><tr><th>Drug</th><th>Rx #</th><th>Patient</th><th>Doctor</th><th>Qty</th></tr></thead>
+            <tbody>
+              <tr><td>Alprazolam tab I.P 0.25 mg</td><td>RX-2026-0045</td><td>Srinivas Reddy</td><td>Dr. Venkat Rao</td><td>10</td></tr>
+              <tr><td>Alprazolam tab I.P 0.25 mg</td><td>INV-1001</td><td>Cash Customer</td><td>Dr. Venkat Rao</td><td>1</td></tr>
+            </tbody>
+          </table>
+          <div style="padding:8px 14px; font-size:10px; color:#aaa; border-top:1px solid #f0f0f0;">All entries logged to Schedule H register &middot; See Reports &rarr; Schedule H Log</div>
         </div>
       </div>
     </div>
@@ -197,8 +205,9 @@ tr:hover td { background: #fafafa; }
           <span>EXPIRING SOON (FINANCIAL LOSS PREVENTION)</span>
         </div>
         <div class="expiry-block">
-          <div class="label">Estimated Expiry Exposure</div>
-          <div class="value">&#x20B9;0</div>
+          <div class="label">Estimated Expiry Exposure (&lt;90 days)</div>
+          <div class="value">&#x20B9;1,320</div>
+          <div style="font-size:11px; color:#777; margin-top:6px;">2 batches expiring soon &middot; 1 batch already expired (blocked)</div>
           <div class="link">Report Batches &lt;90 days &rarr;</div>
         </div>
       </div>
@@ -210,7 +219,7 @@ tr:hover td { background: #fafafa; }
         </div>
         <div class="card-body">
           <div class="recon-row">
-            <div><div class="recon-label">Software Expected Sales:</div><div class="recon-value">&#x20B9;0.00</div></div>
+            <div><div class="recon-label">Software Expected Sales:</div><div class="recon-value">&#x20B9;812.82</div></div>
             <div style="text-align:right;"><div class="recon-label">Reconciliation Status:</div><div style="margin-top:4px;"><span class="status-pending">&#x23F3; Pending Action</span></div></div>
           </div>
           <div style="margin-top:14px;">
@@ -258,16 +267,16 @@ tr:hover td { background: #fafafa; }
       <table>
         <thead><tr><th>Code</th><th>Medicine</th><th>Category</th><th>Rack</th><th>Stock</th></tr></thead>
         <tbody>
-          <tr><td>MED001</td><td>Lignocaine HCl injection LP 1%</td><td>Anaesthetics</td><td>A-01</td><td class="stock-zero">0 Units</td></tr>
-          <tr><td>MED002</td><td>Lignocaine +nifedipine ointment</td><td>Anaesthetics</td><td>A-02</td><td class="stock-zero">0 Units</td></tr>
-          <tr><td>MED003</td><td>Prilocaine lignocaine inj</td><td>Anaesthetics</td><td>A-03</td><td class="stock-zero">0 Units</td></tr>
-          <tr><td>MED004</td><td>Alprazolam tab I.P 0.25 mg,</td><td>Preanaesthetic medications</td><td>B-01</td><td class="stock-zero">0 Units</td></tr>
-          <tr><td>MED005</td><td>Alprazolam tab I.P 0.5 mg</td><td>Preanaesthetic medications</td><td>B-02</td><td class="stock-zero">0 Units</td></tr>
-          <tr><td>MED006</td><td>Amitriptyline tab I.P 10 mg</td><td>Preanaesthetic medications</td><td>B-03</td><td class="stock-zero">0 Units</td></tr>
-          <tr><td>MED007</td><td>Midazolam inj 5 mg/ml</td><td>Preanaesthetic medications</td><td>C-01</td><td class="stock-zero">0 Units</td></tr>
-          <tr><td>MED008</td><td>Midazolam I nj 5 mg/5 ml</td><td>Preanaesthetic medications</td><td>C-02</td><td class="stock-zero">0 Units</td></tr>
-          <tr><td>MED009</td><td>Midazolam nasal spray 5 mg/ml</td><td>Preanaesthetic medications</td><td>C-03</td><td class="stock-zero">0 Units</td></tr>
-          <tr><td>MED010</td><td>Propantheline tab 15 mg</td><td>Preanaesthetic medications</td><td>D-01</td><td class="stock-zero">0 Units</td></tr>
+          <tr><td>MED013</td><td>Paracetamol tab 650 mg</td><td>Analgesics</td><td>E-02</td><td style="color:#43a047; font-weight:600;">48 Units</td></tr>
+          <tr><td>MED099</td><td>Cetirizine tab 10 mg</td><td>Antihistamines</td><td>F-01</td><td style="color:#43a047; font-weight:600;">60 Units</td></tr>
+          <tr><td>MED105</td><td>Pantoprazole tab 40 mg</td><td>Antacids</td><td>F-03</td><td style="color:#43a047; font-weight:600;">35 Units</td></tr>
+          <tr><td>MED082</td><td>Amoxycillin + Clavulanic acid tab 625 mg</td><td>Antibiotics</td><td>C-01</td><td style="color:#43a047; font-weight:600;">30 Units</td></tr>
+          <tr><td>MED004</td><td>Alprazolam tab I.P 0.25 mg <span style="background:#ffebee;color:#c62828;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700;">H</span></td><td>Anxiolytics</td><td>B-01</td><td style="color:#43a047; font-weight:600;">25 Units</td></tr>
+          <tr><td>MED035</td><td>Tramadol tab 50 mg <span style="background:#ffebee;color:#c62828;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700;">H</span></td><td>Analgesics</td><td>B-02</td><td style="color:#43a047; font-weight:600;">20 Units</td></tr>
+          <tr><td>MED062</td><td>Diazepam tab I.P 5 mg <span style="background:#ffebee;color:#c62828;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700;">H</span></td><td>Anxiolytics</td><td>A-02</td><td style="color:#d97706; font-weight:600;">12 Units</td></tr>
+          <tr><td>MED016</td><td>Diclofenac sodium spray</td><td>Topical NSAIDs</td><td>A-01</td><td style="color:#d97706; font-weight:600;">8 Units</td></tr>
+          <tr><td>MED001</td><td>Lignocaine HCl injection LP 1%</td><td>Anaesthetics</td><td>A-01</td><td style="color:#d97706; font-weight:600;">5 Units</td></tr>
+          <tr><td>MED-EXP</td><td>Metformin tab 500 mg</td><td>Antidiabetics</td><td>G-01</td><td class="stock-zero">0 (Expired batch)</td></tr>
         </tbody>
       </table>
       <div style="padding:10px 14px; font-size:11px; color:#aaa; border-top:1px solid #f0f0f0;">Showing 10 of 439 items</div>
@@ -276,5 +285,6 @@ tr:hover td { background: #fafafa; }
 
 </div>
 
+<script src="pharmacy-ux.js"></script>
 </body>
 </html>

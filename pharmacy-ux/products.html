@@ -51,14 +51,25 @@ tr:hover td { background: #fafafa; }
 </style>
 </head>
 <body>
-<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-export">&#9650; Export</button><button class="btn-import">&#9660; Import</button><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
-<div class="nav"><a href="overview.html">Overview</a><a href="products.html" class="active">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="sales.html">Sales</a><a href="purchases.html">Purchases</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="prescription-dispense.html">Rx Dispense</a></div>
+<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
+<div class="nav"><a href="overview.html">Overview</a><a href="products.html" class="active">Products</a><a href="suppliers.html">Suppliers</a><a href="customers.html">Customers</a><a href="purchase-orders.html">Purchase Orders</a><a href="purchases.html">GRN</a><a href="sales.html">Sales</a><a href="prescription-dispense.html">Rx Dispense</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="audit-trail.html">Audit Trail</a><a href="settings.html">Settings</a><a href="documentation.html">Documentation</a></div>
 
 <div class="content">
 
   <!-- VIEW: Product List -->
   <div class="view active" id="view-list">
-    <div class="page-header"><div class="page-title">Products</div><button class="btn-add" onclick="showView('view-add')">+ Add</button></div>
+    <div class="page-header"><div class="page-title">Products</div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn-import" style="padding:7px 14px; border-radius:6px; font-size:11px; font-weight:600;" title="Import product catalog master only — does NOT add stock" onclick="if(window.pharmacyToast)pharmacyToast('Import product catalog (master only — no stock). (demo)')">&#9660; Import Catalog</button>
+        <button class="btn-export" style="padding:7px 14px; border-radius:6px; font-size:11px; font-weight:600;">&#9650; Export</button>
+        <button class="btn-add" onclick="showView('view-add')">+ Add</button>
+      </div>
+    </div>
+
+    <!-- Clarifying note: Products import is catalog-only, not stock -->
+    <div style="background:#e3f2fd; border:1px solid #bbdefb; border-radius:8px; padding:8px 12px; font-size:11px; color:#1565c0; margin-bottom:12px;">
+      &#128218; <strong>Import Catalog</strong> loads the product master (name, MRP, GST, schedule) only — it does <strong>not</strong> add stock. Actual stock, batch &amp; expiry are created when goods arrive, via <a href="purchases.html" style="color:#0d47a1; font-weight:600;">GRN</a>.
+    </div>
 
     <!-- Search -->
     <div style="margin-bottom:12px;">
@@ -68,17 +79,17 @@ tr:hover td { background: #fafafa; }
     <div class="card">
       <table>
         <thead><tr><th>Code</th><th>Name</th><th>Sch</th><th>HSN</th><th>Pack/Unit</th><th>Rack</th><th>Company</th><th>Form</th><th>MRP</th><th>GST%</th><th>Stock</th><th>Reorder</th><th></th></tr></thead>
-        <tbody>
-          <tr onclick="showView('view-detail')" style="cursor:pointer;"><td>MED001</td><td>Lignocaine HCl injection LP 1%</td><td>—</td><td>3004</td><td>1 Ampoule/Vial</td><td>A-01</td><td>Cipla Ltd</td><td>Injection</td><td>85</td><td>12</td><td>5</td><td>15</td><td><button class="btn-del">del</button></td></tr>
-          <tr style="cursor:pointer;"><td>MED004</td><td>Alprazolam tab I.P 0.25 mg</td><td><span style="background:#ffebee;color:#c62828;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700;">H</span></td><td>3004</td><td>10x10 Tablets</td><td>B-01</td><td>Lupin Pharma</td><td>Tablet</td><td>36.1</td><td>5</td><td>25</td><td>15</td><td><button class="btn-del">del</button></td></tr>
-          <tr style="cursor:pointer;"><td>MED013</td><td>Paracetamol tab 650 mg</td><td>—</td><td>3004</td><td>10x10 Tablets</td><td>E-02</td><td>Sanofi India</td><td>Tablet</td><td>69.4</td><td>5</td><td>48</td><td>20</td><td><button class="btn-del">del</button></td></tr>
-          <tr style="cursor:pointer;"><td>MED035</td><td>Tramadol tab 50 mg</td><td><span style="background:#ffebee;color:#c62828;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700;">H</span></td><td>3004</td><td>10x10 Tablets</td><td>B-02</td><td>Zydus</td><td>Tablet</td><td>150.8</td><td>5</td><td>20</td><td>15</td><td><button class="btn-del">del</button></td></tr>
-          <tr style="cursor:pointer;"><td>MED062</td><td>Diazepam tab I.P 5 mg</td><td><span style="background:#ffebee;color:#c62828;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700;">H</span></td><td>3004</td><td>10x10 Tablets</td><td>A-02</td><td>Sun Pharma</td><td>Tablet</td><td>250.7</td><td>5</td><td>12</td><td>15</td><td><button class="btn-del">del</button></td></tr>
-          <tr style="cursor:pointer;"><td>MED082</td><td>Amoxycillin + Clavulanic acid tab</td><td>—</td><td>3004</td><td>10x10 Tablets</td><td>C-01</td><td>Alkem Labs</td><td>Tablet</td><td>324.7</td><td>5</td><td>30</td><td>15</td><td><button class="btn-del">del</button></td></tr>
-          <tr style="cursor:pointer;"><td>MED016</td><td>Diclofenac sodium spray</td><td>—</td><td>3004</td><td>1 Canister</td><td>A-01</td><td>Cipla Ltd</td><td>Spray</td><td>230.5</td><td>5</td><td>8</td><td>10</td><td><button class="btn-del">del</button></td></tr>
+        <tbody id="prod-body">
+          <tr onclick="showView('view-detail')" style="cursor:pointer;"><td>MED001</td><td>Lignocaine HCl injection LP 1%</td><td>—</td><td>3004</td><td>1 Ampoule/Vial</td><td>A-01</td><td>Cipla Ltd</td><td>Injection</td><td>&#x20B9;85.00</td><td>12</td><td>5</td><td>15</td><td><button class="btn-del" onclick="event.stopPropagation(); confirmDelete('MED001')">del</button></td></tr>
+          <tr onclick="showView('view-detail')" style="cursor:pointer;"><td>MED004</td><td>Alprazolam tab I.P 0.25 mg</td><td><span style="background:#ffebee;color:#c62828;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700;">H</span></td><td>3004</td><td>10x10 Tablets</td><td>B-01</td><td>Lupin Pharma</td><td>Tablet</td><td>&#x20B9;36.10</td><td>5</td><td>25</td><td>15</td><td><button class="btn-del" onclick="event.stopPropagation(); confirmDelete('MED004')">del</button></td></tr>
+          <tr onclick="showView('view-detail')" style="cursor:pointer;"><td>MED013</td><td>Paracetamol tab 650 mg</td><td>—</td><td>3004</td><td>10x10 Tablets</td><td>E-02</td><td>Sanofi India</td><td>Tablet</td><td>&#x20B9;69.40</td><td>5</td><td>48</td><td>20</td><td><button class="btn-del" onclick="event.stopPropagation(); confirmDelete('MED013')">del</button></td></tr>
+          <tr onclick="showView('view-detail')" style="cursor:pointer;"><td>MED035</td><td>Tramadol tab 50 mg</td><td><span style="background:#ffebee;color:#c62828;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700;">H</span></td><td>3004</td><td>10x10 Tablets</td><td>B-02</td><td>Zydus</td><td>Tablet</td><td>&#x20B9;150.80</td><td>5</td><td>20</td><td>15</td><td><button class="btn-del" onclick="event.stopPropagation(); confirmDelete('MED035')">del</button></td></tr>
+          <tr onclick="showView('view-detail')" style="cursor:pointer;"><td>MED062</td><td>Diazepam tab I.P 5 mg</td><td><span style="background:#ffebee;color:#c62828;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700;">H</span></td><td>3004</td><td>10x10 Tablets</td><td>A-02</td><td>Sun Pharma</td><td>Tablet</td><td>&#x20B9;250.70</td><td>5</td><td>12</td><td>15</td><td><button class="btn-del" onclick="event.stopPropagation(); confirmDelete('MED062')">del</button></td></tr>
+          <tr onclick="showView('view-detail')" style="cursor:pointer;"><td>MED082</td><td>Amoxycillin + Clavulanic acid tab</td><td>—</td><td>3004</td><td>10x10 Tablets</td><td>C-01</td><td>Alkem Labs</td><td>Tablet</td><td>&#x20B9;324.70</td><td>5</td><td>30</td><td>15</td><td><button class="btn-del" onclick="event.stopPropagation(); confirmDelete('MED082')">del</button></td></tr>
+          <tr onclick="showView('view-detail')" style="cursor:pointer;"><td>MED016</td><td>Diclofenac sodium spray</td><td>—</td><td>3004</td><td>1 Canister</td><td>A-01</td><td>Cipla Ltd</td><td>Spray</td><td>&#x20B9;230.50</td><td>5</td><td>8</td><td>10</td><td><button class="btn-del" onclick="event.stopPropagation(); confirmDelete('MED016')">del</button></td></tr>
         </tbody>
       </table>
-      <div class="row-count">Showing 10 of 439 rows</div>
+      <div class="row-count">Showing 7 of 439 rows</div>
     </div>
   </div>
 
@@ -90,36 +101,36 @@ tr:hover td { background: #fafafa; }
       <div class="card-header">Product Details</div>
       <div class="card-body">
         <div class="form-row form-row-3">
-          <div class="form-group"><label>Code</label><input type="text" placeholder="e.g. MED440"></div>
-          <div class="form-group"><label>Name *</label><input type="text" placeholder="Medicine name"></div>
-          <div class="form-group"><label>Generic Name</label><input type="text" placeholder="Generic / Salt name"></div>
+          <div class="form-group"><label>Code</label><input type="text" id="p-code" placeholder="e.g. MED440"></div>
+          <div class="form-group"><label>Name *</label><input type="text" id="p-name" placeholder="Medicine name"></div>
+          <div class="form-group"><label>Generic Name</label><input type="text" id="p-generic" placeholder="Generic / Salt name"></div>
         </div>
         <div class="form-row form-row-4">
-          <div class="form-group"><label>Form</label><select><option>Tablet</option><option>Injection</option><option>Syrup</option><option>Ointment</option><option>Capsule</option><option>Inhaler/Spray</option><option>Suppository</option><option>Solution</option></select></div>
-          <div class="form-group"><label>Pack/Unit</label><input type="text" placeholder="e.g. 10x10 Tablets"></div>
-          <div class="form-group"><label>Rack Location</label><input type="text" placeholder="e.g. A-01"></div>
-          <div class="form-group"><label>Company</label><input type="text" placeholder="Manufacturer"></div>
+          <div class="form-group"><label>Form</label><select id="p-form"><option>Tablet</option><option>Injection</option><option>Syrup</option><option>Ointment</option><option>Capsule</option><option>Inhaler/Spray</option><option>Suppository</option><option>Solution</option></select></div>
+          <div class="form-group"><label>Pack/Unit</label><input type="text" id="p-pack" placeholder="e.g. 10x10 Tablets"></div>
+          <div class="form-group"><label>Rack Location</label><input type="text" id="p-rack" placeholder="e.g. A-01"></div>
+          <div class="form-group"><label>Company</label><input type="text" id="p-company" placeholder="Manufacturer"></div>
         </div>
         <div class="form-row form-row-4">
-          <div class="form-group"><label>Category</label><input type="text" placeholder="e.g. NSAIDS"></div>
-          <div class="form-group"><label>HSN Code</label><input type="text" value="3004"></div>
-          <div class="form-group"><label>Schedule Type</label><select><option selected>None</option><option>H</option><option>H1</option><option>X (Narcotic)</option></select></div>
+          <div class="form-group"><label>Category</label><input type="text" id="p-category" placeholder="e.g. NSAIDS"></div>
+          <div class="form-group"><label>HSN Code</label><input type="text" id="p-hsn" value="3004"></div>
+          <div class="form-group"><label>Schedule Type</label><select id="p-sch"><option selected>None</option><option>H</option><option>H1</option><option>X (Narcotic)</option></select></div>
           <div class="form-group"><label>Barcode</label><input type="text" placeholder="Scan or enter"></div>
         </div>
         <div class="form-row form-row-4">
-          <div class="form-group"><label>MRP (&#x20B9;)</label><input type="number" placeholder="0.00"></div>
-          <div class="form-group"><label>Selling Rate (&#x20B9;)</label><input type="number" placeholder="0.00"><span style="font-size:9px;color:#e53935;margin-top:2px;">Must not exceed MRP</span></div>
-          <div class="form-group"><label>GST %</label><select><option>5</option><option>12</option><option>18</option><option>0</option></select></div>
+          <div class="form-group"><label>MRP (&#x20B9;)</label><input type="number" id="p-mrp" placeholder="0.00"></div>
+          <div class="form-group"><label>Selling Rate (&#x20B9;)</label><input type="number" id="p-rate" placeholder="0.00"><span style="font-size:9px;color:#e53935;margin-top:2px;">Must not exceed MRP</span></div>
+          <div class="form-group"><label>GST %</label><select id="p-gst"><option>5</option><option>12</option><option>18</option><option>0</option></select></div>
           <div class="form-group"><label>Max Discount %</label><input type="number" value="10"></div>
         </div>
         <div class="form-row form-row-4">
-          <div class="form-group"><label>Stock</label><input type="number" value="0"></div>
-          <div class="form-group"><label>Reorder Level</label><input type="number" value="15"></div>
+          <div class="form-group"><label>Stock</label><input type="number" id="p-stock" value="0" disabled><span style="font-size:9px;color:#94a3b8;margin-top:2px;">Stock is added via GRN, not here</span></div>
+          <div class="form-group"><label>Reorder Level</label><input type="number" id="p-reorder" value="15"></div>
           <div class="form-group"><label>Mfg License No</label><input type="text" placeholder="Manufacturer DL#"></div>
           <div class="form-group"></div>
         </div>
         <div style="margin-top:16px; display:flex; gap:10px;">
-          <button class="btn-save" onclick="showView('view-list')">&#10003; Save Product</button>
+          <button class="btn-save" onclick="saveProduct()">&#10003; Save Product</button>
           <button class="btn-cancel" onclick="showView('view-list')">Cancel</button>
         </div>
       </div>
@@ -155,7 +166,7 @@ tr:hover td { background: #fafafa; }
         <table>
           <thead><tr><th>Transaction</th><th>Date</th><th>Batch</th><th>Qty Change</th><th>Reference</th></tr></thead>
           <tbody>
-            <tr><td>Purchase (GRN)</td><td>15 Aug 2026</td><td>BT-2026-A1</td><td style="color:#43a047; font-weight:700;">+10</td><td>PUR-5001</td></tr>
+            <tr><td>Goods Receipt (GRN)</td><td>15 Aug 2026</td><td>BT-2026-A1</td><td style="color:#43a047; font-weight:700;">+10</td><td>GRN-5001</td></tr>
             <tr><td>Sale</td><td>16 Aug 2026</td><td>BT-2026-A1</td><td style="color:#e53935; font-weight:700;">-3</td><td>INV-1002</td></tr>
             <tr><td>Damage</td><td>17 Aug 2026</td><td>BT-2026-A1</td><td style="color:#e53935; font-weight:700;">-1</td><td>DMG-004</td></tr>
             <tr><td>Adjustment</td><td>17 Aug 2026</td><td>BT-2026-A1</td><td style="color:#e53935; font-weight:700;">-1</td><td>ADJ-002</td></tr>
@@ -166,13 +177,13 @@ tr:hover td { background: #fafafa; }
     </div>
 
     <div class="card">
-      <div class="card-header">Batches</div>
+      <div class="card-header">Batches <span style="font-size:9px; font-weight:500; color:#94a3b8; text-transform:none;">— created from GRN entries (source of truth). Sale uses FEFO (nearest expiry first).</span></div>
       <div class="card-body" style="padding:0;">
         <table>
-          <thead><tr><th>Batch No</th><th>Expiry</th><th>Purchase Rate</th><th>Selling Rate</th><th>MRP</th><th>Qty On Hand</th><th>Status</th></tr></thead>
+          <thead><tr><th>Batch No</th><th>Expiry</th><th>Purchase Rate</th><th>Selling Rate</th><th>MRP</th><th>Qty On Hand</th><th>Source GRN</th><th>Status</th></tr></thead>
           <tbody>
-            <tr><td>BT-2026-A1</td><td>Jun 2028</td><td>&#x20B9;55.00</td><td>&#x20B9;72.00</td><td>&#x20B9;85.00</td><td style="font-weight:700;">5</td><td><span style="background:#d4edda;color:#155724;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:600;">Active</span></td></tr>
-            <tr><td>BT-2025-X1</td><td>Jan 2026</td><td>&#x20B9;50.00</td><td>&#x20B9;70.00</td><td>&#x20B9;82.00</td><td style="font-weight:700; color:#e53935;">0</td><td><span style="background:#ffebee;color:#c62828;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:600;">Expired</span></td></tr>
+            <tr><td>BT-2026-A1</td><td>Jun 2028</td><td>&#x20B9;55.00</td><td>&#x20B9;72.00</td><td>&#x20B9;85.00</td><td style="font-weight:700;">5</td><td>GRN-5001</td><td><span style="background:#d4edda;color:#155724;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:600;">Active</span></td></tr>
+            <tr><td>BT-2025-X1</td><td>Jan 2026</td><td>&#x20B9;50.00</td><td>&#x20B9;70.00</td><td>&#x20B9;82.00</td><td style="font-weight:700; color:#e53935;">0</td><td>GRN-4820</td><td><span style="background:#ffebee;color:#c62828;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:600;">Expired</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -187,6 +198,48 @@ function showView(id) {
   document.getElementById(id).classList.add('active');
   window.scrollTo(0, 0);
 }
+function confirmDelete(code) {
+  if (confirm('Delete product ' + code + '? (demo only)')) {
+    alert('Product ' + code + ' would be deleted. (demo)');
+  }
+}
+
+function val(id) { var el = document.getElementById(id); return el ? (el.value || '').trim() : ''; }
+
+function saveProduct() {
+  var name = val('p-name');
+  if (!name) { document.getElementById('p-name').style.borderColor = '#dc2626'; alert('Product name is required.'); return; }
+  document.getElementById('p-name').style.borderColor = '';
+
+  var code = val('p-code') || 'MED' + Math.floor(400 + Math.random()*99);
+  var sch = document.getElementById('p-sch').value;
+  var schCell = (sch && sch !== 'None')
+    ? '<span style="background:#ffebee;color:#c62828;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700;">' + (sch.charAt(0)) + '</span>'
+    : '&mdash;';
+  var hsn = val('p-hsn') || '3004';
+  var pack = val('p-pack') || '—';
+  var rack = val('p-rack') || '—';
+  var company = val('p-company') || '—';
+  var form = document.getElementById('p-form').value;
+  var mrp = parseFloat(val('p-mrp')) || 0;
+  var gst = document.getElementById('p-gst').value;
+  var reorder = val('p-reorder') || '15';
+
+  var tr = document.createElement('tr');
+  tr.setAttribute('onclick', "showView('view-detail')");
+  tr.style.cursor = 'pointer';
+  tr.innerHTML = '<td>' + code + '</td><td>' + name + '</td><td>' + schCell + '</td><td>' + hsn + '</td><td>' + pack + '</td><td>' + rack + '</td><td>' + company + '</td><td>' + form + '</td><td>\u20B9' + mrp.toFixed(2) + '</td><td>' + gst + '</td><td>0</td><td>' + reorder + '</td>' +
+    '<td><button class="btn-del" onclick="event.stopPropagation(); confirmDelete(\'' + code + '\')">del</button></td>';
+  var body = document.getElementById('prod-body');
+  body.insertBefore(tr, body.firstChild);
+
+  // reset key fields
+  ['p-code','p-name','p-generic','p-pack','p-rack','p-company','p-category','p-mrp','p-rate'].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; });
+
+  showView('view-list');
+  if (window.pharmacyToast) pharmacyToast('Product ' + code + ' added to catalog (stock 0 — add via GRN). (demo)');
+}
 </script>
+<script src="pharmacy-ux.js"></script>
 </body>
 </html>

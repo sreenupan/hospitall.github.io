@@ -36,38 +36,81 @@ tr:hover td { background: #fafafa; }
 </style>
 </head>
 <body>
-<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-export">&#9650; Export</button><button class="btn-import">&#9660; Import</button><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
-<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html" class="active">Suppliers</a><a href="customers.html">Customers</a><a href="sales.html">Sales</a><a href="purchases.html">Purchases</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="prescription-dispense.html">Rx Dispense</a></div>
+<div class="header"><div class="header-brand"><div class="icon">Rx</div>Pharmacy Admin<span class="header-version">v1.0</span></div><div class="header-actions"><button class="btn-reset">&#8634; Reset</button><button class="btn-logout">Logout</button></div></div>
+<div class="nav"><a href="overview.html">Overview</a><a href="products.html">Products</a><a href="suppliers.html" class="active">Suppliers</a><a href="customers.html">Customers</a><a href="purchase-orders.html">Purchase Orders</a><a href="purchases.html">GRN</a><a href="sales.html">Sales</a><a href="prescription-dispense.html">Rx Dispense</a><a href="returns.html">Returns</a><a href="damages.html">Damages</a><a href="stock-adjustments.html">Stock Adj.</a><a href="reports.html">Reports</a><a href="audit-trail.html">Audit Trail</a><a href="settings.html">Settings</a><a href="documentation.html">Documentation</a></div>
 <div class="content">
-  <div class="page-header"><div class="page-title">Suppliers</div><button class="btn-add" onclick="document.getElementById('addForm').style.display=document.getElementById('addForm').style.display==='none'?'block':'none'">+ Add</button></div>
+  <div class="page-header"><div class="page-title">Suppliers</div>
+    <div style="display:flex; gap:8px;">
+      <button class="btn-import" style="padding:7px 14px; border-radius:6px; font-size:11px; font-weight:600;">&#9660; Import</button>
+      <button class="btn-export" style="padding:7px 14px; border-radius:6px; font-size:11px; font-weight:600;">&#9650; Export</button>
+      <button class="btn-add" onclick="document.getElementById('addForm').style.display=document.getElementById('addForm').style.display==='none'?'block':'none'">+ Add</button>
+    </div>
+  </div>
+  <div style="background:#e3f2fd; border:1px solid #bbdefb; border-radius:8px; padding:10px 14px; font-size:12px; color:#1565c0; margin-bottom:14px;">
+    &#127981; Your distributors, wholesalers &amp; manufacturers. Suppliers added here appear when raising a <a href="purchase-orders.html" style="color:#0d47a1; font-weight:600;">Purchase Order</a> and recording a <a href="purchases.html" style="color:#0d47a1; font-weight:600;">GRN</a>. Keep GSTIN accurate for correct purchase tax records.
+  </div>
   <div style="margin-bottom:12px;"><input type="text" placeholder="Search by name, phone, GSTIN..." style="width:300px; border:1px solid #e0e0e0; border-radius:8px; padding:8px 12px; font-size:12px; outline:none;"></div>
   <div class="card" id="addForm" style="display:none; margin-bottom:16px;">
     <div style="padding:14px 18px; font-size:12px; font-weight:700; border-bottom:1px solid #f0f0f0;">NEW SUPPLIER</div>
     <div style="padding:16px 18px;">
       <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px; margin-bottom:12px;">
-        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Name *</label><input style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="Supplier name"></div>
-        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Phone</label><input style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="Phone"></div>
-        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Type</label><select style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;"><option>Distributor</option><option>Wholesaler</option><option>Manufacturer</option></select></div>
-        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">GSTIN</label><input style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="GST number"></div>
+        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Name *</label><input id="sup-name" style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="Supplier name"></div>
+        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Phone</label><input id="sup-phone" style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="Phone"></div>
+        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Type</label><select id="sup-type" style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;"><option>Distributor</option><option>Wholesaler</option><option>Manufacturer</option></select></div>
+        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">GSTIN</label><input id="sup-gstin" style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="GST number"></div>
       </div>
       <div style="display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:12px; margin-bottom:12px;">
-        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Address</label><input style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="Address"></div>
-        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Credit Days</label><input type="number" style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" value="30"></div>
-        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Lead Days</label><input type="number" style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" value="5"></div>
-        <div style="display:flex;align-items:flex-end;gap:8px;"><button onclick="document.getElementById('addForm').style.display='none'" style="background:#43a047;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:11px;font-weight:600;cursor:pointer;">&#10003; Save</button><button onclick="document.getElementById('addForm').style.display='none'" style="background:#f5f5f5;color:#555;border:1px solid #e0e0e0;border-radius:6px;padding:8px 16px;font-size:11px;font-weight:600;cursor:pointer;">Cancel</button></div>
+        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Address</label><input id="sup-address" style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" placeholder="Address"></div>
+        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Credit Days</label><input type="number" id="sup-credit" style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" value="30"></div>
+        <div style="display:flex;flex-direction:column;"><label style="font-size:10px;font-weight:600;color:#777;text-transform:uppercase;margin-bottom:4px;">Lead Days</label><input type="number" id="sup-lead" style="border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;" value="5"></div>
+        <div style="display:flex;align-items:flex-end;gap:8px;"><button onclick="saveSupplier()" style="background:#43a047;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:11px;font-weight:600;cursor:pointer;">&#10003; Save</button><button onclick="document.getElementById('addForm').style.display='none'" style="background:#f5f5f5;color:#555;border:1px solid #e0e0e0;border-radius:6px;padding:8px 16px;font-size:11px;font-weight:600;cursor:pointer;">Cancel</button></div>
       </div>
+      <div id="sup-effect" style="display:none; border-radius:8px; padding:10px 14px; font-size:12px; background:#f0fdf4; border:1px solid #bbf7d0; color:#166534;"></div>
     </div>
   </div>
   <div class="card">
     <table>
       <thead><tr><th>Code</th><th>Name</th><th>Address</th><th>Phone</th><th>Type</th><th>GSTIN</th><th>Credit Days</th><th>Lead Days</th><th></th></tr></thead>
-      <tbody>
-        <tr><td>S001</td><td><strong>Global Meds</strong></td><td>123 Ind. Area</td><td>9876543210</td><td>Distributor</td><td>GST001</td><td>30</td><td>5</td><td><button class="btn-del">del</button></td></tr>
-        <tr><td>S002</td><td><strong>Local Pharma</strong></td><td>456 City Center</td><td>9123456789</td><td>Wholesaler</td><td>GST002</td><td>15</td><td>2</td><td><button class="btn-del">del</button></td></tr>
+      <tbody id="sup-body">
+        <tr><td>S001</td><td><strong>Global Meds Pvt Ltd</strong></td><td>Kukatpally, Hyderabad</td><td>9876543210</td><td>Distributor</td><td>36AABCG1234H1Z5</td><td>30</td><td>5</td><td><button class="btn-del">del</button></td></tr>
+        <tr><td>S002</td><td><strong>Local Pharma</strong></td><td>Ameerpet, Hyderabad</td><td>9123456789</td><td>Wholesaler</td><td>36AABLP5678K1Z3</td><td>15</td><td>2</td><td><button class="btn-del">del</button></td></tr>
       </tbody>
     </table>
-    <div class="row-count">Showing 2 of 2 rows</div>
+    <div class="row-count" id="sup-count">Showing 2 of 2 rows</div>
   </div>
 </div>
+
+<script>
+var supSeq = 2;
+function saveSupplier() {
+  var name = (document.getElementById('sup-name').value || '').trim();
+  if (!name) { document.getElementById('sup-name').style.borderColor = '#dc2626'; if (window.pharmacyToast) pharmacyToast('Supplier name is required.'); return; }
+  document.getElementById('sup-name').style.borderColor = '';
+
+  supSeq++;
+  var code = 'S' + String(supSeq).padStart(3,'0');
+  var phone = (document.getElementById('sup-phone').value || '').trim() || '—';
+  var type = document.getElementById('sup-type').value;
+  var gstin = (document.getElementById('sup-gstin').value || '').trim() || '—';
+  var address = (document.getElementById('sup-address').value || '').trim() || '—';
+  var credit = document.getElementById('sup-credit').value || '0';
+  var lead = document.getElementById('sup-lead').value || '0';
+
+  var tr = document.createElement('tr');
+  tr.innerHTML = '<td>' + code + '</td><td><strong>' + name + '</strong></td><td>' + address + '</td><td>' + phone + '</td><td>' + type + '</td><td>' + gstin + '</td><td>' + credit + '</td><td>' + lead + '</td><td><button class="btn-del">del</button></td>';
+  document.getElementById('sup-body').appendChild(tr);
+  document.getElementById('sup-count').textContent = 'Showing ' + document.querySelectorAll('#sup-body tr').length + ' rows';
+
+  // reset & hide form
+  ['sup-name','sup-phone','sup-gstin','sup-address'].forEach(function(id){ document.getElementById(id).value=''; });
+  document.getElementById('addForm').style.display = 'none';
+
+  var box = document.getElementById('sup-effect');
+  box.style.display = 'block';
+  box.innerHTML = '&#10003; <strong>' + name + '</strong> (' + code + ') added. Now selectable when raising a <a href="purchase-orders.html" style="color:#15803d; font-weight:700;">Purchase Order</a> and recording a <a href="purchases.html" style="color:#15803d; font-weight:700;">GRN</a>.';
+  if (window.pharmacyToast) pharmacyToast('Supplier ' + name + ' (' + code + ') added. (demo)');
+}
+</script>
+<script src="pharmacy-ux.js"></script>
 </body>
 </html>
