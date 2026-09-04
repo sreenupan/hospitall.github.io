@@ -1,6 +1,112 @@
 ﻿  function toggleSidebar(){
-    document.querySelector('.app').classList.toggle('nav-collapsed');
+    var shell = document.querySelector('.app');
+    shell.classList.toggle('nav-collapsed');
+    var toggle = document.querySelector('.nav-toggle');
+    if(toggle){
+      var collapsed = shell.classList.contains('nav-collapsed');
+      toggle.title = collapsed ? 'Expand navigation' : 'Collapse navigation';
+      toggle.setAttribute('aria-label', toggle.title);
+      var topbarToggle = document.querySelector('.menu-btn');
+      if(topbarToggle) topbarToggle.title = collapsed ? 'Expand navigation' : 'Collapse navigation';
+    }
   }
+
+  // ================= DISPLAY COPY NORMALIZATION =================
+  // Older prototype fragments contain UTF-8 text that was saved as Windows-1252.
+  // Normalize it at display time so every working mock screen is presentation-ready.
+  function repairPrototypeCopy(value){
+    if(!value || !/[ÃÂâ]/.test(value)) return value;
+    var cp1252 = {'€':0x80,'‚':0x82,'ƒ':0x83,'„':0x84,'…':0x85,'†':0x86,'‡':0x87,'ˆ':0x88,'‰':0x89,'Š':0x8A,'‹':0x8B,'Œ':0x8C,'Ž':0x8E,'‘':0x91,'’':0x92,'“':0x93,'”':0x94,'•':0x95,'–':0x96,'—':0x97,'˜':0x98,'™':0x99,'š':0x9A,'›':0x9B,'œ':0x9C,'ž':0x9E,'Ÿ':0x9F};
+    var bytes = [];
+    for(var i=0;i<value.length;i++){
+      var code = value.charCodeAt(i);
+      if(code<=255) bytes.push(code);
+      else if(cp1252[value.charAt(i)]!==undefined) bytes.push(cp1252[value.charAt(i)]);
+      else return value;
+    }
+    var repaired = new TextDecoder('utf-8').decode(new Uint8Array(bytes));
+    return repaired.indexOf('\uFFFD')===-1 ? repaired : value;
+  }
+  (function normalizePrototypeCopy(){
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    var node;
+    while((node=walker.nextNode())){
+      var parent = node.parentNode;
+      if(parent && parent.tagName!=='SCRIPT' && parent.tagName!=='STYLE') node.nodeValue = repairPrototypeCopy(node.nodeValue);
+    }
+    document.querySelectorAll('[placeholder],[title],[aria-label]').forEach(function(el){
+      ['placeholder','title','aria-label'].forEach(function(name){
+        if(el.hasAttribute(name)) el.setAttribute(name, repairPrototypeCopy(el.getAttribute(name)));
+      });
+    });
+  })();
+
+  // ================= RESIZABLE GLOBAL NAVIGATION =================
+  (function(){
+    var MIN = 180, MAX = 360, DEFAULT = 212, KEY = 'navigationRailWidth';
+    function app(){ return document.querySelector('.app'); }
+    function setWidth(px){
+      var shell = app(); if(!shell) return;
+      px = Math.max(MIN, Math.min(MAX, px));
+      shell.style.setProperty('--nav-rail', px + 'px');
+      var handle = document.getElementById('navResizer');
+      if(handle) handle.setAttribute('aria-valuenow', Math.round(px));
+      try{ localStorage.setItem(KEY, px); }catch(e){}
+    }
+    function currentWidth(){
+      var saved = null;
+      try{ saved = parseInt(localStorage.getItem(KEY), 10); }catch(e){}
+      return saved || DEFAULT;
+    }
+    function startDrag(e){
+      var shell = app();
+      if(!shell) return;
+      if(shell.classList.contains('nav-collapsed')){
+        shell.classList.remove('nav-collapsed');
+        var navToggle = document.querySelector('.nav-toggle');
+        if(navToggle){
+          navToggle.title = 'Collapse navigation';
+          navToggle.setAttribute('aria-label', navToggle.title);
+        }
+      }
+      e.preventDefault();
+      var handle = document.getElementById('navResizer');
+      if(handle) handle.classList.add('dragging');
+      document.body.classList.add('nav-rail-dragging');
+      function move(ev){
+        var x = ev.touches ? ev.touches[0].clientX : ev.clientX;
+        setWidth(x);
+      }
+      function up(){
+        if(handle) handle.classList.remove('dragging');
+        document.body.classList.remove('nav-rail-dragging');
+        document.removeEventListener('mousemove', move);
+        document.removeEventListener('mouseup', up);
+        document.removeEventListener('touchmove', move);
+        document.removeEventListener('touchend', up);
+      }
+      document.addEventListener('mousemove', move);
+      document.addEventListener('mouseup', up);
+      document.addEventListener('touchmove', move, {passive:false});
+      document.addEventListener('touchend', up);
+    }
+    function attach(){
+      var handle = document.getElementById('navResizer');
+      if(!handle || handle.dataset.bound) return;
+      handle.dataset.bound = '1';
+      handle.addEventListener('mousedown', startDrag);
+      handle.addEventListener('touchstart', startDrag, {passive:false});
+      handle.addEventListener('keydown', function(e){
+        var step = e.shiftKey ? 40 : 10;
+        if(e.key==='ArrowLeft'){ e.preventDefault(); setWidth(currentWidth() - step); }
+        if(e.key==='ArrowRight'){ e.preventDefault(); setWidth(currentWidth() + step); }
+        if(e.key==='Home'){ e.preventDefault(); setWidth(MIN); }
+        if(e.key==='End'){ e.preventDefault(); setWidth(MAX); }
+      });
+    }
+    setWidth(currentWidth());
+    attach();
+  })();
 
   // ================= LIVE TOPBAR CLOCK =================
   function updateTopbarClock(){
@@ -390,34 +496,13 @@
     closeAllTopPanels();
   }
 
-  // ================= HASH-BASED ROLE DEEP LINKS =================
-  // Lets each role bookmark/be given a direct link (e.g. clinic_app.html#doctor) that skips
-  // the role picker entirely â€” the receptionist's front-desk PC only ever needs #reception, etc.
-  function initLoginFromHash(){
-    const raw = location.hash.replace('#','').trim();
-    const [role, personParam] = raw.split('=');
-    // Doctor deep-link: skip the sign-in form entirely and land directly in the doctor module
-    if(role==='doctor'){
-      completeLogin('doctor', 'Dr. Arjun Patel', 'Cardiologist', 'AP', 'linear-gradient(135deg,#2563EB,#1E3A8A)');
-      return;
-    }
-    if(['admin','reception','patient'].includes(role)){
-      selectLoginRole(role);
-      if(role==='reception' && personParam){
-        const person = staffList.find(s=>s.name===decodeURIComponent(personParam));
-        if(person) selectReceptionStaff(person.name, person.roleLabel, person.color);
-      }
-      return;
-    }
-    let remembered = null;
-    try{ remembered = localStorage.getItem('hospitall_device_role'); }catch(e){}
-    if(remembered && ['doctor','admin','reception','patient'].includes(remembered)){
-      selectLoginRole(remembered);
-    }else{
-      backToRolePicker();
-    }
+  // ================= DOCTOR PROTOTYPE ENTRY =================
+  // Authentication belongs to the product implementation. This handoff artifact
+  // always starts in the doctor shell, including after a browser reload.
+  function initDoctorPrototype(){
+    completeLogin('doctor', 'Dr. Arjun Patel', 'Cardiologist', 'AP', 'linear-gradient(135deg,#2563EB,#1E3A8A)');
   }
-  initLoginFromHash();
+  initDoctorPrototype();
 
   // ================= ADMINISTRATIVE PROFILE (click UHID) =================
   let patientExtendedInfo = {}; // uhid -> {dob, maritalStatus, nationality, idProofType, idNumber, email, address, insurance..., emergency..., admin..., family:[], occupation, employer, incomeRange, referredBy, lastUpdated}

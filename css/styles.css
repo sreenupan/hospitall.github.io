@@ -35,8 +35,8 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:var(--font-ui);background:var(--ink-50);color:var(--ink-900);font-size:14px;-webkit-font-smoothing:antialiased;}
-  .app{display:grid;grid-template-columns:248px 1fr;min-height:100vh;transition:grid-template-columns .2s ease;}
-  .app.nav-collapsed{grid-template-columns:72px 1fr;}
+  .app{display:grid;grid-template-columns:var(--nav-rail,212px) minmax(0,1fr);min-height:100vh;transition:grid-template-columns .2s ease;}
+  .app.nav-collapsed{grid-template-columns:72px minmax(0,1fr);}
   .app.nav-collapsed .nav{padding:20px 12px;}
   .app.nav-collapsed .brand{justify-content:center;padding:6px 0 22px;}
   .app.nav-collapsed .brand-name{display:none;}
@@ -47,12 +47,27 @@
   .app.nav-collapsed .clinic-card .meta{display:none;}
   .app.nav-collapsed .quick-add .qa-label{display:none;}
   .app.nav-collapsed .quick-add{padding:11px;}
+  .app.nav-collapsed .nav{min-width:0;overflow:visible;}
+  .app.nav-collapsed .nav-resizer{display:flex;left:64px;}
+  .app.nav-collapsed .nav-toggle{display:none;}
+  .app:not(.nav-collapsed) .menu-btn{display:none;}
+  .app.nav-collapsed .menu-btn{display:flex;background:var(--primary-50);border-color:var(--primary-100);color:var(--primary);}
+  /* This grip stays in the boundary between the global navigation and workspace. */
+  .nav-resizer{position:fixed;left:calc(var(--nav-rail,212px) - 8px);top:50vh;width:16px;height:42px;transform:translateY(-50%);z-index:30;cursor:col-resize;outline:none;}
+  .nav-resizer::before{content:'↔';display:block;width:16px;height:42px;border:1px solid rgba(255,255,255,.38);border-radius:8px;background:var(--primary-dark);color:#fff;box-shadow:0 2px 8px rgba(15,23,42,.18);font-size:14px;font-weight:700;line-height:40px;text-align:center;transition:background .15s,box-shadow .15s;}
+  .nav-resizer::after{content:'Drag to resize navigation';position:absolute;top:50%;left:22px;padding:5px 8px;border-radius:6px;background:var(--ink-900);color:#fff;font-size:11px;font-weight:600;white-space:nowrap;pointer-events:none;opacity:0;transform:translate(4px,-50%);transition:opacity .15s,transform .15s;}
+  .nav-resizer:hover::before,.nav-resizer.dragging::before,.nav-resizer:focus::before{background:var(--primary);box-shadow:0 3px 10px rgba(37,99,235,.28);}
+  .nav-resizer:hover::after,.nav-resizer:focus::after{opacity:1;transform:translate(0,-50%);}
+  body.nav-rail-dragging{cursor:col-resize;user-select:none;}
   .topbar-clock{text-align:right;padding-right:14px;margin-right:6px;border-right:1px solid var(--ink-200);line-height:1.3;}
   .topbar-clock .tc-date{font-size:11px;color:var(--ink-500);font-weight:600;}
   .topbar-clock .tc-time{font-size:13px;color:var(--ink-900);font-weight:700;font-family:var(--font-data);}
 
   .nav{background:linear-gradient(180deg,#1E3A8A 0%,#1E40AF 100%);color:#fff;display:flex;flex-direction:column;padding:20px 14px;position:sticky;top:0;height:100vh;overflow-y:auto;}
   .brand{display:flex;align-items:center;gap:10px;padding:6px 10px 22px;cursor:pointer;text-decoration:none;color:inherit;}
+  .nav-toggle{position:absolute;top:26px;right:14px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.16);border-radius:7px;background:rgba(255,255,255,.09);color:#fff;cursor:pointer;}
+  .nav-toggle:hover{background:rgba(255,255,255,.18);}
+  .nav-toggle svg{width:17px;height:17px;}
   .brand-icon{width:34px;height:34px;background:rgba(255,255,255,.15);border-radius:9px;display:flex;align-items:center;justify-content:center;}
   .brand-name{font-weight:700;font-size:15.5px;letter-spacing:-.2px;}
   .nav-item{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:8px;color:rgba(255,255,255,.78);font-weight:500;font-size:13.5px;cursor:pointer;margin-bottom:2px;position:relative;text-decoration:none;}
@@ -69,10 +84,10 @@
   .status-dot{width:6px;height:6px;background:#4ADE80;border-radius:50%;display:inline-block;margin-right:4px;}
   .quick-add{background:#fff;color:var(--primary-dark);border:none;border-radius:9px;padding:11px;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;}
 
-  .main{display:flex;flex-direction:column;min-height:100vh;}
+  .main{display:flex;flex-direction:column;min-height:100vh;min-width:0;}
   .topbar{display:flex;align-items:center;gap:16px;padding:14px 28px;background:#fff;border-bottom:1px solid var(--ink-200);position:sticky;top:0;z-index:20;}
-  .menu-btn{color:var(--ink-500);cursor:pointer;border-radius:8px;padding:6px;transition:background .15s;}
-  .menu-btn:hover{background:var(--ink-100);}
+  .menu-btn{width:34px;height:34px;align-items:center;justify-content:center;color:var(--ink-500);cursor:pointer;border:1px solid transparent;border-radius:8px;background:transparent;padding:6px;transition:background .15s,border-color .15s;}
+  .menu-btn:hover{background:var(--primary-50);border-color:var(--primary-100);color:var(--primary);}
   .search{flex:1;max-width:520px;display:flex;align-items:center;gap:10px;background:var(--ink-100);border:1px solid var(--ink-200);border-radius:9px;padding:9px 14px;color:var(--ink-500);}
   .search input{border:none;background:none;outline:none;flex:1;font-size:13.5px;font-family:var(--font-ui);color:var(--ink-900);}
   .search input::placeholder{color:var(--ink-400);}
@@ -86,8 +101,40 @@
   .doctor .name{font-size:13px;font-weight:600;color:var(--ink-900);line-height:1.3;}
   .doctor .role{font-size:11.5px;color:var(--ink-500);}
 
-  .content-wrap{flex:1;display:grid;grid-template-columns:1fr 336px;gap:20px;padding:20px 28px 40px;align-items:start;}
-  .content-wrap.dash-wrap{grid-template-columns:1fr 300px;}
+  .content-wrap{flex:1;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;padding:20px 24px 40px;align-items:start;}
+  .content-wrap.dash-wrap{grid-template-columns:minmax(0,1fr) 300px;}
+  /* Let both grid columns shrink so the page never forces a horizontal scrollbar */
+  .content-wrap > *{min-width:0;}
+
+  /* Consultation page: right patient panel is user-adjustable via a drag handle.
+     Default is intentionally narrow so the workflow step names stay fully visible. */
+  #page-consultation{grid-template-columns:minmax(0,1fr) var(--rail,280px);position:relative;padding-left:24px;padding-right:24px;}
+  /* Centre the handle in the grid gutter, rather than over the first card in
+     the rail. This makes it read as the boundary for the complete panel. */
+  .rail-resizer{position:absolute;top:0;bottom:0;right:calc(var(--rail,280px) + 22px);width:16px;cursor:col-resize;z-index:16;display:flex;align-items:flex-start;justify-content:center;outline:none;}
+  /* A persistent grip makes the adjustable reference rail discoverable without
+     competing with the clinical form. The label is revealed when the user is
+     near the control, before they begin dragging. */
+  /* The form is taller than the viewport, so keep the affordance in the
+     visible middle of the consultation workspace rather than its document
+     midpoint (which could be below the fold). */
+  .rail-resizer::before{content:'↔';position:absolute;top:clamp(260px,calc(50vh - 80px),480px);width:16px;height:42px;transform:translateY(-50%);border:1px solid rgba(255,255,255,.38);border-radius:8px;background:var(--primary-dark);color:#fff;box-shadow:0 2px 8px rgba(15,23,42,.18);font-size:14px;font-weight:700;line-height:40px;text-align:center;transition:background .15s,box-shadow .15s;}
+  .rail-resizer::after{content:'Drag to resize panel';position:absolute;top:clamp(260px,calc(50vh - 80px),480px);right:22px;padding:5px 8px;border-radius:6px;background:var(--ink-900);color:#fff;font-size:11px;font-weight:600;white-space:nowrap;pointer-events:none;opacity:0;transform:translate(4px,-50%);transition:opacity .15s,transform .15s;}
+  .rail-resizer:hover::before,.rail-resizer.dragging::before,.rail-resizer:focus::before{background:var(--primary);box-shadow:0 3px 10px rgba(37,99,235,.28);}
+  .rail-resizer:hover::after,.rail-resizer:focus::after{opacity:1;transform:translate(0,-50%);}
+  body.rail-dragging{cursor:col-resize;user-select:none;}
+
+  /* Responsive: shrink the right sidebar + page padding as the viewport narrows
+     so the consultation sidebar (Health Conditions … Habits) stays fully visible
+     without a horizontal scrollbar. */
+  @media (max-width:1200px){
+    .content-wrap{grid-template-columns:minmax(0,1fr) 280px;gap:16px;padding:18px 20px 40px;}
+    .content-wrap.dash-wrap{grid-template-columns:minmax(0,1fr) 280px;}
+  }
+  @media (max-width:1040px){
+    .content-wrap{grid-template-columns:minmax(0,1fr) 264px;gap:14px;padding:16px 16px 40px;}
+    .content-wrap.dash-wrap{grid-template-columns:minmax(0,1fr) 260px;}
+  }
 
   .breadcrumb{display:flex;align-items:center;gap:6px;color:var(--primary);font-size:13px;font-weight:600;cursor:pointer;margin-bottom:10px;text-decoration:none;width:fit-content;}
 
@@ -153,6 +200,7 @@
   .mic-btn{display:flex;align-items:center;gap:6px;background:var(--ink-50);border:1px solid var(--ink-200);color:var(--ink-500);border-radius:99px;padding:5px 10px 5px 8px;font-size:11.5px;font-weight:600;cursor:pointer;flex-shrink:0;}
   .mic-btn svg{width:14px;height:14px;}
   .mic-btn:hover{background:var(--primary-50);border-color:var(--primary-100);color:var(--primary);}
+  .mic-btn.listening{background:var(--danger-50);border-color:var(--danger-100);color:var(--danger);}
   textarea{width:100%;border:none;outline:none;resize:vertical;font-family:var(--font-ui);font-size:13.5px;color:var(--ink-900);min-height:56px;background:var(--ink-50);border-radius:8px;padding:10px 12px;}
   textarea::placeholder{color:var(--ink-400);}
   textarea:focus{background:var(--primary-50);}
@@ -199,15 +247,46 @@
   .action-bar{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--ink-200);padding:14px 28px;display:flex;align-items:center;gap:12px;grid-column:1/-1;box-shadow:0 -4px 16px rgba(15,23,42,.04);}
   .save-status{font-size:12px;color:var(--ink-500);display:flex;align-items:center;gap:6px;}
   .save-status svg{width:14px;height:14px;color:var(--success);}
+  .save-status.saving svg{color:var(--primary);animation:save-pulse .8s ease-in-out infinite alternate;}
+  @keyframes save-pulse{from{opacity:.45;}to{opacity:1;}}
   .action-bar .spacer{flex:1;}
+  /* The sticky action bar must never cover the final consultation section. */
+  #consultSectionsScroll{padding-bottom:104px;}
+
+  .patient-details-link{margin-left:8px;border:0;background:none;color:var(--primary);font-size:11px;font-weight:600;cursor:pointer;padding:2px 0;}
+  .patient-details-link:hover{text-decoration:underline;}
 
   .side-col{display:flex;flex-direction:column;gap:14px;}
+  .reference-rail-heading{display:flex;align-items:baseline;justify-content:space-between;padding:2px 2px 0;}
+  .reference-rail-heading span:first-child{font-size:12px;font-weight:800;color:var(--ink-700);letter-spacing:.04em;text-transform:uppercase;}
+  .reference-rail-heading span:last-child{font-size:11px;color:var(--ink-500);}
+  /* On the consultation page, keep the reference sidebar (allergies, meds,
+     conditions, records) in view while the doctor scrolls the long form.
+     The rail scrolls internally; bottom padding keeps the last card clear of
+     the edge so expanded content is never visually clipped. */
+  #page-consultation .side-col{position:sticky;top:66px;align-self:start;max-height:calc(100vh - 82px);overflow-y:auto;padding-right:4px;padding-bottom:24px;}
+  /* Each expandable card body is bounded and scrolls internally so a long
+     list (records, habits, previous consults) never overruns the rail. */
+  #healthCondBody,#currentMedsBody,#prevConsultBody,#habitsBody{max-height:240px;overflow-y:auto;}
   .card{background:#fff;border:1px solid var(--ink-200);border-radius:var(--radius);padding:16px 18px;}
   .card-title{font-size:12.5px;font-weight:700;color:var(--ink-900);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:6px;flex:1;margin-bottom:12px;}
   .card-title svg{width:14px;height:14px;color:var(--ink-400);}
   .card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
   .card-head .card-title{margin-bottom:0;}
   .card-link{font-size:12px;color:var(--primary);font-weight:600;cursor:pointer;}
+
+  /* ===== Collapsible card header affordance ===== */
+  /* Applied to any .card-head that toggles a section. Makes the expand/collapse
+     obvious: full-width hit area, hover highlight, and a boxed chevron. */
+  .card-head.collapsible{margin:-16px -18px 0;padding:14px 18px;border-radius:var(--radius);transition:background .12s;}
+  .card-head.collapsible:hover{background:var(--ink-50);}
+  .card-head.collapsible .card-title{color:var(--ink-900);}
+  .card-head.collapsible[aria-expanded="true"]{margin-bottom:4px;}
+  .card-chevron{width:24px;height:24px;flex-shrink:0;border:1px solid var(--ink-200);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--ink-500);background:#fff;transition:transform .18s,background .12s,color .12s;}
+  .card-head.collapsible:hover .card-chevron{background:var(--primary-50);color:var(--primary);border-color:var(--primary-100);}
+  .card-chevron svg{width:14px;height:14px;}
+  .card-head.collapsible[aria-expanded="false"] .card-chevron{transform:rotate(-90deg);}
+  .card-count-pill{font-size:11px;font-weight:700;color:var(--ink-500);background:var(--ink-100);border-radius:99px;padding:1px 8px;min-width:18px;text-align:center;}
 
   .snap-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--ink-100);}
   .snap-row:last-child{border-bottom:none;}
@@ -939,10 +1018,18 @@
   .med-card-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
   .med-card-grid label{font-size:10.5px;font-weight:700;color:var(--ink-500);text-transform:uppercase;letter-spacing:.02em;display:block;margin-bottom:5px;}
   .med-card-grid input{width:100%;border:1px solid var(--ink-200);border-radius:7px;padding:7px 9px;font-size:12.5px;font-family:var(--font-ui);color:var(--ink-900);}
+  .med-frequency-row{display:flex;align-items:center;gap:8px;padding:9px 0 8px 28px;flex-wrap:wrap;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+  .med-frequency-label{font-size:10.5px;font-weight:700;color:var(--ink-500);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;}
   .freq-pill-row{display:flex;flex-wrap:wrap;gap:6px;}
-  .freq-pill{font-size:11.5px;font-weight:700;color:var(--ink-700);background:var(--ink-50);border:1px solid var(--ink-200);border-radius:7px;padding:6px 11px;cursor:pointer;}
+  .freq-pill{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-ui);font-size:11.5px;font-weight:700;color:var(--ink-700);background:var(--ink-50);border:1px solid var(--ink-200);border-radius:7px;padding:6px 9px;cursor:pointer;}
+  .freq-pill span{font-size:10.5px;font-weight:500;color:var(--ink-500);}
   .freq-pill:hover{border-color:var(--primary-100);}
   .freq-pill.active{background:var(--primary);border-color:var(--primary);color:#fff;}
+  .freq-pill.active span{color:rgba(255,255,255,.8);}
+  .med-frequency-custom input{width:112px;border:1px solid var(--ink-200);border-radius:7px;padding:6px 8px;font-size:11.5px;font-family:var(--font-ui);color:var(--ink-900);}
+  .freq-clear{font-family:var(--font-ui);font-size:11px;font-weight:700;color:var(--ink-500);background:transparent;border:0;padding:6px 2px;cursor:pointer;}
+  .freq-clear:hover{color:var(--primary);}
   .med-card-instr{width:100%;border:1px solid var(--ink-200);border-radius:7px;padding:8px 10px;font-size:12.5px;font-family:var(--font-ui);color:var(--ink-900);resize:vertical;min-height:38px;}
 
   /* ---- Patient Instructions ---- */
@@ -1225,11 +1312,16 @@
   .sec-pill.active .sec-count{background:var(--primary-100);color:var(--primary);}
 
 
-  /* ===== Progress bar stepper ===== */
-  .pbar-step{display:flex;align-items:center;gap:8px;cursor:pointer;flex-shrink:0;}
-  .pbar-circle{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;border:2px solid var(--ink-300);color:var(--ink-400);background:#fff;transition:all .2s;}
-  .pbar-label{font-size:12.5px;font-weight:600;color:var(--ink-400);white-space:nowrap;transition:color .2s;}
-  .pbar-line{flex:1;height:3px;background:var(--ink-200);margin:0 8px;border-radius:2px;min-width:20px;transition:background .2s;}
+  /* ===== Progress bar stepper =====
+     Robust layout: the bar never overflows. Steps take an equal share of the
+     width, the connector line lives inside each step (flex:1), and labels
+     truncate with an ellipsis instead of pushing the last step off-screen. */
+  #consultSectionNav{overflow:hidden;}
+  .pbar-label-short{display:none;}
+  .pbar-step{display:flex;align-items:center;gap:7px;cursor:pointer;flex-shrink:0;}
+  .pbar-circle{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;flex-shrink:0;border:2px solid var(--ink-300);color:var(--ink-400);background:#fff;transition:all .2s;}
+  .pbar-label{font-size:12px;font-weight:600;color:var(--ink-400);white-space:nowrap;transition:color .2s;}
+  .pbar-line{flex:1;height:3px;background:var(--ink-200);margin:0 6px;border-radius:2px;min-width:8px;transition:background .2s;}
   .pbar-step.done .pbar-circle{background:var(--success);border-color:var(--success);color:#fff;}
   .pbar-step.done .pbar-label{color:var(--ink-700);}
   .pbar-line.done{background:var(--success);}
@@ -1237,6 +1329,32 @@
   .pbar-step.current .pbar-circle{background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:0 0 0 4px var(--primary-100);}
   .pbar-step.current .pbar-label{color:var(--primary);font-weight:700;}
   .pbar-step:hover .pbar-label{color:var(--primary);}
+  /* Workflow names are important — keep them visible. Only tighten spacing/size
+     as the column narrows; never truncate the step names. */
+  @media (max-width:1240px){
+    .pbar-label{font-size:11.5px;}
+    .pbar-line{margin:0 5px;}
+  }
+  @media (max-width:1120px){
+    #consultSectionNav{padding:12px 12px !important;}
+    .pbar-label{font-size:11px;}
+    .pbar-circle{width:22px;height:22px;font-size:11px;}
+    .pbar-step{gap:6px;}
+    .pbar-line{margin:0 4px;}
+  }
+  @media (max-width:1024px){
+    #consultSectionNav{padding:10px 12px !important;}
+    .pbar-label-full{display:none;}
+    .pbar-label-short{display:inline;}
+    .pbar-label{font-size:10.5px;}
+    .pbar-step{gap:4px;}
+    .pbar-circle{width:21px;height:21px;font-size:10px;}
+    .pbar-line{min-width:4px;margin:0 3px;}
+  }
+  .follow-label-row{display:flex;align-items:center;gap:5px;margin-bottom:6px;}
+  .follow-label-row label{margin-bottom:0;}
+  .follow-clear{margin-left:auto;border:0;background:transparent;color:var(--primary);font-family:var(--font-ui);font-size:11px;font-weight:700;padding:0;cursor:pointer;}
+  .follow-clear:hover{text-decoration:underline;}
 
 
   /* ===== Responsive vitals modal ===== */
@@ -1249,3 +1367,28 @@
   /* Fix dropdown panels inside scroll container - ensure they're visible */
   #consultSectionsScroll .dropdown-panel{z-index:60;}
   #consultSectionsScroll .dropdown-panel.open{position:absolute;}
+
+/* ================= ALLERGY SAFETY BANNER (Task 3) ================= */
+.allergy-banner{display:flex;align-items:center;gap:12px;border-radius:var(--radius);padding:10px 16px;border:1px solid transparent;font-size:13px;}
+.allergy-banner .ab-icon{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.allergy-banner .ab-icon svg{width:16px;height:16px;}
+.allergy-banner .ab-text{flex:1;min-width:0;line-height:1.35;}
+.allergy-banner .ab-action{font-weight:700;font-size:12px;cursor:pointer;padding:5px 12px;border-radius:7px;flex-shrink:0;background:#fff;border:1px solid currentColor;}
+.allergy-banner.allergy-red{background:var(--danger-50);border-color:var(--danger-100);color:var(--danger);}
+.allergy-banner.allergy-red .ab-icon{background:var(--danger);color:#fff;}
+.allergy-banner.allergy-red .ab-text{color:var(--ink-900);}
+.allergy-banner.allergy-green{background:var(--success-50);border-color:var(--success-100);color:var(--success);}
+.allergy-banner.allergy-green .ab-icon{background:var(--success);color:#fff;}
+.allergy-banner.allergy-green .ab-text{color:var(--ink-900);}
+.allergy-banner.allergy-amber{background:var(--warning-50);border-color:var(--warning-100);color:var(--warning);}
+.allergy-banner.allergy-amber .ab-icon{background:var(--warning);color:#fff;}
+.allergy-banner.allergy-amber .ab-text{color:var(--ink-900);}
+
+/* ================= PRESCRIPTION PRINT (Task 9) ================= */
+@media print{
+  body > *{visibility:hidden !important;}
+  #rxPrintOverlay, #rxPrintOverlay *{visibility:visible !important;}
+  #rxPrintOverlay{position:absolute !important;inset:0 !important;background:#fff !important;padding:0 !important;display:block !important;}
+  #rxRoot{box-shadow:none !important;border-radius:0 !important;max-width:100% !important;margin:0 !important;}
+  .no-print{display:none !important;}
+}

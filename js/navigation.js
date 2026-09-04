@@ -45,6 +45,25 @@
 
   const chipColors=['#2563EB','#7C3AED','#0D9488','#D97706','#DC2626','#4F46E5'];
   function initials(name){ return name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase(); }
+
+  // Toggle a collapsible sidebar card. Updates the body visibility + the
+  // header's aria-expanded so the chevron affordance rotates via CSS.
+  function toggleCard(headEl, bodyId, displayWhenOpen){
+    var body = document.getElementById(bodyId);
+    if(!body) return;
+    var isOpen = body.style.display !== 'none';
+    body.style.display = isOpen ? 'none' : (displayWhenOpen || 'block');
+    headEl.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+  }
+
+  // Clinical flag on the queue: red dot if the patient has recorded drug allergies (Task 10.1).
+  function allergyDot(uhid){
+    var rec = (typeof getPatientRecord==='function') ? getPatientRecord(uhid) : null;
+    if(rec && rec.allergies && rec.allergies.length>0){
+      return ' <span title="Has recorded drug allergies" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--danger);vertical-align:middle;margin-left:2px;"></span>';
+    }
+    return '';
+  }
   function chipColor(name){ let h=0; for(const c of name) h+=c.charCodeAt(0); return chipColors[h%chipColors.length]; }
 
   const typeMeta={
@@ -130,7 +149,7 @@
           <div class="p-row">
             <div class="p-chip" style="background:${chipColor(p.name)}">${initials(p.name)}</div>
             <div>
-              <div class="p-name link-name" onclick="event.stopPropagation();openMedicalProfile('${p.uhid}')">${p.name}</div>
+              <div class="p-name link-name" onclick="event.stopPropagation();openMedicalProfile('${p.uhid}')">${p.name}${allergyDot(p.uhid)}</div>
               <div class="p-sub"><span class="link-uhid" onclick="event.stopPropagation();openAdminProfile('${p.uhid}')">UHID: ${p.uhid}</span> &nbsp;Â·&nbsp; ${p.age}Y &nbsp;Â·&nbsp; ${p.gender}</div>
             </div>
           </div>
@@ -196,17 +215,33 @@
   function populateConsultation(p){
     const name = p.name;
     currentPatientUhid = p.uhid;
+    // Bind the per-patient MOCK clinical record (Task 1.3).
+    currentPatientRecord = (typeof getPatientRecord==='function') ? getPatientRecord(p.uhid) : null;
+    const rec = currentPatientRecord;
     const ini = initials(name);
     document.getElementById('patientName').textContent = name;
     document.getElementById('patientPhoto').textContent = ini;
-    const bits=['<span class="link-uhid" onclick="openAdminProfile(\''+p.uhid+'\')">'+p.uhid+'</span>', p.age+'Y', p.gender, (p.bloodGroup||'B+'), p.phone];
+
+    // Keep the header scan-friendly: detailed identity data is available from
+    // the adjacent Patient details control in this UX prototype.
+    const bits=['<span class="link-uhid" onclick="openAdminProfile(\''+p.uhid+'\')">'+p.uhid+'</span>', p.age+'Y', p.gender, (rec&&rec.bloodGroup?rec.bloodGroup:(p.bloodGroup||'B+'))];
     document.getElementById('patientSub').innerHTML = bits.join(' &nbsp;\u00B7&nbsp; ');
+
+    // Inline vitals in header + allergy banner + sidebar sections
+    if(rec) renderConsultHeaderVitals(rec.vitals);
+    renderAllergyBanner(rec);
+    renderCurrentMeds(rec);
+    renderHealthConditions(rec);
+    renderMedicalRecords(rec);
+    renderHabits(rec);
+
     var startEl = document.getElementById('startedValue');
     if(startEl) startEl.textContent = p.time;
     const physEl = document.getElementById('patientPhysician');
     if(physEl) physEl.textContent = p.doctor || 'Dr. Arjun Patel';
     renderPrevConsultations(name);
     renderLabOrders();
+    if(typeof renderProcedures==='function') renderProcedures();
     renderDxChips();
     if(document.getElementById('medCardsWrap') && document.getElementById('medCardsWrap').children.length===0) addMedRow();
     if(document.getElementById('piList') && document.getElementById('piList').children.length===0) addInstructionRow();
@@ -231,6 +266,174 @@
   }
   function openConsultation(i){
     populateConsultation(queue[i]);
+  }
+
+  // ===== Per-patient consultation renderers (MOCK data driven) =====
+
+  function schemeChipHtml(scheme){
+    var color = scheme==='Aarogyasri' ? 'var(--teal)' : (scheme==='Ayushman Bharat' ? 'var(--violet)' : 'var(--ink-500)');
+    var bg    = scheme==='Aarogyasri' ? 'var(--teal-50)' : (scheme==='Ayushman Bharat' ? 'var(--violet-50)' : 'var(--ink-100)');
+    return '<span style="display:inline-block;font-size:10px;font-weight:700;color:'+color+';background:'+bg+';border-radius:99px;padding:1px 8px;">'+scheme+'</span>';
+  }
+
+  function renderConsultHeaderVitals(v){
+    if(!v) return;
+    var map = { hvTemp:v.temp+'\u00B0F', hvPulse:v.pulse, hvBp:v.bp, hvSpo2:v.spo2+'%', hvWt:v.weight+'kg', hvBmi:v.bmi };
+    Object.keys(map).forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=map[id]; });
+  }
+
+  // Allergy banner — 3 states (Task 3.3, Correctness Property 1)
+  function renderAllergyBanner(rec){
+    var el = document.getElementById('allergyBanner');
+    if(!el) return;
+    var hasAllergies = rec && rec.allergies && rec.allergies.length>0;
+    var confirmedNone = rec && rec.allergiesConfirmed && (!rec.allergies || rec.allergies.length===0);
+    el.classList.remove('allergy-red','allergy-green','allergy-amber');
+    var iconHtml, textHtml, actionLabel;
+    if(hasAllergies){
+      el.classList.add('allergy-red');
+      iconHtml = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>';
+      textHtml = '<b>Allergies:</b> ' + rec.allergies.map(function(a){ return a.substance+' <span style="opacity:.75;">('+a.severity+')</span>'; }).join(', ');
+      actionLabel = 'Edit';
+    }else if(confirmedNone){
+      el.classList.add('allergy-green');
+      iconHtml = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg>';
+      textHtml = 'No Known Drug Allergies <span style="opacity:.7;">(confirmed)</span>';
+      actionLabel = 'Edit';
+    }else{
+      el.classList.add('allergy-amber');
+      iconHtml = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>';
+      textHtml = 'Allergies not recorded \u2014 please confirm with patient';
+      actionLabel = 'Record';
+    }
+    el.innerHTML =
+      '<div class="ab-icon">'+iconHtml+'</div>'+
+      '<div class="ab-text">'+textHtml+'</div>'+
+      '<div class="ab-action" onclick="openAllergyModal()">'+actionLabel+'</div>';
+  }
+
+  // Current Medications sidebar card (Task 6.1, Correctness Property 2)
+  function renderCurrentMeds(rec){
+    var body = document.getElementById('currentMedsBody');
+    var countEl = document.getElementById('currentMedsCount');
+    if(!body) return;
+    var meds = (rec && rec.currentMeds) ? rec.currentMeds : [];
+    if(countEl) countEl.textContent = meds.length;
+    if(meds.length===0){ body.innerHTML = '<div class="pc-empty-note">No current medications on file.</div>'; return; }
+    body.innerHTML = meds.map(function(m){
+      return '<div style="display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid var(--ink-100);font-size:12px;">'+
+        '<span style="font-weight:600;color:var(--ink-900);">'+m.drug+' '+m.strength+'</span>'+
+        '<span style="color:var(--ink-500);white-space:nowrap;">'+m.frequency+' \u00B7 '+m.since+'</span>'+
+      '</div>';
+    }).join('');
+    // Also update the in-panel review strip if present
+    var strip = document.getElementById('medReviewStrip');
+    if(strip){
+      if(meds.length>0){
+        strip.style.display='flex';
+        strip.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>Patient is on '+meds.length+' chronic medication'+(meds.length===1?'':'s')+' \u2014 review before prescribing';
+      }else{
+        strip.style.display='none';
+      }
+    }
+  }
+
+  function renderHealthConditions(rec){
+    var body = document.getElementById('healthCondBody');
+    if(!body) return;
+    var conds = (rec && rec.conditions) ? rec.conditions : [];
+    var cnt = document.getElementById('healthCondCount'); if(cnt) cnt.textContent = conds.length;
+    if(conds.length===0){ body.innerHTML='<div class="pc-empty-note">No chronic conditions on file.</div>'; return; }
+    var palette=[['--warning-50','--warning-100','--warning'],['--danger-50','--danger-100','--danger'],['--violet-50','--violet-100','--violet']];
+    body.innerHTML = '<div style="display:flex;flex-direction:column;gap:8px;">'+conds.map(function(c,i){
+      var p=palette[i%palette.length];
+      return '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var('+p[0]+');border:1px solid var('+p[1]+');border-radius:8px;">'+
+        '<span style="font-size:12.5px;font-weight:600;color:var(--ink-900);">'+c.name+'</span>'+
+        '<span style="font-size:11px;color:var(--ink-500);">Since '+c.since+'</span></div>';
+    }).join('')+'</div>';
+  }
+
+  function renderMedicalRecords(rec){
+    var body = document.getElementById('medicalRecordsBody');
+    if(!body) return;
+    var recs = (rec && rec.records) ? rec.records : [];
+    var cnt = document.getElementById('medicalRecordsCount'); if(cnt) cnt.textContent = recs.length;
+    if(recs.length===0){ body.innerHTML='<div class="pc-empty-note">No records uploaded.</div>'; return; }
+    var color = {lab:['--primary-50','--primary'], rx:['--success-50','--success']};
+    body.innerHTML = recs.map(function(r){
+      var c = color[r.type]||['--ink-100','--ink-500'];
+      return '<a href="#" onclick="return false;" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--ink-100);border-radius:8px;text-decoration:none;">'+
+        '<div style="width:30px;height:30px;border-radius:7px;background:var('+c[0]+');color:var('+c[1]+');display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>'+
+        '<div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;color:var(--ink-900);">'+r.name+'</div><div style="font-size:11px;color:var(--ink-500);">'+r.date+'</div></div>'+
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>';
+    }).join('');
+  }
+
+  function renderHabits(rec){
+    var body = document.getElementById('habitsBody');
+    if(!body) return;
+    var habits = (rec && rec.habits) ? rec.habits : [];
+    var cnt = document.getElementById('habitsCount'); if(cnt) cnt.textContent = habits.length;
+    if(habits.length===0){ body.innerHTML='<div class="pc-empty-note">No habit information on file.</div>'; return; }
+    var statusColor = {Current:'--danger', Former:'--warning', Occasional:'--success', Never:'--ink-500'};
+    body.innerHTML = habits.map(function(h){
+      var col = statusColor[h.status]||'--ink-500';
+      return '<div style="border:1px solid var(--ink-200);border-radius:9px;padding:10px 12px;">'+
+        '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">'+
+          '<span style="font-size:12.5px;font-weight:700;color:var(--ink-900);">'+h.substance+'</span>'+
+          '<span style="font-size:11px;font-weight:700;color:var('+col+');">'+h.status+'</span></div>'+
+        '<div style="font-size:11px;color:var(--ink-500);">'+h.frequency+' \u00B7 '+h.duration+(h.note&&h.note!=='\u2014'?' \u00B7 '+h.note:'')+'</div></div>';
+    }).join('');
+  }
+
+  // Allergy modal (Task 3.3)
+  function openAllergyModal(){
+    var ov = document.getElementById('allergyModalOverlay');
+    if(!ov) return;
+    renderAllergyModalRows();
+    var rec = currentPatientRecord;
+    var chk = document.getElementById('allergyConfirmNone');
+    if(chk) chk.checked = !!(rec && rec.allergiesConfirmed && (!rec.allergies || rec.allergies.length===0));
+    ov.style.display='flex';
+  }
+  function closeAllergyModal(){ var ov=document.getElementById('allergyModalOverlay'); if(ov) ov.style.display='none'; }
+  function renderAllergyModalRows(){
+    var list = document.getElementById('allergyModalList');
+    var rec = currentPatientRecord;
+    if(!list) return;
+    var rows = (rec && rec.allergies) ? rec.allergies : [];
+    list.innerHTML = rows.map(function(a,i){
+      return '<div class="allergy-row" data-i="'+i+'" style="display:grid;grid-template-columns:1fr 1fr 110px 28px;gap:8px;margin-bottom:8px;">'+
+        '<input class="am-sub" value="'+ (a.substance||'').replace(/"/g,'&quot;') +'" placeholder="Substance">'+
+        '<input class="am-react" value="'+ (a.reaction||'').replace(/"/g,'&quot;') +'" placeholder="Reaction">'+
+        '<select class="am-sev"><option'+(a.severity==='mild'?' selected':'')+'>mild</option><option'+(a.severity==='moderate'?' selected':'')+'>moderate</option><option'+(a.severity==='severe'?' selected':'')+'>severe</option></select>'+
+        '<div class="med-remove" onclick="this.parentElement.remove()" style="cursor:pointer;color:var(--danger);display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M18 6L6 18M6 6l12 12"/></svg></div>'+
+      '</div>';
+    }).join('');
+  }
+  function addAllergyModalRow(){
+    var list = document.getElementById('allergyModalList');
+    if(!list) return;
+    var div = document.createElement('div');
+    div.className='allergy-row';
+    div.style.cssText='display:grid;grid-template-columns:1fr 1fr 110px 28px;gap:8px;margin-bottom:8px;';
+    div.innerHTML='<input class="am-sub" placeholder="Substance"><input class="am-react" placeholder="Reaction"><select class="am-sev"><option>mild</option><option>moderate</option><option>severe</option></select><div class="med-remove" onclick="this.parentElement.remove()" style="cursor:pointer;color:var(--danger);display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M18 6L6 18M6 6l12 12"/></svg></div>';
+    list.appendChild(div);
+    var chk=document.getElementById('allergyConfirmNone'); if(chk) chk.checked=false;
+  }
+  function saveAllergyModal(){
+    var rec = currentPatientRecord;
+    if(!rec){ closeAllergyModal(); return; }
+    var rows = Array.from(document.querySelectorAll('#allergyModalList .allergy-row'));
+    var allergies = rows.map(function(r){
+      return { substance:r.querySelector('.am-sub').value.trim(), reaction:r.querySelector('.am-react').value.trim(), severity:r.querySelector('.am-sev').value };
+    }).filter(function(a){ return a.substance; });
+    var confirmNone = document.getElementById('allergyConfirmNone');
+    rec.allergies = allergies;
+    rec.allergiesConfirmed = allergies.length===0 ? (confirmNone && confirmNone.checked) : true;
+    renderAllergyBanner(rec);
+    closeAllergyModal();
+    if(typeof showToast==='function') showToast('Allergies updated.');
   }
 
   let currentRowMenuPatient=null;

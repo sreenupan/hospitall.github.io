@@ -477,7 +477,8 @@
     currentSessionRole = role;
     currentDoctorIdentity = (role==='doctor') ? displayName : null;
     try{ localStorage.setItem('hospitall_device_role', role); }catch(e){}
-    document.getElementById('loginScreen').classList.add('hidden');
+    var loginScreen = document.getElementById('loginScreen');
+    if(loginScreen) loginScreen.classList.add('hidden');
     clearInterval(otpCountdownTimer);
 
     if(role==='patient'){
@@ -489,7 +490,10 @@
       return;
     }
 
-    document.getElementById('patientPortal').classList.remove('open');
+    // The UX handoff opens directly in the doctor shell; the legacy patient
+    // portal markup is intentionally absent from this page.
+    var patientPortal = document.getElementById('patientPortal');
+    if(patientPortal) patientPortal.classList.remove('open');
     document.getElementById('mainApp').style.display='';
     document.getElementById('topUserName').textContent = displayName;
     document.getElementById('topUserRole').textContent = roleLabel;
@@ -510,6 +514,13 @@
   }
 
   function logout(){
+    // The doctor prototype intentionally starts in the application shell; there
+    // is no sign-in screen to return to from this handoff artifact.
+    if(!document.getElementById('loginScreen')){
+      showPage('dashboard');
+      showToast('Returned to dashboard.');
+      return;
+    }
     closeAllFloatMenus();
     currentSessionRole = null;
     currentDoctorIdentity = null;

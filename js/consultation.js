@@ -96,7 +96,6 @@
           <div style="width:82px;flex-shrink:0;font-size:10px;font-weight:700;color:var(--ink-500);text-transform:uppercase;letter-spacing:.04em;">Form</div>
           <div style="flex:1;min-width:100px;font-size:10px;font-weight:700;color:var(--ink-500);text-transform:uppercase;letter-spacing:.04em;">Drug Name</div>
           <div style="width:72px;flex-shrink:0;font-size:10px;font-weight:700;color:var(--ink-500);text-transform:uppercase;letter-spacing:.04em;">Strength</div>
-          <div style="width:80px;flex-shrink:0;font-size:10px;font-weight:700;color:var(--ink-500);text-transform:uppercase;letter-spacing:.04em;">Freq</div>
           <div style="width:72px;flex-shrink:0;font-size:10px;font-weight:700;color:var(--ink-500);text-transform:uppercase;letter-spacing:.04em;">Duration</div>
           <div style="width:80px;flex-shrink:0;font-size:10px;font-weight:700;color:var(--ink-500);text-transform:uppercase;letter-spacing:.04em;">Route</div>
           <div style="width:28px;flex-shrink:0;"></div>
@@ -122,12 +121,8 @@
           <option value="Powder">Powder</option>
           <option value="Patch">Patch</option>
         </select>
-        <input class="med-card-name" placeholder="Drug name" style="flex:1;min-width:100px;border:1px solid var(--ink-200);border-radius:6px;padding:7px 8px;font-size:12px;">
+        <input class="med-card-name" placeholder="Drug name" oninput="medDrugCheck(${n})" style="flex:1;min-width:100px;border:1px solid var(--ink-200);border-radius:6px;padding:7px 8px;font-size:12px;">
         <input class="med-strength" placeholder="Strength" style="width:72px;flex-shrink:0;border:1px solid var(--ink-200);border-radius:6px;padding:7px 8px;font-size:12px;">
-        <input class="med-freq-input" list="freqOptions${n}" placeholder="Freq" style="width:80px;flex-shrink:0;border:1px solid var(--ink-200);border-radius:6px;padding:7px 8px;font-size:12px;">
-        <datalist id="freqOptions${n}">
-          <option value="QD - Once daily"><option value="BID - Twice daily"><option value="TID - Three times daily"><option value="QID - Four times daily"><option value="QHS - At bedtime"><option value="Q4H - Every 4 hours"><option value="Q6H - Every 6 hours"><option value="Q8H - Every 8 hours"><option value="PRN - As needed"><option value="STAT - Immediately"><option value="Weekly">
-        </datalist>
         <input class="med-duration" placeholder="Duration" style="width:72px;flex-shrink:0;border:1px solid var(--ink-200);border-radius:6px;padding:7px 8px;font-size:12px;">
         <input class="med-route-input" list="routeOptions${n}" placeholder="Route" style="width:80px;flex-shrink:0;border:1px solid var(--ink-200);border-radius:6px;padding:7px 8px;font-size:12px;">
         <datalist id="routeOptions${n}">
@@ -135,16 +130,94 @@
         </datalist>
         <div class="med-card-remove" onclick="removeMedRow(${n})" style="width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--danger);cursor:pointer;flex-shrink:0;" title="Remove"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14z"/></svg></div>
       </div>
+      <div class="med-frequency-row">
+        <span class="med-frequency-label">Dose schedule</span>
+        <div class="freq-pill-row" role="radiogroup" aria-label="Dose schedule">
+          ${frequencyPills(n)}
+        </div>
+        <label class="med-frequency-custom">
+          <span class="sr-only">Other dose schedule</span>
+          <input class="med-freq-input" list="freqOptions${n}" placeholder="Other schedule" oninput="syncCustomFrequency(${n}, this.value)">
+          <datalist id="freqOptions${n}">${freqDatalistOptions()}</datalist>
+        </label>
+        <button type="button" class="freq-clear" onclick="clearFrequency(${n})" aria-label="Clear dose schedule" title="Clear dose schedule">Clear</button>
+      </div>
       <div style="padding-left:28px;margin-top:4px;display:flex;align-items:center;gap:12px;">
         <input class="med-card-instr" placeholder="Instructions, e.g. Take after food" style="flex:1;border:1px solid var(--ink-200);border-radius:6px;padding:6px 8px;font-size:11.5px;color:var(--ink-700);" onkeydown="medInstrKeydown(event,${n})">
         <label style="display:flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:var(--ink-500);white-space:nowrap;cursor:pointer;"><input type="checkbox" class="med-sos-check" style="width:14px;height:14px;">SOS</label>
       </div>
+      <!-- Generic name + Schedule badge + interaction warning (Tasks 7.1-7.3) -->
+      <div class="med-feedback" id="medFeedback${n}" style="padding-left:28px;margin-top:6px;display:none;flex-direction:column;gap:5px;"></div>
     `;
     wrap.appendChild(card);
     updateMedAddButton();
     // Focus drug name of the new row
     card.querySelector('.med-card-name').focus();
   }
+  // Build the frequency datalist from FREQ_OPTIONS (1-0-1 first). Falls back if mockdata absent.
+  function freqDatalistOptions(){
+    if(typeof FREQ_OPTIONS==='undefined' || !FREQ_OPTIONS){
+      return '<option value="1-0-1"><option value="1-1-1"><option value="OD"><option value="BD"><option value="TID">';
+    }
+    return FREQ_OPTIONS.map(function(f){ return '<option value="'+f.token+' - '+f.label+'">'; }).join('');
+  }
+
+  function frequencyPills(n){
+    const choices = [
+      ['1-0-1', 'Morning and night'],
+      ['1-1-1', 'Morning, noon and night'],
+      ['1-0-0', 'Morning only'],
+      ['0-0-1', 'Night only']
+    ];
+    return choices.map(function(choice){
+      return '<button type="button" class="freq-pill" role="radio" aria-checked="false" title="'+choice[1]+'" onclick="selectFreqPill('+n+', this, \''+choice[0]+'\')">'+choice[0]+'<span>'+choice[1]+'</span></button>';
+    }).join('');
+  }
+
+  // Drug-name change -> show generic name, Schedule badge, and allergy/interaction warning (Tasks 7.1-7.3).
+  function medDrugCheck(n){
+    var card = document.getElementById('medCard'+n);
+    var fb = document.getElementById('medFeedback'+n);
+    if(!card || !fb) return;
+    var name = (card.querySelector('.med-card-name').value||'').trim();
+    if(!name){ fb.style.display='none'; fb.innerHTML=''; card.style.borderColor='var(--ink-200)'; return; }
+
+    var parts = [];
+    var danger = false;
+
+    // Generic name line
+    var generic = (typeof genericFor==='function') ? genericFor(name) : null;
+    if(generic){
+      parts.push('<div style="font-size:11px;color:var(--ink-500);"><span style="font-weight:600;color:var(--ink-700);">Generic:</span> '+generic+'</div>');
+    }
+
+    // Schedule badge
+    var sched = (typeof scheduleClassFor==='function') ? scheduleClassFor(name) : null;
+    if(sched){
+      var label = sched==='X' ? 'Schedule X — narcotic, duplicate Rx required'
+                 : sched==='H1' ? 'Schedule H1 — record in H1 register'
+                 : 'Schedule H — prescription-only';
+      var col = sched==='X' ? '--danger' : (sched==='H1' ? '--warning' : '--primary');
+      parts.push('<div style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var('+col+');"><span style="background:var('+col+');color:#fff;border-radius:4px;padding:1px 6px;font-size:10px;">Schedule '+sched+'</span>'+label+'</div>');
+    }
+
+    // Allergy / interaction conflict against the current patient record
+    var rec = (typeof currentPatientRecord!=='undefined') ? currentPatientRecord : null;
+    var conflict = (typeof conflictFor==='function') ? conflictFor(name, rec) : null;
+    if(conflict){
+      danger = true;
+      var icon = conflict.type==='allergy'
+        ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>'
+        : '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>';
+      parts.push('<div style="display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--danger);background:var(--danger-50);border:1px solid var(--danger-100);border-radius:6px;padding:5px 8px;">'+icon+conflict.message+'</div>');
+    }
+
+    if(parts.length===0){ fb.style.display='none'; fb.innerHTML=''; card.style.borderColor='var(--ink-200)'; return; }
+    fb.innerHTML = parts.join('');
+    fb.style.display='flex';
+    card.style.borderColor = danger ? 'var(--danger)' : 'var(--ink-200)';
+  }
+
   function medInstrKeydown(e, n){
     if(e.key==='Enter'){ e.preventDefault(); addMedRow(); }
     if(e.key==='Tab' && !e.shiftKey){
@@ -171,9 +244,30 @@
   function selectFreqPill(n, el, value){
     const card = document.getElementById('medCard'+n);
     if(!card) return;
-    card.dataset.freq = value;
-    card.querySelectorAll('.freq-pill').forEach(p=>p.classList.remove('active'));
+    card.dataset.freq = value.trim();
+    card.querySelectorAll('.freq-pill').forEach(p=>{ p.classList.remove('active'); p.setAttribute('aria-checked', 'false'); });
     el.classList.add('active');
+    el.setAttribute('aria-checked', 'true');
+    card.querySelector('.med-freq-input').value = value.trim();
+  }
+  function syncCustomFrequency(n, value){
+    const card = document.getElementById('medCard'+n);
+    if(!card) return;
+    const selected = value.trim();
+    card.dataset.freq = selected;
+    card.querySelectorAll('.freq-pill').forEach(function(p){
+      const active = p.textContent.trim().startsWith(selected) && selected !== '';
+      p.classList.toggle('active', active);
+      p.setAttribute('aria-checked', active ? 'true' : 'false');
+    });
+  }
+  function clearFrequency(n){
+    const card = document.getElementById('medCard'+n);
+    if(!card) return;
+    card.dataset.freq = '';
+    card.querySelector('.med-freq-input').value = '';
+    card.querySelectorAll('.freq-pill').forEach(function(p){ p.classList.remove('active'); p.setAttribute('aria-checked', 'false'); });
+    card.querySelector('.med-freq-input').focus();
   }
   function removeMedRow(n){
     const card = document.getElementById('medCard'+n);
@@ -373,9 +467,166 @@
       completeConsultation();
     }
   }
+  // ================= PRESCRIPTION PRINT VIEW (Task 9) =================
+  // Hybrid: variant auto-selected by patient scheme, with manual override + Telugu toggle.
+  let rxTeluguOn = false;
+
+  function collectRxData(){
+    var rec = (typeof currentPatientRecord!=='undefined') ? currentPatientRecord : null;
+    // Medications from the panel
+    var meds = [];
+    document.querySelectorAll('.med-card').forEach(function(card){
+      var drug = card.querySelector('.med-card-name').value.trim();
+      if(!drug) return;
+      meds.push({
+        form: card.querySelector('.med-form') ? card.querySelector('.med-form').value : '',
+        drug: drug,
+        generic: (typeof genericFor==='function') ? genericFor(drug) : null,
+        strength: card.querySelector('.med-strength').value.trim(),
+        frequency: card.querySelector('.med-freq-input') ? card.querySelector('.med-freq-input').value.trim() : '',
+        duration: card.querySelector('.med-duration').value.trim(),
+        route: card.querySelector('.med-route-input') ? card.querySelector('.med-route-input').value.trim() : '',
+        instructions: card.querySelector('.med-card-instr').value.trim(),
+        sos: card.querySelector('.med-sos-check') ? card.querySelector('.med-sos-check').checked : false
+      });
+    });
+    var dx = (typeof getDxForUhid==='function') ? getDxForUhid(currentPatientUhid) : [];
+    var instructions = Array.from(document.querySelectorAll('#piList input')).map(function(i){return i.value.trim();}).filter(Boolean);
+    return { rec:rec, meds:meds, dx:dx, instructions:instructions };
+  }
+
+  function rxTelugu(text){
+    if(!rxTeluguOn) return '';
+    if(typeof TELUGU_ADVICE!=='undefined' && TELUGU_ADVICE[text]){
+      return '<div style="font-size:12px;color:#475569;">'+TELUGU_ADVICE[text]+'</div>';
+    }
+    return '';
+  }
+
+  function toggleRxTelugu(){
+    rxTeluguOn = !rxTeluguOn;
+    renderPrescriptionPrint();
+  }
+  function setRxVariant(v){
+    document.getElementById('rxRoot').dataset.variant = v;
+    renderPrescriptionPrint();
+  }
+
+  function renderPrescriptionPrint(){
+    var root = document.getElementById('rxRoot');
+    if(!root) return;
+    var data = collectRxData();
+    var rec = data.rec || {};
+    var doc = (typeof MOCK_DOCTOR!=='undefined') ? MOCK_DOCTOR : {name:'Dr. Arjun Patel', qualifications:'MBBS, MD', regNo:'REG/12345', regCouncil:'NABH', specialization:''};
+    // Variant: manual override wins, otherwise auto by scheme
+    var variant = root.dataset.variant;
+    if(!variant || variant==='auto'){
+      variant = (rec.scheme && rec.scheme!=='Private') ? 'scheme' : 'standard';
+    }
+    var isScheme = variant==='scheme';
+    var schemeName = rec.scheme || 'Govt. Scheme';
+
+    var medsHtml = data.meds.length ? data.meds.map(function(m, i){
+      var line = (m.form?m.form+' ':'') + m.drug + (m.strength?' '+m.strength:'');
+      var genericLine = m.generic ? '<div style="font-size:12px;color:#475569;">('+m.generic+')</div>' : '';
+      var sig = [m.frequency, m.duration, m.route].filter(Boolean).join(' · ');
+      return '<tr style="border-bottom:1px solid #E2E8F0;">'+
+        '<td style="padding:8px 6px;vertical-align:top;color:#0F172A;font-weight:600;">'+(i+1)+'.</td>'+
+        '<td style="padding:8px 6px;vertical-align:top;"><div style="font-weight:700;color:#0F172A;">'+line+(m.sos?' <span style="font-size:11px;color:#DC2626;font-weight:700;">(SOS)</span>':'')+'</div>'+genericLine+(m.instructions?'<div style="font-size:12px;color:#475569;">'+m.instructions+'</div>':'')+'</td>'+
+        '<td style="padding:8px 6px;vertical-align:top;color:#0F172A;white-space:nowrap;">'+(sig||'—')+'</td>'+
+      '</tr>';
+    }).join('') : '<tr><td colspan="3" style="padding:12px 6px;color:#94A3B8;">No medications prescribed.</td></tr>';
+
+    var dxHtml = data.dx.length ? data.dx.map(function(d){
+      return '<span style="display:inline-block;font-size:12.5px;color:#0F172A;margin-right:14px;">'+
+        '<b>'+d.code+'</b> '+d.desc+(d.primary?' <span style="font-size:10px;color:#2563EB;font-weight:700;">(Primary)</span>':'')+
+        ' <span style="font-size:10px;color:#64748B;">['+(d.status||'provisional')+']</span></span>';
+    }).join('') : '<span style="color:#94A3B8;">—</span>';
+
+    var adviceHtml = data.instructions.length ? '<ul style="margin:6px 0 0;padding-left:18px;">'+data.instructions.map(function(a){
+      return '<li style="font-size:12.5px;color:#0F172A;margin-bottom:3px;">'+a+ rxTelugu(a) +'</li>';
+    }).join('')+'</ul>' : '<div style="color:#94A3B8;">—</div>';
+
+    var schemeBand = isScheme ?
+      '<div style="background:#F0FDFA;border:1px solid #CCFBF1;border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:12px;color:#0F172A;">'+
+        '<b>'+schemeName+'</b> &nbsp;·&nbsp; Card: '+(rec.schemeCardNo||'—')+' &nbsp;·&nbsp; Network Hospital: '+(rec.networkHospitalId||'—')+
+      '</div>' : '';
+
+    root.innerHTML =
+      // Screen-only controls
+      '<div class="rx-controls no-print" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid #E2E8F0;background:#F8FAFC;">'+
+        '<span style="font-size:12px;font-weight:700;color:#64748B;">Format:</span>'+
+        '<span onclick="setRxVariant(\'standard\')" style="cursor:pointer;font-size:12px;font-weight:700;padding:4px 10px;border-radius:6px;'+(!isScheme?'background:#2563EB;color:#fff;':'background:#fff;color:#64748B;border:1px solid #E2E8F0;')+'">NMC Standard</span>'+
+        '<span onclick="setRxVariant(\'scheme\')" style="cursor:pointer;font-size:12px;font-weight:700;padding:4px 10px;border-radius:6px;'+(isScheme?'background:#0D9488;color:#fff;':'background:#fff;color:#64748B;border:1px solid #E2E8F0;')+'">Govt. Scheme</span>'+
+        '<div style="flex:1;"></div>'+
+        '<label style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#0F172A;cursor:pointer;"><input type="checkbox" '+(rxTeluguOn?'checked':'')+' onclick="toggleRxTelugu()">Telugu advice</label>'+
+        '<span onclick="window.print()" style="cursor:pointer;font-size:12px;font-weight:700;padding:6px 14px;border-radius:6px;background:#2563EB;color:#fff;">Print</span>'+
+        '<span onclick="closeRxPrint()" style="cursor:pointer;font-size:12px;font-weight:700;padding:6px 12px;border-radius:6px;background:#fff;color:#64748B;border:1px solid #E2E8F0;">Close</span>'+
+      '</div>'+
+      // Printable sheet
+      '<div class="rx-sheet" style="padding:28px 32px;color:#0F172A;">'+
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #0F172A;padding-bottom:12px;margin-bottom:14px;">'+
+          '<div><div style="font-size:20px;font-weight:800;">'+doc.name+'</div>'+
+            '<div style="font-size:12.5px;color:#475569;">'+(doc.qualifications||'')+(doc.specialization?' · '+doc.specialization:'')+'</div>'+
+            '<div style="font-size:12px;color:#475569;">Reg. No: '+(doc.regNo||'—')+' · '+(doc.regCouncil||'NABH')+'</div></div>'+
+          '<div style="text-align:right;font-size:12px;color:#475569;"><div style="font-size:13px;font-weight:700;color:#0F172A;">HospitAll Clinic</div><div>Hyderabad, Telangana</div><div>Date: '+ (typeof nowTimeLabel==='function'? nowTimeLabel() : new Date().toLocaleDateString()) +'</div></div>'+
+        '</div>'+
+        schemeBand+
+        '<div style="display:flex;gap:24px;font-size:13px;margin-bottom:12px;">'+
+          '<div><span style="color:#64748B;">Patient:</span> <b>'+(rec.name||document.getElementById('patientName').textContent)+'</b></div>'+
+          '<div><span style="color:#64748B;">UHID:</span> '+(rec.uhid||'—')+'</div>'+
+          '<div><span style="color:#64748B;">Age/Sex:</span> '+(rec.age||'—')+'/'+((rec.gender||'').charAt(0)||'—')+'</div>'+
+          (rec.abhaId?'<div><span style="color:#64748B;">ABHA:</span> '+rec.abhaId+'</div>':'')+
+        '</div>'+
+        (rec.allergies && rec.allergies.length ? '<div style="font-size:12.5px;color:#DC2626;font-weight:700;margin-bottom:10px;">⚠ Allergies: '+rec.allergies.map(function(a){return a.substance;}).join(', ')+'</div>' : '')+
+        '<div style="font-size:13px;margin-bottom:10px;"><span style="color:#64748B;">Diagnosis:</span> '+dxHtml+'</div>'+
+        '<div style="font-size:22px;font-weight:800;color:#0F172A;margin:8px 0 4px;">℞</div>'+
+        '<table style="width:100%;border-collapse:collapse;border-top:1px solid #E2E8F0;">'+medsHtml+'</table>'+
+        '<div style="margin-top:16px;font-size:13px;"><b>Advice</b>'+adviceHtml+'</div>'+
+        '<div style="margin-top:40px;display:flex;justify-content:flex-end;"><div style="text-align:center;border-top:1px solid #0F172A;padding-top:6px;min-width:200px;font-size:12.5px;">'+doc.name+'<div style="font-size:11px;color:#64748B;">Signature</div></div></div>'+
+      '</div>';
+  }
+
+  // ================= CONSULTATION MOCK STATES =================
+  // These interactions demonstrate the intended UX to developers; persistence
+  // is deliberately local to this HTML prototype.
+  function toggleDictation(button){
+    var wasListening = button.classList.contains('listening');
+    document.querySelectorAll('.mic-btn.listening').forEach(function(active){
+      active.classList.remove('listening');
+      active.lastChild.nodeValue = 'Dictate';
+    });
+    if(wasListening){
+      showToast('Dictation paused.');
+      return;
+    }
+    button.classList.add('listening');
+    button.lastChild.nodeValue = 'Listening…';
+    showToast('Dictation mock started. Select it again to pause.');
+  }
+
+  function saveConsultationDraft(){
+    var status = document.getElementById('consultSaveStatus');
+    if(!status) return;
+    status.classList.add('saving');
+    status.querySelector('span').textContent = 'Saving draft…';
+    setTimeout(function(){
+      var now = new Date();
+      status.classList.remove('saving');
+      status.querySelector('span').textContent = 'Saved ' + now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+      showToast('Consultation draft saved.');
+    }, 550);
+  }
+
   function printPrescription(){
-    showToast('Generating prescription for print...');
-    setTimeout(function(){ window.print(); }, 300);
+    var overlay = document.getElementById('rxPrintOverlay');
+    if(!overlay){ window.print(); return; }
+    renderPrescriptionPrint();
+    overlay.style.display = 'block';
+  }
+  function closeRxPrint(){
+    var overlay = document.getElementById('rxPrintOverlay');
+    if(overlay) overlay.style.display = 'none';
   }
   function saveInstructionsAsTemplate(){
     var instructions = Array.from(document.querySelectorAll('#piList input')).map(function(i){return i.value.trim();}).filter(Boolean);
@@ -431,14 +682,16 @@
     document.getElementById('medCardsWrap').innerHTML = '';
     record.medsList.forEach(m=>{
       addMedRow();
-      const card = document.getElementById('medCardsWrap').lastElementChild;
+      const card = document.getElementById('medCard'+medRowCounter);
       card.querySelector('.med-card-name').value = m.drug;
       card.querySelector('.med-strength').value = m.strength;
       card.querySelector('.med-duration').value = m.duration;
       card.querySelector('.med-card-instr').value = m.instructions;
-      card.dataset.freq = m.frequency;
-      const pill = Array.from(card.querySelectorAll('.freq-pill')).find(p=>m.frequency && m.frequency.startsWith(p.textContent));
-      if(pill) pill.classList.add('active');
+      card.querySelector('.med-route-input').value = m.route || '';
+      const frequency = (m.frequency || '').split(' ')[0];
+      const pill = Array.from(card.querySelectorAll('.freq-pill')).find(p=>frequency === p.textContent.trim().split(/\s+/)[0]);
+      if(pill) selectFreqPill(medRowCounter, pill, frequency);
+      else syncCustomFrequency(medRowCounter, m.frequency || '');
     });
     showToast(record.medsList.length+' medication'+(record.medsList.length===1?'':'s')+' copied to current prescription. You can edit them before saving.');
   }
@@ -478,6 +731,40 @@
         ${o.urgent?'<span class="lo-urgent">Urgent</span>':''}
         <a href="#" onclick="return false;" style="font-size:12px;color:var(--primary);font-weight:600;text-decoration:none;white-space:nowrap;">View Report</a>
         <div class="med-remove" onclick="removeLabOrder(${o.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14z"/></svg></div>
+      </div>`).join('');
+  }
+
+  // ================= PROCEDURES (persisted per-patient, by UHID) — Task 8.1 =================
+  let proceduresAll = [];
+  let procedureIdCounter = 1;
+  function quickAddProcedure(name){ addProcedure(name); }
+  function addCustomProcedure(){
+    const el = document.getElementById('procCustomInput');
+    const name = el.value.trim();
+    if(!name){ showToast('Type a procedure name first.', true); return; }
+    addProcedure(name);
+    el.value='';
+  }
+  function addProcedure(name){
+    proceduresAll.push({id:procedureIdCounter++, uhid: currentPatientUhid, name, date: nowTimeLabel()});
+    renderProcedures();
+  }
+  function removeProcedure(id){
+    proceduresAll = proceduresAll.filter(o=>o.id!==id);
+    renderProcedures();
+  }
+  function getProceduresForUhid(uhid){ return proceduresAll.filter(o=>o.uhid===uhid); }
+  function renderProcedures(){
+    const list = document.getElementById('proceduresList');
+    if(!list) return;
+    const mine = getProceduresForUhid(currentPatientUhid);
+    const cnt = document.getElementById('procCount'); if(cnt) cnt.textContent = mine.length;
+    if(mine.length===0){ list.innerHTML = '<div class="ctab-empty">No procedures added yet for this consultation.</div>'; return; }
+    list.innerHTML = mine.map(o=>`
+      <div class="lab-order-row">
+        <div class="lo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <div style="flex:1;"><div class="lo-name">${o.name}</div><div class="lo-sub">Recorded ${o.date}</div></div>
+        <div class="med-remove" onclick="removeProcedure(${o.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14z"/></svg></div>
       </div>`).join('');
   }
 
@@ -533,7 +820,7 @@
     const mine = getDxForUhid(currentPatientUhid);
     if(code!=='LOCAL' && mine.some(d=>d.code===code)){ showToast('That diagnosis is already added.', true); return; }
     if(code==='LOCAL' && mine.some(d=>d.code==='LOCAL' && d.desc===desc)){ showToast('That diagnosis is already added.', true); return; }
-    dxAddedAll.push({uhid: currentPatientUhid, code, desc, primary: mine.length===0, date: nowTimeLabel()});
+    dxAddedAll.push({uhid: currentPatientUhid, code, desc, primary: mine.length===0, status:'provisional', date: nowTimeLabel()});
     document.getElementById('dxSearchInput').value='';
     document.getElementById('dxResults').classList.remove('open');
     renderDxChips();
@@ -548,51 +835,71 @@
     getDxForUhid(currentPatientUhid).forEach(d=>d.primary = (d.code===code));
     renderDxChips();
   }
+  // Provisional / Confirmed segmented control per diagnosis (Task 5.1)
+  function setDxStatus(code, status){
+    getDxForUhid(currentPatientUhid).forEach(d=>{ if(d.code===code) d.status = status; });
+    renderDxChips();
+  }
   function renderDxChips(){
     const mine = getDxForUhid(currentPatientUhid);
     document.getElementById('dxCount').textContent = mine.length;
     const list = document.getElementById('dxChipList');
     if(mine.length===0){ list.innerHTML='<div class="ctab-empty">No diagnosis codes added yet.</div>'; return; }
-    list.innerHTML = mine.map(d=>`
+    list.innerHTML = mine.map(d=>{
+      const st = d.status||'provisional';
+      const seg =
+        `<span class="dx-seg" style="display:inline-flex;border:1px solid var(--ink-200);border-radius:6px;overflow:hidden;font-size:10.5px;font-weight:700;">`+
+          `<span onclick="setDxStatus('${d.code}','provisional')" style="padding:3px 9px;cursor:pointer;`+(st==='provisional'?'background:var(--warning);color:#fff;':'background:#fff;color:var(--ink-500);')+`">Provisional</span>`+
+          `<span onclick="setDxStatus('${d.code}','confirmed')" style="padding:3px 9px;cursor:pointer;`+(st==='confirmed'?'background:var(--success);color:#fff;':'background:#fff;color:var(--ink-500);')+`">Confirmed</span>`+
+        `</span>`;
+      return `
       <div class="dx-chip ${d.primary?'primary':''}">
         <div class="dxc-code">${d.code}</div>
         <div class="dxc-desc">${d.desc}</div>
+        ${seg}
         ${d.primary?'<span class="dxc-tag">Primary</span>':`<span class="dxc-tag" style="background:var(--ink-100);color:var(--ink-500);cursor:pointer;" onclick="setPrimaryDx('${d.code}')">Set Primary</span>`}
         <div class="dxc-remove" onclick="removeDxCode('${d.code}')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
   }
 
   // ================= SECTION NAV (scroll-spy + click) =================
+  // Panels scroll with the normal page/window. The progress bar is sticky
+  // under the topbar; clicking a step scrolls the panel just below the sticky bar.
+  var CONSULT_PANELS = ['panelClinicalNotes','panelLabOrders','panelFindings','panelDiagnosis','panelMedications','panelProcedures','panelTreatment'];
+
+  function stickyOffset(){
+    // topbar (~66px) + progress nav height + a little breathing room
+    var nav = document.getElementById('consultSectionNav');
+    var navH = nav ? nav.offsetHeight : 60;
+    return 66 + navH + 14;
+  }
+
   function scrollToPanel(e, id){
     if(e){ e.preventDefault(); e.stopPropagation(); }
+    // A doctor can reach Medications directly from step 5, without first opening
+    // another consultation view. Keep its first editable row available.
+    if(id==='panelMedications' && document.getElementById('medCardsWrap') && document.getElementById('medCardsWrap').children.length===0) addMedRow();
     var el = document.getElementById(id);
-    var container = document.getElementById('consultSectionsScroll');
-    var navBar = document.getElementById('consultSectionNav');
-    if(!el || !container) return;
-    // Calculate the element's position within the scroll container
-    // Offset by the sticky nav bar height so the section title is visible below it
-    var containerRect = container.getBoundingClientRect();
-    var elRect = el.getBoundingClientRect();
-    var navHeight = navBar ? navBar.offsetHeight + 14 : 60; // 14px for margin
-    var scrollOffset = elRect.top - containerRect.top + container.scrollTop - navHeight;
-    container.scrollTo({top: Math.max(0, scrollOffset), behavior:'smooth'});
+    if(!el) return;
+    var y = window.pageYOffset + el.getBoundingClientRect().top - stickyOffset();
+    window.scrollTo({ top: Math.max(0, y), behavior:'smooth' });
   }
+
   (function(){
     var ticking = false;
-    var panels = ['panelClinicalNotes','panelLabOrders','panelFindings','panelDiagnosis','panelMedications','panelTreatment'];
     function updateProgressBar(){
       var nav = document.getElementById('consultSectionNav');
-      var container = document.getElementById('consultSectionsScroll');
-      if(!nav || !container) return;
-      var containerRect = container.getBoundingClientRect();
+      if(!nav) return;
+      var threshold = stickyOffset() + 20; // a panel is "reached" once its top passes the sticky bar
       var currentIdx = 0;
-      for(var i = 0; i < panels.length; i++){
-        var el = document.getElementById(panels[i]);
-        if(el){
-          var elRect = el.getBoundingClientRect();
-          // Section is "current" if its top is at or above the container top + 40px threshold
-          if(elRect.top <= containerRect.top + 40) currentIdx = i;
-        }
+      for(var i = 0; i < CONSULT_PANELS.length; i++){
+        var el = document.getElementById(CONSULT_PANELS[i]);
+        if(el && el.getBoundingClientRect().top <= threshold) currentIdx = i;
+      }
+      // If we're at the very bottom of the page, mark the last step current.
+      if((window.innerHeight + window.pageYOffset) >= (document.body.scrollHeight - 4)){
+        currentIdx = CONSULT_PANELS.length - 1;
       }
       var steps = nav.querySelectorAll('.pbar-step');
       var lines = nav.querySelectorAll('.pbar-line');
@@ -607,27 +914,103 @@
         else if(i === currentIdx) line.classList.add('active');
       });
     }
-    function attachScrollSpy(){
-      var container = document.getElementById('consultSectionsScroll');
-      if(container){
-        container.addEventListener('scroll', function(){
-          if(!ticking){ requestAnimationFrame(function(){ updateProgressBar(); ticking=false; }); ticking=true; }
-        });
-      }
+    function onScroll(){
+      if(!ticking){ requestAnimationFrame(function(){ updateProgressBar(); ticking=false; }); ticking=true; }
     }
-    // Re-attach when consultation page becomes visible
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll);
+    // Re-evaluate when the consultation page becomes visible
     var origShowPage = window.showPage;
     if(origShowPage){
       window.showPage = function(name){
         origShowPage(name);
-        if(name==='consultation'){ setTimeout(function(){ attachScrollSpy(); updateProgressBar(); }, 200); }
+        if(name==='consultation'){ setTimeout(updateProgressBar, 120); }
       };
     }
-    setTimeout(function(){ attachScrollSpy(); updateProgressBar(); }, 800);
+    setTimeout(updateProgressBar, 400);
+    // expose for other callers
+    window.updateConsultProgress = updateProgressBar;
+  })();
+
+  // ================= RESIZABLE PATIENT RAIL =================
+  // Doctor can drag the divider to widen/narrow the right patient panel.
+  // Width persists for the session via localStorage; clamped to sane bounds.
+  (function(){
+    var MIN = 220, MAX = 460, KEY = 'consultRailWidth';
+    function page(){ return document.getElementById('page-consultation'); }
+    function setRail(px){
+      var p = page(); if(!p) return;
+      px = Math.max(MIN, Math.min(MAX, px));
+      p.style.setProperty('--rail', px + 'px');
+      var handle = document.getElementById('railResizer');
+      if(handle) handle.setAttribute('aria-valuenow', Math.round(px));
+      try{ localStorage.setItem(KEY, px); }catch(e){}
+    }
+    function initRail(){
+      var saved = null;
+      try{ saved = parseInt(localStorage.getItem(KEY),10); }catch(e){}
+      if(saved) setRail(saved);
+    }
+    function startDrag(e){
+      var p = page(); if(!p) return;
+      e.preventDefault();
+      var handle = document.getElementById('railResizer');
+      if(handle) handle.classList.add('dragging');
+      document.body.classList.add('rail-dragging');
+      var rightEdge = p.getBoundingClientRect().right;
+      function move(ev){
+        var x = (ev.touches ? ev.touches[0].clientX : ev.clientX);
+        // rail width = distance from pointer to the right edge of the content area
+        setRail(rightEdge - x);
+        if(window.updateConsultProgress) window.updateConsultProgress();
+      }
+      function up(){
+        if(handle) handle.classList.remove('dragging');
+        document.body.classList.remove('rail-dragging');
+        document.removeEventListener('mousemove', move);
+        document.removeEventListener('mouseup', up);
+        document.removeEventListener('touchmove', move);
+        document.removeEventListener('touchend', up);
+      }
+      document.addEventListener('mousemove', move);
+      document.addEventListener('mouseup', up);
+      document.addEventListener('touchmove', move, {passive:false});
+      document.addEventListener('touchend', up);
+    }
+    function attach(){
+      var handle = document.getElementById('railResizer');
+      if(handle && !handle.dataset.bound){
+        handle.dataset.bound = '1';
+        handle.addEventListener('mousedown', startDrag);
+        handle.addEventListener('touchstart', startDrag, {passive:false});
+        handle.addEventListener('keydown', function(e){
+          var saved = null;
+          try{ saved = parseInt(localStorage.getItem(KEY),10); }catch(err){}
+          var current = saved || 280;
+          var step = e.shiftKey ? 40 : 10;
+          if(e.key==='ArrowLeft'){ e.preventDefault(); setRail(current + step); }
+          if(e.key==='ArrowRight'){ e.preventDefault(); setRail(current - step); }
+          if(e.key==='Home'){ e.preventDefault(); setRail(MIN); }
+          if(e.key==='End'){ e.preventDefault(); setRail(MAX); }
+        });
+      }
+    }
+    initRail();
+    attach();
+    setTimeout(attach, 500);
   })();
 
   // ================= VITALS MODAL =================
   function openVitalsModal(){
+    // Pre-fill modal inputs from the current MOCK record (Task 2.1).
+    var rec = (typeof currentPatientRecord!=='undefined') ? currentPatientRecord : null;
+    if(rec && rec.vitals){
+      var v = rec.vitals;
+      var setv = function(id, val){ var el=document.getElementById(id); if(el && val!=null) el.value = val; };
+      setv('vmTemp', v.temp); setv('vmPulse', v.pulse); setv('vmSpo2', v.spo2);
+      setv('vmWeight', v.weight); setv('vmHeight', v.height); setv('vmBmi', v.bmi);
+      if(v.bp && v.bp.indexOf('/')!==-1){ var bp=v.bp.split('/'); setv('vmBpSys', bp[0]); setv('vmBpDia', bp[1]); }
+    }
     document.getElementById('vitalsModalOverlay').style.display = 'flex';
   }
   function closeVitalsModal(){
@@ -641,6 +1024,22 @@
     el.value = val;
   }
   function saveVitalsFromModal(){
+    // Sync the read-only header vitals from the modal inputs.
+    var g = function(id){ var el=document.getElementById(id); return el ? el.value.trim() : ''; };
+    var set = function(id, val){ var el=document.getElementById(id); if(el) el.textContent = val; };
+    var temp=g('vmTemp'), pulse=g('vmPulse'), sys=g('vmBpSys'), dia=g('vmBpDia'), spo2=g('vmSpo2'), wt=g('vmWeight'), bmi=g('vmBmi');
+    if(temp) set('hvTemp', temp+'\u00B0F');
+    if(pulse) set('hvPulse', pulse);
+    if(sys && dia) set('hvBp', sys+'/'+dia);
+    if(spo2) set('hvSpo2', spo2+'%');
+    if(wt) set('hvWt', wt+'kg');
+    if(bmi) set('hvBmi', bmi);
+    // Persist onto the current MOCK record so it survives re-renders.
+    if(typeof currentPatientRecord!=='undefined' && currentPatientRecord && currentPatientRecord.vitals){
+      var v=currentPatientRecord.vitals;
+      if(temp) v.temp=temp; if(pulse) v.pulse=pulse; if(sys&&dia) v.bp=sys+'/'+dia;
+      if(spo2) v.spo2=spo2; if(wt) v.weight=wt; if(bmi) v.bmi=bmi;
+    }
     closeVitalsModal();
     showToast('Vitals updated successfully.');
   }
@@ -662,6 +1061,7 @@
   function pickType(el,label){
     document.getElementById('typeValue').textContent=label;
     document.getElementById('typeTrigger').classList.add('filled');
+    document.getElementById('clearFollowType').hidden=false;
     document.querySelectorAll('#typePanel .type-option').forEach(o=>o.classList.remove('selected'));
     el.classList.add('selected');
     togglePanel('typeField');
@@ -670,7 +1070,22 @@
   function pickQuickDate(el,label){
     document.getElementById('dateValue').textContent=label;
     document.getElementById('dateTrigger').classList.add('filled');
+    document.getElementById('clearFollowDate').hidden=false;
     togglePanel('dateField');
+  }
+
+  function clearFollowUpDate(){
+    document.getElementById('dateValue').textContent='Select date';
+    document.getElementById('dateTrigger').classList.remove('filled');
+    document.getElementById('clearFollowDate').hidden=true;
+    closeAllPanels(null);
+  }
+  function clearFollowUpType(){
+    document.getElementById('typeValue').textContent='Select type';
+    document.getElementById('typeTrigger').classList.remove('filled');
+    document.querySelectorAll('#typePanel .type-option').forEach(o=>o.classList.remove('selected'));
+    document.getElementById('clearFollowType').hidden=true;
+    closeAllPanels(null);
   }
 
   let calDate=new Date(2026,7,1);
@@ -716,6 +1131,7 @@
         const label=monthNames[calDate.getMonth()].slice(0,3)+' '+num+', '+calDate.getFullYear();
         document.getElementById('dateValue').textContent=label;
         document.getElementById('dateTrigger').classList.add('filled');
+        document.getElementById('clearFollowDate').hidden=false;
         setTimeout(()=>togglePanel('dateField'),120);
       };
     }

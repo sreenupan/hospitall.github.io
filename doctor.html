@@ -4,167 +4,11 @@
 <meta charset="UTF-8">
 <title>Hospitall - Dashboard & Consultation</title>
 <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/doctor-module.css?v=doctor-module-6">
 </head>
 <body>
-<!-- ================= LOGIN SYSTEM ================= -->
-<div class="login-screen" id="loginScreen">
-  <div class="login-card" id="loginCard">
-
-    <div class="login-brand">
-      <div class="lb-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/><path d="M3.5 12h4l1.5-3 2 6 1.5-3h8"/></svg></div>
-      <div><div class="lb-name">Hospitall</div><div class="lb-tenant" id="loginTenantName">CityCare Clinic</div></div>
-    </div>
-
-    <!-- STEP 0: role picker -->
-    <div class="login-step active" id="loginStepRole">
-      <div class="login-title">Sign in to continue</div>
-      <div class="login-sub">Enter your email, phone number, or name</div>
-
-      <div class="login-error" id="unifiedLoginError">We couldn't find an account matching that. Check for typos, or contact your clinic admin.</div>
-
-      <div class="login-field">
-        <label>Email, Phone Number, or Name</label>
-        <input id="unifiedIdentifier" placeholder="you@clinic.com, 98765 43210, or your name" onkeydown="if(event.key==='Enter') continueUnifiedLogin()">
-      </div>
-      <div class="login-submit-btn" onclick="continueUnifiedLogin()">Continue</div>
-      <div class="login-hint">New patient? <span style="color:var(--success);font-weight:700;cursor:pointer;" onclick="selectLoginRole('patient');showPatientRegister();" >Register here</span></div>
-      <div class="login-hint">Staff: once you sign in, bookmark the page â€” it'll skip straight back here next time.</div>
-    </div>
-
-    <!-- STEP 1: Doctor / Admin â€” password or OTP -->
-    <div class="login-step" id="loginStepStaff">
-      <div class="login-back" onclick="backToRolePicker()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</div>
-      <div class="login-title" id="staffLoginTitle">Doctor Sign In</div>
-      <div class="login-sub" id="staffLoginSub">Enter your credentials to continue</div>
-
-      <div class="auth-tabs">
-        <div class="auth-tab active" id="tabPassword" onclick="setStaffAuthMode('password')">Password</div>
-        <div class="auth-tab" id="tabOtp" onclick="setStaffAuthMode('otp')">OTP</div>
-      </div>
-
-      <div class="login-error" id="staffLoginError">Incorrect password. Please try again.</div>
-
-      <div id="staffPasswordMode">
-        <div class="login-field">
-          <label>Email or Phone</label>
-          <input id="staffEmail" placeholder="you@citycareclinic.com" value="arjun.patel@citycareclinic.com">
-        </div>
-        <div class="login-field">
-          <label>Password</label>
-          <div class="pw-field-wrap">
-            <input type="password" id="staffPassword" placeholder="Enter your password">
-            <div class="pw-toggle" onclick="togglePwVisibility('staffPassword', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
-          </div>
-        </div>
-        <div class="login-row-between">
-          <label class="login-remember"><input type="checkbox" checked>Remember me</label>
-          <span class="login-forgot" onclick="showToast('Password reset link sent (simulated).')">Forgot password?</span>
-        </div>
-        <div class="login-submit-btn" onclick="submitStaffPasswordLogin()">Sign In</div>
-      </div>
-
-      <div id="staffOtpMode" style="display:none;">
-        <div id="staffOtpRequestView">
-          <div class="login-field">
-            <label>Registered Phone Number</label>
-            <input id="staffOtpPhone" placeholder="98765 43210" value="98765 43210">
-          </div>
-          <div class="login-submit-btn" onclick="requestStaffOtp()">Send OTP</div>
-        </div>
-        <div id="staffOtpVerifyView" style="display:none;">
-          <div class="login-sub" style="margin-bottom:14px;">Enter the 6-digit code sent to <b id="staffOtpPhoneShown">98765 43210</b></div>
-          <div class="otp-box-row">
-            <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
-            <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
-            <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
-            <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
-            <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
-            <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
-          </div>
-          <div class="otp-resend" id="staffOtpResend">Resend code in <b>30s</b></div>
-          <div class="login-submit-btn" onclick="verifyStaffOtp()">Verify &amp; Sign In</div>
-        </div>
-      </div>
-
-      <div class="login-hint">Don't have an account? Contact your clinic admin to get set up.</div>
-      <div class="login-hint">Prototype note: any password / any 6-digit code will work.</div>
-    </div>
-
-    <!-- STEP 2: Receptionist â€” staff picker + PIN -->
-    <div class="login-step" id="loginStepReception">
-      <div class="login-back" onclick="backToRolePicker()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</div>
-      <div id="staffPickerView">
-        <div class="login-title">Who's checking in?</div>
-        <div class="login-sub">Tap your name, then enter your PIN</div>
-        <div class="staff-grid" id="staffPickerGrid"></div>
-        <div class="login-hint">Don't see your name? Ask your clinic admin to add you.</div>
-      </div>
-      <div id="pinPadView" style="display:none;">
-        <div class="login-back" onclick="backToStaffPicker()" style="margin-bottom:6px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Not you?</div>
-        <div class="pin-avatar-row">
-          <div class="pa-chip" id="pinAvatarChip">MI</div>
-          <div style="text-align:left;"><div style="font-size:14px;font-weight:700;color:var(--ink-900);" id="pinStaffName">Meena Iyer</div><div style="font-size:11.5px;color:var(--ink-500);" id="pinStaffRole">Front Desk Lead</div></div>
-        </div>
-        <div class="login-sub" style="margin-bottom:16px;">Enter your 4-digit PIN</div>
-        <div class="pin-dots" id="pinDots">
-          <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
-        </div>
-        <div class="pin-pad">
-          <div class="pin-key" onclick="pressPinDigit('1')">1</div><div class="pin-key" onclick="pressPinDigit('2')">2</div><div class="pin-key" onclick="pressPinDigit('3')">3</div>
-          <div class="pin-key" onclick="pressPinDigit('4')">4</div><div class="pin-key" onclick="pressPinDigit('5')">5</div><div class="pin-key" onclick="pressPinDigit('6')">6</div>
-          <div class="pin-key" onclick="pressPinDigit('7')">7</div><div class="pin-key" onclick="pressPinDigit('8')">8</div><div class="pin-key" onclick="pressPinDigit('9')">9</div>
-          <div class="pin-key action" onclick="clearPin()">Clear</div><div class="pin-key" onclick="pressPinDigit('0')">0</div><div class="pin-key action" onclick="backspacePin()">âŒ«</div>
-        </div>
-        <div class="login-hint">Prototype note: any 4 digits will work.</div>
-      </div>
-    </div>
-
-    <!-- STEP 3: Patient â€” phone + OTP, with register branch -->
-    <div class="login-step" id="loginStepPatient">
-      <div class="login-back" onclick="backToRolePicker()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</div>
-
-      <div id="patientPhoneView">
-        <div class="login-title">Patient Login</div>
-        <div class="login-sub">We'll text you a one-time code â€” no password needed</div>
-        <div class="login-field">
-          <label>Mobile Number</label>
-          <input id="patientPhone" placeholder="98765 43210">
-        </div>
-        <div class="login-submit-btn" onclick="requestPatientOtp()">Send OTP</div>
-        <div class="login-hint">New patient? <span style="color:var(--success);font-weight:700;cursor:pointer;" onclick="showPatientRegister()">Register here</span></div>
-      </div>
-
-      <div id="patientOtpView" style="display:none;">
-        <div class="login-title">Enter OTP</div>
-        <div class="login-sub">Sent to <b id="patientOtpPhoneShown">98765 43210</b></div>
-        <div class="otp-box-row">
-          <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
-          <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
-          <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
-          <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
-          <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
-          <input class="otp-box" maxlength="1" oninput="otpAutoAdvance(this)">
-        </div>
-        <div class="otp-resend" id="patientOtpResend">Resend code in <b>30s</b></div>
-        <div class="login-submit-btn" onclick="verifyPatientOtp()">Verify &amp; Continue</div>
-        <div class="login-hint">Prototype note: any 6-digit code will work.</div>
-      </div>
-
-      <div id="patientRegisterView" style="display:none;">
-        <div class="login-title">New Patient Registration</div>
-        <div class="login-sub">Takes less than a minute</div>
-        <div class="login-field"><label>Full Name</label><input id="regName" placeholder="e.g. Sunita Rao"></div>
-        <div class="login-field"><label>Mobile Number</label><input id="regPhone" placeholder="98765 43210"></div>
-        <div class="login-field"><label>Age</label><input id="regAge" type="number" placeholder="Age"></div>
-        <div class="login-field"><label>Gender</label><select id="regGender"><option>Male</option><option>Female</option><option>Other</option></select></div>
-        <div class="login-submit-btn" onclick="submitPatientRegister()">Register &amp; Send OTP</div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<div class="app" id="mainApp" style="display:none;">
+<!-- Doctor prototype starts directly in the application shell. -->
+<div class="app" id="mainApp">
 
   <nav class="nav">
     <div class="brand" onclick="goHome()">
@@ -173,13 +17,17 @@
       </div>
       <div class="brand-name">Hospitall</div>
     </div>
+    <button class="nav-toggle" onclick="toggleSidebar()" title="Collapse navigation" aria-label="Collapse navigation">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
 
     <div class="nav-item active" id="navDashboard" onclick="showPage('dashboard')" title="Dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span class="nav-label">Dashboard</span></div>
-    <div class="nav-item" id="navReception" onclick="showPage('reception')" title="Check-In"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M22 10h-4M20 8v4"/></svg><span class="nav-label">Check-In</span></div>
-    <div class="nav-item" id="navPatients" onclick="showPage('patients')" title="Patients"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span class="nav-label">Patients</span></div>
+    <div class="nav-item" id="navReception" onclick="showPage('doctorQueue')" title="Today's queue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M22 10h-4M20 8v4"/></svg><span class="nav-label">Today's Queue</span></div>
+    <div class="nav-item" id="navPatients" onclick="showPage('doctorPatients')" title="My patients"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span class="nav-label">My Patients</span></div>
     <div class="nav-item" id="navPrescriptions" onclick="showPage('prescriptions')" title="Prescriptions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg><span class="nav-label">Prescriptions</span></div>
-    <div class="nav-item" id="navReports" onclick="showPage('reports')" title="Reports"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M18 17V9M13 17V5M8 17v-3"/></svg><span class="nav-label">Reports</span></div>
-    <div class="nav-item" id="navSettings" onclick="showPage('settings')" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="nav-label">Settings</span></div>
+    <div class="nav-item" id="navReports" onclick="showPage('doctorInbox')" title="Clinical inbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M18 17V9M13 17V5M8 17v-3"/></svg><span class="nav-label">Clinical Inbox</span></div>
+    <div class="nav-item" id="navSettings" onclick="showPage('doctorFollowups')" title="Follow-ups"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="nav-label">Follow-ups</span></div>
+    <div class="nav-item" id="navAvailability" onclick="showPage('doctorAvailability')" title="Availability"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg><span class="nav-label">Availability</span></div>
 
     <div class="nav-spacer"></div>
 
@@ -187,16 +35,21 @@
       <div class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 22s8-4.5 8-11V5l-8-3-8 3v6c0 6.5 8 11 8 11z"/></svg></div>
       <div class="meta"><b id="sidebarClinicName">CityCare Clinic</b>Multi-speciality Clinic<br><span class="status-dot"></span>Online</div>
     </div>
-    <button class="quick-add" onclick="showPage('reception')" title="Quick Add"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg><span class="qa-label">Quick Add</span></button>
+    <button class="quick-add" onclick="doctorModule.newWalkin()" title="Add walk-in visit"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg><span class="qa-label">Add walk-in</span></button>
   </nav>
+
+  <!-- Global navigation width control; hidden while the navigation is collapsed. -->
+  <div class="nav-resizer" id="navResizer" role="separator" aria-orientation="vertical"
+       aria-label="Resize navigation panel" aria-valuemin="180" aria-valuemax="360"
+       aria-valuenow="212" tabindex="0" title="Drag to resize navigation panel"></div>
 
   <div class="main">
     <div class="topbar">
-      <div class="menu-btn" onclick="toggleSidebar()" title="Toggle sidebar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></div>
+      <button class="menu-btn" onclick="toggleSidebar()" title="Expand navigation" aria-label="Expand navigation"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M9 18l6-6-6-6"/></svg></button>
       <div class="search" style="position:relative;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input id="globalSearchInput" placeholder="Search patient by name, UHID, phone numberâ€¦" oninput="onGlobalSearch()" onfocus="onGlobalSearch()">
-        <span class="kbd">âŒ˜K</span>
+        <input id="globalSearchInput" placeholder="Search patient by name, UHID, or phone number" oninput="onGlobalSearch()" onfocus="onGlobalSearch()">
+        <span class="kbd">Ctrl K</span>
         <div class="gs-results" id="gsResults"></div>
       </div>
       <div class="topbar-right">
@@ -326,21 +179,25 @@
           <div id="patientPhoto" style="width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#60A5FA,#2563EB);color:#fff;font-weight:700;font-size:12px;flex-shrink:0;">RS</div>
           <div style="min-width:0;">
             <span id="patientName" style="font-size:13.5px;font-weight:700;color:var(--primary);cursor:pointer;" onclick="openAdminProfile(currentPatientUhid)">Rahul Sharma</span>
+            <button class="patient-details-link" onclick="doctorModule.showPatientDetails(currentPatientUhid)">Patient details</button>
             <div id="patientSub" style="font-size:11px;color:var(--ink-500);">HSP24-00123 &middot; 34Y &middot; Male &middot; B+ &middot; 98765 43210</div>
           </div>
           <div style="width:1px;height:28px;background:var(--ink-200);margin:0 4px;flex-shrink:0;"></div>
           <div style="display:flex;align-items:center;gap:14px;flex:1;font-size:12px;flex-wrap:nowrap;overflow:hidden;">
-            <div><span style="color:var(--ink-400);font-weight:600;">T:</span><span style="font-weight:700;color:var(--ink-900);">98.6&deg;F</span></div>
-            <div><span style="color:var(--ink-400);font-weight:600;">P:</span><span style="font-weight:700;color:var(--ink-900);">72</span></div>
-            <div><span style="color:var(--ink-400);font-weight:600;">BP:</span><span style="font-weight:700;color:var(--ink-900);">120/80</span></div>
-            <div><span style="color:var(--ink-400);font-weight:600;">SpO2:</span><span style="font-weight:700;color:var(--ink-900);">98%</span></div>
-            <div><span style="color:var(--ink-400);font-weight:600;">Wt:</span><span style="font-weight:700;color:var(--ink-900);">70kg</span></div>
-            <div><span style="color:var(--ink-400);font-weight:600;">BMI:</span><span style="font-weight:700;color:var(--ink-900);">24.2</span></div>
+            <div><span style="color:var(--ink-400);font-weight:600;">T:</span><span id="hvTemp" style="font-weight:700;color:var(--ink-900);">98.6&deg;F</span></div>
+            <div><span style="color:var(--ink-400);font-weight:600;">P:</span><span id="hvPulse" style="font-weight:700;color:var(--ink-900);">72</span></div>
+            <div><span style="color:var(--ink-400);font-weight:600;">BP:</span><span id="hvBp" style="font-weight:700;color:var(--ink-900);">120/80</span></div>
+            <div><span style="color:var(--ink-400);font-weight:600;">SpO2:</span><span id="hvSpo2" style="font-weight:700;color:var(--ink-900);">98%</span></div>
+            <div><span style="color:var(--ink-400);font-weight:600;">Wt:</span><span id="hvWt" style="font-weight:700;color:var(--ink-900);">70kg</span></div>
+            <div><span style="color:var(--ink-400);font-weight:600;">BMI:</span><span id="hvBmi" style="font-weight:700;color:var(--ink-900);">24.2</span></div>
           </div>
           <div style="color:var(--primary);cursor:pointer;display:flex;align-items:center;flex-shrink:0;" onclick="openVitalsModal()" title="Edit Vitals">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
           </div>
         </div>
+
+        <!-- ===== ALLERGY SAFETY BANNER (Task 3) ===== -->
+        <div id="allergyBanner" class="allergy-banner allergy-red" style="margin-bottom:10px;"></div>
 
         <div class="tabs" style="display:none;">
           <div class="tab active" id="ctabNotes" onclick="switchConsultTab('notes')"></div>
@@ -349,22 +206,24 @@
           <div class="tab" id="ctabMeds" onclick="switchConsultTab('meds')"></div>
         </div>
 
-        <!-- Scrollable sections container (includes progress bar) -->
-        <div id="consultSectionsScroll" style="position:relative;overflow-y:auto;max-height:calc(100vh - 150px);border-radius:var(--radius);padding-right:4px;padding-bottom:200px;">
+        <!-- Sections flow in the normal page scroll (no nested scrollbar) -->
+        <div id="consultSectionsScroll" style="position:relative;">
 
-        <!-- ===== SECTION NAV BAR ===== -->
-        <div id="consultSectionNav" style="display:flex;align-items:center;background:#fff;border:1px solid var(--ink-200);border-radius:var(--radius);padding:14px 22px;margin-bottom:14px;position:sticky;top:0;z-index:5;">
-          <div class="pbar-step done" onclick="scrollToPanel(event,'panelClinicalNotes')" data-target="panelClinicalNotes"><div class="pbar-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><div class="pbar-label">Clinical Notes</div></div>
-          <div class="pbar-line done"></div>
-          <div class="pbar-step done" onclick="scrollToPanel(event,'panelLabOrders')" data-target="panelLabOrders"><div class="pbar-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><div class="pbar-label">Diagnostics</div></div>
-          <div class="pbar-line done"></div>
-          <div class="pbar-step done" onclick="scrollToPanel(event,'panelFindings')" data-target="panelFindings"><div class="pbar-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><div class="pbar-label">Findings</div></div>
-          <div class="pbar-line active"></div>
-          <div class="pbar-step current" onclick="scrollToPanel(event,'panelDiagnosis')" data-target="panelDiagnosis"><div class="pbar-circle">4</div><div class="pbar-label">Diagnosis</div></div>
+        <!-- ===== SECTION NAV BAR (sticky under the topbar) ===== -->
+        <div id="consultSectionNav" style="display:flex;align-items:center;background:#fff;border:1px solid var(--ink-200);border-radius:var(--radius);padding:14px 22px;margin-bottom:14px;position:sticky;top:66px;z-index:15;box-shadow:0 2px 8px rgba(15,23,42,.04);">
+          <div class="pbar-step current" onclick="scrollToPanel(event,'panelClinicalNotes')" data-target="panelClinicalNotes"><div class="pbar-circle">1</div><div class="pbar-label"><span class="pbar-label-full">Clinical Notes</span><span class="pbar-label-short">Notes</span></div></div>
           <div class="pbar-line"></div>
-          <div class="pbar-step" onclick="scrollToPanel(event,'panelMedications')" data-target="panelMedications"><div class="pbar-circle">5</div><div class="pbar-label">Medications</div></div>
+          <div class="pbar-step" onclick="scrollToPanel(event,'panelLabOrders')" data-target="panelLabOrders"><div class="pbar-circle">2</div><div class="pbar-label"><span class="pbar-label-full">Diagnostics</span><span class="pbar-label-short">Tests</span></div></div>
           <div class="pbar-line"></div>
-          <div class="pbar-step" onclick="scrollToPanel(event,'panelTreatment')" data-target="panelTreatment"><div class="pbar-circle">6</div><div class="pbar-label">Treatment Plan</div></div>
+          <div class="pbar-step" onclick="scrollToPanel(event,'panelFindings')" data-target="panelFindings"><div class="pbar-circle">3</div><div class="pbar-label"><span class="pbar-label-full">Findings</span><span class="pbar-label-short">Findings</span></div></div>
+          <div class="pbar-line"></div>
+          <div class="pbar-step" onclick="scrollToPanel(event,'panelDiagnosis')" data-target="panelDiagnosis"><div class="pbar-circle">4</div><div class="pbar-label"><span class="pbar-label-full">Diagnosis</span><span class="pbar-label-short">Dx</span></div></div>
+          <div class="pbar-line"></div>
+          <div class="pbar-step" onclick="scrollToPanel(event,'panelMedications')" data-target="panelMedications"><div class="pbar-circle">5</div><div class="pbar-label"><span class="pbar-label-full">Medications</span><span class="pbar-label-short">Meds</span></div></div>
+          <div class="pbar-line"></div>
+          <div class="pbar-step" onclick="scrollToPanel(event,'panelProcedures')" data-target="panelProcedures"><div class="pbar-circle">6</div><div class="pbar-label"><span class="pbar-label-full">Procedures</span><span class="pbar-label-short">Procedures</span></div></div>
+          <div class="pbar-line"></div>
+          <div class="pbar-step" onclick="scrollToPanel(event,'panelTreatment')" data-target="panelTreatment"><div class="pbar-circle">7</div><div class="pbar-label"><span class="pbar-label-full">Treatment Plan</span><span class="pbar-label-short">Plan</span></div></div>
         </div>
 
         <div class="panel" id="panelClinicalNotes" style="border-radius:var(--radius);border:1px solid var(--ink-200);margin-bottom:16px;scroll-margin-top:0;">
@@ -376,7 +235,7 @@
                   <div class="field-name">Complaints</div>
                   <div class="field-desc">What the patient is experiencing</div>
                 </div>
-                <button class="mic-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg>Dictate</button>
+                <button class="mic-btn" onclick="toggleDictation(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg>Dictate</button>
               </div>
             </div>
             <textarea rows="2">Intermittent chest tightness on exertion for 3 days, mild breathlessness climbing stairs. No radiating pain.</textarea>
@@ -391,12 +250,12 @@
                   <div class="field-desc">Past medical, surgical, family and social history</div>
                 </div>
                 <div style="display:flex;align-items:center;gap:10px;">
-                  <a href="#" style="font-size:12px;color:var(--primary);font-weight:600;text-decoration:none;white-space:nowrap;" onclick="return false;">View Full History</a>
-                  <button class="mic-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg>Dictate</button>
+                  <a href="#" style="font-size:12px;color:var(--primary);font-weight:600;text-decoration:none;white-space:nowrap;" onclick="openAdminProfile(currentPatientUhid);return false;">View Full History</a>
+                  <button class="mic-btn" onclick="toggleDictation(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg>Dictate</button>
                 </div>
               </div>
             </div>
-            <textarea placeholder="e.g. Hypertension since 2018, Type 2 DM, Appendectomy 2015, Father â€” MI at 55..."></textarea>
+            <textarea placeholder="e.g. Hypertension since 2018, Type 2 diabetes, appendectomy in 2015, father had MI at 55"></textarea>
           </div>
 
 
@@ -473,7 +332,7 @@
                   <div class="field-name">Investigations &amp; Findings</div>
                   <div class="field-desc">Examination findings, test results, observations</div>
                 </div>
-                <button class="mic-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg>Dictate</button>
+                <button class="mic-btn" onclick="toggleDictation(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg>Dictate</button>
               </div>
             </div>
             <textarea rows="2">BP mildly elevated at 120/80 baseline noted. Chest auscultation clear, no murmurs. ECG ordered for review.</textarea>
@@ -494,6 +353,8 @@
 
         <!-- ===== MEDICATIONS PANEL ===== -->
         <div class="panel" id="panelMedications" style="border-radius:var(--radius);border:1px solid var(--ink-200);margin-bottom:16px;scroll-margin-top:110px;">
+          <!-- Current-medication review reminder (Task 6.2) — populated by renderCurrentMeds() -->
+          <div id="medReviewStrip" style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--warning);background:var(--warning-50);border:1px solid var(--warning-100);border-radius:8px;padding:8px 12px;margin-bottom:12px;"></div>
           <div class="ctab-section-title">Medications for This Consultation</div>
           <div id="medCardsWrap"></div>
 
@@ -512,6 +373,26 @@
           </div>
         </div>
 
+        <!-- ===== PROCEDURES PANEL (Task 8.1) ===== -->
+        <div class="panel" id="panelProcedures" style="border-radius:var(--radius);border:1px solid var(--ink-200);margin-bottom:16px;scroll-margin-top:110px;">
+          <div class="ctab-section-title" style="font-size:14px;font-weight:700;margin-bottom:14px;">Procedures</div>
+          <div class="ctab-section-title">Add Procedure</div>
+          <div class="lab-chip-row">
+            <div class="lab-chip" onclick="quickAddProcedure('Dressing')">Dressing</div>
+            <div class="lab-chip" onclick="quickAddProcedure('Nebulization')">Nebulization</div>
+            <div class="lab-chip" onclick="quickAddProcedure('Suturing')">Suturing</div>
+            <div class="lab-chip" onclick="quickAddProcedure('Injection (IM/IV)')">Injection (IM/IV)</div>
+            <div class="lab-chip" onclick="quickAddProcedure('ECG')">ECG</div>
+            <div class="lab-chip" onclick="quickAddProcedure('Incision & Drainage')">Incision &amp; Drainage</div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;max-width:420px;margin-bottom:20px;">
+            <input id="procCustomInput" placeholder="Or type a custom procedure name..." style="flex:1;border:1px solid var(--ink-200);border-radius:8px;padding:10px 12px;font-size:13px;">
+            <div class="btn btn-primary" style="padding:8px 16px;font-size:12.5px;white-space:nowrap;" onclick="addCustomProcedure()">Add Procedure</div>
+          </div>
+          <div class="ctab-section-title">Procedures Done / Advised <span id="procCount" style="font-size:11px;color:var(--ink-500);font-weight:600;">0</span></div>
+          <div id="proceduresList"><div class="ctab-empty">No procedures added yet for this consultation.</div></div>
+        </div>
+
         <!-- ===== TREATMENT PLAN & FOLLOW-UP ===== -->
         <div class="panel" id="panelTreatment" style="border-radius:var(--radius);border:1px solid var(--ink-200);margin-bottom:16px;scroll-margin-top:110px;">
           <div class="ctab-section-title" style="font-size:14px;font-weight:700;margin-bottom:14px;">Treatment Plan & Follow-up</div>
@@ -523,14 +404,14 @@
                   <div class="field-name">Treatment Plan &amp; Referrals</div>
                   <div class="field-desc">General advice and referrals</div>
                 </div>
-                <button class="mic-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg>Dictate</button>
+                <button class="mic-btn" onclick="toggleDictation(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg>Dictate</button>
               </div>
             </div>
             <textarea rows="2" placeholder="e.g. Advised low-salt diet, referred to cardiology for further evaluation..." style="background:var(--ink-50)"></textarea>
           </div>
           <div class="follow-row">
             <div class="follow-field" id="dateField">
-              <label>Follow-up Date <span class="opt">(optional)</span></label>
+              <div class="follow-label-row"><label>Follow-up Date <span class="opt">(optional)</span></label><button type="button" class="follow-clear" id="clearFollowDate" onclick="clearFollowUpDate()" hidden>Clear</button></div>
               <div class="select-like" id="dateTrigger" onclick="togglePanel('dateField')">
                 <span id="dateValue">Select date</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
@@ -551,7 +432,7 @@
               </div>
             </div>
             <div class="follow-field" id="typeField">
-              <label>Follow-up Type</label>
+              <div class="follow-label-row"><label>Follow-up Type</label><button type="button" class="follow-clear" id="clearFollowType" onclick="clearFollowUpType()" hidden>Clear</button></div>
               <div class="select-like" id="typeTrigger" onclick="togglePanel('typeField')">
                 <span id="typeValue">Select type</span>
                 <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -624,155 +505,89 @@
         </div>
       </div>
 
+      <!-- Visible drag handle: the patient-reference rail is resizable. -->
+      <div class="rail-resizer" id="railResizer" role="separator" aria-orientation="vertical"
+           aria-label="Resize patient reference panel" aria-valuemin="220" aria-valuemax="460"
+           aria-valuenow="280" tabindex="0" title="Drag to resize patient panel"></div>
+
       <div class="side-col">
-        <!-- ===== HEALTH CONDITIONS ===== -->
+        <div class="reference-rail-heading"><span>Patient reference</span><span>Context for this visit</span></div>
+        <!-- ===== HEALTH CONDITIONS — expanded by default ===== -->
         <div class="card">
-          <div class="card-head" style="cursor:pointer;" onclick="var b=document.getElementById('healthCondBody');b.style.display=b.style.display==='none'?'block':'none';this.querySelector('.collapse-icon').style.transform=b.style.display==='none'?'rotate(-90deg)':'';">
+          <div class="card-head collapsible" aria-expanded="true" onclick="toggleCard(this,'healthCondBody','block')">
             <div class="card-title">Health Conditions</div>
-            <svg class="collapse-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--ink-400);transition:transform .15s;"><path d="M6 9l6 6 6-6"/></svg>
-          </div>
-          <div id="healthCondBody">
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--warning-50);border:1px solid var(--warning-100);border-radius:8px;">
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M12 9v4M12 17h.01"/></svg>
-                  <span style="font-size:12.5px;font-weight:600;color:var(--ink-900);">Diabetes</span>
-                </div>
-                <span style="font-size:11px;color:var(--ink-500);">Since 2 years</span>
-              </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--danger-50);border:1px solid var(--danger-100);border-radius:8px;">
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                  <span style="font-size:12.5px;font-weight:600;color:var(--ink-900);">Hypertension</span>
-                </div>
-                <span style="font-size:11px;color:var(--ink-500);">Since 3 years</span>
-              </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--violet-50);border:1px solid var(--violet-100);border-radius:8px;">
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-                  <span style="font-size:12.5px;font-weight:600;color:var(--ink-900);">Thyroid</span>
-                </div>
-                <span style="font-size:11px;color:var(--ink-500);">Since 1 year</span>
-              </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="card-count-pill" id="healthCondCount">0</span>
+              <div class="card-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
             </div>
           </div>
+          <!-- DEV: populated by renderHealthConditions() from MOCK patient record -->
+          <div id="healthCondBody"></div>
         </div>
 
+        <!-- ===== CURRENT MEDICATIONS (Task 6.1) — expanded for at-a-glance review ===== -->
         <div class="card">
-          <div class="card-head"><div class="card-title">Medical Records</div><div class="card-link" style="cursor:pointer;">Upload</div></div>
-          <div style="display:flex;flex-direction:column;gap:6px;max-height:220px;overflow-y:auto;padding-right:4px;">
-            <a href="#" onclick="return false;" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--ink-100);border-radius:8px;text-decoration:none;">
-              <div style="width:30px;height:30px;border-radius:7px;background:var(--danger-50);color:var(--danger);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;color:var(--ink-900);">CBP Report</div><div style="font-size:11px;color:var(--ink-500);">12 Jun 2026</div></div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            </a>
-            <a href="#" onclick="return false;" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--ink-100);border-radius:8px;text-decoration:none;">
-              <div style="width:30px;height:30px;border-radius:7px;background:var(--primary-50);color:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;color:var(--ink-900);">Diabetic Prescription</div><div style="font-size:11px;color:var(--ink-500);">08 May 2026</div></div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            </a>
-            <a href="#" onclick="return false;" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--ink-100);border-radius:8px;text-decoration:none;">
-              <div style="width:30px;height:30px;border-radius:7px;background:var(--success-50);color:var(--success);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;color:var(--ink-900);">ECG Report</div><div style="font-size:11px;color:var(--ink-500);">02 May 2026</div></div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            </a>
-            <a href="#" onclick="return false;" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--ink-100);border-radius:8px;text-decoration:none;">
-              <div style="width:30px;height:30px;border-radius:7px;background:var(--violet-50);color:var(--violet);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;color:var(--ink-900);">Thyroid Profile</div><div style="font-size:11px;color:var(--ink-500);">18 Mar 2026</div></div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            </a>
-            <a href="#" onclick="return false;" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--ink-100);border-radius:8px;text-decoration:none;">
-              <div style="width:30px;height:30px;border-radius:7px;background:var(--warning-50);color:var(--warning);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;color:var(--ink-900);">Lipid Profile</div><div style="font-size:11px;color:var(--ink-500);">10 Feb 2026</div></div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            </a>
-            <a href="#" onclick="return false;" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--ink-100);border-radius:8px;text-decoration:none;">
-              <div style="width:30px;height:30px;border-radius:7px;background:var(--primary-50);color:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;color:var(--ink-900);">HbA1c Report</div><div style="font-size:11px;color:var(--ink-500);">28 Jan 2026</div></div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            </a>
-            <a href="#" onclick="return false;" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--ink-100);border-radius:8px;text-decoration:none;">
-              <div style="width:30px;height:30px;border-radius:7px;background:var(--success-50);color:var(--success);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;color:var(--ink-900);">Chest X-Ray</div><div style="font-size:11px;color:var(--ink-500);">15 Dec 2025</div></div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            </a>
-            <a href="#" onclick="return false;" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--ink-100);border-radius:8px;text-decoration:none;">
-              <div style="width:30px;height:30px;border-radius:7px;background:var(--danger-50);color:var(--danger);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
-              <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;color:var(--ink-900);">Blood Sugar (Fasting)</div><div style="font-size:11px;color:var(--ink-500);">01 Nov 2025</div></div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            </a>
+          <div class="card-head collapsible" aria-expanded="true" onclick="toggleCard(this,'currentMedsBody','block')">
+            <div class="card-title">Current Medications</div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="card-count-pill" id="currentMedsCount">0</span>
+              <div class="card-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+            </div>
+          </div>
+          <!-- DEV: populated by renderCurrentMeds() from MOCK patient record -->
+          <div id="currentMedsBody" style="display:block;margin-top:12px;"></div>
+        </div>
+
+        <!-- ===== MEDICAL RECORDS — collapsed by default ===== -->
+        <div class="card">
+          <div class="card-head collapsible" aria-expanded="false" onclick="toggleCard(this,'medicalRecordsBody','flex')">
+            <div class="card-title">Medical Records</div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="card-count-pill" id="medicalRecordsCount">0</span>
+              <div class="card-link" style="cursor:pointer;" onclick="event.stopPropagation();">Upload</div>
+              <div class="card-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+            </div>
+          </div>
+          <!-- DEV: populated by renderMedicalRecords() from MOCK patient record -->
+          <div id="medicalRecordsBody" style="display:none;flex-direction:column;gap:6px;max-height:220px;overflow-y:auto;padding-right:4px;margin-top:12px;">
+            <!-- MOCK-DATA-PLACEHOLDER: rows injected by renderMedicalRecords() -->
           </div>
         </div>
 
+        <!-- ===== PREVIOUS CONSULTATIONS — collapsed by default ===== -->
         <div class="card">
-          <div class="card-head" style="cursor:pointer;" onclick="var b=document.getElementById('prevConsultBody');b.style.display=b.style.display==='none'?'block':'none';this.querySelector('.collapse-icon').style.transform=b.style.display==='none'?'rotate(-90deg)':'';">
+          <div class="card-head collapsible" aria-expanded="false" onclick="toggleCard(this,'prevConsultBody','block')">
             <div class="card-title">Previous Consultations</div>
             <div style="display:flex;align-items:center;gap:8px;">
-              <div class="card-link" id="prevConsultCount">0</div>
-              <svg class="collapse-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--ink-400);transition:transform .15s;"><path d="M6 9l6 6 6-6"/></svg>
+              <span class="card-count-pill" id="prevConsultCount">0</span>
+              <div class="card-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
             </div>
           </div>
-          <div id="prevConsultBody" style="display:none;">
+          <div id="prevConsultBody" style="display:none;margin-top:12px;">
             <div id="prevConsultList"><div class="pc-empty-note">No previous consultations on file yet.</div></div>
           </div>
         </div>
 
-        <!-- ===== KNOWN ALLERGIES ===== -->
-        <div class="card">
-          <div class="card-head" style="cursor:pointer;" onclick="var b=document.getElementById('allergiesBody');b.style.display=b.style.display==='none'?'block':'none';this.querySelector('.collapse-icon').style.transform=b.style.display==='none'?'rotate(-90deg)':'';">
-            <div class="card-title">Known Allergies</div>
-            <svg class="collapse-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--ink-400);transition:transform .15s;"><path d="M6 9l6 6 6-6"/></svg>
-          </div>
-          <div id="allergiesBody" style="display:none;">
-            <div style="font-size:13px;color:var(--ink-500);padding:4px 0;">None reported</div>
-          </div>
-        </div>
+        <!-- Known Allergies sidebar card removed (Task 3.4) — replaced by the top allergy safety banner. -->
 
-        <!-- ===== HABITS ===== -->
+        <!-- ===== HABITS — collapsed by default ===== -->
         <div class="card">
-          <div class="card-head" style="cursor:pointer;" onclick="var b=document.getElementById('habitsBody');b.style.display=b.style.display==='none'?'block':'none';this.querySelector('.collapse-icon').style.transform=b.style.display==='none'?'rotate(-90deg)':'';">
+          <div class="card-head collapsible" aria-expanded="false" onclick="toggleCard(this,'habitsBody','flex')">
             <div class="card-title">Habits</div>
-            <svg class="collapse-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--ink-400);transition:transform .15s;"><path d="M6 9l6 6 6-6"/></svg>
-          </div>
-          <div id="habitsBody" style="display:none;flex-direction:column;gap:10px;">
-            <!-- Tobacco -->
-            <div style="border:1px solid var(--warning-100);background:var(--warning-50);border-radius:9px;padding:12px 14px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M18 12H6M18 12a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2M6 12a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2"/></svg>
-                  <span style="font-size:13px;font-weight:700;color:var(--ink-900);">Tobacco (Smoking)</span>
-                </div>
-                <span style="font-size:11px;font-weight:700;color:var(--warning);background:#fff;border:1px solid var(--warning-100);border-radius:99px;padding:2px 8px;">Former</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;font-size:11.5px;">
-                <div><span style="color:var(--ink-400);">Frequency:</span> <span style="color:var(--ink-700);font-weight:600;">10/day</span></div>
-                <div><span style="color:var(--ink-400);">Duration:</span> <span style="color:var(--ink-700);font-weight:600;">2010–2020</span></div>
-                <div style="grid-column:1/-1;"><span style="color:var(--ink-400);">Note:</span> <span style="color:var(--ink-700);font-weight:500;">Quit 6 years ago</span></div>
-              </div>
-            </div>
-            <!-- Alcohol -->
-            <div style="border:1px solid var(--ink-200);background:var(--ink-50);border-radius:9px;padding:12px 14px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ink-500)" stroke-width="2"><path d="M8 2h8l-1 7H9L8 2z"/><path d="M9 9l-1 3a4 4 0 0 0 8 0l-1-3"/><path d="M12 15v7"/><path d="M8 22h8"/></svg>
-                  <span style="font-size:13px;font-weight:700;color:var(--ink-900);">Alcohol</span>
-                </div>
-                <span style="font-size:11px;font-weight:700;color:var(--success);background:var(--success-50);border:1px solid var(--success-100);border-radius:99px;padding:2px 8px;">Occasional</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;font-size:11.5px;">
-                <div><span style="color:var(--ink-400);">Frequency:</span> <span style="color:var(--ink-700);font-weight:600;">2–3 drinks/week</span></div>
-                <div><span style="color:var(--ink-400);">Context:</span> <span style="color:var(--ink-700);font-weight:600;">Social</span></div>
-                <div style="grid-column:1/-1;"><span style="color:var(--ink-400);">Note:</span> <span style="color:var(--ink-700);font-weight:500;">Weekend only</span></div>
-              </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="card-count-pill" id="habitsCount">0</span>
+              <div class="card-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
             </div>
           </div>
+          <!-- DEV: populated by renderHabits() from MOCK patient record -->
+          <div id="habitsBody" style="display:none;flex-direction:column;gap:10px;margin-top:12px;"></div>
         </div>
 
       </div>
 
       <div class="action-bar">
-        <button class="btn btn-ghost">Save as Draft</button>
-        <div class="save-status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Saved 09:00 AM</div>
+        <button class="btn btn-ghost" onclick="saveConsultationDraft()">Save as Draft</button>
+        <div class="save-status" id="consultSaveStatus" aria-live="polite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>Saved 09:00 AM</span></div>
         <div class="spacer"></div>
         <button class="btn btn-ghost" onclick="printPrescription()" style="margin-right:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> Print Prescription</button>
         <button class="btn btn-primary btn-lg" onclick="confirmCompleteConsultation()">Complete Consultation<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
@@ -1125,6 +940,10 @@
       </div>
     </div>
 
+    <!-- Doctor-only worklist pages. The approved consultation screen above remains unchanged. -->
+    <div class="content-wrap doctor-worklist" id="page-doctorModule" style="display:none;grid-template-columns:1fr;">
+      <div id="doctorModuleContent"></div>
+    </div>
   </div>
 </div>
 
@@ -2059,12 +1878,50 @@
     </div>
   </div>
 </div>
+
+<!-- ================= ALLERGY EDIT MODAL (Task 3.3) ================= -->
+<div class="modal-overlay" id="allergyModalOverlay" onclick="if(event.target===this) closeAllergyModal()" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.4);z-index:200;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:14px;padding:24px 28px;width:95%;max-width:640px;box-shadow:0 20px 60px rgba(15,23,42,.2);position:relative;max-height:90vh;overflow-y:auto;margin:20px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+      <div style="font-size:17px;font-weight:700;color:var(--ink-900);">Drug Allergies</div>
+      <div onclick="closeAllergyModal()" style="width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink-400);" title="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+    </div>
+    <div style="font-size:12px;color:var(--ink-500);margin-bottom:16px;">Record every known drug allergy. This drives the safety banner and prescription interaction checks.</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 110px 28px;gap:8px;font-size:11px;font-weight:700;color:var(--ink-400);text-transform:uppercase;margin-bottom:6px;">
+      <div>Substance</div><div>Reaction</div><div>Severity</div><div></div>
+    </div>
+    <div id="allergyModalList"><!-- rows injected by renderAllergyModalRows() --></div>
+
+    <div class="pi-add-link" onclick="addAllergyModalRow()" style="margin-top:2px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 5v14M5 12h14"/></svg>Add allergy</div>
+
+    <label style="display:flex;align-items:center;gap:8px;margin-top:16px;padding:10px 12px;background:var(--success-50);border:1px solid var(--success-100);border-radius:8px;cursor:pointer;font-size:12.5px;font-weight:600;color:var(--ink-900);">
+      <input type="checkbox" id="allergyConfirmNone">
+      Confirmed with patient — No Known Drug Allergies
+    </label>
+
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:18px;">
+      <div class="btn btn-ghost" onclick="closeAllergyModal()">Cancel</div>
+      <div class="btn btn-primary" onclick="saveAllergyModal()">Save Allergies</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PRESCRIPTION PRINT VIEW (Task 9) ================= -->
+<div id="rxPrintOverlay" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:300;overflow-y:auto;padding:24px;">
+  <div id="rxRoot" data-variant="auto" style="background:#fff;max-width:820px;margin:0 auto;border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(15,23,42,.3);">
+    <!-- populated by renderPrescriptionPrint() -->
+  </div>
+</div>
+
+<script src="js/mockdata.js"></script>
 <script src="js/navigation.js"></script>
 <script src="js/consultation.js"></script>
 <script src="js/queue.js"></script>
 <script src="js/calls.js"></script>
 <script src="js/reception.js"></script>
-<script src="js/login.js"></script>
+<script src="js/login.js?v=doctor-shell-2"></script>
 <script src="js/ui.js"></script>
+<script src="js/doctor-module.js?v=doctor-module-7"></script>
 </body>
 </html>

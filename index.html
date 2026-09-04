@@ -34,8 +34,8 @@ body{font-family:var(--font-ui);background:linear-gradient(180deg,#1E3A8A 0%,#1E
     <a class="role-card" href="doctor.html#doctor">
       <div class="role-icon" style="background:var(--primary);">Dr</div>
       <div class="role-name">Doctor</div>
-      <div class="role-desc">Full consultation workflow with clinical notes, diagnostics, diagnosis, prescriptions, and follow-up planning</div>
-      <div class="role-screens">Screens: Dashboard, Queue, Consultation (Clinical Notes/Diagnostics/Diagnosis/Medications/Treatment Plan), Video/Audio Calls, Reception</div>
+      <div class="role-desc">Doctor dashboard, queue and the approved consultation workflow with clinical notes, diagnostics, diagnosis, prescriptions and follow-up planning.</div>
+      <div class="role-screens">Screens: Dashboard, Queue, Consultation, Video/Audio Calls and patient reference context</div>
     </a>
     <a class="role-card" href="receptionist.html">
       <div class="role-icon" style="background:var(--teal);">Rc</div>
@@ -51,9 +51,9 @@ body{font-family:var(--font-ui);background:linear-gradient(180deg,#1E3A8A 0%,#1E
     </a>
     <a class="role-card" href="admin.html">
       <div class="role-icon" style="background:var(--danger);">Ad</div>
-      <div class="role-name">Admin / Org Admin</div>
-      <div class="role-desc">User management, IPD bed management, pharmacy billing, emergency dept, org settings, reports</div>
-      <div class="role-screens">Screens: Dashboard, Users, Doctors, Patients, IPD (Ward/Room/Bed), Pharmacy, Emergency, Labs Inbox, Settings, Reports</div>
+      <div class="role-name">System Administrator</div>
+      <div class="role-desc">Platform-wide governance: organizations, identity/access, configuration, security, audit and monitoring</div>
+      <div class="role-screens">Screens: Platform Overview, Organizations, Identity &amp; Access, Platform Operations, Security &amp; Compliance, Monitoring</div>
     </a>
     <a class="role-card" href="patient.html">
       <div class="role-icon" style="background:var(--violet);">Pt</div>
@@ -63,14 +63,14 @@ body{font-family:var(--font-ui);background:linear-gradient(180deg,#1E3A8A 0%,#1E
     </a>
     <a class="role-card" href="pharmacy-ux/overview.html">
       <div class="role-icon" style="background:var(--warning);">Rx</div>
-      <div class="role-name">Pharmacy</div>
-      <div class="role-desc">Full pharmacy operations: sales, purchases/GRN, prescription dispensing with Schedule H verification, GST invoicing, batch/expiry tracking (Telangana compliant)</div>
+      <div class="role-name">Pharmacist</div>
+      <div class="role-desc">Prescription dispensing, sales, GRN, stock and compliance. Pharmacy remains an organization type.</div>
       <div class="role-screens">Screens: Overview, Products, Suppliers, Customers, Sales, Purchases, Returns, Damages, Stock Adj., Reports, Rx Dispense, Settings, Invoice Print</div>
     </a>
   </div>
   <div class="footer">
-    <p>Source: Based on actual codebase (frontend/src/components, services/api.js, constants/clinical.js)</p>
-    <p style="margin-top:6px;">Roles in codebase: USER, ADMIN, DOCTOR, NURSE, ORGANIZATION_ADMIN | Feature flags: ipd, pharmacy, emergency, ipdInsurance</p>
+    <p>V1 UX handoff: each role begins in its own operational queue or dashboard.</p>
+    <p style="margin-top:6px;">Doctor Consultation remains the approved frozen clinical reference.</p>
   </div>
 </div>
 </body>
