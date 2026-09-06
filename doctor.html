@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Hospitall - Dashboard & Consultation</title>
-<link rel="stylesheet" href="css/styles.css">
-<link rel="stylesheet" href="css/doctor-module.css?v=doctor-module-6">
+<link rel="stylesheet" href="css/styles.css?v=completion-modal-responsive-1">
+<link rel="stylesheet" href="css/doctor-module.css?v=doctor-module-10">
 </head>
 <body>
 <!-- Doctor prototype starts directly in the application shell. -->
@@ -24,7 +24,7 @@
     <div class="nav-item active" id="navDashboard" onclick="showPage('dashboard')" title="Dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span class="nav-label">Dashboard</span></div>
     <div class="nav-item" id="navReception" onclick="showPage('doctorQueue')" title="Today's queue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M22 10h-4M20 8v4"/></svg><span class="nav-label">Today's Queue</span></div>
     <div class="nav-item" id="navPatients" onclick="showPage('doctorPatients')" title="My patients"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span class="nav-label">My Patients</span></div>
-    <div class="nav-item" id="navPrescriptions" onclick="showPage('prescriptions')" title="Prescriptions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/></svg><span class="nav-label">Prescriptions</span></div>
+    <div class="nav-item" id="navPrescriptions" onclick="showPage('doctorConsultations')" title="Completed Consultations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span class="nav-label">Completed Consultations</span></div>
     <div class="nav-item" id="navReports" onclick="showPage('doctorInbox')" title="Clinical inbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M18 17V9M13 17V5M8 17v-3"/></svg><span class="nav-label">Clinical Inbox</span></div>
     <div class="nav-item" id="navSettings" onclick="showPage('doctorFollowups')" title="Follow-ups"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="nav-label">Follow-ups</span></div>
     <div class="nav-item" id="navAvailability" onclick="showPage('doctorAvailability')" title="Availability"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg><span class="nav-label">Availability</span></div>
@@ -1916,12 +1916,12 @@
 
 <script src="js/mockdata.js"></script>
 <script src="js/navigation.js"></script>
-<script src="js/consultation.js"></script>
+<script src="js/consultation.js?v=completion-modal-1"></script>
 <script src="js/queue.js"></script>
 <script src="js/calls.js"></script>
 <script src="js/reception.js"></script>
 <script src="js/login.js?v=doctor-shell-2"></script>
 <script src="js/ui.js"></script>
-<script src="js/doctor-module.js?v=doctor-module-7"></script>
+<script src="js/doctor-module.js?v=doctor-module-22"></script>
 </body>
 </html>

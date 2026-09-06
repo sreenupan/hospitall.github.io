@@ -277,8 +277,10 @@
   }
 
   function renderConsultHeaderVitals(v){
-    if(!v) return;
-    var map = { hvTemp:v.temp+'\u00B0F', hvPulse:v.pulse, hvBp:v.bp, hvSpo2:v.spo2+'%', hvWt:v.weight+'kg', hvBmi:v.bmi };
+    // Do not leave the preceding patient's vital signs on screen when this
+    // patient's record has no vitals. The header itself remains the existing
+    // visible route to record or correct them.
+    var map = v ? { hvTemp:v.temp+'\u00B0F', hvPulse:v.pulse, hvBp:v.bp, hvSpo2:v.spo2+'%', hvWt:v.weight+'kg', hvBmi:v.bmi } : {hvTemp:'Not recorded',hvPulse:'Not recorded',hvBp:'Not recorded',hvSpo2:'Not recorded',hvWt:'Not recorded',hvBmi:'Not recorded'};
     Object.keys(map).forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=map[id]; });
   }
 

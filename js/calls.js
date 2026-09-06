@@ -124,6 +124,7 @@
     document.getElementById('cmTitle').textContent=title;
     document.getElementById('cmMsg').textContent=msg;
     document.getElementById('cmConfirmBtn').textContent=confirmLabel;
+    document.getElementById('cmConfirmBtn').style.background='var(--danger)';
     confirmCallback=cb;
     document.getElementById('confirmModalOverlay').classList.add('open');
   }
@@ -151,6 +152,15 @@
     clearInterval(callTimerInterval);
     document.getElementById(mode==='video'?'videoCallScreen':'audioCallScreen').classList.remove('open');
     const patient = activeCallPatient;
+    // The call side-panel is a drafting surface. On end-call its notes are
+    // intentionally transferred to the selected patient's consultation form,
+    // where the doctor reviews them before completing the encounter.
+    const panel=document.getElementById(mode==='video'?'videoNotesPanel':'audioNotesPanel');
+    const notes=panel?Array.from(panel.querySelectorAll('textarea')).map(el=>el.value.trim()):[];
+    if(patient&&notes.some(Boolean)){
+      window.callConsultationDrafts=window.callConsultationDrafts||{};
+      window.callConsultationDrafts[patient.uhid]={complaints:notes[0]||'',history:[notes[1],notes[2],notes[3]].filter(Boolean).join(' · '),medications:[]};
+    }
     activeCallPatient=null;
     if(patient) populateConsultation(patient);
   }

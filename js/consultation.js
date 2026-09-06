@@ -463,9 +463,15 @@
 
   // ================= COMPLETE CONSULTATION =================
   function confirmCompleteConsultation(){
-    if(confirm('Are you sure you want to complete this consultation? This will finalize all notes, prescriptions, and diagnosis for this visit.')){
-      completeConsultation();
-    }
+    openConfirmModal(
+      'Complete consultation?',
+      'This will finalize the notes, prescriptions, diagnoses, and treatment plan for this visit.',
+      'Complete consultation',
+      completeConsultation
+    );
+    // The shared confirmation pattern is also used for ending calls. Completion
+    // is a positive clinical action, so retain the primary action treatment.
+    document.getElementById('cmConfirmBtn').style.background='var(--primary)';
   }
   // ================= PRESCRIPTION PRINT VIEW (Task 9) =================
   // Hybrid: variant auto-selected by patient scheme, with manual override + Telugu toggle.
