@@ -575,7 +575,7 @@
           '<div><div style="font-size:20px;font-weight:800;">'+doc.name+'</div>'+
             '<div style="font-size:12.5px;color:#475569;">'+(doc.qualifications||'')+(doc.specialization?' · '+doc.specialization:'')+'</div>'+
             '<div style="font-size:12px;color:#475569;">Reg. No: '+(doc.regNo||'—')+' · '+(doc.regCouncil||'NABH')+'</div></div>'+
-          '<div style="text-align:right;font-size:12px;color:#475569;"><div style="font-size:13px;font-weight:700;color:#0F172A;">HospitAll Clinic</div><div>Hyderabad, Telangana</div><div>Date: '+ (typeof nowTimeLabel==='function'? nowTimeLabel() : new Date().toLocaleDateString()) +'</div></div>'+
+          '<div style="text-align:right;font-size:12px;color:#475569;"><div style="font-size:13px;font-weight:700;color:#0F172A;">HospitAll Clinic</div><div>Hyderabad, Telangana</div><div>Date: '+ new Date().toLocaleString('en-IN',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) +'</div></div>'+
         '</div>'+
         schemeBand+
         '<div style="display:flex;gap:24px;font-size:13px;margin-bottom:12px;">'+
@@ -878,7 +878,8 @@
     // topbar (~66px) + progress nav height + a little breathing room
     var nav = document.getElementById('consultSectionNav');
     var navH = nav ? nav.offsetHeight : 60;
-    return 66 + navH + 14;
+    var headerHeight=window.matchMedia('(min-width:768px) and (max-width:1023px)').matches ? document.querySelector('.topbar').getBoundingClientRect().height : 66;
+    return headerHeight + navH + 14;
   }
 
   function scrollToPanel(e, id){
@@ -1074,7 +1075,11 @@
   }
 
   function pickQuickDate(el,label){
-    document.getElementById('dateValue').textContent=label;
+    const date=new Date();
+    const offsets={'Tomorrow':1,'In 3 days':3,'In 1 week':7,'In 2 weeks':14,'In 1 month':30};
+    if(label==='In 1 month')date.setMonth(date.getMonth()+1);
+    else date.setDate(date.getDate()+(offsets[label]||0));
+    document.getElementById('dateValue').textContent=date.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
     document.getElementById('dateTrigger').classList.add('filled');
     document.getElementById('clearFollowDate').hidden=false;
     togglePanel('dateField');
@@ -1094,7 +1099,8 @@
     closeAllPanels(null);
   }
 
-  let calDate=new Date(2026,7,1);
+  let calDate=new Date();
+  calDate.setDate(1);
   const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
   function shiftMonth(dir){
     calDate.setMonth(calDate.getMonth()+dir);
@@ -1113,7 +1119,7 @@
     const firstDow=new Date(year,month,1).getDay();
     const daysInMonth=new Date(year,month+1,0).getDate();
     const daysInPrevMonth=new Date(year,month,0).getDate();
-    const today=new Date(2026,6,30);
+    const today=new Date();
     for(let i=firstDow-1;i>=0;i--){
       addDay(grid,daysInPrevMonth-i,true,false,false);
     }

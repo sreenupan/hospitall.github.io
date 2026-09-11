@@ -5,6 +5,8 @@
 
   function startCall(patient, mode){
     activeCallPatient=patient;
+    // Each call captures new notes; prior notes are retained in the visit draft.
+    document.querySelectorAll('#'+(mode==='video'?'videoNotesPanel':'audioNotesPanel')+' textarea').forEach(el=>{el.value='';});
     micOn=true; camOn=true; speakerOn=true;
     callSeconds=0;
     const ini = initials(patient.name);
@@ -14,7 +16,7 @@
       document.getElementById('vcPatientChip').textContent=ini;
       document.getElementById('vcPatientChip').style.background=color;
       document.getElementById('vcPatientName').textContent=patient.name;
-      document.getElementById('vcPatientSub').textContent='UHID: '+patient.uhid+' Â· '+patient.age+'Y Â· '+patient.gender;
+      document.getElementById('vcPatientSub').textContent='UHID: '+patient.uhid+' · '+patient.age+'Y · '+patient.gender;
       document.getElementById('vcMainAvatar').textContent=ini;
       document.getElementById('vcMainAvatar').style.background=color;
       document.getElementById('vcMainName').textContent=patient.name;
@@ -25,13 +27,13 @@
       document.getElementById('videoCallScreen').classList.add('open');
       const cw=document.getElementById('videoConnecting');
       cw.style.display='flex';
-      document.getElementById('videoConnectingText').textContent='Connecting to '+patient.name+'â€¦';
+      document.getElementById('videoConnectingText').textContent='Connecting to '+patient.name+'…';
       setTimeout(()=>{ cw.style.display='none'; }, 1100);
     }else{
       document.getElementById('acPatientChip').textContent=ini;
       document.getElementById('acPatientChip').style.background=color;
       document.getElementById('acPatientName').textContent=patient.name;
-      document.getElementById('acPatientSub').textContent='UHID: '+patient.uhid+' Â· '+patient.age+'Y Â· '+patient.gender;
+      document.getElementById('acPatientSub').textContent='UHID: '+patient.uhid+' · '+patient.age+'Y · '+patient.gender;
       document.getElementById('acMainAvatar').textContent=ini;
       document.getElementById('acMainAvatar').style.background=color;
       document.getElementById('acMainName').textContent=patient.name;
@@ -43,7 +45,7 @@
       document.getElementById('audioCallScreen').classList.add('open');
       const cw=document.getElementById('audioConnecting');
       cw.style.display='flex';
-      document.getElementById('audioConnectingText').textContent='Connecting to '+patient.name+'â€¦';
+      document.getElementById('audioConnectingText').textContent='Connecting to '+patient.name+'…';
       setTimeout(()=>{ cw.style.display='none'; }, 1100);
     }
 
@@ -159,7 +161,7 @@
     const notes=panel?Array.from(panel.querySelectorAll('textarea')).map(el=>el.value.trim()):[];
     if(patient&&notes.some(Boolean)){
       window.callConsultationDrafts=window.callConsultationDrafts||{};
-      window.callConsultationDrafts[patient.uhid]={complaints:notes[0]||'',history:[notes[1],notes[2],notes[3]].filter(Boolean).join(' · '),medications:[]};
+      window.callConsultationDrafts[patient.visitId||patient.uhid]={complaints:notes[0]||'',findings:notes[1]||'',diagnosis:notes[2]||'',treatment:notes[3]||'',medications:[]};
     }
     activeCallPatient=null;
     if(patient) populateConsultation(patient);

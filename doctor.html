@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Hospitall - Dashboard & Consultation</title>
 <link rel="stylesheet" href="css/styles.css?v=completion-modal-responsive-1">
-<link rel="stylesheet" href="css/doctor-module.css?v=doctor-module-10">
+<link rel="stylesheet" href="css/doctor-module.css?v=doctor-ux-corrections-20260909-1">
 </head>
 <body>
 <!-- Doctor prototype starts directly in the application shell. -->
@@ -250,7 +250,7 @@
                   <div class="field-desc">Past medical, surgical, family and social history</div>
                 </div>
                 <div style="display:flex;align-items:center;gap:10px;">
-                  <a href="#" style="font-size:12px;color:var(--primary);font-weight:600;text-decoration:none;white-space:nowrap;" onclick="openAdminProfile(currentPatientUhid);return false;">View Full History</a>
+                  <a href="#" style="font-size:12px;color:var(--primary);font-weight:600;text-decoration:none;white-space:nowrap;" onclick="doctorModule.consultationHistory();return false;">View Full History</a>
                   <button class="mic-btn" onclick="toggleDictation(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg>Dictate</button>
                 </div>
               </div>
@@ -1533,7 +1533,7 @@
       </div>
       <div class="profile-foot-note">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 17h.01"/></svg>
-        <div>This section reflects real visits, prescriptions, lab orders, and diagnoses recorded this session. Blood group, allergies, and chronic conditions aren't collected yet.</div>
+        <div>Patient information is shared with the consultation record. Missing information is shown as Not recorded.</div>
       </div>
     </div>
   </div>
@@ -1916,12 +1916,12 @@
 
 <script src="js/mockdata.js"></script>
 <script src="js/navigation.js"></script>
-<script src="js/consultation.js?v=completion-modal-1"></script>
+<script src="js/consultation.js?v=doctor-ux-corrections-20260909-1"></script>
 <script src="js/queue.js"></script>
-<script src="js/calls.js"></script>
+<script src="js/calls.js?v=doctor-qa-20260908-1"></script>
 <script src="js/reception.js"></script>
 <script src="js/login.js?v=doctor-shell-2"></script>
-<script src="js/ui.js"></script>
-<script src="js/doctor-module.js?v=doctor-module-22"></script>
+<script src="js/ui.js?v=doctor-ux-corrections-20260909-1"></script>
+<script src="js/doctor-module.js?v=doctor-ux-corrections-20260909-1"></script>
 </body>
 </html>

@@ -357,12 +357,13 @@
       box.innerHTML = matches.map(p=>`
         <div class="gs-result-row" onclick="selectGlobalSearchResult('${p.uhid}')">
           <div class="rc-chip" style="background:${chipColor(p.name)}">${initials(p.name)}</div>
-          <div><div class="gs-name">${p.name}</div><div class="gs-sub">UHID: ${p.uhid} &nbsp;Â·&nbsp; ${p.phone}</div></div>
+          <div><div class="gs-name">${p.name}</div><div class="gs-sub">UHID: ${p.uhid} &nbsp;·&nbsp; ${p.phone}</div></div>
         </div>`).join('');
     }
     box.classList.add('open');
   }
   function selectGlobalSearchResult(uhid){
+    if(window.doctorModule){document.getElementById('gsResults').classList.remove('open');document.getElementById('globalSearchInput').value='';doctorModule.record(uhid);return;}
     document.getElementById('gsResults').classList.remove('open');
     document.getElementById('globalSearchInput').value='';
     showPage('patients');
@@ -697,6 +698,11 @@
 
   // ================= MEDICAL / CLINICAL PROFILE (click Name) =================
   function openMedicalProfile(uhid){
+    const clinicalRecord=typeof MOCK_PATIENTS!=='undefined'?MOCK_PATIENTS[uhid]||{}:{};
+    const values=[clinicalRecord.bloodGroup||'Not recorded',
+      (clinicalRecord.allergies||[]).map(a=>a.substance+' ('+a.severity+')').join(', ')||(clinicalRecord.allergiesConfirmed?'No known drug allergies confirmed':'Not recorded'),
+      (clinicalRecord.conditions||[]).map(c=>c.name).join(', ')||'Not recorded'];
+    document.querySelectorAll('#medicalProfileOverlay .profile-tag .pt-value').forEach((el,index)=>{el.textContent=values[index]||'Not recorded';el.classList.toggle('muted',el.textContent==='Not recorded');});
     const p = getKnownPatients().find(k=>k.uhid===uhid);
     if(!p){ showToast('Patient record not found.', true); return; }
     document.getElementById('mpChip').textContent = initials(p.name);

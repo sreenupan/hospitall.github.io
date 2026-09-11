@@ -1375,6 +1375,17 @@
     .pbar-circle{width:21px;height:21px;font-size:10px;}
     .pbar-line{min-width:4px;margin:0 3px;}
   }
+  /* At tablet width the clinical workspace takes precedence. The reference
+     rail follows it in normal reading order and the workflow navigator can be
+     scrolled instead of clipping its later steps. */
+  @media (max-width:980px){
+    #page-consultation{grid-template-columns:minmax(0,1fr);padding-left:16px;padding-right:16px;}
+    #page-consultation .side-col{position:static;max-height:none;overflow:visible;padding-right:0;padding-bottom:0;}
+    #page-consultation .rail-resizer{display:none;}
+    #consultSectionNav{overflow-x:auto;overflow-y:hidden;scrollbar-gutter:stable;}
+    #consultSectionNav .pbar-step{flex-shrink:0;}
+    .action-bar{padding:12px 16px;flex-wrap:wrap;}
+  }
   .follow-label-row{display:flex;align-items:center;gap:5px;margin-bottom:6px;}
   .follow-label-row label{margin-bottom:0;}
   .follow-clear{margin-left:auto;border:0;background:transparent;color:var(--primary);font-family:var(--font-ui);font-size:11px;font-weight:700;padding:0;cursor:pointer;}
