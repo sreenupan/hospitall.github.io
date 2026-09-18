@@ -41,3 +41,63 @@
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);else mount();
 })();
+
+/* Shared top-bar presentation. Move existing controls, preserving their handlers. */
+(() => {
+ function alignHeader(){
+  if(!document.body.classList.contains('module-design'))return;
+  const header=document.querySelector('.topbar,.ph-main>.header');
+  if(!header)return;
+  const svg=path=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${path}"/></svg>`;
+  const bell='M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M10 21h4';
+  const menu=header.querySelector('[data-rec-toggle],[data-nur-toggle],[data-pat-toggle],[data-oa-toggle],#menu,.ph-toggle,button[aria-controls]');
+  const home=header.querySelector('.module-home');
+  const title=header.querySelector('#page-title');
+  const search=header.querySelector('.topbar-search,#global-search');
+  const context=header.querySelector('.person-select,.persona-label');
+  const right=document.createElement('div');right.className='aligned-topbar-right';
+  const profile=document.createElement('div');profile.className='aligned-profile';
+  const makeProfile=(initials,name,role)=>{profile.innerHTML=`<span class="aligned-avatar">${initials}</span><span class="aligned-profile-copy"><strong>${name}</strong><small>${role}</small></span>`;};
+  header.classList.add('aligned-topbar');
+  if(menu)menu.classList.add('aligned-menu');
+  if(title){title.classList.add('aligned-page-title');header.after(title);}
+  header.querySelectorAll('.topbar-spacer,.top-spacer').forEach(n=>n.remove());
+  if(search){
+   search.classList.add('aligned-search');header.prepend(search);
+   if(search.id==='global-search'){
+    const decoration=document.createElement('span');decoration.className='aligned-search-symbol';decoration.innerHTML=svg('M21 21l-4.3-4.3M11 3a8 8 0 1 0 0 16 8 8 0 0 0 0-16');search.prepend(decoration);
+   }
+  }else if(context){context.classList.add('aligned-context');header.prepend(context);}
+  if(menu)header.prepend(menu);
+  if(home){home.classList.add('aligned-icon');right.append(home);}
+  const alert=header.querySelector('#alerts,#notifications,[title="Notifications"]');
+  if(alert){
+   alert.classList.add('aligned-icon');
+   if(!alert.querySelector('svg')){const label=alert.textContent.trim();alert.setAttribute('aria-label',alert.getAttribute('aria-label')||label);alert.title=label;alert.innerHTML=svg(bell)+`<span class="aligned-sr-only">${label}</span>`;}
+   right.append(alert);
+  }
+  if(document.body.classList.contains('receptionist-module')){
+   const oldProfile=[...header.children].find(n=>n.textContent.includes('Receptionist |'));
+   const clock=[...header.children].find(n=>n.textContent.includes('04 Aug 2026'));
+   if(clock){clock.classList.add('aligned-clock');right.prepend(clock);}
+   makeProfile('RC','Receptionist','City Health Clinic');oldProfile?.remove();header.querySelector('.avatar')?.remove();
+  }else if(document.body.classList.contains('nurse-module')){
+   const staff=header.querySelector('.staff');makeProfile('NA','Nurse Anita','City Health Clinic');
+   if(staff){const date=document.createElement('div');date.className='aligned-clock';date.textContent='04 Aug 2026';right.prepend(date);staff.remove();}header.querySelector('.avatar')?.remove();
+  }else if(document.body.classList.contains('patient-module')){
+   makeProfile('RK','Ravi Kumar','Patient account');const member=document.querySelector('#member');
+   const sync=()=>{const name=member.querySelector('option[value="ravi"]')?.textContent.replace(/\s*\(Self\)\s*$/,'')||'Patient';profile.querySelector('strong').textContent=name;profile.querySelector('.aligned-avatar').textContent=name.split(/\s+/).map(s=>s[0]).slice(0,2).join('');};
+   new MutationObserver(sync).observe(member,{childList:true,subtree:true,characterData:true});sync();
+  }else if(document.body.classList.contains('admin-module')){
+   makeProfile('OA','Organization Admin','');const select=document.querySelector('#scenario');const sync=()=>profile.querySelector('small').textContent=select.selectedOptions[0].textContent;select.addEventListener('change',sync);sync();
+  }else if(document.body.classList.contains('inpatient-module')){
+   makeProfile('IP','Inpatient team','');const select=document.querySelector('#persona');const sync=()=>profile.querySelector('small').textContent=select.value;select.addEventListener('change',sync);sync();
+   header.querySelector(':scope > strong')?.remove();const reset=header.querySelector('[data-action="reset"]');if(reset)right.append(reset);
+  }else{
+   const brand=header.querySelector('.header-brand');if(brand){brand.classList.add('aligned-pharmacy-identity');profile.append(brand);}
+   const actions=header.querySelector('.header-actions');if(actions)right.append(actions);
+  }
+  right.append(profile);header.append(right);
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>queueMicrotask(alignHeader));else queueMicrotask(alignHeader);
+})();
