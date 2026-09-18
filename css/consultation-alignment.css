@@ -1,0 +1,200 @@
+/* Canonical editable-module presentation, derived from the frozen Consultation.
+   Loaded last. Never loaded by Doctor. Workflow styles (states, visibility,
+   layout mechanics and print documents) remain owned by their module. */
+body.module-design {
+  --ui-primary:#2563eb; --ui-ink:#0f172a; --ui-muted:#64748b;
+  --ui-line:#e2e8f0; --ui-surface:#f8fafc; --ui-radius:10px;
+  font:14px/1.4 Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  color:var(--ui-ink); background:var(--ui-surface);
+}
+/* Same shell dimensions; saved user rail widths still take precedence. */
+.module-design.patient-module .app:not(.collapsed){grid-template-columns:var(--pat-nav-width,212px) minmax(0,1fr)}
+.module-design.nurse-module .app:not(.collapsed){grid-template-columns:var(--nur-nav-width,212px) minmax(0,1fr)}
+.module-design.receptionist-module .app:not(.collapsed){grid-template-columns:var(--rec-nav-width,212px) minmax(0,1fr)}
+.module-design.admin-module .app:not(.collapsed){grid-template-columns:var(--oa-nav-width,212px) minmax(0,1fr)}
+.module-design .pat-nav-resizer{left:calc(var(--pat-nav-width,212px) - 8px)}
+.module-design .nur-nav-resizer{left:calc(var(--nur-nav-width,212px) - 8px)}
+.module-design .rec-nav-resizer{left:calc(var(--rec-nav-width,212px) - 8px)}
+.module-design .oa-nav-resizer{left:calc(var(--oa-nav-width,212px) - 8px)}
+.module-design .app.collapsed :is(.pat-nav-resizer,.nur-nav-resizer,.rec-nav-resizer,.oa-nav-resizer){left:64px}
+body.module-design :is(.app>.nav,.sidebar,.ph-sidebar){background:linear-gradient(180deg,#1e3a8a,#1e40af);padding:20px 14px}
+body.module-design :is(.brand,.ph-brand){padding:6px 0 22px;gap:10px;font-size:15.5px}
+body.module-design :is(.nav-item,.sidebar nav a,.ph-sidebar .nav a){font-size:13.5px;line-height:18px;min-height:36px;padding:9px 12px;gap:12px;margin-bottom:2px;font-weight:500;border-radius:8px}
+body.module-design :is(.nav-item.active,.sidebar nav a.active,.ph-sidebar .nav a.active){font-weight:600;background:#ffffff29;color:white}
+body.module-design :is(.pat-nav-icon,.nur-nav-icon,.rec-nav-icon,.oa-nav-icon,.nav-icon,.ph-nav-icon){width:18px;height:18px;flex-shrink:0}
+body.module-design :is(.nav-section,.caption){font-size:10px;line-height:1.3;padding:10px 12px 6px;letter-spacing:.06em;color:#bfdbfe}
+body.module-design :is(.sidebar nav,.ph-sidebar>.nav){gap:0}
+body.module-design .app.collapsed :is(.nav-item,.sidebar nav a){min-height:40px;padding:11px;justify-content:center}
+body.module-design .topbar,body.ph-themed.module-design .ph-main>.header{min-height:68px;height:auto;padding:14px 28px;gap:12px;align-items:center;background:#fff;border-bottom:1px solid var(--ui-line)}
+body.module-design :is(.topbar-title,.topbar>strong){font-size:14px;line-height:1.3}
+body.module-design .persona-label{flex-direction:row;align-items:center;gap:8px;white-space:nowrap;font-weight:400}
+body.module-design.patient-module .topbar{flex-wrap:wrap}
+body.module-design :is(.topbar .person-select select,.topbar .persona-label select){min-height:36px;padding:7px 10px;font-size:13px;font-weight:400}
+body.module-design :is(.org-context,.demo){padding:6px 28px;font-size:11.5px;line-height:1.4}
+body.module-design .demo{background:#f8fafc;color:#64748b;border-bottom:1px solid var(--ui-line)}
+body.module-design :is(#screen-content,#content),body.ph-themed.module-design .ph-main>.content{max-width:none!important;padding:20px 24px 32px!important}
+/* Reference type hierarchy: page > panel > field > supporting text. */
+body.module-design :is(h1,.page-title,.page-title-lg){font-size:24px;line-height:1.25;letter-spacing:-.3px;font-weight:700}
+body.module-design h2{font-size:16px;line-height:1.4;font-weight:700}
+body.module-design h3{font-size:14px;line-height:1.4;font-weight:700}
+body.module-design :is(.page-header,.page-heading){margin-bottom:18px;gap:14px}
+body.module-design :is(.page-header,.page-heading) p{font-size:13px;line-height:1.4;margin-top:5px;color:var(--ui-muted)}
+body.module-design :is(.muted,small,.rec-muted,.sub,.stat-label){color:var(--ui-muted)}
+body.module-design :is(small,.rec-muted,.sub){font-size:12px;line-height:1.4}
+body.module-design :is(.card,.hero){border:1px solid var(--ui-line);border-radius:10px;background:#fff;padding:22px;margin-bottom:16px;box-shadow:none}
+body.module-design .grid>.card{margin-bottom:0}
+body.module-design :is(.card-title,.card>h2){font-size:16px;margin-bottom:14px}
+body.module-design :is(.grid,.workspace,.split){gap:20px}
+body.module-design :is(.identity,.patient-banner){background:#fff;border:1px solid var(--ui-line);border-radius:10px;padding:12px 16px;margin:0 0 14px;gap:16px}
+body.module-design :is(.identity,.patient-banner) h2{font-size:16px;margin:0 0 3px}
+body.module-design :is(.identity,.patient-banner) p{font-size:12px;margin:0;color:var(--ui-muted)}
+body.module-design :is(.notice,.rec-notice,.banner){padding:10px 14px;font-size:12px;line-height:1.5;border-radius:8px;margin-bottom:14px}
+/* Keep semantic error/warning/disabled states owned by each module. */
+body.module-design :is(.btn,button[class^=btn-],.module-home),body.module-design.inpatient-module main button,body.module-design.inpatient-module dialog button{font-family:inherit;font-size:13px;line-height:16px;font-weight:600;min-height:36px;padding:9px 15px;border-radius:9px}
+body.module-design :is(.btn-primary,.btn-success,button.primary){background:#2563eb;border-color:#2563eb;color:#fff;box-shadow:0 1px 2px #2563eb30}
+body.module-design :is(.btn-primary,.btn-success,button.primary):hover:not(:disabled){background:#1d4ed8}
+body.module-design :is(.btn-ghost,.btn-outline,.btn-secondary){background:#fff;color:#334155;border:1px solid var(--ui-line);box-shadow:none}
+body.module-design :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),select,textarea,.form-control){font-family:inherit;font-size:13.5px;line-height:1.4;min-height:38px;padding:9px 12px;border:1px solid var(--ui-line);border-radius:8px;color:var(--ui-ink);background:#f8fafc;max-width:100%}
+body.module-design textarea{resize:vertical}
+body.module-design :is(input,select,textarea)[aria-invalid=true]{border-color:#dc2626!important}
+body.module-design :is(input,select,textarea):disabled{color:#64748b;background:#f1f5f9;cursor:not-allowed}
+body.module-design :is(.form-label,.form-group>label,.fields>label){font-size:13px;font-weight:600;color:#334155;line-height:1.4;margin-bottom:6px}
+body.module-design :is(.form-row,.form-row-3,.form-row-4,.fields){gap:16px}
+body.module-design :is(.form-group){margin-bottom:16px}
+body.module-design :is(.filterbar,.filters,.search-bar){gap:12px;margin-bottom:16px}
+body.module-design :is(.filterbar,.filters,.search-bar) .form-group{margin-bottom:0}
+body.module-design .topbar-search input{border:0!important;background:transparent!important;min-height:0;padding:0!important}
+body.module-design :is(.stats,.stat-grid){gap:12px;margin-bottom:18px}
+body.module-design :is(.stat,.stat-card,.stats>button){text-align:left;padding:14px 16px;border:1px solid var(--ui-line);border-radius:10px;background:#fff}
+body.module-design :is(.stat strong,.stat-value,.stats strong){font-size:25px;font-weight:700;line-height:1.25}
+body.module-design :is(.stat-label,.stat>span){font-size:12px;line-height:1.4}
+/* Existing tab/step actions retain their handlers, order and names. */
+body.module-design .tabs{display:flex;flex-wrap:wrap;gap:4px;padding:4px 0;margin:0 0 16px;border-bottom:1px solid var(--ui-line)}
+body.module-design .tabs :is(button,a,.tab){background:transparent;border:0;border-bottom:2px solid transparent;border-radius:0;padding:10px 12px;min-height:38px;font-size:13px;font-weight:600;color:#64748b;box-shadow:none}
+body.module-design .tabs :is([aria-pressed=true],[aria-selected=true],.active){background:transparent;border-bottom-color:#2563eb;color:#2563eb}
+body.module-design :is(.wizard-steps,.steps){background:#fff;border:1px solid var(--ui-line);border-radius:10px;padding:10px 12px;gap:8px;margin-bottom:16px}
+body.module-design :is(.wizard-step,.steps li,.steps>span){background:transparent;color:#64748b;border-radius:6px;padding:8px 12px;font-size:12px;line-height:1.4}
+body.module-design :is(.wizard-step.active,.steps .active,.steps [aria-current=step]){background:#eff6ff;color:#2563eb;font-weight:700}
+/* Worklists use the same white surface and low-contrast separators. */
+body.module-design :is(.rec-table-wrap,.table-wrap){background:#fff;border:1px solid var(--ui-line);border-radius:10px}
+body.module-design table{font-size:13px;background:#fff}
+body.module-design th{font-size:11px;line-height:1.4;font-weight:600;letter-spacing:.04em;color:#64748b;background:#f8fafc;padding:11px 14px}
+body.module-design td{font-size:13px;line-height:1.4;padding:12px 14px;border-color:#edf2f7}
+body.module-design :is(.badge,.status){font-size:11px;line-height:1.4;padding:3px 8px;border-radius:20px}
+/* Shared dialog anatomy; native and existing dialog implementations stay intact. */
+body.module-design dialog{width:min(640px,calc(100vw - 32px));max-height:calc(100dvh - 32px);border:1px solid var(--ui-line);border-radius:14px;color:var(--ui-ink);box-shadow:0 20px 70px #0f172a33}
+body.module-design dialog::backdrop{background:#0f172a66}
+body.module-design :is(.dialog-head,.dialog-foot,.rec-dialog-header,.rec-dialog-footer){padding:16px 22px;background:white;gap:10px}
+body.module-design :is(.dialog-head,.rec-dialog-header) h2,body.module-design .dialog-heading h2{font-size:18px;margin:0}
+body.module-design :is(.dialog-body,.rec-dialog-body){padding:22px;min-height:0;overflow:auto}
+body.module-design :is(.dialog-foot,.rec-dialog-footer){justify-content:flex-end}
+body.module-design.inpatient-module dialog{padding:22px}
+body.module-design.inpatient-module dialog .dialog-heading{top:-22px}
+body.module-design.inpatient-module dialog form>.actions{bottom:-22px}
+/* Role-specific compositions, using the same components. */
+.module-design.patient-module #doctor-results article.card{display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:12px;row-gap:4px;align-content:start}
+.module-design.patient-module #doctor-results .doctor-avatar{grid-column:1;grid-row:1 / span 2;width:44px;height:44px;margin:0;border-radius:9px}
+.module-design.patient-module #doctor-results :is(h2,p){grid-column:2;margin:0}
+.module-design.patient-module #doctor-results .actions{grid-column:1/-1;margin-top:12px}
+.module-design.patient-module .patient-dashboard .hero{background:#fff}
+.module-design.patient-module .dashboard-overview .stats{border-radius:10px}
+.module-design.patient-module .dashboard-overview .stats button{border-radius:0;border-width:0 0 1px}
+.module-design.admin-module .hero{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:20px;row-gap:4px;padding:16px 18px}
+.module-design.admin-module .hero :is(h2,p){grid-column:1;margin:0}
+.module-design.admin-module .hero h2{font-size:16px}
+.module-design.admin-module .hero p{font-size:13px}
+.module-design.admin-module .hero .actions{grid-column:2;grid-row:1 / span 3;margin:0;align-self:center}
+.module-design.inpatient-module .topbar>button{min-height:36px}
+.module-design.inpatient-module .sidebar-bottom{font-size:12px;color:#dbeafe}
+/* Pharmacy has historical inline presentation. Override only visual properties. */
+body.ph-themed.module-design :is(.card,.rx-card){padding:0;border-radius:10px;border-color:var(--ui-line);margin-bottom:16px}
+body.ph-themed.module-design :is(.card-body,.rx-card-body){padding:18px 22px}
+body.ph-themed.module-design :is([class^=card-header],.rx-card-header,.section-header){padding:16px 18px;font-size:14px;font-weight:700;background:#fff!important;color:#0f172a;border-color:var(--ui-line)}
+body.ph-themed.module-design .ph-main :is(button,input,select,textarea)[style*="font-size"]{font-size:13px!important}
+body.ph-themed.module-design .ph-main :is(button[class^=btn-],.btn){font-size:13px;min-height:36px;line-height:16px;padding:9px 15px;border-radius:9px}
+body.ph-themed.module-design :is(.btn-sm,.btn-apply,.btn-generate,.btn-simulate,.btn-save,.btn-submit,.btn-add,.btn-auto-order,.btn-primary,.btn-success){background:#2563eb!important;border-color:#2563eb!important;color:white!important}
+body.ph-themed.module-design :is(.btn-csv,.btn-export,.btn-import,.btn-reset,.btn-cancel,.btn-outline){background:#fff!important;color:#334155!important;border:1px solid var(--ui-line)!important}
+body.ph-themed.module-design .ph-main :is(.form-group label,.fields label){font-size:13px;line-height:1.4;font-weight:600}
+body.ph-themed.module-design .ph-main label[style*="font-size"]{font-size:13px!important;font-weight:600!important;color:#334155!important;text-transform:none!important}
+body.ph-themed.module-design .ph-main button[style]{min-height:36px;border-radius:9px!important;font-family:inherit;line-height:16px;padding:9px 15px!important}
+body.ph-themed.module-design .ph-main button:is([onclick="saveCustomer()"],[onclick="saveSupplier()"]){background:#2563eb!important;color:#fff!important}
+body.ph-themed.module-design .ph-main button[style*="background:#f5f5f5"]{background:#fff!important;color:#334155!important;border-color:var(--ui-line)!important}
+body.ph-themed.module-design .form-row{align-items:start}
+body.ph-themed.module-design .admin-note{display:block;font-size:12px;line-height:1.5;padding:10px 14px;border-radius:8px}
+body.ph-themed.module-design .form-row>.form-group:has(>button):not(:has(input,select,textarea)){align-self:end}
+body.ph-themed.module-design .ph-main :is(.kpi-label,.stat-card .lbl){font-size:12px;color:#64748b;line-height:1.4}
+body.ph-themed.module-design :is(.kpi-card,.stat-card){border-radius:10px;padding:14px 16px;border-color:var(--ui-line)}
+body.ph-themed.module-design .ph-main :is(div,p)[style*="background:#e3f2fd"],body.ph-themed.module-design .ph-main :is(div,p)[style*="background: #e3f2fd"]{background:#f8fafc!important;border-color:var(--ui-line)!important;color:#475569!important;padding:10px 14px!important;font-size:12px!important;line-height:1.5!important;border-radius:8px!important}
+body.ph-themed.module-design .ph-main :is(div,p)[style*="font-size:9px"],body.ph-themed.module-design .ph-main :is(div,p)[style*="font-size:10px"],body.ph-themed.module-design .ph-main :is(div,p)[style*="font-size:11px"]{font-size:12px!important;line-height:1.5!important}
+body.ph-themed.module-design :is(.ph-overview-help,.ph-overview-totals){margin-bottom:10px}
+body.ph-themed.module-design .revenue-banner{border-radius:10px;padding:12px 16px}
+body.ph-themed.module-design .ph-main table{font-size:13px}
+body.ph-themed.module-design td{font-size:13px;padding:12px 14px}
+body.ph-themed.module-design th{font-size:11px;padding:11px 14px}
+body.ph-themed.module-design .ph-main .card-badge{font-size:12px}
+/* Entry screen shares the product surface without a clinical workspace shell. */
+body.role-entry{background:#f8fafc;color:#0f172a;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.role-entry .header{color:#0f172a;margin-bottom:28px}.role-entry .header h1{font-size:28px}.role-entry .header p{color:#64748b}
+.role-entry .role-card{border-radius:10px;padding:22px;text-align:left}.role-entry .role-card:hover{transform:none;box-shadow:0 2px 12px #0f172a0a;border-color:#93c5fd}
+.role-entry .role-card:focus-visible{outline:3px solid #2563eb;outline-offset:3px}
+.role-entry .role-icon{width:40px;height:40px;border-radius:9px;margin:0 0 12px;background:#eff6ff!important;color:#2563eb;font-size:16px}
+.role-entry .role-desc,.role-entry .role-screens{font-size:13px;color:#64748b}.role-entry .footer{color:#64748b}
+@media(min-width:701px) and (max-width:1023px){
+ body.module-design .topbar{padding:12px 20px}
+ body.module-design .persona-label{flex-direction:row}
+ body.module-design :is(.rec-table-wrap,.table-wrap){min-width:0}
+}
+@media(max-width:1023px){
+ body.module-design.nurse-module td{display:grid;grid-template-columns:105px minmax(0,1fr);padding:6px 0;gap:10px;font-size:13px}
+ body.module-design.nurse-module tr{padding:12px 0}
+ body.module-design.receptionist-module .rec-table td{padding:7px 12px}
+ body.module-design.inpatient-module .table-wrap td:last-child:has(a){position:sticky;right:0;background:white;border-left:1px solid var(--ui-line)}
+ body.ph-themed.module-design .ph-table-scroll td:last-child:has(button){position:sticky;right:0;background:white;border-left:1px solid var(--ui-line)}
+ body.ph-themed.module-design .ph-table-scroll table:has(td:last-child button) th:last-child,
+ body.module-design.inpatient-module .table-wrap table:has(td:last-child a) th:last-child{position:sticky;right:0;background:#f8fafc;border-left:1px solid var(--ui-line);z-index:1}
+}
+@media(max-width:700px){
+ body.module-design{font-size:16px;line-height:1.5}
+ body.module-design .app:not(.collapsed){display:block}
+ body.module-design :is(.topbar,.ph-main>.header){padding:8px 16px;min-height:60px;gap:8px;flex-wrap:wrap}
+ body.module-design :is(.topbar-title,.topbar>strong){font-size:13px}
+ body.module-design :is(#screen-content,#content),body.ph-themed.module-design .ph-main>.content{padding:16px!important}
+ body.module-design :is(h1,.page-title,.page-title-lg){font-size:23px}
+ body.module-design :is(.card,.hero){padding:16px}
+ body.module-design :is(.btn,button[class^=btn-],.module-home),body.module-design.inpatient-module main button,body.module-design.inpatient-module dialog button{min-height:44px;font-size:14px;line-height:20px;padding:10px 12px}
+ body.module-design :is(input:not([type=checkbox]):not([type=radio]),select,textarea,.form-control){font-size:16px;min-height:44px}
+ body.module-design .topbar :is(.person-select select,.persona-label select){min-height:44px;font-size:16px}
+ body.module-design :is(.nav-item,.sidebar nav a,.ph-sidebar .nav a){min-height:44px;line-height:20px}
+ body.module-design :is(.org-context,.demo){padding:6px 16px;font-size:11px}
+ body.module-design .persona-label{flex-direction:row;flex:1;white-space:normal}
+ body.module-design .persona-label select{max-width:100%;min-width:0;flex:1}
+ body.module-design .tabs :is(button,a,.tab){min-height:44px;font-size:14px;padding:10px}
+ body.module-design :is(.dialog-head,.dialog-foot,.dialog-body,.rec-dialog-header,.rec-dialog-body,.rec-dialog-footer){padding:16px}
+ body.module-design dialog{max-height:calc(100dvh - 24px)}
+ body.module-design.inpatient-module dialog{padding:16px}
+ body.module-design.inpatient-module dialog .dialog-heading{top:-16px}
+ body.module-design.inpatient-module dialog form>.actions{bottom:-16px}
+ body.module-design.nurse-module td{grid-template-columns:96px minmax(0,1fr);padding:5px 0;font-size:14px;gap:8px;align-items:start}
+ body.module-design.nurse-module td::before{font-size:12px}
+ body.module-design.nurse-module td .actions{gap:6px}
+ body.module-design.receptionist-module .rec-table td{grid-template-columns:80px minmax(0,1fr);font-size:14px;gap:8px;padding:6px 10px}
+ body.module-design.receptionist-module .topbar-search{padding:8px 10px!important}
+ body.module-design.receptionist-module .topbar-search input{min-height:28px;font-size:16px}
+ body.module-design.admin-module .hero{grid-template-columns:1fr;padding:14px;gap:4px}
+ body.module-design.admin-module .hero .actions{grid-column:1;grid-row:auto;margin-top:8px;gap:8px}
+ body.module-design.admin-module .hero .actions .btn{flex:1;font-size:13px}
+ body.module-design.admin-module .metrics{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+ body.module-design.admin-module .metrics button{padding:10px;font-size:12px;line-height:1.35}
+ body.module-design.admin-module .metrics strong{font-size:23px;margin-bottom:3px}
+ body.module-design.patient-module .dashboard-overview .stats button{font-size:13px;padding:10px}
+ body.module-design.patient-module #doctor-results .actions .btn{flex:1}
+ body.ph-themed.module-design :is(.card,.rx-card){padding:0}
+ body.ph-themed.module-design :is(.card-body,.rx-card-body){padding:16px}
+ body.ph-themed.module-design .ph-main :is(button[class^=btn-],.btn){min-height:44px;font-size:14px;line-height:20px;padding:10px 12px}
+ body.ph-themed.module-design .ph-main :is(input,select,textarea)[style*="font-size"]{font-size:16px!important}
+ body.ph-themed.module-design .ph-main button[style*="font-size"]{font-size:14px!important}
+ body.ph-themed.module-design .ph-main button[style]{min-height:44px;line-height:20px;padding:10px 12px!important}
+ body.ph-themed.module-design .ph-main :is(div,p)[style*="font-size"]{font-size:13px!important}
+ .role-entry .header h1{font-size:24px}.role-entry .roles{grid-template-columns:1fr}.role-entry .role-card{padding:18px}
+}
+@media print{body.module-design :is(#screen-content,#content){padding:0!important}.role-entry{background:white}}

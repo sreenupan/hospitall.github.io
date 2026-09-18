@@ -1,9 +1,9 @@
-// Receptionist-only navigation. Doctor assets and preferences are independent.
+// Nurse-only navigation. Doctor assets and preferences are independent.
 (() => {
   'use strict';
   const shell = document.querySelector('.app');
   const nav = document.querySelector('.nav');
-  nav.id = 'receptionist-navigation';
+  nav.id = 'nurse-navigation';
   const paths = {
     dashboard:'M3 10 12 3l9 7v11h-6v-7H9v7H3Z',
     appointments:'M5 5h14v16H5ZM8 3v4m8-4v4M5 10h14',
@@ -15,36 +15,37 @@
     payments:'M3 5h18v14H3ZM3 10h18m-5 5h3',
     switch:'M4 7h16m-4-4 4 4-4 4M20 17H4m4-4-4 4 4 4'
   };
-  const icon = path => `<svg class="rec-nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="${path}"/></svg>`;
+  Object.assign(paths,{'vitals-queue':paths.checkin,'record-vitals':'M3 12h4l3-8 4 16 3-8h4',reports:'M5 3h10l4 4v14H5Zm9 0v5h5M8 12h8m-8 4h6',tasks:paths.checkin,'ipd-mar':paths.payments,'ipd-vitals':'M3 12h4l3-8 4 16 3-8h4','ipd-notes':paths.appointments});
+  const icon = path => `<svg class="nur-nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="${path}"/></svg>`;
   nav.querySelectorAll('.nav-item,.switch-role').forEach(item => {
     const badge = item.querySelector('.nav-badge');
     const label = item.firstChild.textContent.trim();
     item.firstChild.remove();
-    const span = document.createElement('span'); span.className='rec-nav-label'; span.textContent=label;
+    const span = document.createElement('span'); span.className='nur-nav-label'; span.textContent=label;
     item.insertAdjacentHTML('afterbegin',icon(paths[item.dataset.screen || 'switch']));
     item.insertBefore(span,badge);
     item.dataset.tooltip=label;
     item.setAttribute('aria-label',label);
   });
   const topToggle = document.querySelector('[title="Toggle sidebar"]');
-  topToggle.dataset.recToggle='';
+  topToggle.dataset.nurToggle='';
   const collapse = document.createElement('button');
-  collapse.type='button'; collapse.className='rec-nav-collapse'; collapse.dataset.recToggle='';
+  collapse.type='button'; collapse.className='nur-nav-collapse'; collapse.dataset.nurToggle='';
   collapse.innerHTML=icon('m14 6-6 6 6 6');
   nav.querySelector('.brand').append(collapse);
   const handle = document.createElement('div');
-  handle.className='rec-nav-resizer'; handle.tabIndex=0;
+  handle.className='nur-nav-resizer'; handle.tabIndex=0;
   handle.setAttribute('role','separator'); handle.setAttribute('aria-orientation','vertical');
   handle.setAttribute('aria-label','Resize navigation panel'); handle.setAttribute('aria-controls',nav.id);
   handle.setAttribute('aria-valuemin','180');handle.setAttribute('aria-valuemax','360');
   handle.title='Drag to resize navigation; use arrow keys when focused';
   handle.textContent='↔'; shell.append(handle);
-  const key='receptionistNavigationWidth';
+  const key='nurseNavigationWidth';
   let width=null;
   try { const saved=Number(localStorage.getItem(key)); if(saved>=180&&saved<=360)width=saved; } catch (_) {}
   function applyWidth(value,persist=true){
     width=Math.max(180,Math.min(360,Math.round(value)));
-    shell.style.setProperty('--rec-nav-width',width+'px');
+    shell.style.setProperty('--nur-nav-width',width+'px');
     handle.setAttribute('aria-valuenow',String(width));
     if(persist)try{localStorage.setItem(key,String(width));}catch(_){}
   }

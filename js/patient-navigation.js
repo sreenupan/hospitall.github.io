@@ -1,9 +1,9 @@
-// Receptionist-only navigation. Doctor assets and preferences are independent.
+// Patient-only navigation. Other role assets and preferences are independent.
 (() => {
   'use strict';
   const shell = document.querySelector('.app');
   const nav = document.querySelector('.nav');
-  nav.id = 'receptionist-navigation';
+  nav.id = 'patient-navigation';
   const paths = {
     dashboard:'M3 10 12 3l9 7v11h-6v-7H9v7H3Z',
     appointments:'M5 5h14v16H5ZM8 3v4m8-4v4M5 10h14',
@@ -15,41 +15,45 @@
     payments:'M3 5h18v14H3ZM3 10h18m-5 5h3',
     switch:'M4 7h16m-4-4 4 4-4 4M20 17H4m4-4-4 4 4 4'
   };
-  const icon = path => `<svg class="rec-nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="${path}"/></svg>`;
+  Object.assign(paths,{'vitals-queue':paths.checkin,'record-vitals':'M3 12h4l3-8 4 16 3-8h4',reports:'M5 3h10l4 4v14H5Zm9 0v5h5M8 12h8m-8 4h6',tasks:paths.checkin,'ipd-mar':paths.payments,'ipd-vitals':'M3 12h4l3-8 4 16 3-8h4','ipd-notes':paths.appointments});
+  Object.assign(paths,{followups:paths.appointments,records:paths.reports,prescriptions:paths.reports,health:paths['record-vitals'],labs:paths.reports,profile:paths.patients,claim:paths.reports,emergency:'M12 3v18M3 12h18',support:'M4 4h16v12H9l-5 5Z'});
+  const icon = path => `<svg class="pat-nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="${path}"/></svg>`;
   nav.querySelectorAll('.nav-item,.switch-role').forEach(item => {
     const badge = item.querySelector('.nav-badge');
     const label = item.firstChild.textContent.trim();
     item.firstChild.remove();
-    const span = document.createElement('span'); span.className='rec-nav-label'; span.textContent=label;
+    const span = document.createElement('span'); span.className='pat-nav-label'; span.textContent=label;
     item.insertAdjacentHTML('afterbegin',icon(paths[item.dataset.screen || 'switch']));
     item.insertBefore(span,badge);
     item.dataset.tooltip=label;
     item.setAttribute('aria-label',label);
   });
   const topToggle = document.querySelector('[title="Toggle sidebar"]');
-  topToggle.dataset.recToggle='';
+  topToggle.dataset.patToggle='';
   const collapse = document.createElement('button');
-  collapse.type='button'; collapse.className='rec-nav-collapse'; collapse.dataset.recToggle='';
+  collapse.type='button'; collapse.className='pat-nav-collapse'; collapse.dataset.patToggle='';
   collapse.innerHTML=icon('m14 6-6 6 6 6');
   nav.querySelector('.brand').append(collapse);
   const handle = document.createElement('div');
-  handle.className='rec-nav-resizer'; handle.tabIndex=0;
+  handle.className='pat-nav-resizer'; handle.tabIndex=0;
   handle.setAttribute('role','separator'); handle.setAttribute('aria-orientation','vertical');
   handle.setAttribute('aria-label','Resize navigation panel'); handle.setAttribute('aria-controls',nav.id);
   handle.setAttribute('aria-valuemin','180');handle.setAttribute('aria-valuemax','360');
   handle.title='Drag to resize navigation; use arrow keys when focused';
   handle.textContent='↔'; shell.append(handle);
-  const key='receptionistNavigationWidth';
+  const scrim=document.createElement('button');scrim.className='pat-nav-scrim';scrim.type='button';scrim.setAttribute('aria-label','Close navigation');scrim.tabIndex=-1;shell.append(scrim);
+  const key='patientNavigationWidth';
   let width=null;
   try { const saved=Number(localStorage.getItem(key)); if(saved>=180&&saved<=360)width=saved; } catch (_) {}
   function applyWidth(value,persist=true){
     width=Math.max(180,Math.min(360,Math.round(value)));
-    shell.style.setProperty('--rec-nav-width',width+'px');
+    shell.style.setProperty('--pat-nav-width',width+'px');
     handle.setAttribute('aria-valuenow',String(width));
     if(persist)try{localStorage.setItem(key,String(width));}catch(_){}
   }
   function sync(){
     const collapsed=shell.classList.contains('collapsed');
+    document.querySelector('.main').inert=window.matchMedia('(max-width:700px)').matches&&!collapsed;
     [topToggle,collapse].forEach(button=>{
       const label=collapsed?'Expand navigation':'Collapse navigation';
       button.title=label;button.setAttribute('aria-label',label);
@@ -61,6 +65,7 @@
     button.setAttribute('role','button'); button.tabIndex=0;
     button.onclick=()=>{shell.classList.toggle('collapsed');sync();(shell.classList.contains('collapsed')?topToggle:collapse).focus();};
   });
+  scrim.onclick=()=>{shell.classList.add('collapsed');sync();topToggle.focus();};
   topToggle.onkeydown=event=>{if(['Enter',' '].includes(event.key)){event.preventDefault();topToggle.click();}};
   const expand=()=>{shell.classList.remove('collapsed');sync();};
   let dragging=false;
@@ -78,5 +83,8 @@
     applyWidth(event.key==='Home'?180:event.key==='End'?360:current+(event.key==='ArrowLeft'?-step:step));
   });
   if(width)applyWidth(width,false);
+  if(window.matchMedia('(max-width:700px)').matches)shell.classList.add('collapsed');
+  nav.querySelectorAll('[data-screen]').forEach(item=>item.addEventListener('click',()=>{if(window.matchMedia('(max-width:700px)').matches){shell.classList.add('collapsed');sync();document.querySelector('#screen-content h1')?.focus({preventScroll:true});}}));
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&window.matchMedia('(max-width:700px)').matches&&!shell.classList.contains('collapsed')){shell.classList.add('collapsed');sync();topToggle.focus();}});
   sync();window.addEventListener('resize',sync);
 })();

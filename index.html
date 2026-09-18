@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -23,8 +23,8 @@ body{font-family:var(--font-ui);background:linear-gradient(180deg,#1E3A8A 0%,#1E
 .footer{text-align:center;margin-top:40px;font-size:12px;color:var(--ink-400);}
 .footer a{color:var(--primary);text-decoration:underline;}
 </style>
-</head>
-<body>
+<link rel="stylesheet" href="css/consultation-alignment.css?v=20260918-1"></head>
+<body class="role-entry">
 <div class="container">
   <div class="header">
     <h1>HospitAll UI Prototype</h1>
@@ -51,15 +51,21 @@ body{font-family:var(--font-ui);background:linear-gradient(180deg,#1E3A8A 0%,#1E
     </a>
     <a class="role-card" href="admin.html">
       <div class="role-icon" style="background:var(--danger);">Ad</div>
-      <div class="role-name">System Administrator</div>
-      <div class="role-desc">Platform-wide governance: organizations, identity/access, configuration, security, audit and monitoring</div>
-      <div class="role-screens">Screens: Platform Overview, Organizations, Identity &amp; Access, Platform Operations, Security &amp; Compliance, Monitoring</div>
+      <div class="role-name">Organization Admin</div>
+      <div class="role-desc">Manage your organization: staff access, services, schedules, operational oversight and settings</div>
+      <div class="role-screens">Screens: Overview, Staff &amp; Access, Services, Schedule &amp; Closures, Operations, Settings &amp; Activity</div>
     </a>
     <a class="role-card" href="patient.html">
       <div class="role-icon" style="background:var(--violet);">Pt</div>
       <div class="role-name">Patient (User)</div>
       <div class="role-desc">In-person appointment booking (4-step), online consultation (teleconsult/now), lab ordering with geo-nearby, records, prescriptions, claim flow</div>
       <div class="role-screens">Screens: Dashboard, Appointments, Book In-Person (Org/Doctor/Slot/Pay), Book Online (Intake/Doctor/Slot/Pay), Records, Prescriptions, Lab Orders, Claim, Emergency</div>
+    </a>
+    <a class="role-card" href="inpatient.html">
+      <div class="role-icon" style="background:var(--primary);">IP</div>
+      <div class="role-name">Inpatient</div>
+      <div class="role-desc">Admissions, bed assignment, transfers, care chart, billing and discharge. UX preview with fictional data.</div>
+      <div class="role-screens">Screens: Overview, Bed Board, Admissions, Patient Workspace, Discharge, Billing &amp; Insurance, Activity</div>
     </a>
     <a class="role-card" href="pharmacy-ux/overview.html">
       <div class="role-icon" style="background:var(--warning);">Rx</div>
@@ -75,3 +81,6 @@ body{font-family:var(--font-ui);background:linear-gradient(180deg,#1E3A8A 0%,#1E
 </div>
 </body>
 </html>
+
+
+

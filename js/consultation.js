@@ -463,6 +463,7 @@
 
   // ================= COMPLETE CONSULTATION =================
   function confirmCompleteConsultation(){
+    if(window.doctorModule && typeof doctorModule.validateCompletion==='function' && !doctorModule.validateCompletion()) return;
     openConfirmModal(
       'Complete consultation?',
       'This will finalize the notes, prescriptions, diagnoses, and treatment plan for this visit.',
@@ -566,8 +567,8 @@
         '<span onclick="setRxVariant(\'scheme\')" style="cursor:pointer;font-size:12px;font-weight:700;padding:4px 10px;border-radius:6px;'+(isScheme?'background:#0D9488;color:#fff;':'background:#fff;color:#64748B;border:1px solid #E2E8F0;')+'">Govt. Scheme</span>'+
         '<div style="flex:1;"></div>'+
         '<label style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#0F172A;cursor:pointer;"><input type="checkbox" '+(rxTeluguOn?'checked':'')+' onclick="toggleRxTelugu()">Telugu advice</label>'+
-        '<span onclick="window.print()" style="cursor:pointer;font-size:12px;font-weight:700;padding:6px 14px;border-radius:6px;background:#2563EB;color:#fff;">Print</span>'+
-        '<span onclick="closeRxPrint()" style="cursor:pointer;font-size:12px;font-weight:700;padding:6px 12px;border-radius:6px;background:#fff;color:#64748B;border:1px solid #E2E8F0;">Close</span>'+
+        '<button type="button" onclick="window.print()" style="cursor:pointer;font-family:inherit;font-size:12px;font-weight:700;padding:6px 14px;border:0;border-radius:6px;background:#2563EB;color:#fff;">Print</button>'+ 
+        '<button type="button" onclick="closeRxPrint()" style="cursor:pointer;font-family:inherit;font-size:12px;font-weight:700;padding:6px 12px;border-radius:6px;background:#fff;color:#64748B;border:1px solid #E2E8F0;">Close</button>'+ 
       '</div>'+
       // Printable sheet
       '<div class="rx-sheet" style="padding:28px 32px;color:#0F172A;">'+

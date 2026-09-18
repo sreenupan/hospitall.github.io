@@ -23,6 +23,7 @@
       document.getElementById('vcTimer').textContent='00:00';
       document.getElementById('videoNotesPanel').classList.remove('open');
       document.getElementById('vcNotesToggleBtn').classList.remove('active');
+      document.getElementById('vcNotesToggleBtn').setAttribute('aria-pressed','false');
       resetCallControls('video');
       document.getElementById('videoCallScreen').classList.add('open');
       const cw=document.getElementById('videoConnecting');
@@ -40,6 +41,7 @@
       document.getElementById('acTimer').textContent='00:00';
       document.getElementById('audioNotesPanel').classList.remove('open');
       document.getElementById('acNotesToggleBtn').classList.remove('active');
+      document.getElementById('acNotesToggleBtn').setAttribute('aria-pressed','false');
       buildWaveform();
       resetCallControls('audio');
       document.getElementById('audioCallScreen').classList.add('open');
@@ -73,12 +75,20 @@
     if(mode==='video'){
       document.getElementById('vcMicBtn').classList.remove('off');
       document.getElementById('vcCamBtn').classList.remove('off');
+      document.getElementById('vcMicBtn').setAttribute('aria-pressed','false');
+      document.getElementById('vcMicBtn').setAttribute('aria-label','Mute microphone');
+      document.getElementById('vcCamBtn').setAttribute('aria-pressed','false');
+      document.getElementById('vcCamBtn').setAttribute('aria-label','Turn off camera');
       document.getElementById('vcVideoTile').classList.remove('cam-off');
       document.getElementById('vcCamCaption').textContent='Camera on';
       document.getElementById('vcSelfView').classList.remove('cam-off');
     }else{
       document.getElementById('acMicBtn').classList.remove('off');
       document.getElementById('acSpeakerBtn').classList.remove('off');
+      document.getElementById('acMicBtn').setAttribute('aria-pressed','false');
+      document.getElementById('acMicBtn').setAttribute('aria-label','Mute microphone');
+      document.getElementById('acSpeakerBtn').setAttribute('aria-pressed','false');
+      document.getElementById('acSpeakerBtn').setAttribute('aria-label','Mute speaker');
     }
   }
 
@@ -92,6 +102,8 @@
     const btn = mode==='video'?document.getElementById('vcMicBtn'):document.getElementById('acMicBtn');
     btn.classList.toggle('off', !micOn);
     btn.title = micOn?'Mute':'Unmute';
+    btn.setAttribute('aria-label',micOn?'Mute microphone':'Unmute microphone');
+    btn.setAttribute('aria-pressed',String(!micOn));
     btn.innerHTML = micOn ? MIC_ON_ICON : MIC_OFF_ICON;
   }
 
@@ -100,6 +112,8 @@
     const btn=document.getElementById('vcCamBtn');
     btn.classList.toggle('off', !camOn);
     btn.title = camOn?'Turn off camera':'Turn on camera';
+    btn.setAttribute('aria-label',camOn?'Turn off camera':'Turn on camera');
+    btn.setAttribute('aria-pressed',String(!camOn));
     document.getElementById('vcVideoTile').classList.toggle('cam-off', !camOn);
     document.getElementById('vcCamCaption').textContent = camOn ? 'Camera on' : 'Camera off';
     document.getElementById('vcSelfView').classList.toggle('cam-off', !camOn);
@@ -111,6 +125,8 @@
     const btn=document.getElementById('acSpeakerBtn');
     btn.classList.toggle('off', !speakerOn);
     btn.title = speakerOn?'Mute speaker':'Unmute speaker';
+    btn.setAttribute('aria-label',speakerOn?'Mute speaker':'Unmute speaker');
+    btn.setAttribute('aria-pressed',String(!speakerOn));
   }
 
   function toggleCallNotes(mode){
@@ -118,6 +134,7 @@
     const btn = mode==='video'?document.getElementById('vcNotesToggleBtn'):document.getElementById('acNotesToggleBtn');
     panel.classList.toggle('open');
     btn.classList.toggle('active');
+    btn.setAttribute('aria-pressed',String(panel.classList.contains('open')));
   }
 
   // ---- generic confirm modal (reused for End Call) ----
