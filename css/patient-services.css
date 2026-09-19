@@ -1,13 +1,15 @@
 .patient-module .patient-services{padding:22px;margin-bottom:20px}
 .patient-module .patient-services h2{margin:0 0 16px;font-size:18px}
-.patient-module .service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.patient-module .service-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:154px;padding:18px 16px;border:1px solid #dde5f2;border-radius:14px;background:#fff;color:#102443;font:inherit;cursor:pointer;text-align:center;transition:background .15s,border-color .15s,box-shadow .15s}
+.patient-module .service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.patient-module .service-card{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:12px;min-height:108px;padding:16px;border:1px solid #dde5f2;border-radius:14px;background:#fff;color:#102443;font:inherit;cursor:pointer;text-align:left;transition:background .15s,border-color .15s,box-shadow .15s}
 .patient-module .service-card:hover{background:#f5f8ff;border-color:#7998e6;box-shadow:0 3px 10px #233e7a12}
 .patient-module .service-card:focus-visible{outline:3px solid #315cdb;outline-offset:3px}
-.patient-module .service-icon{display:grid;place-items:center;width:60px;height:60px;color:#1667bd;background:#edf5ff;border-radius:18px 24px 16px 24px}
-.patient-module .service-icon svg{width:48px;height:48px}
-.patient-module .service-label{font-size:17px;font-weight:700;line-height:1.35;overflow-wrap:anywhere}
+.patient-module .service-icon{display:grid;place-items:center;width:44px;height:44px;flex:0 0 44px;color:#1667bd;background:#edf5ff;border-radius:12px}
+.patient-module .service-icon svg{width:32px;height:32px}
+.patient-module .service-label{font-size:16px;font-weight:700;line-height:1.35;overflow-wrap:anywhere}
 .patient-module .service-hint{font-size:12px;line-height:1.4;color:#526681}
-@media(max-width:1023px){.patient-module .service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.patient-module .service-card{min-height:148px}}
-@media(max-width:600px){.patient-module .service-grid{grid-template-columns:1fr}.patient-module .service-card{min-height:132px}}
+@media(max-width:1023px){.patient-module .service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.patient-module .service-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.patient-module .service-card{transition:none}}
+
+.patient-module .service-copy{display:flex;flex-direction:column;gap:4px;min-width:0}
