@@ -1,0 +1,5200 @@
+{
+  "demoDate": "2026-08-04",
+  "roles": {
+    "patient": {
+      "people": {
+        "ravi": {
+          "name": "Ravi Kumar",
+          "id": "PAT-1042",
+          "relation": "Self",
+          "phone": "9876543210",
+          "email": "ravi@example.test",
+          "dob": "1988-05-14"
+        },
+        "anaya": {
+          "name": "Anaya Kumar",
+          "id": "PAT-2042",
+          "relation": "Daughter",
+          "phone": "9876543210",
+          "email": "",
+          "dob": "2016-02-20"
+        }
+      },
+      "doctors": [
+        {
+          "id": "priya",
+          "name": "Dr. Priya Sharma",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "12 years",
+          "fee": 500,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "PS",
+          "hospital": "city",
+          "conditions": [
+            "Fever",
+            "Diabetes",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "amit",
+          "name": "Dr. Amit Joshi",
+          "specialty": "Cardiology",
+          "qualification": "MBBS, DM",
+          "experience": "15 years",
+          "fee": 800,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "AJ",
+          "hospital": "city",
+          "conditions": [
+            "Hypertension",
+            "Heart disease"
+          ]
+        },
+        {
+          "id": "neha",
+          "name": "Dr. Neha Rao",
+          "specialty": "Pediatrics",
+          "qualification": "MBBS, MD",
+          "experience": "9 years",
+          "fee": 600,
+          "types": [
+            "In person"
+          ],
+          "initials": "NR",
+          "hospital": "city",
+          "conditions": [
+            "Childhood fever",
+            "Asthma"
+          ]
+        },
+        {
+          "id": "sara",
+          "name": "Dr. Sara Ali",
+          "specialty": "Dermatology",
+          "qualification": "MBBS, MD",
+          "experience": "8 years",
+          "fee": 650,
+          "types": [],
+          "initials": "SA",
+          "hospital": "city",
+          "conditions": [
+            "Eczema",
+            "Acne"
+          ]
+        },
+        {
+          "id": "meera",
+          "name": "Dr. Meera Nair",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "10 years",
+          "fee": 550,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "MN",
+          "hospital": "lakeside",
+          "conditions": [
+            "Diabetes",
+            "Fever",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "dental-demo",
+          "name": "Dr. Anjali Desai",
+          "specialty": "Dentistry",
+          "qualification": "BDS, MDS",
+          "experience": "8 years",
+          "fee": 600,
+          "types": [
+            "In person"
+          ],
+          "initials": "AD",
+          "hospital": "city",
+          "conditions": [
+            "Dental care"
+          ]
+        },
+        {
+          "id": "vision-demo",
+          "name": "Dr. Vikram Shah",
+          "specialty": "Ophthalmology",
+          "qualification": "MBBS, MS",
+          "experience": "11 years",
+          "fee": 700,
+          "types": [
+            "In person"
+          ],
+          "initials": "VS",
+          "hospital": "lakeside",
+          "conditions": [
+            "Eye care"
+          ]
+        },
+        {
+          "id": "sample-0-0",
+          "name": "Dr. Aarav Patel",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "12 years",
+          "fee": 500,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "AP",
+          "hospital": "city",
+          "conditions": [
+            "Fever",
+            "Diabetes",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-0-1",
+          "name": "Dr. Aarav Menon",
+          "specialty": "Cardiology",
+          "qualification": "MBBS, DM",
+          "experience": "15 years",
+          "fee": 800,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "AM",
+          "hospital": "lakeside",
+          "conditions": [
+            "Hypertension",
+            "Heart disease"
+          ]
+        },
+        {
+          "id": "sample-0-2",
+          "name": "Dr. Aarav Shah",
+          "specialty": "Pediatrics",
+          "qualification": "MBBS, MD",
+          "experience": "9 years",
+          "fee": 600,
+          "types": [
+            "In person"
+          ],
+          "initials": "AS",
+          "hospital": "city",
+          "conditions": [
+            "Childhood fever",
+            "Asthma"
+          ]
+        },
+        {
+          "id": "sample-0-3",
+          "name": "Dr. Aarav Das",
+          "specialty": "Dermatology",
+          "qualification": "MBBS, MD",
+          "experience": "8 years",
+          "fee": 650,
+          "types": [],
+          "initials": "AD",
+          "hospital": "lakeside",
+          "conditions": [
+            "Eczema",
+            "Acne"
+          ]
+        },
+        {
+          "id": "sample-0-4",
+          "name": "Dr. Aarav Iyer",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "10 years",
+          "fee": 550,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "AI",
+          "hospital": "city",
+          "conditions": [
+            "Diabetes",
+            "Fever",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-1-0",
+          "name": "Dr. Diya Patel",
+          "specialty": "Cardiology",
+          "qualification": "MBBS, DM",
+          "experience": "15 years",
+          "fee": 800,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "DP",
+          "hospital": "city",
+          "conditions": [
+            "Hypertension",
+            "Heart disease"
+          ]
+        },
+        {
+          "id": "sample-1-1",
+          "name": "Dr. Diya Menon",
+          "specialty": "Pediatrics",
+          "qualification": "MBBS, MD",
+          "experience": "9 years",
+          "fee": 600,
+          "types": [
+            "In person"
+          ],
+          "initials": "DM",
+          "hospital": "lakeside",
+          "conditions": [
+            "Childhood fever",
+            "Asthma"
+          ]
+        },
+        {
+          "id": "sample-1-2",
+          "name": "Dr. Diya Shah",
+          "specialty": "Dermatology",
+          "qualification": "MBBS, MD",
+          "experience": "8 years",
+          "fee": 650,
+          "types": [],
+          "initials": "DS",
+          "hospital": "city",
+          "conditions": [
+            "Eczema",
+            "Acne"
+          ]
+        },
+        {
+          "id": "sample-1-3",
+          "name": "Dr. Diya Das",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "10 years",
+          "fee": 550,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "DD",
+          "hospital": "lakeside",
+          "conditions": [
+            "Diabetes",
+            "Fever",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-1-4",
+          "name": "Dr. Diya Iyer",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "12 years",
+          "fee": 500,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "DI",
+          "hospital": "city",
+          "conditions": [
+            "Fever",
+            "Diabetes",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-2-0",
+          "name": "Dr. Ishaan Patel",
+          "specialty": "Pediatrics",
+          "qualification": "MBBS, MD",
+          "experience": "9 years",
+          "fee": 600,
+          "types": [
+            "In person"
+          ],
+          "initials": "IP",
+          "hospital": "city",
+          "conditions": [
+            "Childhood fever",
+            "Asthma"
+          ]
+        },
+        {
+          "id": "sample-2-1",
+          "name": "Dr. Ishaan Menon",
+          "specialty": "Dermatology",
+          "qualification": "MBBS, MD",
+          "experience": "8 years",
+          "fee": 650,
+          "types": [],
+          "initials": "IM",
+          "hospital": "lakeside",
+          "conditions": [
+            "Eczema",
+            "Acne"
+          ]
+        },
+        {
+          "id": "sample-2-2",
+          "name": "Dr. Ishaan Shah",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "10 years",
+          "fee": 550,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "IS",
+          "hospital": "city",
+          "conditions": [
+            "Diabetes",
+            "Fever",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-2-3",
+          "name": "Dr. Ishaan Das",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "12 years",
+          "fee": 500,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "ID",
+          "hospital": "lakeside",
+          "conditions": [
+            "Fever",
+            "Diabetes",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-2-4",
+          "name": "Dr. Ishaan Iyer",
+          "specialty": "Cardiology",
+          "qualification": "MBBS, DM",
+          "experience": "15 years",
+          "fee": 800,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "II",
+          "hospital": "city",
+          "conditions": [
+            "Hypertension",
+            "Heart disease"
+          ]
+        },
+        {
+          "id": "sample-3-0",
+          "name": "Dr. Kavya Patel",
+          "specialty": "Dermatology",
+          "qualification": "MBBS, MD",
+          "experience": "8 years",
+          "fee": 650,
+          "types": [],
+          "initials": "KP",
+          "hospital": "city",
+          "conditions": [
+            "Eczema",
+            "Acne"
+          ]
+        },
+        {
+          "id": "sample-3-1",
+          "name": "Dr. Kavya Menon",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "10 years",
+          "fee": 550,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "KM",
+          "hospital": "lakeside",
+          "conditions": [
+            "Diabetes",
+            "Fever",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-3-2",
+          "name": "Dr. Kavya Shah",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "12 years",
+          "fee": 500,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "KS",
+          "hospital": "city",
+          "conditions": [
+            "Fever",
+            "Diabetes",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-3-3",
+          "name": "Dr. Kavya Das",
+          "specialty": "Cardiology",
+          "qualification": "MBBS, DM",
+          "experience": "15 years",
+          "fee": 800,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "KD",
+          "hospital": "lakeside",
+          "conditions": [
+            "Hypertension",
+            "Heart disease"
+          ]
+        },
+        {
+          "id": "sample-3-4",
+          "name": "Dr. Kavya Iyer",
+          "specialty": "Pediatrics",
+          "qualification": "MBBS, MD",
+          "experience": "9 years",
+          "fee": 600,
+          "types": [
+            "In person"
+          ],
+          "initials": "KI",
+          "hospital": "city",
+          "conditions": [
+            "Childhood fever",
+            "Asthma"
+          ]
+        },
+        {
+          "id": "sample-4-0",
+          "name": "Dr. Rohan Patel",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "10 years",
+          "fee": 550,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "RP",
+          "hospital": "city",
+          "conditions": [
+            "Diabetes",
+            "Fever",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-4-1",
+          "name": "Dr. Rohan Menon",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "12 years",
+          "fee": 500,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "RM",
+          "hospital": "lakeside",
+          "conditions": [
+            "Fever",
+            "Diabetes",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-4-2",
+          "name": "Dr. Rohan Shah",
+          "specialty": "Cardiology",
+          "qualification": "MBBS, DM",
+          "experience": "15 years",
+          "fee": 800,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "RS",
+          "hospital": "city",
+          "conditions": [
+            "Hypertension",
+            "Heart disease"
+          ]
+        },
+        {
+          "id": "sample-4-3",
+          "name": "Dr. Rohan Das",
+          "specialty": "Pediatrics",
+          "qualification": "MBBS, MD",
+          "experience": "9 years",
+          "fee": 600,
+          "types": [
+            "In person"
+          ],
+          "initials": "RD",
+          "hospital": "lakeside",
+          "conditions": [
+            "Childhood fever",
+            "Asthma"
+          ]
+        },
+        {
+          "id": "sample-4-4",
+          "name": "Dr. Rohan Iyer",
+          "specialty": "Dermatology",
+          "qualification": "MBBS, MD",
+          "experience": "8 years",
+          "fee": 650,
+          "types": [],
+          "initials": "RI",
+          "hospital": "city",
+          "conditions": [
+            "Eczema",
+            "Acne"
+          ]
+        },
+        {
+          "id": "sample-5-0",
+          "name": "Dr. Tara Patel",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "12 years",
+          "fee": 500,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "TP",
+          "hospital": "city",
+          "conditions": [
+            "Fever",
+            "Diabetes",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-5-1",
+          "name": "Dr. Tara Menon",
+          "specialty": "Cardiology",
+          "qualification": "MBBS, DM",
+          "experience": "15 years",
+          "fee": 800,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "TM",
+          "hospital": "lakeside",
+          "conditions": [
+            "Hypertension",
+            "Heart disease"
+          ]
+        },
+        {
+          "id": "sample-5-2",
+          "name": "Dr. Tara Shah",
+          "specialty": "Pediatrics",
+          "qualification": "MBBS, MD",
+          "experience": "9 years",
+          "fee": 600,
+          "types": [
+            "In person"
+          ],
+          "initials": "TS",
+          "hospital": "city",
+          "conditions": [
+            "Childhood fever",
+            "Asthma"
+          ]
+        },
+        {
+          "id": "sample-5-3",
+          "name": "Dr. Tara Das",
+          "specialty": "Dermatology",
+          "qualification": "MBBS, MD",
+          "experience": "8 years",
+          "fee": 650,
+          "types": [],
+          "initials": "TD",
+          "hospital": "lakeside",
+          "conditions": [
+            "Eczema",
+            "Acne"
+          ]
+        },
+        {
+          "id": "sample-5-4",
+          "name": "Dr. Tara Iyer",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "10 years",
+          "fee": 550,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "TI",
+          "hospital": "city",
+          "conditions": [
+            "Diabetes",
+            "Fever",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-6-0",
+          "name": "Dr. Nikhil Patel",
+          "specialty": "Cardiology",
+          "qualification": "MBBS, DM",
+          "experience": "15 years",
+          "fee": 800,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "NP",
+          "hospital": "city",
+          "conditions": [
+            "Hypertension",
+            "Heart disease"
+          ]
+        },
+        {
+          "id": "sample-6-1",
+          "name": "Dr. Nikhil Menon",
+          "specialty": "Pediatrics",
+          "qualification": "MBBS, MD",
+          "experience": "9 years",
+          "fee": 600,
+          "types": [
+            "In person"
+          ],
+          "initials": "NM",
+          "hospital": "lakeside",
+          "conditions": [
+            "Childhood fever",
+            "Asthma"
+          ]
+        },
+        {
+          "id": "sample-6-2",
+          "name": "Dr. Nikhil Shah",
+          "specialty": "Dermatology",
+          "qualification": "MBBS, MD",
+          "experience": "8 years",
+          "fee": 650,
+          "types": [],
+          "initials": "NS",
+          "hospital": "city",
+          "conditions": [
+            "Eczema",
+            "Acne"
+          ]
+        },
+        {
+          "id": "sample-6-3",
+          "name": "Dr. Nikhil Das",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "10 years",
+          "fee": 550,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "ND",
+          "hospital": "lakeside",
+          "conditions": [
+            "Diabetes",
+            "Fever",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-6-4",
+          "name": "Dr. Nikhil Iyer",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "12 years",
+          "fee": 500,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "NI",
+          "hospital": "city",
+          "conditions": [
+            "Fever",
+            "Diabetes",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-7-0",
+          "name": "Dr. Asha Patel",
+          "specialty": "Pediatrics",
+          "qualification": "MBBS, MD",
+          "experience": "9 years",
+          "fee": 600,
+          "types": [
+            "In person"
+          ],
+          "initials": "AP",
+          "hospital": "city",
+          "conditions": [
+            "Childhood fever",
+            "Asthma"
+          ]
+        },
+        {
+          "id": "sample-7-1",
+          "name": "Dr. Asha Menon",
+          "specialty": "Dermatology",
+          "qualification": "MBBS, MD",
+          "experience": "8 years",
+          "fee": 650,
+          "types": [],
+          "initials": "AM",
+          "hospital": "lakeside",
+          "conditions": [
+            "Eczema",
+            "Acne"
+          ]
+        },
+        {
+          "id": "sample-7-2",
+          "name": "Dr. Asha Shah",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "10 years",
+          "fee": 550,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "AS",
+          "hospital": "city",
+          "conditions": [
+            "Diabetes",
+            "Fever",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-7-3",
+          "name": "Dr. Asha Das",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "12 years",
+          "fee": 500,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "AD",
+          "hospital": "lakeside",
+          "conditions": [
+            "Fever",
+            "Diabetes",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-7-4",
+          "name": "Dr. Asha Iyer",
+          "specialty": "Cardiology",
+          "qualification": "MBBS, DM",
+          "experience": "15 years",
+          "fee": 800,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "AI",
+          "hospital": "city",
+          "conditions": [
+            "Hypertension",
+            "Heart disease"
+          ]
+        },
+        {
+          "id": "sample-8-0",
+          "name": "Dr. Dev Patel",
+          "specialty": "Dermatology",
+          "qualification": "MBBS, MD",
+          "experience": "8 years",
+          "fee": 650,
+          "types": [],
+          "initials": "DP",
+          "hospital": "city",
+          "conditions": [
+            "Eczema",
+            "Acne"
+          ]
+        },
+        {
+          "id": "sample-8-1",
+          "name": "Dr. Dev Menon",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "10 years",
+          "fee": 550,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "DM",
+          "hospital": "lakeside",
+          "conditions": [
+            "Diabetes",
+            "Fever",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-8-2",
+          "name": "Dr. Dev Shah",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "12 years",
+          "fee": 500,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "DS",
+          "hospital": "city",
+          "conditions": [
+            "Fever",
+            "Diabetes",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-8-3",
+          "name": "Dr. Dev Das",
+          "specialty": "Cardiology",
+          "qualification": "MBBS, DM",
+          "experience": "15 years",
+          "fee": 800,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "DD",
+          "hospital": "lakeside",
+          "conditions": [
+            "Hypertension",
+            "Heart disease"
+          ]
+        },
+        {
+          "id": "sample-8-4",
+          "name": "Dr. Dev Iyer",
+          "specialty": "Pediatrics",
+          "qualification": "MBBS, MD",
+          "experience": "9 years",
+          "fee": 600,
+          "types": [
+            "In person"
+          ],
+          "initials": "DI",
+          "hospital": "city",
+          "conditions": [
+            "Childhood fever",
+            "Asthma"
+          ]
+        },
+        {
+          "id": "sample-9-0",
+          "name": "Dr. Maya Patel",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "10 years",
+          "fee": 550,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "MP",
+          "hospital": "city",
+          "conditions": [
+            "Diabetes",
+            "Fever",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-9-1",
+          "name": "Dr. Maya Menon",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "12 years",
+          "fee": 500,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "MM",
+          "hospital": "lakeside",
+          "conditions": [
+            "Fever",
+            "Diabetes",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-9-2",
+          "name": "Dr. Maya Shah",
+          "specialty": "Cardiology",
+          "qualification": "MBBS, DM",
+          "experience": "15 years",
+          "fee": 800,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "MS",
+          "hospital": "city",
+          "conditions": [
+            "Hypertension",
+            "Heart disease"
+          ]
+        },
+        {
+          "id": "sample-9-3",
+          "name": "Dr. Maya Das",
+          "specialty": "Pediatrics",
+          "qualification": "MBBS, MD",
+          "experience": "9 years",
+          "fee": 600,
+          "types": [
+            "In person"
+          ],
+          "initials": "MD",
+          "hospital": "lakeside",
+          "conditions": [
+            "Childhood fever",
+            "Asthma"
+          ]
+        },
+        {
+          "id": "sample-9-4",
+          "name": "Dr. Maya Iyer",
+          "specialty": "Dermatology",
+          "qualification": "MBBS, MD",
+          "experience": "8 years",
+          "fee": 650,
+          "types": [],
+          "initials": "MI",
+          "hospital": "city",
+          "conditions": [
+            "Eczema",
+            "Acne"
+          ]
+        },
+        {
+          "id": "sample-10-0",
+          "name": "Dr. Arjun Patel",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "12 years",
+          "fee": 500,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "AP",
+          "hospital": "city",
+          "conditions": [
+            "Fever",
+            "Diabetes",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-10-1",
+          "name": "Dr. Arjun Menon",
+          "specialty": "Cardiology",
+          "qualification": "MBBS, DM",
+          "experience": "15 years",
+          "fee": 800,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "AM",
+          "hospital": "lakeside",
+          "conditions": [
+            "Hypertension",
+            "Heart disease"
+          ]
+        },
+        {
+          "id": "sample-10-2",
+          "name": "Dr. Arjun Shah",
+          "specialty": "Pediatrics",
+          "qualification": "MBBS, MD",
+          "experience": "9 years",
+          "fee": 600,
+          "types": [
+            "In person"
+          ],
+          "initials": "AS",
+          "hospital": "city",
+          "conditions": [
+            "Childhood fever",
+            "Asthma"
+          ]
+        },
+        {
+          "id": "sample-10-3",
+          "name": "Dr. Arjun Das",
+          "specialty": "Dermatology",
+          "qualification": "MBBS, MD",
+          "experience": "8 years",
+          "fee": 650,
+          "types": [],
+          "initials": "AD",
+          "hospital": "lakeside",
+          "conditions": [
+            "Eczema",
+            "Acne"
+          ]
+        },
+        {
+          "id": "sample-10-4",
+          "name": "Dr. Arjun Iyer",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "10 years",
+          "fee": 550,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "AI",
+          "hospital": "city",
+          "conditions": [
+            "Diabetes",
+            "Fever",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-11-0",
+          "name": "Dr. Ira Patel",
+          "specialty": "Cardiology",
+          "qualification": "MBBS, DM",
+          "experience": "15 years",
+          "fee": 800,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "IP",
+          "hospital": "city",
+          "conditions": [
+            "Hypertension",
+            "Heart disease"
+          ]
+        },
+        {
+          "id": "sample-11-1",
+          "name": "Dr. Ira Menon",
+          "specialty": "Pediatrics",
+          "qualification": "MBBS, MD",
+          "experience": "9 years",
+          "fee": 600,
+          "types": [
+            "In person"
+          ],
+          "initials": "IM",
+          "hospital": "lakeside",
+          "conditions": [
+            "Childhood fever",
+            "Asthma"
+          ]
+        },
+        {
+          "id": "sample-11-2",
+          "name": "Dr. Ira Shah",
+          "specialty": "Dermatology",
+          "qualification": "MBBS, MD",
+          "experience": "8 years",
+          "fee": 650,
+          "types": [],
+          "initials": "IS",
+          "hospital": "city",
+          "conditions": [
+            "Eczema",
+            "Acne"
+          ]
+        },
+        {
+          "id": "sample-11-3",
+          "name": "Dr. Ira Das",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "10 years",
+          "fee": 550,
+          "types": [
+            "In person",
+            "Online"
+          ],
+          "initials": "ID",
+          "hospital": "lakeside",
+          "conditions": [
+            "Diabetes",
+            "Fever",
+            "Hypertension"
+          ]
+        },
+        {
+          "id": "sample-11-4",
+          "name": "Dr. Ira Iyer",
+          "specialty": "General Medicine",
+          "qualification": "MBBS, MD",
+          "experience": "12 years",
+          "fee": 500,
+          "types": [
+            "Online"
+          ],
+          "initials": "II",
+          "hospital": "city",
+          "conditions": [
+            "Fever",
+            "Diabetes",
+            "Hypertension"
+          ]
+        }
+      ],
+      "appointments": [
+        {
+          "id": "APT-1042",
+          "person": "ravi",
+          "doctor": "priya",
+          "date": "2026-08-04",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Fever review",
+          "fee": 500,
+          "summary": "Symptoms and previous reports reviewed. Follow the signed prescription and follow-up plan.",
+          "rx": "RX-1042"
+        },
+        {
+          "id": "APT-1043",
+          "person": "ravi",
+          "doctor": "priya",
+          "date": "2026-08-11",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Scheduled",
+          "payment": "Paid",
+          "reason": "Follow-up visit",
+          "fee": 500
+        },
+        {
+          "id": "APT-1044",
+          "person": "ravi",
+          "doctor": "amit",
+          "date": "2026-08-18",
+          "time": "14:00",
+          "type": "Online",
+          "status": "Scheduled",
+          "payment": "Pending",
+          "reason": "Review previous reports",
+          "fee": 800
+        },
+        {
+          "id": "APT-1045",
+          "person": "ravi",
+          "doctor": "amit",
+          "date": "2026-07-28",
+          "time": "10:00",
+          "type": "In person",
+          "status": "Cancelled",
+          "payment": "Not charged",
+          "reason": "Previous booking",
+          "fee": 800
+        },
+        {
+          "id": "APT-RX-MOCK-001",
+          "person": "ravi",
+          "doctor": "priya",
+          "date": "2026-08-01",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 1",
+          "fee": 500,
+          "summary": "Fictional completed consultation 1. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-001"
+        },
+        {
+          "id": "APT-RX-MOCK-002",
+          "person": "ravi",
+          "doctor": "amit",
+          "date": "2026-07-29",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 2",
+          "fee": 800,
+          "summary": "Fictional completed consultation 2. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-002"
+        },
+        {
+          "id": "APT-RX-MOCK-003",
+          "person": "ravi",
+          "doctor": "meera",
+          "date": "2026-07-26",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 3",
+          "fee": 550,
+          "summary": "Fictional completed consultation 3. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-003"
+        },
+        {
+          "id": "APT-RX-MOCK-004",
+          "person": "ravi",
+          "doctor": "priya",
+          "date": "2026-07-23",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 4",
+          "fee": 500,
+          "summary": "Fictional completed consultation 4. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-004"
+        },
+        {
+          "id": "APT-RX-MOCK-005",
+          "person": "ravi",
+          "doctor": "amit",
+          "date": "2026-07-20",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 5",
+          "fee": 800,
+          "summary": "Fictional completed consultation 5. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-005"
+        },
+        {
+          "id": "APT-RX-MOCK-006",
+          "person": "ravi",
+          "doctor": "meera",
+          "date": "2026-07-17",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 6",
+          "fee": 550,
+          "summary": "Fictional completed consultation 6. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-006"
+        },
+        {
+          "id": "APT-RX-MOCK-007",
+          "person": "ravi",
+          "doctor": "priya",
+          "date": "2026-07-14",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 7",
+          "fee": 500,
+          "summary": "Fictional completed consultation 7. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-007"
+        },
+        {
+          "id": "APT-RX-MOCK-008",
+          "person": "ravi",
+          "doctor": "amit",
+          "date": "2026-07-11",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 8",
+          "fee": 800,
+          "summary": "Fictional completed consultation 8. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-008"
+        },
+        {
+          "id": "APT-RX-MOCK-009",
+          "person": "ravi",
+          "doctor": "meera",
+          "date": "2026-07-08",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 9",
+          "fee": 550,
+          "summary": "Fictional completed consultation 9. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-009"
+        },
+        {
+          "id": "APT-RX-MOCK-010",
+          "person": "ravi",
+          "doctor": "priya",
+          "date": "2026-07-05",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 10",
+          "fee": 500,
+          "summary": "Fictional completed consultation 10. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-010"
+        },
+        {
+          "id": "APT-RX-MOCK-011",
+          "person": "ravi",
+          "doctor": "amit",
+          "date": "2026-07-02",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 11",
+          "fee": 800,
+          "summary": "Fictional completed consultation 11. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-011"
+        },
+        {
+          "id": "APT-RX-MOCK-012",
+          "person": "ravi",
+          "doctor": "meera",
+          "date": "2026-06-29",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 12",
+          "fee": 550,
+          "summary": "Fictional completed consultation 12. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-012"
+        },
+        {
+          "id": "APT-RX-MOCK-013",
+          "person": "ravi",
+          "doctor": "priya",
+          "date": "2026-06-26",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 13",
+          "fee": 500,
+          "summary": "Fictional completed consultation 13. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-013"
+        },
+        {
+          "id": "APT-RX-MOCK-014",
+          "person": "ravi",
+          "doctor": "amit",
+          "date": "2026-06-23",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 14",
+          "fee": 800,
+          "summary": "Fictional completed consultation 14. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-014"
+        },
+        {
+          "id": "APT-RX-MOCK-015",
+          "person": "ravi",
+          "doctor": "meera",
+          "date": "2026-06-20",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 15",
+          "fee": 550,
+          "summary": "Fictional completed consultation 15. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-015"
+        },
+        {
+          "id": "APT-RX-MOCK-016",
+          "person": "ravi",
+          "doctor": "priya",
+          "date": "2026-06-17",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 16",
+          "fee": 500,
+          "summary": "Fictional completed consultation 16. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-016"
+        },
+        {
+          "id": "APT-RX-MOCK-017",
+          "person": "ravi",
+          "doctor": "amit",
+          "date": "2026-06-14",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 17",
+          "fee": 800,
+          "summary": "Fictional completed consultation 17. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-017"
+        },
+        {
+          "id": "APT-RX-MOCK-018",
+          "person": "ravi",
+          "doctor": "meera",
+          "date": "2026-06-11",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 18",
+          "fee": 550,
+          "summary": "Fictional completed consultation 18. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-018"
+        },
+        {
+          "id": "APT-RX-MOCK-019",
+          "person": "ravi",
+          "doctor": "priya",
+          "date": "2026-06-08",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 19",
+          "fee": 500,
+          "summary": "Fictional completed consultation 19. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-019"
+        },
+        {
+          "id": "APT-RX-MOCK-020",
+          "person": "ravi",
+          "doctor": "amit",
+          "date": "2026-06-05",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 20",
+          "fee": 800,
+          "summary": "Fictional completed consultation 20. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-020"
+        },
+        {
+          "id": "APT-RX-MOCK-021",
+          "person": "ravi",
+          "doctor": "meera",
+          "date": "2026-06-02",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 21",
+          "fee": 550,
+          "summary": "Fictional completed consultation 21. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-021"
+        },
+        {
+          "id": "APT-RX-MOCK-022",
+          "person": "ravi",
+          "doctor": "priya",
+          "date": "2026-05-30",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 22",
+          "fee": 500,
+          "summary": "Fictional completed consultation 22. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-022"
+        },
+        {
+          "id": "APT-RX-MOCK-023",
+          "person": "ravi",
+          "doctor": "amit",
+          "date": "2026-05-27",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 23",
+          "fee": 800,
+          "summary": "Fictional completed consultation 23. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-023"
+        },
+        {
+          "id": "APT-RX-MOCK-024",
+          "person": "ravi",
+          "doctor": "meera",
+          "date": "2026-05-24",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 24",
+          "fee": 550,
+          "summary": "Fictional completed consultation 24. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-024"
+        },
+        {
+          "id": "APT-RX-MOCK-025",
+          "person": "ravi",
+          "doctor": "priya",
+          "date": "2026-05-21",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 25",
+          "fee": 500,
+          "summary": "Fictional completed consultation 25. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-025"
+        },
+        {
+          "id": "APT-RX-MOCK-026",
+          "person": "ravi",
+          "doctor": "amit",
+          "date": "2026-05-18",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 26",
+          "fee": 800,
+          "summary": "Fictional completed consultation 26. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-026"
+        },
+        {
+          "id": "APT-RX-MOCK-027",
+          "person": "ravi",
+          "doctor": "meera",
+          "date": "2026-05-15",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 27",
+          "fee": 550,
+          "summary": "Fictional completed consultation 27. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-027"
+        },
+        {
+          "id": "APT-RX-MOCK-028",
+          "person": "ravi",
+          "doctor": "priya",
+          "date": "2026-05-12",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 28",
+          "fee": 500,
+          "summary": "Fictional completed consultation 28. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-028"
+        },
+        {
+          "id": "APT-RX-MOCK-029",
+          "person": "ravi",
+          "doctor": "amit",
+          "date": "2026-05-09",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 29",
+          "fee": 800,
+          "summary": "Fictional completed consultation 29. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-029"
+        },
+        {
+          "id": "APT-RX-MOCK-030",
+          "person": "ravi",
+          "doctor": "meera",
+          "date": "2026-05-06",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 30",
+          "fee": 550,
+          "summary": "Fictional completed consultation 30. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-030"
+        },
+        {
+          "id": "APT-RX-MOCK-031",
+          "person": "ravi",
+          "doctor": "priya",
+          "date": "2026-05-03",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 31",
+          "fee": 500,
+          "summary": "Fictional completed consultation 31. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-031"
+        },
+        {
+          "id": "APT-RX-MOCK-032",
+          "person": "ravi",
+          "doctor": "amit",
+          "date": "2026-04-30",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 32",
+          "fee": 800,
+          "summary": "Fictional completed consultation 32. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-032"
+        },
+        {
+          "id": "APT-RX-MOCK-033",
+          "person": "ravi",
+          "doctor": "meera",
+          "date": "2026-04-27",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 33",
+          "fee": 550,
+          "summary": "Fictional completed consultation 33. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-033"
+        },
+        {
+          "id": "APT-RX-MOCK-034",
+          "person": "ravi",
+          "doctor": "priya",
+          "date": "2026-04-24",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 34",
+          "fee": 500,
+          "summary": "Fictional completed consultation 34. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-034"
+        },
+        {
+          "id": "APT-RX-MOCK-035",
+          "person": "ravi",
+          "doctor": "amit",
+          "date": "2026-04-21",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 35",
+          "fee": 800,
+          "summary": "Fictional completed consultation 35. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-035"
+        },
+        {
+          "id": "APT-RX-MOCK-036",
+          "person": "ravi",
+          "doctor": "meera",
+          "date": "2026-04-18",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 36",
+          "fee": 550,
+          "summary": "Fictional completed consultation 36. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-036"
+        },
+        {
+          "id": "APT-RX-MOCK-037",
+          "person": "ravi",
+          "doctor": "priya",
+          "date": "2026-04-15",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 37",
+          "fee": 500,
+          "summary": "Fictional completed consultation 37. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-037"
+        },
+        {
+          "id": "APT-RX-MOCK-038",
+          "person": "ravi",
+          "doctor": "amit",
+          "date": "2026-04-12",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 38",
+          "fee": 800,
+          "summary": "Fictional completed consultation 38. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-038"
+        },
+        {
+          "id": "APT-RX-MOCK-039",
+          "person": "ravi",
+          "doctor": "meera",
+          "date": "2026-04-09",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 39",
+          "fee": 550,
+          "summary": "Fictional completed consultation 39. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-039"
+        },
+        {
+          "id": "APT-RX-MOCK-040",
+          "person": "ravi",
+          "doctor": "priya",
+          "date": "2026-04-06",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 40",
+          "fee": 500,
+          "summary": "Fictional completed consultation 40. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-040"
+        },
+        {
+          "id": "APT-RX-MOCK-041",
+          "person": "ravi",
+          "doctor": "amit",
+          "date": "2026-04-03",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 41",
+          "fee": 800,
+          "summary": "Fictional completed consultation 41. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-041"
+        },
+        {
+          "id": "APT-RX-MOCK-042",
+          "person": "ravi",
+          "doctor": "meera",
+          "date": "2026-03-31",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 42",
+          "fee": 550,
+          "summary": "Fictional completed consultation 42. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-042"
+        },
+        {
+          "id": "APT-RX-MOCK-043",
+          "person": "ravi",
+          "doctor": "priya",
+          "date": "2026-03-28",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 43",
+          "fee": 500,
+          "summary": "Fictional completed consultation 43. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-043"
+        },
+        {
+          "id": "APT-RX-MOCK-044",
+          "person": "ravi",
+          "doctor": "amit",
+          "date": "2026-03-25",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 44",
+          "fee": 800,
+          "summary": "Fictional completed consultation 44. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-044"
+        },
+        {
+          "id": "APT-RX-MOCK-045",
+          "person": "ravi",
+          "doctor": "meera",
+          "date": "2026-03-22",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 45",
+          "fee": 550,
+          "summary": "Fictional completed consultation 45. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-045"
+        },
+        {
+          "id": "APT-RX-MOCK-046",
+          "person": "ravi",
+          "doctor": "priya",
+          "date": "2026-03-19",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 46",
+          "fee": 500,
+          "summary": "Fictional completed consultation 46. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-046"
+        },
+        {
+          "id": "APT-RX-MOCK-047",
+          "person": "ravi",
+          "doctor": "amit",
+          "date": "2026-03-16",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 47",
+          "fee": 800,
+          "summary": "Fictional completed consultation 47. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-047"
+        },
+        {
+          "id": "APT-RX-MOCK-048",
+          "person": "ravi",
+          "doctor": "meera",
+          "date": "2026-03-13",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 48",
+          "fee": 550,
+          "summary": "Fictional completed consultation 48. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-048"
+        },
+        {
+          "id": "APT-RX-MOCK-049",
+          "person": "ravi",
+          "doctor": "priya",
+          "date": "2026-03-10",
+          "time": "09:30",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 49",
+          "fee": 500,
+          "summary": "Fictional completed consultation 49. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-049"
+        },
+        {
+          "id": "APT-RX-MOCK-050",
+          "person": "ravi",
+          "doctor": "amit",
+          "date": "2026-03-07",
+          "time": "14:00",
+          "type": "In person",
+          "status": "Completed",
+          "payment": "Paid",
+          "reason": "Sample historical consultation 50",
+          "fee": 800,
+          "summary": "Fictional completed consultation 50. The linked signed prescription is a read-only UX sample.",
+          "rx": "RX-MOCK-050"
+        }
+      ],
+      "reports": [
+        {
+          "id": "DOC-1",
+          "person": "ravi",
+          "consultation": "APT-1042",
+          "title": "Complete blood count",
+          "date": "2026-08-04",
+          "category": "Lab report",
+          "body": "Sample laboratory report. Hemoglobin: 13.8 g/dL. This is fixture content for document-viewing UX.",
+          "source": "City Diagnostics"
+        },
+        {
+          "id": "DOC-2",
+          "person": "ravi",
+          "title": "Chest X-Ray",
+          "date": "2026-07-28",
+          "category": "Imaging",
+          "body": "Sample imaging report attached to the patient record.",
+          "source": "City Health Clinic"
+        }
+      ],
+      "prescriptions": [
+        {
+          "id": "RX-1042",
+          "person": "ravi",
+          "date": "2026-08-04",
+          "doctor": "priya",
+          "consultation": "APT-1042",
+          "body": "Paracetamol 500 mg — as recorded in the sample signed prescription.\nUse the instructions issued by your treating doctor. This document is a UX fixture."
+        },
+        {
+          "id": "RX-MOCK-001",
+          "person": "ravi",
+          "date": "2026-08-01",
+          "doctor": "priya",
+          "consultation": "APT-RX-MOCK-001",
+          "body": "FICTIONAL UX PRESCRIPTION — Sample medicine A; not a real medicine.\nStrength: 10 mg. Dose: 1 tablet. Route: Oral.\nSchedule: Morning.\nFood instruction: Before food. Wait at least 30 minutes after taking this medicine before eating.\nCourse: 2026-08-01 to 2026-08-15. Status: Active.\nThese invented instructions demonstrate the interface only."
+        },
+        {
+          "id": "RX-MOCK-002",
+          "person": "ravi",
+          "date": "2026-07-29",
+          "doctor": "amit",
+          "consultation": "APT-RX-MOCK-002",
+          "body": "FICTIONAL UX PRESCRIPTION — Sample medicine B; not a real medicine.\nStrength: 5 mg. Dose: 1 tablet. Route: Oral.\nSchedule: Afternoon.\nFood instruction: After food. Take at least 15 minutes after finishing food.\nCourse: 2026-07-29 to 2026-08-15. Status: Active.\nThese invented instructions demonstrate the interface only."
+        },
+        {
+          "id": "RX-MOCK-003",
+          "person": "ravi",
+          "date": "2026-07-26",
+          "doctor": "meera",
+          "consultation": "APT-RX-MOCK-003",
+          "body": "FICTIONAL UX PRESCRIPTION — Sample medicine C; not a real medicine.\nStrength: 20 mg. Dose: 1 tablet. Route: Oral.\nSchedule: Night.\nFood instruction: With food. Take with food; no separate waiting interval is recorded.\nCourse: 2026-07-26 to 2026-08-15. Status: Active.\nThese invented instructions demonstrate the interface only."
+        },
+        {
+          "id": "RX-MOCK-004",
+          "person": "ravi",
+          "date": "2026-07-23",
+          "doctor": "priya",
+          "consultation": "APT-RX-MOCK-004",
+          "body": "FICTIONAL UX PRESCRIPTION — Sample medicine D; not a real medicine.\nStrength: 2 mg. Dose: 1 tablet. Route: Oral.\nSchedule: Morning and Night.\nFood instruction: After food. Exact gap not specified in prescription.\nCourse: 2026-07-23 to 2026-08-15. Status: Active.\nThese invented instructions demonstrate the interface only."
+        },
+        {
+          "id": "RX-MOCK-005",
+          "person": "ravi",
+          "date": "2026-07-20",
+          "doctor": "amit",
+          "consultation": "APT-RX-MOCK-005",
+          "body": "FICTIONAL UX PRESCRIPTION — Sample medicine E; not a real medicine.\nStrength: 1 mg. Dose: 1 tablet. Route: Oral.\nSchedule: As needed, as recorded in the sample prescription.\nFood instruction: With or without food. No food-related waiting interval is recorded.\nCourse: 2026-07-20 to 2026-08-15. Status: Active.\nThese invented instructions demonstrate the interface only."
+        },
+        {
+          "id": "RX-MOCK-006",
+          "person": "ravi",
+          "date": "2026-07-17",
+          "doctor": "meera",
+          "consultation": "APT-RX-MOCK-006",
+          "body": "FICTIONAL UX PRESCRIPTION — Sample medicine F; not a real medicine.\nStrength: 5 mg. Dose: 1 tablet. Route: Oral.\nSchedule: Timing not recorded.\nFood instruction: Food instructions not recorded. Food timing and gap are not recorded.\nCourse: 2026-07-17 to 2026-08-15. Status: Active.\nThese invented instructions demonstrate the interface only."
+        },
+        {
+          "id": "RX-MOCK-007",
+          "person": "ravi",
+          "date": "2026-07-14",
+          "doctor": "priya",
+          "consultation": "APT-RX-MOCK-007",
+          "body": "FICTIONAL UX PRESCRIPTION — Sample medicine G; not a real medicine.\nStrength: 3 mg. Dose: 1 tablet. Route: Oral.\nSchedule: Every 8 hours; exact clock times not recorded.\nFood instruction: Before food. Wait 20 minutes after taking this medicine before eating.\nCourse: 2026-07-14 to 2026-08-15. Status: Active.\nThese invented instructions demonstrate the interface only."
+        },
+        {
+          "id": "RX-MOCK-008",
+          "person": "ravi",
+          "date": "2026-07-11",
+          "doctor": "amit",
+          "consultation": "APT-RX-MOCK-008",
+          "body": "FICTIONAL UX PRESCRIPTION — Sample medicine H; not a real medicine.\nStrength: 5 mg. Dose: 1 tablet. Route: Oral.\nSchedule: Morning.\nFood instruction: After food. Exact gap not specified in prescription.\nCourse: 2026-07-11 to 2026-07-24. Status: Completed.\nThese invented instructions demonstrate the interface only."
+        },
+        {
+          "id": "RX-MOCK-009",
+          "person": "ravi",
+          "date": "2026-07-08",
+          "doctor": "meera",
+          "consultation": "APT-RX-MOCK-009",
+          "body": "FICTIONAL UX PRESCRIPTION — Sample medicine I; not a real medicine.\nStrength: 10 mg. Dose: 1 tablet. Route: Oral.\nSchedule: Night.\nFood instruction: With food. Take with food; no separate waiting interval is recorded.\nCourse: 2026-07-08 to 2026-07-20. Status: Stopped.\nThese invented instructions demonstrate the interface only."
+        },
+        {
+          "id": "RX-MOCK-010",
+          "person": "ravi",
+          "date": "2026-07-05",
+          "doctor": "priya",
+          "consultation": "APT-RX-MOCK-010",
+          "body": "FICTIONAL UX PRESCRIPTION — Sample medicine J; not a real medicine.\nStrength: 4 mg. Dose: 1 tablet. Route: Oral.\nSchedule: Conflicting source instructions: Morning in schedule; Night in notes. Confirm timing with the prescriber..\nFood instruction: After food. Exact gap not specified in prescription.\nCourse: 2026-07-05 to 2026-08-15. Status: Active.\nThese invented instructions demonstrate the interface only."
+        },
+        {
+          "id": "RX-MOCK-011",
+          "person": "ravi",
+          "date": "2026-07-02",
+          "doctor": "amit",
+          "consultation": "APT-RX-MOCK-011",
+          "body": "Fictional prescription 11 of 50.\nSample medicine entry 11 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-012",
+          "person": "ravi",
+          "date": "2026-06-29",
+          "doctor": "meera",
+          "consultation": "APT-RX-MOCK-012",
+          "body": "Fictional prescription 12 of 50.\nSample medicine entry 12 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-013",
+          "person": "ravi",
+          "date": "2026-06-26",
+          "doctor": "priya",
+          "consultation": "APT-RX-MOCK-013",
+          "body": "Fictional prescription 13 of 50.\nSample medicine entry 13 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-014",
+          "person": "ravi",
+          "date": "2026-06-23",
+          "doctor": "amit",
+          "consultation": "APT-RX-MOCK-014",
+          "body": "Fictional prescription 14 of 50.\nSample medicine entry 14 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-015",
+          "person": "ravi",
+          "date": "2026-06-20",
+          "doctor": "meera",
+          "consultation": "APT-RX-MOCK-015",
+          "body": "Fictional prescription 15 of 50.\nSample medicine entry 15 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-016",
+          "person": "ravi",
+          "date": "2026-06-17",
+          "doctor": "priya",
+          "consultation": "APT-RX-MOCK-016",
+          "body": "Fictional prescription 16 of 50.\nSample medicine entry 16 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-017",
+          "person": "ravi",
+          "date": "2026-06-14",
+          "doctor": "amit",
+          "consultation": "APT-RX-MOCK-017",
+          "body": "Fictional prescription 17 of 50.\nSample medicine entry 17 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-018",
+          "person": "ravi",
+          "date": "2026-06-11",
+          "doctor": "meera",
+          "consultation": "APT-RX-MOCK-018",
+          "body": "Fictional prescription 18 of 50.\nSample medicine entry 18 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-019",
+          "person": "ravi",
+          "date": "2026-06-08",
+          "doctor": "priya",
+          "consultation": "APT-RX-MOCK-019",
+          "body": "Fictional prescription 19 of 50.\nSample medicine entry 19 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-020",
+          "person": "ravi",
+          "date": "2026-06-05",
+          "doctor": "amit",
+          "consultation": "APT-RX-MOCK-020",
+          "body": "Fictional prescription 20 of 50.\nSample medicine entry 20 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-021",
+          "person": "ravi",
+          "date": "2026-06-02",
+          "doctor": "meera",
+          "consultation": "APT-RX-MOCK-021",
+          "body": "Fictional prescription 21 of 50.\nSample medicine entry 21 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-022",
+          "person": "ravi",
+          "date": "2026-05-30",
+          "doctor": "priya",
+          "consultation": "APT-RX-MOCK-022",
+          "body": "Fictional prescription 22 of 50.\nSample medicine entry 22 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-023",
+          "person": "ravi",
+          "date": "2026-05-27",
+          "doctor": "amit",
+          "consultation": "APT-RX-MOCK-023",
+          "body": "Fictional prescription 23 of 50.\nSample medicine entry 23 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-024",
+          "person": "ravi",
+          "date": "2026-05-24",
+          "doctor": "meera",
+          "consultation": "APT-RX-MOCK-024",
+          "body": "Fictional prescription 24 of 50.\nSample medicine entry 24 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-025",
+          "person": "ravi",
+          "date": "2026-05-21",
+          "doctor": "priya",
+          "consultation": "APT-RX-MOCK-025",
+          "body": "Fictional prescription 25 of 50.\nSample medicine entry 25 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-026",
+          "person": "ravi",
+          "date": "2026-05-18",
+          "doctor": "amit",
+          "consultation": "APT-RX-MOCK-026",
+          "body": "Fictional prescription 26 of 50.\nSample medicine entry 26 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-027",
+          "person": "ravi",
+          "date": "2026-05-15",
+          "doctor": "meera",
+          "consultation": "APT-RX-MOCK-027",
+          "body": "Fictional prescription 27 of 50.\nSample medicine entry 27 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-028",
+          "person": "ravi",
+          "date": "2026-05-12",
+          "doctor": "priya",
+          "consultation": "APT-RX-MOCK-028",
+          "body": "Fictional prescription 28 of 50.\nSample medicine entry 28 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-029",
+          "person": "ravi",
+          "date": "2026-05-09",
+          "doctor": "amit",
+          "consultation": "APT-RX-MOCK-029",
+          "body": "Fictional prescription 29 of 50.\nSample medicine entry 29 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-030",
+          "person": "ravi",
+          "date": "2026-05-06",
+          "doctor": "meera",
+          "consultation": "APT-RX-MOCK-030",
+          "body": "Fictional prescription 30 of 50.\nSample medicine entry 30 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-031",
+          "person": "ravi",
+          "date": "2026-05-03",
+          "doctor": "priya",
+          "consultation": "APT-RX-MOCK-031",
+          "body": "Fictional prescription 31 of 50.\nSample medicine entry 31 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-032",
+          "person": "ravi",
+          "date": "2026-04-30",
+          "doctor": "amit",
+          "consultation": "APT-RX-MOCK-032",
+          "body": "Fictional prescription 32 of 50.\nSample medicine entry 32 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-033",
+          "person": "ravi",
+          "date": "2026-04-27",
+          "doctor": "meera",
+          "consultation": "APT-RX-MOCK-033",
+          "body": "Fictional prescription 33 of 50.\nSample medicine entry 33 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-034",
+          "person": "ravi",
+          "date": "2026-04-24",
+          "doctor": "priya",
+          "consultation": "APT-RX-MOCK-034",
+          "body": "Fictional prescription 34 of 50.\nSample medicine entry 34 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-035",
+          "person": "ravi",
+          "date": "2026-04-21",
+          "doctor": "amit",
+          "consultation": "APT-RX-MOCK-035",
+          "body": "Fictional prescription 35 of 50.\nSample medicine entry 35 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-036",
+          "person": "ravi",
+          "date": "2026-04-18",
+          "doctor": "meera",
+          "consultation": "APT-RX-MOCK-036",
+          "body": "Fictional prescription 36 of 50.\nSample medicine entry 36 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-037",
+          "person": "ravi",
+          "date": "2026-04-15",
+          "doctor": "priya",
+          "consultation": "APT-RX-MOCK-037",
+          "body": "Fictional prescription 37 of 50.\nSample medicine entry 37 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-038",
+          "person": "ravi",
+          "date": "2026-04-12",
+          "doctor": "amit",
+          "consultation": "APT-RX-MOCK-038",
+          "body": "Fictional prescription 38 of 50.\nSample medicine entry 38 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-039",
+          "person": "ravi",
+          "date": "2026-04-09",
+          "doctor": "meera",
+          "consultation": "APT-RX-MOCK-039",
+          "body": "Fictional prescription 39 of 50.\nSample medicine entry 39 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-040",
+          "person": "ravi",
+          "date": "2026-04-06",
+          "doctor": "priya",
+          "consultation": "APT-RX-MOCK-040",
+          "body": "Fictional prescription 40 of 50.\nSample medicine entry 40 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-041",
+          "person": "ravi",
+          "date": "2026-04-03",
+          "doctor": "amit",
+          "consultation": "APT-RX-MOCK-041",
+          "body": "Fictional prescription 41 of 50.\nSample medicine entry 41 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-042",
+          "person": "ravi",
+          "date": "2026-03-31",
+          "doctor": "meera",
+          "consultation": "APT-RX-MOCK-042",
+          "body": "Fictional prescription 42 of 50.\nSample medicine entry 42 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-043",
+          "person": "ravi",
+          "date": "2026-03-28",
+          "doctor": "priya",
+          "consultation": "APT-RX-MOCK-043",
+          "body": "Fictional prescription 43 of 50.\nSample medicine entry 43 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-044",
+          "person": "ravi",
+          "date": "2026-03-25",
+          "doctor": "amit",
+          "consultation": "APT-RX-MOCK-044",
+          "body": "Fictional prescription 44 of 50.\nSample medicine entry 44 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-045",
+          "person": "ravi",
+          "date": "2026-03-22",
+          "doctor": "meera",
+          "consultation": "APT-RX-MOCK-045",
+          "body": "Fictional prescription 45 of 50.\nSample medicine entry 45 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-046",
+          "person": "ravi",
+          "date": "2026-03-19",
+          "doctor": "priya",
+          "consultation": "APT-RX-MOCK-046",
+          "body": "Fictional prescription 46 of 50.\nSample medicine entry 46 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-047",
+          "person": "ravi",
+          "date": "2026-03-16",
+          "doctor": "amit",
+          "consultation": "APT-RX-MOCK-047",
+          "body": "Fictional prescription 47 of 50.\nSample medicine entry 47 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-048",
+          "person": "ravi",
+          "date": "2026-03-13",
+          "doctor": "meera",
+          "consultation": "APT-RX-MOCK-048",
+          "body": "Fictional prescription 48 of 50.\nSample medicine entry 48 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-049",
+          "person": "ravi",
+          "date": "2026-03-10",
+          "doctor": "priya",
+          "consultation": "APT-RX-MOCK-049",
+          "body": "Fictional prescription 49 of 50.\nSample medicine entry 49 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        },
+        {
+          "id": "RX-MOCK-050",
+          "person": "ravi",
+          "date": "2026-03-07",
+          "doctor": "amit",
+          "consultation": "APT-RX-MOCK-050",
+          "body": "Fictional prescription 50 of 50.\nSample medicine entry 50 — demonstration content only.\nThis mock record does not provide medicine or dosing instructions."
+        }
+      ],
+      "followups": [
+        {
+          "id": "FU-1",
+          "person": "ravi",
+          "doctor": "priya",
+          "due": "2026-08-11",
+          "reason": "Follow-up visit",
+          "appointment": "APT-1043"
+        },
+        {
+          "id": "FU-2",
+          "person": "ravi",
+          "doctor": "amit",
+          "due": "2026-08-25",
+          "reason": "Bring previous reports for review",
+          "appointment": null
+        }
+      ],
+      "health": {
+        "ravi": {
+          "Allergies": [
+            [
+              "Penicillin",
+              "Rash reported · patient-reported"
+            ]
+          ],
+          "Medications": [
+            [
+              "Amlodipine 5 mg",
+              "Listed in historical record; verify with treating doctor"
+            ]
+          ],
+          "Family history": [
+            [
+              "Father",
+              "Type 2 diabetes"
+            ]
+          ],
+          "Vaccines": [
+            [
+              "Influenza",
+              "01 Oct 2025 · patient-reported"
+            ]
+          ],
+          "Substance use": [
+            [
+              "Tobacco",
+              "Never · patient-reported"
+            ]
+          ]
+        },
+        "anaya": {
+          "Allergies": [],
+          "Medications": [],
+          "Family history": [],
+          "Vaccines": [],
+          "Substance use": []
+        }
+      },
+      "labs": [
+        {
+          "id": "LAB-1",
+          "person": "ravi",
+          "title": "Complete blood count",
+          "status": "Completed",
+          "date": "2026-08-04",
+          "fee": 350,
+          "report": "DOC-1"
+        },
+        {
+          "id": "LAB-2",
+          "person": "ravi",
+          "title": "HbA1c",
+          "status": "Ordered",
+          "date": "2026-08-05",
+          "fee": 450
+        }
+      ],
+      "tickets": [],
+      "requests": [],
+      "healthExtra": {
+        "readings": [
+          {
+            "person": "ravi",
+            "metric": "bp",
+            "value": [
+              124,
+              82
+            ],
+            "stamp": "2026-06-20T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-RX-MOCK-015"
+          },
+          {
+            "person": "ravi",
+            "metric": "bp",
+            "value": [
+              122,
+              80
+            ],
+            "stamp": "2026-07-11T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-RX-MOCK-008"
+          },
+          {
+            "person": "ravi",
+            "metric": "bp",
+            "value": [
+              126,
+              82
+            ],
+            "stamp": "2026-07-20T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-RX-MOCK-005"
+          },
+          {
+            "person": "ravi",
+            "metric": "bp",
+            "value": [
+              120,
+              80
+            ],
+            "stamp": "2026-08-01T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-RX-MOCK-001"
+          },
+          {
+            "person": "ravi",
+            "metric": "bp",
+            "value": [
+              122,
+              80
+            ],
+            "stamp": "2026-08-04T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-1042"
+          },
+          {
+            "person": "ravi",
+            "metric": "pulse",
+            "value": [
+              76
+            ],
+            "stamp": "2026-06-20T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-RX-MOCK-015"
+          },
+          {
+            "person": "ravi",
+            "metric": "pulse",
+            "value": [
+              73
+            ],
+            "stamp": "2026-07-11T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-RX-MOCK-008"
+          },
+          {
+            "person": "ravi",
+            "metric": "pulse",
+            "value": [
+              75
+            ],
+            "stamp": "2026-07-20T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-RX-MOCK-005"
+          },
+          {
+            "person": "ravi",
+            "metric": "pulse",
+            "value": [
+              72
+            ],
+            "stamp": "2026-08-01T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-RX-MOCK-001"
+          },
+          {
+            "person": "ravi",
+            "metric": "pulse",
+            "value": [
+              74
+            ],
+            "stamp": "2026-08-04T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-1042"
+          },
+          {
+            "person": "ravi",
+            "metric": "weight",
+            "value": [
+              73.2
+            ],
+            "stamp": "2026-06-20T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-RX-MOCK-015"
+          },
+          {
+            "person": "ravi",
+            "metric": "weight",
+            "value": [
+              73
+            ],
+            "stamp": "2026-07-11T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-RX-MOCK-008"
+          },
+          {
+            "person": "ravi",
+            "metric": "weight",
+            "value": [
+              72.9
+            ],
+            "stamp": "2026-07-20T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-RX-MOCK-005"
+          },
+          {
+            "person": "ravi",
+            "metric": "weight",
+            "value": [
+              72.6
+            ],
+            "stamp": "2026-08-01T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-RX-MOCK-001"
+          },
+          {
+            "person": "ravi",
+            "metric": "weight",
+            "value": [
+              72.5
+            ],
+            "stamp": "2026-08-04T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-1042"
+          },
+          {
+            "person": "ravi",
+            "metric": "temperature",
+            "value": [
+              36.7
+            ],
+            "stamp": "2026-06-20T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-RX-MOCK-015"
+          },
+          {
+            "person": "ravi",
+            "metric": "temperature",
+            "value": [
+              36.8
+            ],
+            "stamp": "2026-07-11T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-RX-MOCK-008"
+          },
+          {
+            "person": "ravi",
+            "metric": "temperature",
+            "value": null,
+            "stamp": "2026-07-20T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-RX-MOCK-005"
+          },
+          {
+            "person": "ravi",
+            "metric": "temperature",
+            "value": [
+              36.6
+            ],
+            "stamp": "2026-08-01T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-RX-MOCK-001"
+          },
+          {
+            "person": "ravi",
+            "metric": "temperature",
+            "value": [
+              36.7
+            ],
+            "stamp": "2026-08-04T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-1042"
+          },
+          {
+            "person": "ravi",
+            "metric": "oxygen",
+            "value": [
+              98
+            ],
+            "stamp": "2026-06-20T09:30",
+            "source": "Clinic record",
+            "encounter": "APT-RX-MOCK-015"
+          },
+          {
+            "person": "anaya",
+            "metric": "weight",
+            "value": [
+              28.2
+            ],
+            "stamp": "2026-07-25T18:00",
+            "source": "Patient-reported"
+          }
+        ]
+      },
+      "serviceExtra": {
+        "requests": []
+      }
+    },
+    "reception": {
+      "db": {
+        "date": "2026-08-04",
+        "clinic": "City Health Clinic",
+        "nextPatient": 1200,
+        "nextVisit": 2000,
+        "nextReceipt": 500,
+        "doctors": [
+          {
+            "id": "priya",
+            "name": "Dr. Priya Sharma",
+            "specialty": "General Medicine",
+            "fee": 500
+          },
+          {
+            "id": "amit",
+            "name": "Dr. Amit Joshi",
+            "specialty": "Cardiology",
+            "fee": 700
+          },
+          {
+            "id": "neha",
+            "name": "Dr. Neha Gupta",
+            "specialty": "Dermatology",
+            "fee": 600
+          }
+        ],
+        "patients": [
+          {
+            "id": "PAT-1042",
+            "first": "Ravi",
+            "last": "Kumar",
+            "phone": "9876543210",
+            "gender": "MALE",
+            "dob": "1992-04-10",
+            "blood": "B+",
+            "lastVisit": "2026-08-04"
+          },
+          {
+            "id": "PAT-1089",
+            "first": "Meera",
+            "last": "Devi",
+            "phone": "9123456789",
+            "gender": "FEMALE",
+            "dob": "1981-02-16",
+            "blood": "A+",
+            "lastVisit": "2026-08-01"
+          },
+          {
+            "id": "PAT-1103",
+            "first": "Arjun",
+            "last": "Patel",
+            "phone": "9988776655",
+            "gender": "MALE",
+            "dob": "1998-01-12",
+            "blood": "O+",
+            "lastVisit": "2026-08-04"
+          },
+          {
+            "id": "PAT-0812",
+            "first": "Vikram",
+            "last": "Singh",
+            "phone": "9876500012",
+            "gender": "MALE",
+            "dob": "1972-03-11",
+            "blood": "",
+            "lastVisit": "2026-07-28"
+          },
+          {
+            "id": "PAT-1120",
+            "first": "Lakshmi",
+            "last": "Iyer",
+            "phone": "9876511120",
+            "gender": "FEMALE",
+            "dob": "1986-01-03",
+            "blood": "",
+            "lastVisit": "2026-07-20"
+          },
+          {
+            "id": "PAT-0823",
+            "first": "Ravi",
+            "last": "Sharma",
+            "phone": "9123400823",
+            "gender": "MALE",
+            "dob": "1985-06-06",
+            "blood": "",
+            "lastVisit": "2026-07-19"
+          }
+        ],
+        "visits": [
+          {
+            "id": "APT-1042",
+            "patient": "PAT-1042",
+            "doctor": "priya",
+            "date": "2026-08-04",
+            "time": "09:30",
+            "type": "CONSULTATION",
+            "channel": "IN_PERSON",
+            "reason": "Fever and cough",
+            "status": "CONFIRMED",
+            "arrived": false,
+            "fee": 500,
+            "paid": 500
+          },
+          {
+            "id": "APT-1089",
+            "patient": "PAT-1089",
+            "doctor": "priya",
+            "date": "2026-08-04",
+            "time": "10:00",
+            "type": "CONSULTATION",
+            "channel": "IN_PERSON",
+            "reason": "Follow-up",
+            "status": "SCHEDULED",
+            "arrived": false,
+            "fee": 500,
+            "paid": 0
+          },
+          {
+            "id": "APT-1103",
+            "patient": "PAT-1103",
+            "doctor": "priya",
+            "date": "2026-08-04",
+            "time": "10:30",
+            "type": "CONSULTATION",
+            "channel": "ONLINE",
+            "reason": "Review",
+            "status": "CONFIRMED",
+            "arrived": false,
+            "fee": 500,
+            "paid": 500
+          },
+          {
+            "id": "APT-0812",
+            "patient": "PAT-0812",
+            "doctor": "amit",
+            "date": "2026-08-04",
+            "time": "14:00",
+            "type": "CONSULTATION",
+            "channel": "IN_PERSON",
+            "reason": "Review",
+            "status": "CANCELED",
+            "arrived": false,
+            "fee": 700,
+            "paid": 0,
+            "refunded": true
+          },
+          {
+            "id": "APT-1120",
+            "patient": "PAT-1120",
+            "doctor": "amit",
+            "date": "2026-08-04",
+            "time": "11:30",
+            "type": "CONSULTATION",
+            "channel": "IN_PERSON",
+            "reason": "Review",
+            "status": "SCHEDULED",
+            "arrived": false,
+            "fee": 700,
+            "paid": 0
+          }
+        ],
+        "receipts": [],
+        "waitlist": [],
+        "credits": {},
+        "nextWaitlist": 1,
+        "nextResolution": 1,
+        "audit": []
+      }
+    },
+    "nurse": {
+      "db": {
+        "date": "2026-08-04",
+        "clinic": "City Health Clinic",
+        "nextPatient": 1200,
+        "nextVisit": 2000,
+        "nextReceipt": 500,
+        "doctors": [
+          {
+            "id": "priya",
+            "name": "Dr. Priya Sharma",
+            "specialty": "General Medicine",
+            "fee": 500
+          },
+          {
+            "id": "amit",
+            "name": "Dr. Amit Joshi",
+            "specialty": "Cardiology",
+            "fee": 700
+          },
+          {
+            "id": "neha",
+            "name": "Dr. Neha Gupta",
+            "specialty": "Dermatology",
+            "fee": 600
+          },
+          {
+            "id": "duty",
+            "name": "Dr. S. Rao",
+            "specialty": "General Medicine",
+            "unavailable": true
+          }
+        ],
+        "patients": [
+          {
+            "id": "PAT-1042",
+            "first": "Ravi",
+            "last": "Kumar",
+            "phone": "9876543210",
+            "gender": "MALE",
+            "dob": "1992-04-10",
+            "blood": "B+",
+            "lastVisit": "2026-08-04"
+          },
+          {
+            "id": "PAT-1089",
+            "first": "Meera",
+            "last": "Devi",
+            "phone": "9123456789",
+            "gender": "FEMALE",
+            "dob": "1981-02-16",
+            "blood": "A+",
+            "lastVisit": "2026-08-01"
+          },
+          {
+            "id": "PAT-1103",
+            "first": "Arjun",
+            "last": "Patel",
+            "phone": "9988776655",
+            "gender": "MALE",
+            "dob": "1998-01-12",
+            "blood": "O+",
+            "lastVisit": "2026-08-04"
+          },
+          {
+            "id": "PAT-0812",
+            "first": "Vikram",
+            "last": "Singh",
+            "phone": "9876500012",
+            "gender": "MALE",
+            "dob": "1972-03-11",
+            "blood": "",
+            "lastVisit": "2026-07-28"
+          },
+          {
+            "id": "PAT-1120",
+            "first": "Lakshmi",
+            "last": "Iyer",
+            "phone": "9876511120",
+            "gender": "FEMALE",
+            "dob": "1986-01-03",
+            "blood": "",
+            "lastVisit": "2026-07-20"
+          },
+          {
+            "id": "PAT-0823",
+            "first": "Ravi",
+            "last": "Sharma",
+            "phone": "9123400823",
+            "gender": "MALE",
+            "dob": "1985-06-06",
+            "blood": "",
+            "lastVisit": "2026-07-19"
+          }
+        ],
+        "visits": [
+          {
+            "id": "APT-1042",
+            "patient": "PAT-1042",
+            "doctor": "priya",
+            "date": "2026-08-04",
+            "time": "09:30",
+            "type": "CONSULTATION",
+            "channel": "IN_PERSON",
+            "reason": "Fever and cough",
+            "status": "CONFIRMED",
+            "arrived": true,
+            "fee": 500,
+            "paid": 500,
+            "intake": "Not started",
+            "assessment": {},
+            "audit": [],
+            "consultation": "Pending"
+          },
+          {
+            "id": "APT-1089",
+            "patient": "PAT-1089",
+            "doctor": "priya",
+            "date": "2026-08-04",
+            "time": "10:00",
+            "type": "CONSULTATION",
+            "channel": "IN_PERSON",
+            "reason": "Follow-up",
+            "status": "SCHEDULED",
+            "arrived": true,
+            "fee": 500,
+            "paid": 0,
+            "intake": "Not started",
+            "assessment": {},
+            "audit": [],
+            "consultation": "Pending"
+          },
+          {
+            "id": "APT-1103",
+            "patient": "PAT-1103",
+            "doctor": "priya",
+            "date": "2026-08-04",
+            "time": "10:30",
+            "type": "CONSULTATION",
+            "channel": "ONLINE",
+            "reason": "Review",
+            "status": "CONFIRMED",
+            "arrived": false,
+            "fee": 500,
+            "paid": 500,
+            "intake": "Ready",
+            "assessment": {
+              "notes": "Patient-reported observations recorded for online visit.",
+              "allergy": "Unable to confirm"
+            },
+            "audit": [],
+            "consultation": "In progress"
+          },
+          {
+            "id": "APT-0812",
+            "patient": "PAT-0812",
+            "doctor": "amit",
+            "date": "2026-08-04",
+            "time": "14:00",
+            "type": "CONSULTATION",
+            "channel": "IN_PERSON",
+            "reason": "Review",
+            "status": "CANCELED",
+            "arrived": false,
+            "fee": 700,
+            "paid": 0,
+            "refunded": true,
+            "intake": "Not started",
+            "assessment": {},
+            "audit": [],
+            "consultation": "Cancelled"
+          },
+          {
+            "id": "APT-1120",
+            "patient": "PAT-1120",
+            "doctor": "amit",
+            "date": "2026-08-04",
+            "time": "11:30",
+            "type": "CONSULTATION",
+            "channel": "IN_PERSON",
+            "reason": "Review",
+            "status": "SCHEDULED",
+            "arrived": false,
+            "fee": 700,
+            "paid": 0,
+            "intake": "In progress",
+            "assessment": {
+              "temperature": "36.8",
+              "pulse": "78",
+              "notes": "Draft from earlier intake."
+            },
+            "audit": [],
+            "consultation": "Pending"
+          }
+        ],
+        "receipts": [],
+        "waitlist": [],
+        "credits": {},
+        "nextWaitlist": 1,
+        "nextResolution": 1,
+        "audit": []
+      },
+      "admissions": [
+        {
+          "id": "ADM-201",
+          "patient": "PAT-0812",
+          "bed": "General / R3 / A",
+          "name": "Vikram Singh",
+          "vitals": [],
+          "notes": []
+        },
+        {
+          "id": "ADM-198",
+          "patient": "IPD-0198",
+          "bed": "ICU / R1 / B",
+          "name": "Kamala Nair",
+          "vitals": [],
+          "notes": []
+        }
+      ],
+      "meds": [
+        {
+          "id": "M1",
+          "admission": "ADM-201",
+          "time": "08:00",
+          "drug": "Amoxicillin 500mg",
+          "dose": "1 capsule",
+          "route": "Oral",
+          "state": "Given"
+        },
+        {
+          "id": "M2",
+          "admission": "ADM-201",
+          "time": "08:00",
+          "drug": "Pantoprazole 40mg",
+          "dose": "1 tablet",
+          "route": "Oral",
+          "state": "Given"
+        },
+        {
+          "id": "M3",
+          "admission": "ADM-201",
+          "time": "14:00",
+          "drug": "Amoxicillin 500mg",
+          "dose": "1 capsule",
+          "route": "Oral",
+          "state": "Due"
+        },
+        {
+          "id": "M4",
+          "admission": "ADM-198",
+          "time": "14:00",
+          "drug": "Furosemide 40mg",
+          "dose": "1 tablet",
+          "route": "Oral",
+          "state": "Due"
+        },
+        {
+          "id": "M5",
+          "admission": "ADM-201",
+          "time": "As needed",
+          "drug": "Salbutamol Neb 2.5mg",
+          "dose": "1 dose",
+          "route": "Inhalation",
+          "state": "As needed"
+        }
+      ],
+      "reports": [
+        {
+          "id": "REP-1",
+          "patient": "PAT-1042",
+          "title": "Complete blood count",
+          "date": "2026-08-03",
+          "source": "City Health Lab",
+          "body": "Complete blood count\nSpecimen: Blood\nHaemoglobin: 13.5 g/dL\nWhite blood cells: 7,500 /µL\nPlatelets: 250,000 /µL\n\nSample report for UX review. No clinical interpretation is generated."
+        },
+        {
+          "id": "REP-2",
+          "patient": "PAT-1089",
+          "title": "Previous visit report",
+          "date": "2026-08-01",
+          "source": "Patient supplied",
+          "body": "Previous visit document\nFollow-up notes attached for the treating doctor.\n\nSample document for UX review."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "T1",
+          "visit": "APT-1042",
+          "title": "Confirm patient brought previous reports",
+          "done": false
+        },
+        {
+          "id": "T2",
+          "visit": "APT-1089",
+          "title": "Prepare follow-up records for consultation",
+          "done": false
+        }
+      ],
+      "extra": {
+        "escalations": [],
+        "handoffs": [],
+        "cases": []
+      }
+    },
+    "doctor": {
+      "state": {
+        "queueFilter": "all",
+        "queueReadiness": "all",
+        "search": "",
+        "patientFilter": "all",
+        "patientSearch": "",
+        "results": [
+          {
+            "id": "R-01",
+            "uhid": "HSP24-00123",
+            "test": "HbA1c",
+            "value": "8.2%",
+            "flag": "High",
+            "received": "Today, 08:42",
+            "status": "new",
+            "report": {
+              "number": "LAB-2026-004821",
+              "laboratory": "CityCare Diagnostics",
+              "collected": "05 Sep 2026, 07:50 AM",
+              "reported": "05 Sep 2026, 08:42 AM",
+              "sections": [
+                {
+                  "title": "Glycaemic control",
+                  "items": [
+                    [
+                      "HbA1c",
+                      "8.2",
+                      "%",
+                      "4.0–5.6",
+                      "High"
+                    ],
+                    [
+                      "Estimated average glucose",
+                      "189",
+                      "mg/dL",
+                      "—",
+                      ""
+                    ]
+                  ]
+                }
+              ],
+              "impression": "Elevated HbA1c. Interpret with the patient’s clinical context and current treatment plan."
+            }
+          },
+          {
+            "id": "R-02",
+            "uhid": "HSP24-00125",
+            "test": "Chest X-ray",
+            "value": "Mild hyperinflation",
+            "flag": "Review",
+            "received": "Today, 09:05",
+            "status": "new",
+            "report": {
+              "number": "RAD-2026-001946",
+              "laboratory": "CityCare Radiology",
+              "collected": "05 Sep 2026, 08:20 AM",
+              "reported": "05 Sep 2026, 09:05 AM",
+              "sections": [
+                {
+                  "title": "Radiology report",
+                  "items": [
+                    [
+                      "Examination",
+                      "Chest X-ray PA view",
+                      "",
+                      "",
+                      ""
+                    ],
+                    [
+                      "Findings",
+                      "Mild hyperinflation. No focal consolidation or pleural effusion.",
+                      "",
+                      "",
+                      ""
+                    ],
+                    [
+                      "Impression",
+                      "Mild hyperinflation. Correlate clinically.",
+                      "",
+                      "",
+                      "Review"
+                    ]
+                  ]
+                }
+              ],
+              "impression": "Radiologist report available for clinical correlation."
+            }
+          },
+          {
+            "id": "R-03",
+            "uhid": "HSP24-00124",
+            "test": "TSH",
+            "value": "3.1 mIU/L",
+            "flag": "Normal",
+            "received": "Yesterday",
+            "status": "new",
+            "report": {
+              "number": "LAB-2026-004790",
+              "laboratory": "CityCare Diagnostics",
+              "collected": "04 Sep 2026, 09:10 AM",
+              "reported": "04 Sep 2026, 04:20 PM",
+              "sections": [
+                {
+                  "title": "Thyroid function",
+                  "items": [
+                    [
+                      "TSH",
+                      "3.1",
+                      "mIU/L",
+                      "0.4–4.0",
+                      "Normal"
+                    ]
+                  ]
+                }
+              ],
+              "impression": "Result is within the supplied reference interval."
+            }
+          }
+        ],
+        "followups": [
+          {
+            "id": "F-01",
+            "uhid": "HSP24-00123",
+            "reason": "Review HbA1c and diabetic control",
+            "due": "Today",
+            "priority": "Due today",
+            "status": "open",
+            "appointment": {
+              "status": "Not booked"
+            }
+          },
+          {
+            "id": "F-02",
+            "uhid": "HSP24-00125",
+            "reason": "COPD inhaler technique review",
+            "due": "06 Sep 2026",
+            "priority": "Upcoming",
+            "status": "open",
+            "appointment": {
+              "status": "Booked",
+              "date": "06 Sep 2026",
+              "time": "10:30 AM",
+              "mode": "In clinic",
+              "bookedBy": "Reception"
+            }
+          },
+          {
+            "id": "F-03",
+            "uhid": "HSP24-00126",
+            "reason": "First-visit clinical review",
+            "due": "10 Sep 2026",
+            "priority": "Upcoming",
+            "status": "open",
+            "appointment": {
+              "status": "Not booked"
+            }
+          }
+        ],
+        "referrals": [
+          {
+            "id": "RF-01",
+            "uhid": "HSP24-00125",
+            "to": "Pulmonology",
+            "reason": "COPD review",
+            "status": "Awaiting response"
+          },
+          {
+            "id": "RF-02",
+            "uhid": "HSP24-00123",
+            "to": "Diabetology",
+            "reason": "HbA1c review",
+            "status": "Awaiting response"
+          }
+        ],
+        "availability": {
+          "Mon": true,
+          "Tue": true,
+          "Wed": true,
+          "Thu": true,
+          "Fri": true,
+          "Sat": true,
+          "Sun": false
+        },
+        "bookingPreferences": {
+          "duration": "15",
+          "advance": "30",
+          "clinic": true,
+          "video": true,
+          "audio": true
+        },
+        "activeResultId": null,
+        "reportPage": 1,
+        "reportZoom": 100,
+        "resultDrafts": {},
+        "consultationDrafts": {},
+        "currentPage": "dashboard",
+        "profileOrigin": null,
+        "inboxView": "needs",
+        "availabilityDirty": false,
+        "lastCompletedId": null,
+        "consultationView": "consultations",
+        "consultationQuery": "",
+        "consultationSort": "newest",
+        "activeAmendment": null,
+        "vitalsHistory": {},
+        "vitalsTypeFilter": "all",
+        "vitalsRangeFilter": "all",
+        "quickVitalsType": "all",
+        "quickVitalsRange": "all",
+        "completedConsultations": [
+          {
+            "id": "CON-2026-000177",
+            "uhid": "HSP24-00123",
+            "date": "18 Mar 2026",
+            "type": "In clinic",
+            "reason": "Hypertension review",
+            "diagnosis": "Hypertension",
+            "status": "Signed",
+            "version": 1,
+            "summary": "Blood-pressure review with medication plan.",
+            "prescriptionIds": [
+              -3
+            ],
+            "clinicalContent": {
+              "complaints": "Routine blood-pressure review.",
+              "history": "Hypertension on regular treatment.",
+              "findings": "BP within the recorded treatment range.",
+              "diagnosis": "Hypertension",
+              "treatment": "Continue current antihypertensive treatment.",
+              "medications": [
+                {
+                  "drug": "Telmisartan",
+                  "form": "Tablet",
+                  "strength": "40mg",
+                  "frequency": "OD (Once daily)",
+                  "duration": "90 days",
+                  "route": "Oral",
+                  "instructions": "Morning",
+                  "sos": false
+                },
+                {
+                  "drug": "Aspirin",
+                  "form": "Tablet",
+                  "strength": "75mg",
+                  "frequency": "OD (Once daily)",
+                  "duration": "90 days",
+                  "route": "Oral",
+                  "instructions": "After food",
+                  "sos": false
+                }
+              ],
+              "diagnoses": [
+                {
+                  "code": "LOCAL",
+                  "desc": "Hypertension",
+                  "primary": true,
+                  "status": "provisional"
+                }
+              ],
+              "instructions": [],
+              "tests": [],
+              "procedures": [],
+              "followup": {
+                "date": "Select date",
+                "type": "Select type",
+                "purpose": "",
+                "priority": "Normal"
+              }
+            },
+            "visitId": "VISIT-CON-2026-000177",
+            "rootConsultationId": "CON-2026-000177"
+          },
+          {
+            "id": "CON-2026-000178",
+            "uhid": "HSP24-00123",
+            "date": "02 May 2026",
+            "type": "Video",
+            "reason": "Diabetes follow-up",
+            "diagnosis": "Type 2 diabetes",
+            "status": "Signed",
+            "version": 1,
+            "summary": "Diabetes follow-up and counselling.",
+            "prescriptionIds": [
+              -2
+            ],
+            "clinicalContent": {
+              "complaints": "Diabetes follow-up by video.",
+              "history": "Type 2 diabetes under ongoing review.",
+              "findings": "Home glucose readings discussed.",
+              "diagnosis": "Type 2 diabetes",
+              "treatment": "Continue diabetic diet and medicine plan.",
+              "medications": [
+                {
+                  "drug": "Vitamin D3",
+                  "form": "Tablet",
+                  "strength": "60,000 IU",
+                  "frequency": "OD (Once daily)",
+                  "duration": "6 weeks",
+                  "route": "Oral",
+                  "instructions": "Once weekly, after food",
+                  "sos": false
+                }
+              ],
+              "diagnoses": [
+                {
+                  "code": "LOCAL",
+                  "desc": "Type 2 diabetes",
+                  "primary": true,
+                  "status": "provisional"
+                }
+              ],
+              "instructions": [],
+              "tests": [],
+              "procedures": [],
+              "followup": {
+                "date": "Select date",
+                "type": "Select type",
+                "purpose": "",
+                "priority": "Normal"
+              }
+            },
+            "visitId": "VISIT-CON-2026-000178",
+            "rootConsultationId": "CON-2026-000178"
+          },
+          {
+            "id": "CON-2026-000179",
+            "uhid": "HSP24-00123",
+            "date": "12 Jun 2026",
+            "type": "In clinic",
+            "reason": "Chest tightness review",
+            "diagnosis": "Hypertension review",
+            "status": "Signed",
+            "version": 1,
+            "summary": "Clinical review, treatment advice, and follow-up planning.",
+            "prescriptionIds": [
+              -1
+            ],
+            "clinicalContent": {
+              "complaints": "Chest tightness on exertion reviewed.",
+              "history": "Hypertension and diabetes history noted.",
+              "findings": "Cardiac evaluation advised.",
+              "diagnosis": "Hypertension review",
+              "treatment": "Continue medicine plan and arrange follow-up.",
+              "medications": [
+                {
+                  "drug": "Amlodipine",
+                  "form": "Tablet",
+                  "strength": "5mg",
+                  "frequency": "OD (Once daily)",
+                  "duration": "30 days",
+                  "route": "Oral",
+                  "instructions": "Morning, before food",
+                  "sos": false
+                },
+                {
+                  "drug": "Atorvastatin",
+                  "form": "Tablet",
+                  "strength": "10mg",
+                  "frequency": "OD (Once daily)",
+                  "duration": "30 days",
+                  "route": "Oral",
+                  "instructions": "Night, after food",
+                  "sos": false
+                }
+              ],
+              "diagnoses": [
+                {
+                  "code": "LOCAL",
+                  "desc": "Hypertension review",
+                  "primary": true,
+                  "status": "provisional"
+                }
+              ],
+              "instructions": [],
+              "tests": [],
+              "procedures": [],
+              "followup": {
+                "date": "Select date",
+                "type": "Select type",
+                "purpose": "",
+                "priority": "Normal"
+              }
+            },
+            "visitId": "VISIT-CON-2026-000179",
+            "rootConsultationId": "CON-2026-000179"
+          },
+          {
+            "id": "CON-2026-000180",
+            "uhid": "HSP24-00125",
+            "date": "20 Aug 2026",
+            "type": "In clinic",
+            "reason": "Breathlessness review",
+            "diagnosis": "COPD review",
+            "status": "Signed",
+            "version": 1,
+            "summary": "Clinical review with inhaler technique assessment.",
+            "prescriptionIds": [],
+            "clinicalContent": {
+              "complaints": "Breathlessness follow-up.",
+              "history": "COPD on inhaler treatment.",
+              "findings": "Inhaler technique reviewed.",
+              "diagnosis": "COPD review",
+              "treatment": "Continue inhaler plan and reinforce technique.",
+              "medications": [],
+              "diagnoses": [
+                {
+                  "code": "LOCAL",
+                  "desc": "COPD review",
+                  "primary": true,
+                  "status": "provisional"
+                }
+              ],
+              "instructions": [],
+              "tests": [],
+              "procedures": [],
+              "followup": {
+                "date": "Select date",
+                "type": "Select type",
+                "purpose": "",
+                "priority": "Normal"
+              }
+            },
+            "visitId": "VISIT-CON-2026-000180",
+            "rootConsultationId": "CON-2026-000180"
+          }
+        ]
+      },
+      "queue": [
+        {
+          "time": "09:00 AM",
+          "name": "Rahul Sharma",
+          "uhid": "HSP24-00123",
+          "age": 34,
+          "gender": "Male",
+          "phone": "98765 43210",
+          "type": "clinic",
+          "freq": "Twice / Year",
+          "freqIcon": "cal",
+          "action": "active",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Cash",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-1"
+        },
+        {
+          "time": "09:30 AM",
+          "name": "Priya Mehta",
+          "uhid": "HSP24-00124",
+          "age": 31,
+          "gender": "Female",
+          "phone": "91234 56780",
+          "type": "video",
+          "freq": "Monthly (1 visit)",
+          "freqIcon": "cal",
+          "action": "active",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Card",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-2"
+        },
+        {
+          "time": "10:00 AM",
+          "name": "Amit Verma",
+          "uhid": "HSP24-00125",
+          "age": 52,
+          "gender": "Male",
+          "phone": "99887 66554",
+          "type": "audio",
+          "freq": "Monthly (1 visit)",
+          "freqIcon": "cal",
+          "action": "active",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "UPI",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-3"
+        },
+        {
+          "time": "10:30 AM",
+          "name": "Sunita Rao",
+          "uhid": "HSP24-00126",
+          "age": 38,
+          "gender": "Female",
+          "phone": "90909 12345",
+          "type": "clinic",
+          "freq": "First Visit",
+          "freqIcon": "star",
+          "action": "active",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Cash",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-4"
+        },
+        {
+          "time": "11:00 AM",
+          "name": "Vikram Singh",
+          "uhid": "HSP24-00127",
+          "age": 29,
+          "gender": "Male",
+          "phone": "98123 45670",
+          "type": "video",
+          "freq": "Quarterly",
+          "freqIcon": "cal",
+          "action": "upcoming",
+          "caption": "Join opens 15 min before",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Card",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-5"
+        }
+      ],
+      "fullQueueData": [
+        {
+          "time": "09:00 AM",
+          "name": "Rahul Sharma",
+          "uhid": "HSP24-00123",
+          "age": 34,
+          "gender": "Male",
+          "phone": "98765 43210",
+          "type": "clinic",
+          "freq": "Twice / Year",
+          "freqIcon": "cal",
+          "status": "yts",
+          "reason": "Chest Pain, Shortness of Breath",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Cash",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-1"
+        },
+        {
+          "time": "09:30 AM",
+          "name": "Priya Mehta",
+          "uhid": "HSP24-00124",
+          "age": 31,
+          "gender": "Female",
+          "phone": "91234 56780",
+          "type": "video",
+          "freq": "Monthly (1 visit)",
+          "freqIcon": "cal",
+          "status": "progress",
+          "reason": "Follow-up Consultation",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Card",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-2"
+        },
+        {
+          "time": "10:00 AM",
+          "name": "Amit Verma",
+          "uhid": "HSP24-00125",
+          "age": 52,
+          "gender": "Male",
+          "phone": "99887 66554",
+          "type": "audio",
+          "freq": "Monthly (1 visit)",
+          "freqIcon": "cal",
+          "status": "completed",
+          "reason": "Hypertension Management",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "UPI",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-3"
+        },
+        {
+          "time": "10:30 AM",
+          "name": "Sunita Rao",
+          "uhid": "HSP24-00126",
+          "age": 38,
+          "gender": "Female",
+          "phone": "90909 12345",
+          "type": "clinic",
+          "freq": "First Visit",
+          "freqIcon": "star",
+          "status": "yts",
+          "reason": "Regular Health Checkup",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Cash",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-4"
+        },
+        {
+          "time": "11:00 AM",
+          "name": "Vikram Singh",
+          "uhid": "HSP24-00127",
+          "age": 29,
+          "gender": "Male",
+          "phone": "98123 45670",
+          "type": "video",
+          "freq": "Quarterly",
+          "freqIcon": "cal",
+          "status": "progress",
+          "reason": "Review Test Reports",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Card",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-5"
+        },
+        {
+          "time": "11:30 AM",
+          "name": "Neha Kapoor",
+          "uhid": "HSP24-00128",
+          "age": 27,
+          "gender": "Female",
+          "phone": "93456 78901",
+          "type": "clinic",
+          "freq": "Quarterly",
+          "freqIcon": "cal",
+          "status": "cancelled",
+          "reason": "Fever, Body Ache",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "UPI",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-6"
+        },
+        {
+          "time": "12:00 PM",
+          "name": "Arjun Reddy",
+          "uhid": "HSP24-00129",
+          "age": 41,
+          "gender": "Male",
+          "phone": "92345 67890",
+          "type": "walkin",
+          "freq": "First Visit",
+          "freqIcon": "star",
+          "status": "yts",
+          "reason": "Skin Rash",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Cash",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-7"
+        },
+        {
+          "time": "12:30 PM",
+          "name": "Kavita Iyer",
+          "uhid": "HSP24-00130",
+          "age": 47,
+          "gender": "Female",
+          "phone": "97654 32109",
+          "type": "audio",
+          "freq": "Monthly (1 visit)",
+          "freqIcon": "cal",
+          "status": "completed",
+          "reason": "Diabetes Follow-up",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Card",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-8"
+        },
+        {
+          "time": "01:00 PM",
+          "name": "Rohan Gupta",
+          "uhid": "HSP24-00131",
+          "age": 36,
+          "gender": "Male",
+          "phone": "96543 21098",
+          "type": "clinic",
+          "freq": "Twice / Year",
+          "freqIcon": "cal",
+          "status": "yts",
+          "reason": "Back Pain",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "UPI",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-9"
+        },
+        {
+          "time": "01:30 PM",
+          "name": "Meera Nair",
+          "uhid": "HSP24-00132",
+          "age": 44,
+          "gender": "Female",
+          "phone": "95432 10987",
+          "type": "video",
+          "freq": "Quarterly",
+          "freqIcon": "cal",
+          "status": "completed",
+          "reason": "Thyroid Review",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Cash",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-10"
+        },
+        {
+          "time": "02:00 PM",
+          "name": "Sanjay Joshi",
+          "uhid": "HSP24-00133",
+          "age": 58,
+          "gender": "Male",
+          "phone": "94321 09876",
+          "type": "clinic",
+          "freq": "Monthly (1 visit)",
+          "freqIcon": "cal",
+          "status": "yts",
+          "reason": "Post-Surgery Checkup",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Card",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-11"
+        },
+        {
+          "time": "02:30 PM",
+          "name": "Ananya Das",
+          "uhid": "HSP24-00134",
+          "age": 25,
+          "gender": "Female",
+          "phone": "93210 98765",
+          "type": "walkin",
+          "freq": "First Visit",
+          "freqIcon": "star",
+          "status": "yts",
+          "reason": "Migraine",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "UPI",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-12"
+        },
+        {
+          "time": "03:00 PM",
+          "name": "Karan Malhotra",
+          "uhid": "HSP24-00135",
+          "age": 49,
+          "gender": "Male",
+          "phone": "92109 87654",
+          "type": "audio",
+          "freq": "Twice / Year",
+          "freqIcon": "cal",
+          "status": "completed",
+          "reason": "Cholesterol Review",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Cash",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-13"
+        },
+        {
+          "time": "03:30 PM",
+          "name": "Divya Menon",
+          "uhid": "HSP24-00136",
+          "age": 33,
+          "gender": "Female",
+          "phone": "91098 76543",
+          "type": "clinic",
+          "freq": "Quarterly",
+          "freqIcon": "cal",
+          "status": "cancelled",
+          "reason": "Joint Pain",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Card",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-14"
+        },
+        {
+          "time": "04:00 PM",
+          "name": "Farhan Ali",
+          "uhid": "HSP24-00137",
+          "age": 30,
+          "gender": "Male",
+          "phone": "90987 65432",
+          "type": "video",
+          "freq": "Monthly (1 visit)",
+          "freqIcon": "cal",
+          "status": "yts",
+          "reason": "Anxiety Consultation",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "UPI",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-15"
+        },
+        {
+          "time": "04:30 PM",
+          "name": "Ritu Bhatia",
+          "uhid": "HSP24-00138",
+          "age": 28,
+          "gender": "Female",
+          "phone": "89876 54321",
+          "type": "clinic",
+          "freq": "First Visit",
+          "freqIcon": "star",
+          "status": "yts",
+          "reason": "General Checkup",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Cash",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-16"
+        },
+        {
+          "time": "05:00 PM",
+          "name": "Manish Kumar",
+          "uhid": "HSP24-00139",
+          "age": 55,
+          "gender": "Male",
+          "phone": "88765 43210",
+          "type": "audio",
+          "freq": "Quarterly",
+          "freqIcon": "cal",
+          "status": "yts",
+          "reason": "Diabetes Follow-up",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Card",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-17"
+        },
+        {
+          "time": "05:30 PM",
+          "name": "Pooja Shah",
+          "uhid": "HSP24-00140",
+          "age": 39,
+          "gender": "Female",
+          "phone": "87654 32109",
+          "type": "video",
+          "freq": "Twice / Year",
+          "freqIcon": "cal",
+          "status": "yts",
+          "reason": "Cardiac Review",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "UPI",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-18"
+        },
+        {
+          "time": "06:00 PM",
+          "name": "Vivek Rao",
+          "uhid": "HSP24-00141",
+          "age": 46,
+          "gender": "Male",
+          "phone": "86543 21098",
+          "type": "clinic",
+          "freq": "Monthly (1 visit)",
+          "freqIcon": "cal",
+          "status": "yts",
+          "reason": "Knee Pain",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Cash",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-19"
+        },
+        {
+          "time": "06:30 PM",
+          "name": "Shreya Pillai",
+          "uhid": "HSP24-00142",
+          "age": 22,
+          "gender": "Female",
+          "phone": "85432 10987",
+          "type": "walkin",
+          "freq": "First Visit",
+          "freqIcon": "star",
+          "status": "yts",
+          "reason": "Fever",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Card",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-20"
+        },
+        {
+          "time": "07:00 PM",
+          "name": "Aditya Chopra",
+          "uhid": "HSP24-00143",
+          "age": 51,
+          "gender": "Male",
+          "phone": "84321 09876",
+          "type": "clinic",
+          "freq": "Quarterly",
+          "freqIcon": "cal",
+          "status": "yts",
+          "reason": "Blood Pressure Check",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "UPI",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-21"
+        },
+        {
+          "time": "07:30 PM",
+          "name": "Isha Kapoor",
+          "uhid": "HSP24-00144",
+          "age": 35,
+          "gender": "Female",
+          "phone": "83210 98765",
+          "type": "video",
+          "freq": "Monthly (1 visit)",
+          "freqIcon": "cal",
+          "status": "yts",
+          "reason": "Follow-up Consultation",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Cash",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-22"
+        },
+        {
+          "time": "08:00 PM",
+          "name": "Nikhil Bansal",
+          "uhid": "HSP24-00145",
+          "age": 32,
+          "gender": "Male",
+          "phone": "82109 87654",
+          "type": "audio",
+          "freq": "First Visit",
+          "freqIcon": "star",
+          "status": "yts",
+          "reason": "Cough, Cold",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "Card",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-23"
+        },
+        {
+          "time": "08:30 PM",
+          "name": "Tanvi Desai",
+          "uhid": "HSP24-00146",
+          "age": 40,
+          "gender": "Female",
+          "phone": "81098 76543",
+          "type": "clinic",
+          "freq": "Twice / Year",
+          "freqIcon": "cal",
+          "status": "yts",
+          "reason": "Annual Physical",
+          "paid": true,
+          "doctor": "Dr. Arjun Patel",
+          "paymentMethod": "UPI",
+          "date": "2026-09-19",
+          "visitId": "VISIT-1789816643002-24"
+        }
+      ],
+      "patients": {
+        "HSP24-00123": {
+          "uhid": "HSP24-00123",
+          "name": "Rahul Sharma",
+          "age": 34,
+          "gender": "Male",
+          "bloodGroup": "B+",
+          "phone": "98765 43210",
+          "abhaId": "14-1234-5678-9012",
+          "scheme": "Aarogyasri",
+          "schemeCardNo": "ARG-TS-0098765",
+          "networkHospitalId": "NH-TS-00456",
+          "allergiesConfirmed": true,
+          "allergies": [
+            {
+              "substance": "Penicillin",
+              "reaction": "Rash, breathing difficulty",
+              "severity": "severe"
+            },
+            {
+              "substance": "Sulfa drugs",
+              "reaction": "Skin rash",
+              "severity": "moderate"
+            }
+          ],
+          "currentMeds": [
+            {
+              "drug": "Metformin",
+              "strength": "500mg",
+              "frequency": "1-0-1",
+              "since": "Jan 2024"
+            },
+            {
+              "drug": "Telmisartan",
+              "strength": "40mg",
+              "frequency": "1-0-0",
+              "since": "2023"
+            },
+            {
+              "drug": "Atorvastatin",
+              "strength": "10mg",
+              "frequency": "0-0-1",
+              "since": "2023"
+            }
+          ],
+          "conditions": [
+            {
+              "name": "Type 2 Diabetes",
+              "since": "2 years"
+            },
+            {
+              "name": "Hypertension",
+              "since": "3 years"
+            }
+          ],
+          "vitals": {
+            "temp": "98.6",
+            "pulse": "72",
+            "bp": "120/80",
+            "spo2": "98",
+            "weight": "70",
+            "height": "170",
+            "bmi": "24.2",
+            "measuredAt": "Today, 09:10"
+          },
+          "records": [
+            {
+              "name": "CBP Report",
+              "type": "lab",
+              "date": "12 Jun 2026"
+            },
+            {
+              "name": "Diabetic Prescription",
+              "type": "rx",
+              "date": "08 May 2026"
+            },
+            {
+              "name": "ECG Report",
+              "type": "lab",
+              "date": "02 May 2026"
+            },
+            {
+              "name": "HbA1c Report",
+              "type": "lab",
+              "date": "28 Jan 2026"
+            }
+          ],
+          "habits": [
+            {
+              "substance": "Tobacco (Smoking)",
+              "status": "Former",
+              "frequency": "10/day",
+              "duration": "2010-2020",
+              "note": "Quit 6 years ago"
+            },
+            {
+              "substance": "Alcohol",
+              "status": "Occasional",
+              "frequency": "2-3 drinks/week",
+              "duration": "Social",
+              "note": "Weekend only"
+            }
+          ]
+        },
+        "HSP24-00124": {
+          "uhid": "HSP24-00124",
+          "name": "Priya Mehta",
+          "age": 31,
+          "gender": "Female",
+          "bloodGroup": "O+",
+          "phone": "91234 56780",
+          "abhaId": "14-2233-4455-6677",
+          "scheme": "Private",
+          "allergiesConfirmed": true,
+          "allergies": [],
+          "currentMeds": [
+            {
+              "drug": "Thyronorm",
+              "strength": "50mcg",
+              "frequency": "1-0-0",
+              "since": "2022"
+            }
+          ],
+          "conditions": [
+            {
+              "name": "Hypothyroidism",
+              "since": "4 years"
+            }
+          ],
+          "vitals": {
+            "temp": "98.4",
+            "pulse": "78",
+            "bp": "118/76",
+            "spo2": "99",
+            "weight": "58",
+            "height": "162",
+            "bmi": "22.1",
+            "measuredAt": "Today, 09:35"
+          },
+          "records": [
+            {
+              "name": "Thyroid Profile",
+              "type": "lab",
+              "date": "18 Mar 2026"
+            },
+            {
+              "name": "CBP Report",
+              "type": "lab",
+              "date": "18 Mar 2026"
+            }
+          ],
+          "habits": [
+            {
+              "substance": "Tobacco",
+              "status": "Never",
+              "frequency": "—",
+              "duration": "—",
+              "note": "Non-smoker"
+            },
+            {
+              "substance": "Alcohol",
+              "status": "Never",
+              "frequency": "—",
+              "duration": "—",
+              "note": "—"
+            }
+          ]
+        },
+        "HSP24-00125": {
+          "uhid": "HSP24-00125",
+          "name": "Amit Verma",
+          "age": 52,
+          "gender": "Male",
+          "bloodGroup": "A+",
+          "phone": "99887 66554",
+          "abhaId": "14-8899-0011-2233",
+          "scheme": "Ayushman Bharat",
+          "schemeCardNo": "PMJAY-TS-0044556",
+          "networkHospitalId": "NH-TS-00789",
+          "allergiesConfirmed": false,
+          "allergies": [],
+          "currentMeds": [
+            {
+              "drug": "Formoterol + Budesonide",
+              "strength": "Inhaler",
+              "frequency": "1-0-1",
+              "since": "2021"
+            },
+            {
+              "drug": "Montelukast",
+              "strength": "10mg",
+              "frequency": "0-0-1",
+              "since": "2022"
+            }
+          ],
+          "conditions": [
+            {
+              "name": "COPD",
+              "since": "5 years"
+            }
+          ],
+          "vitals": {
+            "temp": "99.1",
+            "pulse": "88",
+            "bp": "134/86",
+            "spo2": "94",
+            "weight": "74",
+            "height": "168",
+            "bmi": "26.2",
+            "measuredAt": "Today, 10:05"
+          },
+          "records": [
+            {
+              "name": "Chest X-Ray",
+              "type": "lab",
+              "date": "15 Dec 2025"
+            },
+            {
+              "name": "Spirometry Report",
+              "type": "lab",
+              "date": "15 Dec 2025"
+            }
+          ],
+          "habits": [
+            {
+              "substance": "Tobacco (Smoking)",
+              "status": "Current",
+              "frequency": "15/day",
+              "duration": "25 years",
+              "note": "Advised cessation"
+            },
+            {
+              "substance": "Alcohol",
+              "status": "Occasional",
+              "frequency": "1-2 drinks/week",
+              "duration": "Social",
+              "note": "—"
+            }
+          ]
+        }
+      },
+      "prescriptions": [
+        {
+          "id": -3,
+          "patientName": "Rahul Sharma",
+          "doctor": "Dr. Arjun Patel",
+          "medications": "Telmisartan 40mg — OD (Once daily), 90 days; Aspirin 75mg — OD (Once daily), 90 days",
+          "medsList": [
+            {
+              "drug": "Telmisartan",
+              "strength": "40mg",
+              "frequency": "OD (Once daily)",
+              "duration": "90 days",
+              "instructions": "Morning"
+            },
+            {
+              "drug": "Aspirin",
+              "strength": "75mg",
+              "frequency": "OD (Once daily)",
+              "duration": "90 days",
+              "instructions": "After food"
+            }
+          ],
+          "instructions": "",
+          "followUp": "",
+          "date": "18 Mar 2026",
+          "consultationId": "CON-2026-000177",
+          "uhid": "HSP24-00123",
+          "diagnosis": "Hypertension",
+          "rootPrescriptionId": -3
+        },
+        {
+          "id": -2,
+          "patientName": "Rahul Sharma",
+          "doctor": "Dr. Arjun Patel",
+          "medications": "Vitamin D3 60,000 IU — OD (Once daily), 6 weeks",
+          "medsList": [
+            {
+              "drug": "Vitamin D3",
+              "strength": "60,000 IU",
+              "frequency": "OD (Once daily)",
+              "duration": "6 weeks",
+              "instructions": "Once weekly, after food"
+            }
+          ],
+          "instructions": "",
+          "followUp": "",
+          "date": "02 May 2026",
+          "consultationId": "CON-2026-000178",
+          "uhid": "HSP24-00123",
+          "diagnosis": "Type 2 diabetes",
+          "rootPrescriptionId": -2
+        },
+        {
+          "id": -1,
+          "patientName": "Rahul Sharma",
+          "doctor": "Dr. Arjun Patel",
+          "medications": "Amlodipine 5mg — OD (Once daily), 30 days; Atorvastatin 10mg — OD (Once daily), 30 days",
+          "medsList": [
+            {
+              "drug": "Amlodipine",
+              "strength": "5mg",
+              "frequency": "OD (Once daily)",
+              "duration": "30 days",
+              "instructions": "Morning, before food"
+            },
+            {
+              "drug": "Atorvastatin",
+              "strength": "10mg",
+              "frequency": "OD (Once daily)",
+              "duration": "30 days",
+              "instructions": "Night, after food"
+            }
+          ],
+          "instructions": "",
+          "followUp": "",
+          "date": "12 Jun 2026",
+          "consultationId": "CON-2026-000179",
+          "uhid": "HSP24-00123",
+          "diagnosis": "Hypertension review",
+          "rootPrescriptionId": -1
+        }
+      ],
+      "labOrdersAll": [],
+      "proceduresAll": [],
+      "dxAddedAll": []
+    },
+    "inpatient": {
+      "patients": [
+        {
+          "id": "PAT-1042",
+          "name": "Ravi Kumar",
+          "age": "45Y · Male",
+          "allergy": "Penicillin — rash"
+        },
+        {
+          "id": "PAT-1089",
+          "name": "Meera Devi",
+          "age": "62Y · Female",
+          "allergy": "No known allergies (recorded)"
+        },
+        {
+          "id": "PAT-1120",
+          "name": "Lakshmi Iyer",
+          "age": "58Y · Female",
+          "allergy": "Not recorded"
+        },
+        {
+          "id": "PAT-1103",
+          "name": "Arjun Patel",
+          "age": "34Y · Male",
+          "allergy": "Not recorded"
+        },
+        {
+          "id": "PAT-1195",
+          "name": "Sana Ali",
+          "age": "29Y · Female",
+          "allergy": "No known allergies (recorded)"
+        }
+      ],
+      "doctors": [
+        "Dr. Priya Sharma",
+        "Dr. Amit Joshi"
+      ],
+      "beds": [
+        {
+          "id": "A-101-1",
+          "ward": "General ward A",
+          "room": "101",
+          "status": "Occupied"
+        },
+        {
+          "id": "A-101-2",
+          "ward": "General ward A",
+          "room": "101",
+          "status": "Available"
+        },
+        {
+          "id": "A-102-1",
+          "ward": "General ward A",
+          "room": "102",
+          "status": "Occupied"
+        },
+        {
+          "id": "A-102-2",
+          "ward": "General ward A",
+          "room": "102",
+          "status": "Turnover"
+        },
+        {
+          "id": "P-201",
+          "ward": "Private ward",
+          "room": "201",
+          "status": "Occupied"
+        },
+        {
+          "id": "P-202",
+          "ward": "Private ward",
+          "room": "202",
+          "status": "Available"
+        },
+        {
+          "id": "P-203",
+          "ward": "Private ward",
+          "room": "203",
+          "status": "Maintenance"
+        },
+        {
+          "id": "P-204",
+          "ward": "Private ward",
+          "room": "204",
+          "status": "Available"
+        }
+      ],
+      "admissions": [
+        {
+          "id": "IPD-2026-0041",
+          "patient": "PAT-1042",
+          "bed": "A-101-1",
+          "doctor": "Dr. Priya Sharma",
+          "reason": "Observation and continued inpatient care",
+          "date": "15 Sep 2026, 14:20",
+          "status": "Active",
+          "notes": [
+            {
+              "at": "17 Sep 2026, 08:15",
+              "actor": "Ward nurse",
+              "kind": "Handover",
+              "text": "Morning handover completed. Continue the documented care plan."
+            }
+          ],
+          "vitals": [
+            {
+              "at": "17 Sep 2026, 08:00",
+              "bp": "124/78",
+              "pulse": "76",
+              "spo2": "98",
+              "temp": "36.8",
+              "note": "Routine observation",
+              "actor": "Ward nurse"
+            }
+          ],
+          "orders": [
+            {
+              "id": "ORD-101",
+              "name": "CBC",
+              "type": "Investigation",
+              "status": "Result available",
+              "detail": "Sample report attached for UX preview.",
+              "reviewed": false
+            },
+            {
+              "id": "ORD-102",
+              "name": "Physiotherapy assessment",
+              "type": "Referral",
+              "status": "Requested",
+              "detail": "Review requested by treating team."
+            }
+          ],
+          "meds": [
+            {
+              "id": "MED-101",
+              "name": "Paracetamol",
+              "dose": "500 mg",
+              "route": "Oral",
+              "frequency": "As ordered",
+              "time": "17 Sep, 12:00",
+              "status": "Due",
+              "instruction": "Fictional existing medication order. Verify against the signed chart."
+            }
+          ],
+          "events": [
+            {
+              "at": "15 Sep 2026, 14:20",
+              "actor": "Admissions desk",
+              "text": "Admitted to A-101-1"
+            }
+          ],
+          "charges": [
+            {
+              "description": "Room and board — posted stay charges",
+              "qty": 1,
+              "rate": 6000
+            },
+            {
+              "description": "Consultation — posted visit",
+              "qty": 1,
+              "rate": 1000
+            }
+          ],
+          "payments": [
+            {
+              "amount": 2000,
+              "method": "Cash",
+              "reference": "DEP-1001"
+            }
+          ],
+          "insurance": null,
+          "summary": {
+            "diagnosis": "",
+            "course": "",
+            "treatment": "",
+            "advice": "",
+            "followup": ""
+          },
+          "signed": false,
+          "handover": false,
+          "dischargePlanned": false
+        },
+        {
+          "id": "IPD-2026-0042",
+          "patient": "PAT-1089",
+          "bed": "A-102-1",
+          "doctor": "Dr. Amit Joshi",
+          "reason": "Post-procedure recovery",
+          "date": "16 Sep 2026, 10:15",
+          "status": "Active",
+          "notes": [
+            {
+              "at": "17 Sep 2026, 08:15",
+              "actor": "Ward nurse",
+              "kind": "Handover",
+              "text": "Morning handover completed. Continue the documented care plan."
+            }
+          ],
+          "vitals": [
+            {
+              "at": "17 Sep 2026, 08:00",
+              "bp": "124/78",
+              "pulse": "76",
+              "spo2": "98",
+              "temp": "36.8",
+              "note": "Routine observation",
+              "actor": "Ward nurse"
+            }
+          ],
+          "orders": [],
+          "meds": [],
+          "events": [
+            {
+              "at": "16 Sep 2026, 10:15",
+              "actor": "Admissions desk",
+              "text": "Admitted to A-102-1"
+            }
+          ],
+          "charges": [
+            {
+              "description": "Room and board — posted stay charges",
+              "qty": 1,
+              "rate": 6000
+            },
+            {
+              "description": "Consultation — posted visit",
+              "qty": 1,
+              "rate": 1000
+            }
+          ],
+          "payments": [
+            {
+              "amount": 2000,
+              "method": "Cash",
+              "reference": "DEP-1001"
+            }
+          ],
+          "insurance": {
+            "insurer": "Example Health Insurance",
+            "policy": "MOCK-20041",
+            "requested": 25000,
+            "approved": 0,
+            "preauth": "Submitted",
+            "claim": "Not started",
+            "notes": "Awaiting insurer response (mock)"
+          },
+          "summary": {
+            "diagnosis": "",
+            "course": "",
+            "treatment": "",
+            "advice": "",
+            "followup": ""
+          },
+          "signed": false,
+          "handover": false,
+          "dischargePlanned": false
+        },
+        {
+          "id": "IPD-2026-0043",
+          "patient": "PAT-1120",
+          "bed": "P-201",
+          "doctor": "Dr. Priya Sharma",
+          "reason": "Planned discharge review",
+          "date": "14 Sep 2026, 09:00",
+          "status": "Active",
+          "notes": [
+            {
+              "at": "17 Sep 2026, 08:15",
+              "actor": "Ward nurse",
+              "kind": "Handover",
+              "text": "Morning handover completed. Continue the documented care plan."
+            }
+          ],
+          "vitals": [
+            {
+              "at": "17 Sep 2026, 08:00",
+              "bp": "124/78",
+              "pulse": "76",
+              "spo2": "98",
+              "temp": "36.8",
+              "note": "Routine observation",
+              "actor": "Ward nurse"
+            }
+          ],
+          "orders": [],
+          "meds": [],
+          "events": [
+            {
+              "at": "14 Sep 2026, 09:00",
+              "actor": "Admissions desk",
+              "text": "Admitted to P-201"
+            }
+          ],
+          "charges": [
+            {
+              "description": "Room and board — posted stay charges",
+              "qty": 1,
+              "rate": 6000
+            },
+            {
+              "description": "Consultation — posted visit",
+              "qty": 1,
+              "rate": 1000
+            }
+          ],
+          "payments": [
+            {
+              "amount": 2000,
+              "method": "Cash",
+              "reference": "DEP-1001"
+            }
+          ],
+          "insurance": null,
+          "summary": {
+            "diagnosis": "Recorded diagnosis — demonstration only",
+            "course": "Observation completed; treating team has documented readiness.",
+            "treatment": "See reconciled medication plan in the discharge record.",
+            "advice": "Written discharge instructions reviewed with the patient.",
+            "followup": "Review with the treating team as documented."
+          },
+          "signed": true,
+          "handover": false,
+          "dischargePlanned": true,
+          "signedAt": "17 Sep 2026, 09:00"
+        }
+      ],
+      "activity": [
+        {
+          "at": "17 Sep 2026, 09:00",
+          "actor": "Treating doctor",
+          "text": "IPD-2026-0043: discharge summary signed (mock)."
+        }
+      ],
+      "seq": 44,
+      "requests": []
+    },
+    "emergency": {
+      "state": {
+        "version": 1,
+        "seq": 1005,
+        "encounters": [
+          {
+            "id": "ER-1001",
+            "patient": {
+              "id": "PAT-1195",
+              "name": "Sana Ali",
+              "age": "29Y · Female",
+              "allergy": "No known allergies (recorded)"
+            },
+            "priority": "Not triaged",
+            "status": "Awaiting triage",
+            "reason": "Abdominal discomfort",
+            "location": "Triage area",
+            "arrived": 1789815923330,
+            "doctor": "Dr. Priya Sharma",
+            "assessment": "",
+            "impression": "",
+            "meds": [],
+            "orders": [],
+            "observations": [],
+            "events": [
+              {
+                "at": "19 Sept 2026, 16:47",
+                "actor": "Demo fixture",
+                "text": "Emergency encounter opened."
+              }
+            ],
+            "escalation": false,
+            "plan": "",
+            "reviewAt": "",
+            "disposition": null,
+            "closed": false
+          },
+          {
+            "id": "ER-1002",
+            "patient": {
+              "id": "TEMP-1002",
+              "name": "Unidentified patient 1002",
+              "age": "Age / sex not recorded",
+              "allergy": "Unknown",
+              "temporary": true
+            },
+            "priority": "Immediate",
+            "status": "In treatment",
+            "reason": "Brought after a fall",
+            "location": "Resuscitation bay 1",
+            "arrived": 1789816163330,
+            "doctor": "Dr. Priya Sharma",
+            "assessment": "",
+            "impression": "",
+            "meds": [],
+            "orders": [],
+            "observations": [],
+            "events": [
+              {
+                "at": "19 Sept 2026, 16:47",
+                "actor": "Demo fixture",
+                "text": "Emergency encounter opened."
+              }
+            ],
+            "escalation": false,
+            "plan": "",
+            "reviewAt": "",
+            "disposition": null,
+            "closed": false
+          },
+          {
+            "id": "ER-1003",
+            "patient": {
+              "id": "PAT-1103",
+              "name": "Arjun Patel",
+              "age": "34Y · Male",
+              "allergy": "Not recorded"
+            },
+            "priority": "Standard",
+            "status": "Observation",
+            "reason": "Dizziness review",
+            "location": "Triage area",
+            "arrived": 1789814243330,
+            "doctor": "Dr. Priya Sharma",
+            "assessment": "Initial assessment documented for this fictional encounter.",
+            "impression": "Symptoms under observation",
+            "meds": [],
+            "orders": [],
+            "observations": [],
+            "events": [
+              {
+                "at": "19 Sept 2026, 16:47",
+                "actor": "Demo fixture",
+                "text": "Emergency encounter opened."
+              }
+            ],
+            "escalation": false,
+            "plan": "Continue the documented observation plan and repeat clinician review.",
+            "reviewAt": "2026-09-19T11:47:23.330Z",
+            "disposition": null,
+            "closed": false
+          },
+          {
+            "id": "ER-1004",
+            "patient": {
+              "id": "PAT-1301",
+              "name": "Nila Das",
+              "age": "51Y · Female",
+              "allergy": "Not recorded"
+            },
+            "priority": "Urgent",
+            "status": "Awaiting bed",
+            "reason": "Continued monitored care requested",
+            "location": "Triage area",
+            "arrived": 1789813343330,
+            "doctor": "Dr. Priya Sharma",
+            "assessment": "Emergency assessment completed in this fictional scenario.",
+            "impression": "Requires continued inpatient care",
+            "meds": [],
+            "orders": [],
+            "observations": [],
+            "events": [
+              {
+                "at": "19 Sept 2026, 16:47",
+                "actor": "Demo fixture",
+                "text": "Emergency encounter opened."
+              }
+            ],
+            "escalation": false,
+            "plan": "",
+            "reviewAt": "",
+            "disposition": {
+              "type": "Admission",
+              "unit": "ICU",
+              "doctor": "Dr. Amit Joshi",
+              "reason": "Continued monitored care",
+              "status": "Awaiting bed"
+            },
+            "closed": false
+          }
+        ]
+      },
+      "registry": [
+        {
+          "id": "PAT-1195",
+          "name": "Sana Ali",
+          "age": "29Y · Female",
+          "allergy": "No known allergies (recorded)"
+        },
+        {
+          "id": "PAT-1103",
+          "name": "Arjun Patel",
+          "age": "34Y · Male",
+          "allergy": "Not recorded"
+        },
+        {
+          "id": "PAT-1301",
+          "name": "Nila Das",
+          "age": "51Y · Female",
+          "allergy": "Not recorded"
+        }
+      ],
+      "occupiedBeds": []
+    }
+  },
+  "stock": [
+    {
+      "id": "PCM650",
+      "name": "Paracetamol",
+      "strength": "650 mg",
+      "match": "paracetamol",
+      "rate": 65,
+      "tax": 5,
+      "restricted": false,
+      "batches": [
+        {
+          "id": "BT-2026-A1",
+          "expiry": "2028-06-30",
+          "stock": 48
+        },
+        {
+          "id": "BT-2025-X3",
+          "expiry": "2026-12-31",
+          "stock": 12
+        }
+      ]
+    },
+    {
+      "id": "PCM500",
+      "name": "Paracetamol",
+      "strength": "500 mg",
+      "match": "paracetamol",
+      "rate": 2,
+      "tax": 5,
+      "restricted": false,
+      "batches": [
+        {
+          "id": "PCM500-A",
+          "expiry": "2027-12-31",
+          "stock": 200
+        }
+      ]
+    },
+    {
+      "id": "ALP",
+      "name": "Alprazolam",
+      "strength": "0.25 mg",
+      "match": "alprazolam",
+      "rate": 34,
+      "tax": 5,
+      "restricted": true,
+      "batches": [
+        {
+          "id": "BT-2026-C2",
+          "expiry": "2027-12-31",
+          "stock": 25
+        }
+      ]
+    },
+    {
+      "id": "AMOX",
+      "name": "Amoxycillin + Clavulanic acid",
+      "strength": "625 mg",
+      "match": "amoxycillin",
+      "rate": 310,
+      "tax": 5,
+      "restricted": false,
+      "batches": [
+        {
+          "id": "BT-2026-D5",
+          "expiry": "2028-03-31",
+          "stock": 30
+        }
+      ]
+    },
+    {
+      "id": "DIC",
+      "name": "Diclofenac sodium spray",
+      "strength": "",
+      "match": "diclofenac",
+      "rate": 220,
+      "tax": 5,
+      "restricted": false,
+      "batches": [
+        {
+          "id": "BT-2026-E1",
+          "expiry": "2027-09-30",
+          "stock": 8
+        }
+      ]
+    }
+  ],
+  "pharmacy": [
+    {
+      "id": "RX-2026-0045",
+      "patientName": "Srinivas Reddy",
+      "patientId": "PH-RX-2026-0045",
+      "doctor": "Dr. Venkat Rao",
+      "date": "2026-08-04",
+      "diagnosis": "Fictional sample prescription",
+      "status": "Pending",
+      "items": [
+        {
+          "id": "RX-2026-0045-0",
+          "product": "PCM650",
+          "name": "Paracetamol",
+          "strength": "650 mg",
+          "quantity": 10,
+          "frequency": "As prescribed",
+          "duration": "Recorded sample course",
+          "route": "As prescribed"
+        },
+        {
+          "id": "RX-2026-0045-1",
+          "product": "ALP",
+          "name": "Alprazolam",
+          "strength": "0.25 mg",
+          "quantity": 10,
+          "frequency": "As prescribed",
+          "duration": "Recorded sample course",
+          "route": "As prescribed"
+        },
+        {
+          "id": "RX-2026-0045-2",
+          "product": "AMOX",
+          "name": "Amoxycillin + Clavulanic acid",
+          "strength": "625 mg",
+          "quantity": 6,
+          "frequency": "As prescribed",
+          "duration": "Recorded sample course",
+          "route": "As prescribed"
+        },
+        {
+          "id": "RX-2026-0045-3",
+          "product": "DIC",
+          "name": "Diclofenac sodium spray",
+          "strength": "",
+          "quantity": 1,
+          "frequency": "As prescribed",
+          "duration": "Recorded sample course",
+          "route": "As prescribed"
+        }
+      ]
+    },
+    {
+      "id": "RX-2026-0046",
+      "patientName": "Lakshmi Devi",
+      "patientId": "PH-RX-2026-0046",
+      "doctor": "Dr. Venkat Rao",
+      "date": "2026-08-04",
+      "diagnosis": "Fictional sample prescription",
+      "status": "Pending",
+      "items": [
+        {
+          "id": "RX-2026-0046-0",
+          "product": "PCM650",
+          "name": "Paracetamol",
+          "strength": "650 mg",
+          "quantity": 10,
+          "frequency": "As prescribed",
+          "duration": "Recorded sample course",
+          "route": "As prescribed"
+        },
+        {
+          "id": "RX-2026-0046-1",
+          "product": "AMOX",
+          "name": "Amoxycillin + Clavulanic acid",
+          "strength": "625 mg",
+          "quantity": 6,
+          "frequency": "As prescribed",
+          "duration": "Recorded sample course",
+          "route": "As prescribed"
+        },
+        {
+          "id": "RX-2026-0046-2",
+          "product": "DIC",
+          "name": "Diclofenac sodium spray",
+          "strength": "",
+          "quantity": 1,
+          "frequency": "As prescribed",
+          "duration": "Recorded sample course",
+          "route": "As prescribed"
+        }
+      ]
+    },
+    {
+      "id": "RX-2026-0044",
+      "patientName": "Rajesh Kumar",
+      "patientId": "PH-RX-2026-0044",
+      "doctor": "Dr. Venkat Rao",
+      "date": "2026-08-04",
+      "diagnosis": "Fictional sample prescription",
+      "status": "Partial",
+      "items": [
+        {
+          "id": "RX-2026-0044-0",
+          "product": "PCM650",
+          "name": "Paracetamol",
+          "strength": "650 mg",
+          "quantity": 5,
+          "frequency": "As prescribed",
+          "duration": "Recorded sample course",
+          "route": "As prescribed"
+        },
+        {
+          "id": "RX-2026-0044-1",
+          "product": "DIC",
+          "name": "Diclofenac sodium spray",
+          "strength": "",
+          "quantity": 1,
+          "frequency": "As prescribed",
+          "duration": "Recorded sample course",
+          "route": "As prescribed"
+        }
+      ]
+    },
+    {
+      "id": "RX-2026-0043",
+      "patientName": "Priya Sharma",
+      "patientId": "PH-RX-2026-0043",
+      "doctor": "Dr. Venkat Rao",
+      "date": "2026-08-04",
+      "diagnosis": "Fictional sample prescription",
+      "status": "Dispensed",
+      "items": [
+        {
+          "id": "RX-2026-0043-0",
+          "product": "PCM650",
+          "name": "Paracetamol",
+          "strength": "650 mg",
+          "quantity": 10,
+          "frequency": "As prescribed",
+          "duration": "Recorded sample course",
+          "route": "As prescribed"
+        }
+      ]
+    },
+    {
+      "id": "RX-2026-0042",
+      "patientName": "Anil Reddy",
+      "patientId": "PH-RX-2026-0042",
+      "doctor": "Dr. Venkat Rao",
+      "date": "2026-08-04",
+      "diagnosis": "Fictional sample prescription",
+      "status": "Dispensed",
+      "items": [
+        {
+          "id": "RX-2026-0042-0",
+          "product": "ALP",
+          "name": "Alprazolam",
+          "strength": "0.25 mg",
+          "quantity": 10,
+          "frequency": "As prescribed",
+          "duration": "Recorded sample course",
+          "route": "As prescribed"
+        }
+      ]
+    }
+  ]
+}

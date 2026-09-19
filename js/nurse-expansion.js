@@ -6,7 +6,7 @@ window.createNurseExpansion = function (c) {
   const clock=s=>{const [h,m]=s.split(':').map(Number);return h*60+m;};
   const queueContext=v=>{
     const waiting=v.arrived&&v.channel==='IN_PERSON'?Math.max(0,clock(now)-clock(v.time))+' min':'Not waiting';
-    const risk=v.id==='APT-1042'?'Fever/cough reported':v.id==='APT-1089'?'Follow-up preparation':v.channel==='ONLINE'?'Online visit':'Awaiting arrival';
+    const risk=v.shared?(v.reason|| (v.arrived?'Checked in':'Awaiting arrival')):v.id==='APT-1042'?'Fever/cough reported':v.id==='APT-1089'?'Follow-up preparation':v.channel==='ONLINE'?'Online visit':'Awaiting arrival';
     const next=editable(v)?v.intake==='Ready'?'Await doctor':'Record assessment':v.channel==='ONLINE'?'Consultation in progress':'Await check-in';
     return {waiting,risk,next};
   };
@@ -83,5 +83,5 @@ window.createNurseExpansion = function (c) {
     if(action==='triage-create'){createTriage();return true;}
     return false;
   }
-  return {rows,appointments,tasks:tasksPage,escalations:escalationsPage,handoffs:handoffsPage,triage:triagePage,decorate,bind(){},handle};
+  return {snapshot:()=>({escalations,handoffs,cases}),restore:data=>{for(const [key,target] of Object.entries({escalations,handoffs,cases}))if(data?.[key])DemoStore.replace(target,data[key]);},rows,appointments,tasks:tasksPage,escalations:escalationsPage,handoffs:handoffsPage,triage:triagePage,decorate,bind(){},handle};
 };

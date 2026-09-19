@@ -23,7 +23,7 @@ body{font-family:var(--font-ui);background:linear-gradient(180deg,#1E3A8A 0%,#1E
 .footer{text-align:center;margin-top:40px;font-size:12px;color:var(--ink-400);}
 .footer a{color:var(--primary);text-decoration:underline;}
 </style>
-<link rel="stylesheet" href="css/consultation-alignment.css?v=20260918-1"></head>
+<link rel="stylesheet" href="css/consultation-alignment.css?v=20260918-1"><script src="js/mock-core.js"></script><script src="js/mock-client.js"></script></head>
 <body class="role-entry">
 <div class="container">
   <div class="header">
@@ -91,7 +91,7 @@ body{font-family:var(--font-ui);background:linear-gradient(180deg,#1E3A8A 0%,#1E
     <p style="margin-top:6px;">Doctor Consultation remains the approved frozen clinical reference.</p>
   </div>
 </div>
-</body>
+<script>const reset=document.createElement('button');reset.className='btn';reset.textContent='Reset demo';reset.onclick=()=>{if(confirm('Restore original fictional data across all connected modules?'))DemoStore.reset();};document.querySelector('.footer').append(reset);</script></body>
 </html>
 
 

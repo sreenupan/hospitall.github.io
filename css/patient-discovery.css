@@ -13,8 +13,16 @@
 .patient-discovery #location-status{font-size:14px;margin:8px 0}
 .directory-pages{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:16px;margin:24px 0}
 #doctor-results{scroll-margin-top:90px}
+body.patient-module .doctor-photo{display:block;object-fit:cover;background:#dbeafe}
+#doctor-results .doctor-card-identity{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+#doctor-results .doctor-card-identity .doctor-avatar{flex:none;margin-bottom:0}
+#doctor-results .doctor-card-identity h2{margin-bottom:2px}
+#doctor-results .doctor-card-identity p{margin-bottom:0}
 @media(max-width:1000px){.patient-discovery .directory-location .form-group{flex-basis:100%}.patient-discovery [role=option]{align-items:flex-start;flex-direction:column;gap:2px}}
 @media(max-width:600px){.patient-discovery .directory-search-row{flex-wrap:wrap}.patient-discovery .search-combobox{flex-basis:100%}.patient-discovery .directory-search-row>.btn{margin-top:0}.patient-discovery .directory-location .form-group{min-width:0}.directory-pages{gap:8px}}
 
 /* Approved distance emphasis; no card layout or shared button changes. */
 body.patient-module #doctor-results .directory-distance{color:#1d4ed8;font-weight:600}
+
+/* Clickable portraits retain their existing thumbnail footprint. */
+.patient-module .doctor-photo-button{padding:0;border:0;overflow:hidden;cursor:zoom-in}.patient-module .doctor-photo-button img{display:block;width:100%;height:100%;object-fit:cover}.patient-module .doctor-photo-button:focus-visible{outline:3px solid #2563eb;outline-offset:3px}.patient-module .doctor-photo-preview{display:block;width:100%;height:auto;max-height:calc(100dvh - 190px);object-fit:contain}

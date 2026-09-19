@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="css/patient-health-center.css">
   <link rel="stylesheet" href="css/patient-services.css">
   <link rel="stylesheet" href="css/patient-mobile.css">
-</head>
+<script src="js/mock-core.js"></script><script src="js/mock-client.js"></script></head>
 <body class="patient-mobile patient-module">
   <a class="skip" href="#screen-content">Skip to content</a>
   <div class="app">
@@ -40,16 +40,16 @@
       </header>
       <div class="person-select"><label for="member">Viewing care for</label><select id="member"><option value="ravi">Ravi Kumar (Self)</option><option value="anaya">Anaya Kumar (Daughter)</option></select></div>
       <div id="screen-content" tabindex="-1"></div>
-      <footer>UX demo · 04 Aug 2026. Changes reset on reload. No real bookings, payments, calls or emergency requests.</footer>
+      <footer>UX demo · 04 Aug 2026. Changes save in this browser. No real bookings, payments, calls or emergency requests.</footer>
       <nav class="mobile-tabs" aria-label="Patient app tabs"></nav>
     </main>
   </div>
   <dialog id="patient-dialog"></dialog>
   <div id="patient-feedback" role="status" aria-live="polite"></div>
-  <script src="js/patient-discovery.js"></script>
-  <script src="js/patient-health-center.js"></script>
-  <script src="js/patient-services.js"></script>
-  <script src="js/patient-ux.js"></script>
-  <script src="js/patient-mobile.js"></script>
+  <script src="js/mock-loader.js" data-scripts='["js/patient-discovery.js","js/patient-health-center.js","js/patient-services.js","js/patient-ux.js","js/patient-mobile.js"]'></script>
+  
+  
+  
+  
 </body>
 </html>

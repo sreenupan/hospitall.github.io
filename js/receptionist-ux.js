@@ -1,6 +1,7 @@
 (() => {
   'use strict';
   const db = window.createRoleMockStore();
+  DemoStore.attach('reception',()=>({db}),data=>DemoStore.replace(db,data.db));
   const root = document.getElementById('screen-content');
   const names = {dashboard:'Dashboard',doctors:'Doctors',appointments:'Appointments','book-appointment':'Book Appointment',checkin:'Check-in Queue',patients:'Patient Registry','register-patient':'Register New Patient',payments:'Payments','patient-detail':'Patient Details','appointment-detail':'Appointment Details','payment-success':'Payment Success','checkin-success':'Check-in Success'};
   let doctorQuery = '', bookingFromDoctors = false;
@@ -153,6 +154,6 @@
   results.addEventListener('click',event=>{const b=event.target.closest('button');if(!b)return;results.hidden=true;search.value='';if(b.dataset.searchPatient)go('patient-detail',b.dataset.searchPatient);if(b.dataset.searchVisit)go('appointment-detail',b.dataset.searchVisit);});search.addEventListener('keydown',event=>{if(event.key==='Escape')results.hidden=true;});
   document.querySelector('.switch-role').addEventListener('click',event=>{if(ui.dirty){event.preventDefault();guarded(()=>location.href='index.html');}});
   window.addEventListener('beforeunload',event=>{if(ui.dirty){event.preventDefault();event.returnValue='';}});
-  const note=document.createElement('p');note.className='rec-scenario';note.textContent='Mock scenario: 04 Aug 2026. Changes reset when this page reloads.';document.querySelector('main').append(note);
+  const note=document.createElement('p');note.className='rec-scenario';note.textContent='Mock scenario: 04 Aug 2026. Changes save in this browser.';document.querySelector('main').append(note);
   render();
 })();
