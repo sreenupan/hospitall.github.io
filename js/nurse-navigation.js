@@ -15,7 +15,7 @@
     payments:'M3 5h18v14H3ZM3 10h18m-5 5h3',
     switch:'M4 7h16m-4-4 4 4-4 4M20 17H4m4-4-4 4 4 4'
   };
-  Object.assign(paths,{'vitals-queue':paths.checkin,'record-vitals':'M3 12h4l3-8 4 16 3-8h4',reports:'M5 3h10l4 4v14H5Zm9 0v5h5M8 12h8m-8 4h6',tasks:paths.checkin,'ipd-mar':paths.payments,'ipd-vitals':'M3 12h4l3-8 4 16 3-8h4','ipd-notes':paths.appointments});
+  Object.assign(paths,{'vitals-queue':paths.checkin,reports:'M5 3h10l4 4v14H5Zm9 0v5h5M8 12h8m-8 4h6',tasks:paths.checkin,'ipd-mar':paths.payments,'ipd-vitals':'M3 12h4l3-8 4 16 3-8h4','ipd-notes':paths.appointments,escalations:'M12 3 2 21h20L12 3Zm0 6v5m0 4h.01',handoffs:'M4 7h13m-3-3 3 3-3 3M20 17H7m3-3-3 3 3 3',triage:'M3 12h4l3-8 4 16 3-8h4'});
   const icon = path => `<svg class="nur-nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="${path}"/></svg>`;
   nav.querySelectorAll('.nav-item,.switch-role').forEach(item => {
     const badge = item.querySelector('.nav-badge');

@@ -1,0 +1,20 @@
+.patient-discovery .directory-search-row{display:flex;gap:12px;align-items:flex-start}
+.patient-discovery .directory-search-row>.btn{margin-top:27px;flex-shrink:0}
+.patient-discovery .search-combobox{position:relative;flex:1;min-width:0;margin-bottom:8px}
+.patient-discovery #doctor-suggestions{position:absolute;top:100%;left:0;right:0;z-index:20;list-style:none;margin:0;padding:4px;background:#fff;border:1px solid #cbd5e1;border-radius:8px;box-shadow:0 8px 24px #0f172a26;max-height:min(320px,45dvh);overflow:auto}
+.patient-discovery #doctor-suggestions[hidden]{display:none}
+.patient-discovery [role=option]{padding:10px 12px;min-height:44px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.patient-discovery [role=option]:hover,.patient-discovery [role=option][aria-selected=true]{background:#eef2ff}
+.patient-discovery [role=option][aria-selected=true]{outline:2px solid #4058db;outline-offset:-2px}
+.patient-discovery [role=option] small{flex-shrink:0}
+.patient-discovery .directory-location{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;border-top:1px solid #e2e8f0;padding-top:16px;margin-top:16px;margin-bottom:12px}
+.patient-discovery .directory-location .form-group{flex:1;min-width:230px;margin:0}
+.patient-discovery #location-help,.patient-discovery #search-help{font-size:13px;margin-bottom:0}
+.patient-discovery #location-status{font-size:14px;margin:8px 0}
+.directory-pages{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:16px;margin:24px 0}
+#doctor-results{scroll-margin-top:90px}
+@media(max-width:1000px){.patient-discovery .directory-location .form-group{flex-basis:100%}.patient-discovery [role=option]{align-items:flex-start;flex-direction:column;gap:2px}}
+@media(max-width:600px){.patient-discovery .directory-search-row{flex-wrap:wrap}.patient-discovery .search-combobox{flex-basis:100%}.patient-discovery .directory-search-row>.btn{margin-top:0}.patient-discovery .directory-location .form-group{min-width:0}.directory-pages{gap:8px}}
+
+/* Approved distance emphasis; no card layout or shared button changes. */
+body.patient-module #doctor-results .directory-distance{color:#1d4ed8;font-weight:600}

@@ -1,6 +1,5 @@
 /* Shared presentation for editable modules. Doctor's approved CSS is not imported or changed. */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-:root{--ui-font:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--ui-primary:#2563eb;--ui-ink:#0f172a;--ui-muted:#475569;--ui-line:#e2e8f0;--ui-surface:#f8fafc;--ui-radius:10px}
+:root{--ui-font:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--ui-primary:#2563eb;--ui-ink:#0f172a;--ui-muted:#475569;--ui-line:#e2e8f0;--ui-surface:#f8fafc;--ui-radius:10px}
 body.module-design{font-family:var(--ui-font);font-size:14px;line-height:1.5;color:var(--ui-ink);background:var(--ui-surface);-webkit-font-smoothing:antialiased}
 .module-design :is(button,input,select,textarea){font-family:var(--ui-font)}
 .module-design :is(h1,.page-title,.page-title-lg){font-size:24px;line-height:1.25;letter-spacing:-.4px;font-weight:700}

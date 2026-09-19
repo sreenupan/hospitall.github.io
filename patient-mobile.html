@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#153b83">
+  <title>HospitALL — Patient Mobile</title>
+  <link rel="stylesheet" href="css/patient-base.css">
+  <link rel="stylesheet" href="css/patient-ux.css">
+  <link rel="stylesheet" href="css/patient-discovery.css">
+  <link rel="stylesheet" href="css/patient-health-center.css">
+  <link rel="stylesheet" href="css/patient-mobile.css">
+</head>
+<body class="patient-mobile patient-module">
+  <a class="skip" href="#screen-content">Skip to content</a>
+  <div class="app">
+    <nav class="nav" aria-label="Patient destinations" hidden>
+      <div class="brand"><div class="brand-icon">H</div><div class="brand-name">HospitALL</div></div>
+      <button class="nav-item" data-screen="dashboard">Home</button>
+      <button class="nav-item" data-screen="appointments">Appointments</button>
+      <button class="nav-item" data-screen="doctors">Find Care</button>
+      <button class="nav-item" data-screen="records">Records</button>
+      <button class="nav-item" data-screen="profile">Profile</button>
+      <button class="nav-item" data-screen="followups">Follow-ups</button>
+      <button class="nav-item" data-screen="prescriptions">Prescriptions</button>
+      <button class="nav-item" data-screen="health">Health Profile</button>
+      <button class="nav-item" data-screen="labs">Lab Orders</button>
+      <button class="nav-item" data-screen="claim">Claim Records</button>
+      <button class="nav-item" data-screen="emergency">Emergency</button>
+      <button class="nav-item" data-screen="support">Support</button>
+      <a class="switch-role" href="index.html">Back to modules</a>
+    </nav>
+    <main class="main">
+      <header class="topbar">
+        <div class="app-brand" aria-label="HospitALL Patient"><span class="app-mark">H</span><span>HospitALL <small>Patient</small></span></div>
+        <strong id="page-title">Dashboard</strong>
+        <div class="topbar-spacer"></div>
+        <button class="btn btn-ghost" id="alerts" type="button">Reminders</button>
+      </header>
+      <div class="person-select"><label for="member">Viewing care for</label><select id="member"><option value="ravi">Ravi Kumar (Self)</option><option value="anaya">Anaya Kumar (Daughter)</option></select></div>
+      <div id="screen-content" tabindex="-1"></div>
+      <footer>UX demo · 04 Aug 2026. Changes reset on reload. No real bookings, payments, calls or emergency requests.</footer>
+      <nav class="mobile-tabs" aria-label="Patient app tabs"></nav>
+    </main>
+  </div>
+  <dialog id="patient-dialog"></dialog>
+  <div id="patient-feedback" role="status" aria-live="polite"></div>
+  <script src="js/patient-discovery.js"></script>
+  <script src="js/patient-health-center.js"></script>
+  <script src="js/patient-ux.js"></script>
+  <script src="js/patient-mobile.js"></script>
+</body>
+</html>

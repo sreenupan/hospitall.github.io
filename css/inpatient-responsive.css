@@ -1,0 +1,19 @@
+/* Mobile presentation of existing inpatient table data; desktop tables remain unchanged. */
+.inpatient-module .mobile-cell-label{display:none}
+@media screen and (max-width:700px){
+ body.module-design.inpatient-module .table-wrap{overflow:visible;border:0;background:transparent}
+ body.module-design.inpatient-module .table-wrap table,
+ body.module-design.inpatient-module .table-wrap tbody,
+ body.module-design.inpatient-module .table-wrap tr,
+ body.module-design.inpatient-module .table-wrap td{display:block;width:100%;min-width:0}
+ body.module-design.inpatient-module .table-wrap thead{display:none}
+ body.module-design.inpatient-module .table-wrap tr{margin-bottom:12px;border:1px solid var(--ui-line);border-radius:10px;background:#fff;overflow:hidden}
+ body.module-design.inpatient-module .table-wrap td{padding:10px 14px;border:0;overflow-wrap:anywhere}
+ body.module-design.inpatient-module .table-wrap td+td{border-top:1px solid #f1f5f9}
+ body.module-design.inpatient-module .table-wrap .mobile-cell-label{display:block;margin-bottom:3px;color:#475569;font-size:11px;font-weight:700;letter-spacing:.035em;text-transform:uppercase}
+ body.module-design.inpatient-module .table-wrap td:last-child:has(a){position:static;right:auto;background:transparent;border-left:0}
+ body.module-design.inpatient-module .table-wrap td:last-child a,
+ body.module-design.inpatient-module .table-wrap td:last-child button{display:inline-flex;align-items:center;min-height:44px}
+ body.module-design.inpatient-module .table-wrap .empty-row td{border:0}
+ body.module-design.inpatient-module .table-wrap .empty{padding:20px 8px}
+}

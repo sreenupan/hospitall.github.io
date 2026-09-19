@@ -89,7 +89,7 @@
    const sync=()=>{const name=member.querySelector('option[value="ravi"]')?.textContent.replace(/\s*\(Self\)\s*$/,'')||'Patient';profile.querySelector('strong').textContent=name;profile.querySelector('.aligned-avatar').textContent=name.split(/\s+/).map(s=>s[0]).slice(0,2).join('');};
    new MutationObserver(sync).observe(member,{childList:true,subtree:true,characterData:true});sync();
   }else if(document.body.classList.contains('admin-module')){
-   makeProfile('OA','Organization Admin','');const select=document.querySelector('#scenario');const sync=()=>profile.querySelector('small').textContent=select.selectedOptions[0].textContent;select.addEventListener('change',sync);sync();
+   makeProfile('OA','Organization Admin','');const name=document.querySelector('#org-name');const sync=()=>profile.querySelector('small').textContent=name.textContent;new MutationObserver(sync).observe(name,{childList:true,characterData:true,subtree:true});sync();
   }else if(document.body.classList.contains('inpatient-module')){
    makeProfile('IP','Inpatient team','');const select=document.querySelector('#persona');const sync=()=>profile.querySelector('small').textContent=select.value;select.addEventListener('change',sync);sync();
    header.querySelector(':scope > strong')?.remove();const reset=header.querySelector('[data-action="reset"]');if(reset)right.append(reset);

@@ -17,6 +17,6 @@ window.createRoleMockStore = function () {
       {id:'APT-1103',patient:'PAT-1103',doctor:'priya',date:'2026-08-04',time:'10:30',type:'CONSULTATION',channel:'ONLINE',reason:'Review',status:'CONFIRMED',arrived:false,fee:500,paid:500},
       {id:'APT-0812',patient:'PAT-0812',doctor:'amit',date:'2026-08-04',time:'14:00',type:'CONSULTATION',channel:'IN_PERSON',reason:'Review',status:'CANCELED',arrived:false,fee:700,paid:0,refunded:true},
       {id:'APT-1120',patient:'PAT-1120',doctor:'amit',date:'2026-08-04',time:'11:30',type:'CONSULTATION',channel:'IN_PERSON',reason:'Review',status:'SCHEDULED',arrived:false,fee:700,paid:0}
-    ], receipts: []
+    ], receipts: [], waitlist: [], credits: {}, nextWaitlist: 1, nextResolution: 1, audit: []
   };
 };

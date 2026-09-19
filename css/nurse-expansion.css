@@ -1,0 +1,20 @@
+/* Scoped Nurse additions; existing Doctor and shared components are untouched. */
+.nurse-module .prior-observation{padding:16px 0 20px;margin-bottom:20px;border-bottom:1px solid var(--ink-200)}
+.nurse-module .prior-observation h2{margin-bottom:4px}
+.nurse-module .prior-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0}
+.nurse-module .prior-grid div{padding:10px 12px;background:var(--primary-50);border:1px solid var(--primary-100);border-radius:8px}
+.nurse-module .prior-grid dt{font-size:12px;color:var(--ink-500)}
+.nurse-module .prior-grid dd{margin:2px 0 0;font-weight:600}
+.nurse-module #bedside-check{width:18px;height:18px;vertical-align:middle;margin-right:8px}
+.nurse-module #bedside-check+span{vertical-align:middle}
+.nurse-module .nav{scrollbar-width:thin}
+@media(max-width:1023px){
+ .nurse-module .nav-item{min-height:44px!important;display:flex;align-items:center}
+ .nurse-module .topbar button,.nurse-module .topbar input,.nurse-module .switch-role,.nurse-module #screen-content button,.nurse-module dialog button,.nurse-module #screen-content input,.nurse-module #screen-content select,.nurse-module dialog input,.nurse-module dialog select{min-height:44px}
+ .nurse-module .nav .brand button{min-width:44px;min-height:44px}
+ body.module-design.nurse-module .aligned-topbar .aligned-search input,
+ body.module-design.nurse-module .aligned-topbar .aligned-search button,
+ body.module-design.nurse-module .aligned-topbar .aligned-icon{min-height:44px!important;height:44px!important}
+ body.module-design.nurse-module .aligned-topbar .aligned-icon{min-width:44px!important;width:44px!important}
+}
+@media(max-width:650px){.nurse-module .prior-grid{grid-template-columns:1fr}}
