@@ -27,7 +27,7 @@
   }
   function sync(){
     const current=sourceNav.querySelector('.nav-item[aria-current="page"]')?.dataset.screen;
-    const parent={doctor:'doctors',booking:'doctors',success:'appointments',appointment:'appointments',room:'appointments',prescriptions:'records',health:'records',labs:'records',followups:'appointments',claim:'profile',support:'profile',emergency:'profile'}[current]||current;
+    const parent={doctor:'doctors',booking:'doctors',success:'appointments',appointment:'appointments',room:'appointments',prescriptions:'records',health:'records',labs:'records',followups:'appointments',claim:'profile',support:'profile',emergency:'profile'}[current]||(root.querySelector('[data-action="dashboard"]')?'dashboard':current);
     tabs.querySelectorAll('button').forEach(button=>{if(button.dataset.tab===parent)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
     shortcuts();profileLinks();
   }
