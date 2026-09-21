@@ -50,6 +50,18 @@
     return {label:'Allergy status not recorded',kind:'waiting'};
   };
   const readiness = (visit,record) => visit.action==='upcoming' ? {label:'Scheduled',kind:'waiting'} : hasVitals(record) ? {label:'Vitals ready',kind:'ready'} : {label:'Vitals pending',kind:'alert'};
+  function alignResetQueueToToday(){
+    const current=todayISO();
+    if(state.demoQueueDate)return;
+    const active=todayQueue().filter(v=>v.action!=='completed'&&v.status!=='completed');
+    if(!active.length){state.demoQueueDate=current;return;}
+    const counts=active.reduce((all,v)=>{all[v.date]=(all[v.date]||0)+1;return all;},{});
+    const fixtureDate=Object.keys(counts).sort((a,b)=>counts[b]-counts[a])[0];
+    const rebasedIds=new Set();
+    active.forEach(v=>{if(v.date===fixtureDate){v.date=current;rebasedIds.add(v.visitId);}});
+    fullQueueData.forEach(v=>{if(rebasedIds.has(v.visitId))v.date=current;});
+    state.demoQueueDate=current;
+  }
   const nextVisit = uhid => todayQueue().filter(v=>v.uhid===uhid&&v.status!=='completed'&&v.date>=todayISO()).sort((a,b)=>a.date.localeCompare(b.date))[0] || null;
   const latestActivity = record => (record.records||[]).slice().sort((a,b)=>dateTime(b.date)-dateTime(a.date))[0] || null;
   const hasRecentActivity = record => {const latest=latestActivity(record);return !!latest&&dateTime(latest.date)>=dateTime('01 Jan 2026');};
@@ -764,6 +776,6 @@
     content.instructions=r?.instructions?[r.instructions]:[];content.tests=[];content.procedures=[];
     content.followup={date:'Select date',type:'Select type',purpose:'',priority:'Normal'};
   });
-  DemoStore.attach('doctor',()=>({state,queue,fullQueueData,patients:MOCK_PATIENTS,prescriptions:prescriptionsList,labOrdersAll,proceduresAll,dxAddedAll}),data=>{for(const [key,target] of Object.entries({state,queue,fullQueueData,patients:MOCK_PATIENTS,prescriptions:prescriptionsList,labOrdersAll,proceduresAll,dxAddedAll}))if(data[key])DemoStore.replace(target,data[key]);savedAvailability={...state.availability};savedPreferences={...state.bookingPreferences};labOrderIdCounter=Math.max(0,...labOrdersAll.map(item=>Number(item.id)||0))+1;procedureIdCounter=Math.max(0,...proceduresAll.map(item=>Number(item.id)||0))+1;});
+  DemoStore.attach('doctor',()=>({state,queue,fullQueueData,patients:MOCK_PATIENTS,prescriptions:prescriptionsList,labOrdersAll,proceduresAll,dxAddedAll}),data=>{for(const [key,target] of Object.entries({state,queue,fullQueueData,patients:MOCK_PATIENTS,prescriptions:prescriptionsList,labOrdersAll,proceduresAll,dxAddedAll}))if(data[key])DemoStore.replace(target,data[key]);alignResetQueueToToday();savedAvailability={...state.availability};savedPreferences={...state.bookingPreferences};labOrderIdCounter=Math.max(0,...labOrdersAll.map(item=>Number(item.id)||0))+1;procedureIdCounter=Math.max(0,...proceduresAll.map(item=>Number(item.id)||0))+1;});
   doctorDashboard();
 })();

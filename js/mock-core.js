@@ -27,7 +27,7 @@ function clinicalPatient(p,assessment={}) {
 }
 function patientKey(data,id) {return Object.keys(data.people||{}).find(k=>data.people[k].id===id);}
 function project(db,role) {
-  if(role==='pharmacy'||role==='invoice') return {prescriptions:[...db.workflow.pharmacy,...Object.values(db.workflow.prescriptions)],stock:db.workflow.stock,invoices:db.workflow.invoices};
+  if(['pharmacy','invoice','pharmacyReports'].includes(role)) return {prescriptions:[...db.workflow.pharmacy,...Object.values(db.workflow.prescriptions)],stock:db.workflow.stock,invoices:db.workflow.invoices};
   const data=copy(db.roles[role]);if(!data)return null;
   const w=db.workflow,visits=Object.values(w.visits);
   if(role==='patient') {
@@ -75,8 +75,8 @@ function importEmergency(data,state) {
   }
 }
 function commit(db,{role,base,data}) {
-  if(!['patient','reception','nurse','doctor','inpatient','emergency'].includes(role)||!data||!base)throw new Error('Invalid role snapshot');
-  const latest=project(db,role);if(!latest)throw new Error('Missing seeded role');
+  if(!['patient','reception','nurse','doctor','inpatient','emergency','admin'].includes(role)||!data||!base)throw new Error('Invalid role snapshot');
+  const latest=project(db,role)||(role==='admin'?copy(base):null);if(!latest)throw new Error('Missing seeded role');
   const next=merge(latest,base,data,role);const w=db.workflow;
   if(role==='patient') {
     for(const [key,p]of Object.entries(next.people))if(!w.patients[p.id]||!same(base.people[key],data.people[key])){w.patients[p.id]={...w.patients[p.id],...p,first:p.name.split(' ')[0],last:p.name.split(' ').slice(1).join(' ')};}
@@ -127,22 +127,30 @@ function transaction(db,action,input) {
   const w=db.workflow,rx=w.prescriptions[input.id]||w.pharmacy.find(r=>r.id===input.id);
   if(!rx||!['Pending','Partial'].includes(rx.status))bad('Prescription unavailable or already dispensed');
   if(!Array.isArray(input.lines)||input.lines.length!==rx.items.length)throw new Error('All prescription lines must be accounted for');
+  if(input.expectedDispensed && !same(input.expectedDispensed,rx.items.map(m=>m.dispensed||0)))bad('This prescription changed in another tab. Reload before dispensing.');
   if(!['Cash','UPI','Card'].includes(input.method))throw new Error('Choose a payment method');
   if(input.method!=='Cash'&&!String(input.reference||'').trim())throw new Error('Enter a mock payment reference');
   const lines=input.lines.map((line,i)=>{
     const item=rx.items[i],product=w.stock.find(p=>p.id===item.product),batch=product?.batches.find(b=>b.id===line.batch);
-    if(!batch||batch.expiry<db.demoDate)throw new Error('Choose an available non-expired batch for every medicine');
     const qty=Number(line.qty),discount=Number(line.discount),rate=Number(line.rate);
-    if(!Number.isInteger(qty)||qty<=0||qty>batch.stock)throw new Error('Quantity must be a positive whole number within available stock');
+    if(!Number.isInteger(qty)||qty<0)throw new Error('Quantity must be a whole number at least zero');
+    if(qty===0)return null;
+    if(!batch||batch.expiry<db.demoDate)throw new Error('Choose an available non-expired batch for every supplied medicine');
+    if(qty>batch.stock)throw new Error('Quantity must be within available stock');
+    if(item.quantityKnown!==false&&qty>item.quantity-(item.dispensed||0))throw new Error('Quantity exceeds the remaining prescribed quantity');
     if(!Number.isFinite(rate)||rate<0||!Number.isFinite(discount)||discount<0||discount>100)throw new Error('Invalid price or discount');
     if(product.restricted&&!input.verified)throw new Error('Confirm prescription and patient identity verification');
     const taxable=Math.round(qty*rate*(1-discount/100)*100)/100,tax=Math.round(taxable*product.tax)/100;
-    return {name:item.name,strength:item.strength,product:product.id,batch:batch.id,expiry:batch.expiry,qty,rate,discount,taxable,tax,total:Math.round((taxable+tax)*100)/100,restricted:product.restricted};
-  });
+    return {itemIndex:i,name:item.name,strength:item.strength,product:product.id,batch:batch.id,expiry:batch.expiry,qty,rate,discount,taxable,tax,total:Math.round((taxable+tax)*100)/100,restricted:product.restricted};
+  }).filter(Boolean);
+  if(!lines.length)throw new Error('Enter a quantity for at least one medicine');
   const used={};for(const l of lines){const k=l.product+'|'+l.batch;used[k]=(used[k]||0)+l.qty;const b=w.stock.find(p=>p.id===l.product).batches.find(b=>b.id===l.batch);if(used[k]>b.stock)throw new Error('Combined medicine quantities exceed stock');}
   for(const l of lines)w.stock.find(p=>p.id===l.product).batches.find(b=>b.id===l.batch).stock-=l.qty;
   const id='INV-'+crypto.randomUUID().slice(0,8).toUpperCase();const invoice={id,rx:rx.id,patientName:rx.patientName,patientId:rx.patientId,doctor:rx.doctor,phone:rx.phone||'',method:input.method,reference:input.reference||'',date:new Date().toISOString(),lines,total:Math.round(lines.reduce((n,l)=>n+l.total,0)*100)/100,verified:!!input.verified};
-  w.invoices[id]=invoice;rx.status='Dispensed';rx.invoice=id;return {invoice};
+  invoice.notes=String(input.notes||'').trim();invoice.pharmacist='Pharmacy Admin (mock)';
+  for(const line of lines){const item=rx.items[line.itemIndex];if(item.quantityKnown===false){item.quantity=line.qty;item.quantityKnown=true;}item.dispensed=(item.dispensed||0)+line.qty;}
+  w.invoices[id]=invoice;rx.status=rx.items.every(m=>m.quantityKnown!==false&&(m.dispensed||0)>=m.quantity)?'Dispensed':'Partial';rx.invoice=id;
+  rx.invoiceIds=[...new Set([...(rx.invoiceIds||[]),id])];return {invoice,prescription:copy(rx)};
 }
 const core={initialize,project,commit,transaction,merge};
 if(typeof module === 'object' && module.exports)module.exports=core;

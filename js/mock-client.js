@@ -9,7 +9,7 @@
   // Prevent an early click from acting on an unhydrated fixture.
   document.documentElement.inert = true;
   let boot, binding, saved, chain = Promise.resolve(), failure;
-  const roleFiles = {'patient.html':'patient','patient-mobile.html':'patient','receptionist.html':'reception','nurse.html':'nurse','doctor.html':'doctor','inpatient.html':'inpatient','emergency.html':'emergency','prescription-dispense.html':'pharmacy','invoice-print.html':'invoice'};
+  const roleFiles = {'patient.html':'patient','patient-mobile.html':'patient','receptionist.html':'reception','nurse.html':'nurse','doctor.html':'doctor','inpatient.html':'inpatient','emergency.html':'emergency','prescription-dispense.html':'pharmacy','invoice-print.html':'invoice','reports.html':'pharmacyReports','admin.html':'admin'};
   // IndexedDB read/write transactions serialize the complete update across tabs.
   // Unlike separate localStorage reads/writes, this also prevents lost updates.
   const database = new Promise((resolve, reject) => {
