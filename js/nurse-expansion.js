@@ -5,7 +5,7 @@ window.createNurseExpansion = function (c) {
   const now='12:00';
   const clock=s=>{const [h,m]=s.split(':').map(Number);return h*60+m;};
   const queueContext=v=>{
-    const waiting=v.arrived&&v.channel==='IN_PERSON'?Math.max(0,clock(now)-clock(v.time))+' min':'Not waiting';
+    const waiting=v.arrived&&v.channel==='IN_PERSON'?(v.walkin?Math.max(0,Math.floor((Date.now()-Date.parse(v.arrivalAt))/60000)):Math.max(0,clock(now)-clock(v.time)))+' min':'Not waiting';
     const risk=v.shared?(v.reason|| (v.arrived?'Checked in':'Awaiting arrival')):v.id==='APT-1042'?'Fever/cough reported':v.id==='APT-1089'?'Follow-up preparation':v.channel==='ONLINE'?'Online visit':'Awaiting arrival';
     const next=editable(v)?v.intake==='Ready'?'Await doctor':'Record assessment':v.channel==='ONLINE'?'Consultation in progress':'Await check-in';
     return {waiting,risk,next};
@@ -65,12 +65,14 @@ window.createNurseExpansion = function (c) {
     if(!pid)err.push(['triage-patient','Select a patient.']);if(!concern)err.push(['triage-concern','Record the presenting concern.']);if(!level)err.push(['triage-level','Select a provisional level.']);if(errors(err,dialog))return false;
     cases.push({id:'TRI-'+(cases.length+1),patient:pid,concern,level,note:dialog.querySelector('#triage-note').value.trim(),at:stamp()});render();toast('Mock triage case recorded for '+full(patient(pid))+'.');
   }}]);}
-  function book(){modal('Book Appointment',`<p class="notice">Clinic: City Health Clinic · Nurse booking is locked to this organization.</p>`+errorsBox()+select('book-patient','Patient',[['','Select patient'],...db.patients.map(p=>[p.id,`${full(p)} · ${p.id}`])])+select('book-doctor','Doctor',[['','Select doctor'],...db.doctors.filter(d=>!d.unavailable).map(d=>[d.id,`${d.name} · ${d.specialty}`])])+select('book-slot','Available mock slot',[['','Select slot'],['12:30','04 Aug 2026 · 12:30'],['13:00','04 Aug 2026 · 13:00'],['15:00','04 Aug 2026 · 15:00']])+field('book-reason','Visit reason'),[{label:'Cancel'},{label:'Confirm Booking',style:'primary',run:()=>{
+  function book(){modal('Book Appointment',`<div id="nurse-scheduled-booking"><p class="notice">Clinic: City Health Clinic · Nurse booking is locked to this organization.</p>`+errorsBox()+select('book-patient','Patient',[['','Select patient'],...db.patients.map(p=>[p.id,`${full(p)} · ${p.id}`])])+select('book-doctor','Doctor',[['','Select doctor'],...db.doctors.filter(d=>!d.unavailable).map(d=>[d.id,`${d.name} · ${d.specialty}`])])+select('book-slot','Available mock slot',[['','Select slot'],['12:30','04 Aug 2026 · 12:30'],['13:00','04 Aug 2026 · 13:00'],['15:00','04 Aug 2026 · 15:00']])+field('book-reason','Visit reason')+'</div>',[{label:'Cancel'},{label:'Confirm Booking',style:'primary',run:()=>{
     const pid=dialog.querySelector('#book-patient').value,did=dialog.querySelector('#book-doctor').value,time=dialog.querySelector('#book-slot').value,reason=dialog.querySelector('#book-reason').value.trim(),err=[];
     if(!pid)err.push(['book-patient','Select a patient.']);if(!did)err.push(['book-doctor','Select a doctor.']);if(!time)err.push(['book-slot','Select a slot.']);if(!reason)err.push(['book-reason','Record the visit reason.']);if(errors(err,dialog))return false;
     if(db.visits.some(v=>v.doctor===did&&v.time===time&&v.consultation!=='Cancelled'))return !errors([['book-slot','That clinician slot is already booked.']],dialog);
-    db.visits.push({id:'APT-'+db.nextVisit++,patient:pid,doctor:did,date:db.date,time,type:'CONSULTATION',channel:'IN_PERSON',reason,status:'SCHEDULED',arrived:false,fee:doctor(did).fee,paid:0,intake:'Not started',assessment:{},audit:[{title:'Appointment booked',detail:'By Nurse Anita · City Health Clinic',at:stamp()}],consultation:'Pending'});render();toast('Appointment booked for '+full(patient(pid))+'.');
-  }}]);}
+    db.visits.push({id:'APT-NUR-'+crypto.randomUUID().slice(0,8).toUpperCase(),patient:pid,doctor:did,date:db.date,time,type:'CONSULTATION',channel:'IN_PERSON',reason,status:'SCHEDULED',arrived:false,fee:doctor(did).fee,paid:0,intake:'Not started',assessment:{},audit:[{title:'Appointment booked',detail:'By Nurse Anita · City Health Clinic',at:stamp()}],consultation:'Pending'});render();toast('Appointment booked for '+full(patient(pid))+'.');
+  }}]);
+   WalkinUI.attach({role:'nurse',facility:'city',nodes:[dialog.querySelector('#nurse-scheduled-booking')],footer:dialog.querySelector('.dialog-foot'),context:()=>({patient:dialog.querySelector('#book-patient').value,doctor:dialog.querySelector('#book-doctor').value,facility:'city',reason:dialog.querySelector('#book-reason').value}),onScheduled:d=>{if(!d)return;for(const [id,key] of [['book-patient','patient'],['book-doctor','doctor'],['book-reason','reason']])dialog.querySelector('#'+id).value=d[key]||'';},onSaved:()=>{dialog.close();ui.page='appointments';render();},render});
+  }
   function handle(action,id){
     if(action==='book'){book();return true;}
     if(action==='task-create'){createTask();return true;}

@@ -109,6 +109,12 @@
       await flush();
       return persist(action, {...data,epoch:boot.epoch});
     },
+    async refresh() {
+      await flush();const db=await readDatabase();
+      if(db.epoch!==boot.epoch)throw Error('Demo was reset in another tab. Reload.');
+      boot.revision=db.revision;boot.workflow=db.workflow;boot.data=core.project(db,binding.role)||clone(binding.get());
+      binding.set(clone(boot.data));saved=clone(binding.get());
+    },
     get workflow() { return boot?.workflow || {}; },
   };
   ready.catch(e => error(e.message));

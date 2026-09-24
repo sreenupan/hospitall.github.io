@@ -1,0 +1,51 @@
+/* Approved compact Patient dashboard; scoped to this screen. */
+.patient-module .dashboard-priority{display:grid;gap:16px}
+.patient-module .dashboard-priority>.page-header{margin-bottom:0;align-items:center}
+.patient-module .dashboard-priority .card{margin:0}
+.patient-module .dashboard-book-actions{display:flex;gap:10px;flex-wrap:wrap}
+.patient-module .dashboard-book-actions .btn{display:flex;gap:8px;align-items:center;min-height:44px}
+.patient-module .dashboard-book-actions svg{width:24px;height:24px;flex-shrink:0}
+.patient-module #dashboard-walkin:empty{display:none}
+.patient-module .dashboard-today{padding:0;overflow:hidden}
+.patient-module .dashboard-today-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid #dce4f0}
+.patient-module .dashboard-today-head h2{margin:0;font-size:16px}
+.patient-module .dashboard-today-head .muted{font-size:12px}
+.patient-module .dashboard-walkin-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:18px;align-items:center;padding:12px 18px}
+.patient-module .dashboard-walkin-row+.dashboard-walkin-row{border-top:1px solid #dce4f0}
+.patient-module .dashboard-walkin-row p{font-size:13px;margin:4px 0 0;color:#526681}
+.patient-module .dashboard-walkin-row .wi-button{min-height:44px}
+.patient-module .dashboard-next{display:flex;align-items:center;gap:16px;padding:16px 18px}
+.patient-module .dashboard-next-copy{flex:1;min-width:0}
+.patient-module .dashboard-next h2{font-size:13px;font-weight:500;color:#526681;margin:0 0 4px}
+.patient-module .dashboard-next p{margin:3px 0;font-size:13px}
+.patient-module .dashboard-next .dashboard-date{font-size:16px;font-weight:700;color:#173458}
+.patient-module .dashboard-calendar{background:#eff5ff;color:#2054bb;padding:8px 14px;border-radius:8px;text-align:center;min-width:60px}
+.patient-module .dashboard-calendar small{display:block;text-transform:uppercase;font-size:11px}
+.patient-module .dashboard-calendar strong{font-size:22px;line-height:1.1}
+.patient-module .dashboard-priority .btn{min-height:44px}
+.patient-module .dashboard-shortcuts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.patient-module .dashboard-shortcut{display:flex;align-items:center;gap:12px;padding:14px;min-height:74px;border:1px solid #dce4f0;border-radius:10px;background:white;color:#173458;text-align:left;font:inherit;cursor:pointer}
+.patient-module .dashboard-shortcut svg{width:24px;height:24px;flex:0 0 24px;color:#2563eb}
+.patient-module .dashboard-shortcut>span:first-of-type{flex:1;min-width:0}
+.patient-module .dashboard-shortcut strong{display:block;font-size:14px}
+.patient-module .dashboard-shortcut small{display:block;font-size:12px;margin-top:4px;color:#526681}
+.patient-module .dashboard-shortcut:hover{border-color:#7998e6;background:#f5f8ff}
+.patient-module .dashboard-shortcut:focus-visible{outline:3px solid #315cdb;outline-offset:3px}
+.patient-module .dashboard-records{gap:16px}
+.patient-module .dashboard-records .card{padding:16px 18px}
+.patient-module .dashboard-records h2{font-size:16px;margin:0 0 12px}
+.patient-module .dashboard-records .list-item{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:12px;align-items:center;padding:12px 0}
+.patient-module .dashboard-records .list-item h3{font-size:14px;margin:0}
+.patient-module .dashboard-records .list-item p{font-size:12px;margin:4px 0 0;grid-column:1;color:#526681}
+.patient-module .dashboard-records .list-item>.btn{grid-column:2;grid-row:1/3}
+.patient-module .dashboard-other{padding:16px 18px}
+.patient-module .dashboard-other h2{font-size:16px;margin:0 0 12px}
+.patient-module .dashboard-other .service-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.patient-module .dashboard-other .service-card{min-height:68px;padding:10px;gap:9px;border-radius:8px}
+.patient-module .dashboard-other .service-icon{width:28px;height:28px;flex-basis:28px;background:transparent}
+.patient-module .dashboard-other .service-icon svg{width:26px;height:26px}
+.patient-module .dashboard-other .service-label{font-size:13px}
+.patient-module .dashboard-other .service-hint{display:none}
+@media(max-width:1250px){.patient-module .dashboard-priority>.page-header{align-items:flex-start;flex-direction:column;gap:12px}.patient-module .dashboard-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))}.patient-module .dashboard-other .service-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:1023px){.patient-module .dashboard-priority>.dashboard-records{grid-template-columns:1fr}.patient-module .dashboard-other .service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.patient-module .dashboard-today-head{align-items:flex-start;flex-direction:column}.patient-module .dashboard-walkin-row{grid-template-columns:minmax(0,1fr) auto;gap:10px}.patient-module .dashboard-walkin-status{grid-row:2;grid-column:1/-1}.patient-module .dashboard-walkin-row>.wi-button{grid-row:1;grid-column:2}.patient-module .dashboard-next{flex-wrap:wrap}.patient-module .dashboard-shortcuts,.patient-module .dashboard-other .service-grid{grid-template-columns:1fr}.patient-module .dashboard-records .list-item{grid-template-columns:1fr}.patient-module .dashboard-records .list-item>.btn{grid-column:1;grid-row:auto;justify-self:start;margin-top:8px}}

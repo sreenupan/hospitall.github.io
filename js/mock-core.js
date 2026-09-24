@@ -32,16 +32,16 @@ function project(db,role) {
   const w=db.workflow,visits=Object.values(w.visits);
   if(role==='patient') {
     for(const d of Object.values(w.doctors))if(!data.doctors.some(x=>x.id===d.id))data.doctors.push({...d,hospital:'city',types:['In person','Online'],conditions:d.conditions||[],initials:'DR',qualification:'Mock clinician',experience:'Demo'});
-    for(const v of visits){const key=patientKey(data,v.patient);if(!key)continue;const old=data.appointments.find(a=>a.id===v.id)||{};put(data.appointments,{...old,id:v.id,person:key,doctor:v.doctor,date:v.date,time:v.time,type:v.channel==='ONLINE'?'Online':'In person',status:v.status==='COMPLETED'?'Completed':['CANCELED','NO_SHOW'].includes(v.status)?'Cancelled':'Scheduled',payment:v.paid>=v.fee?'Paid':'Pending',reason:v.reason,fee:v.fee,...(v.summary?{summary:v.summary,rx:v.rx}:{}),shared:true});}
+    for(const v of visits){if(v.walkin)continue;const key=patientKey(data,v.patient);if(!key)continue;const old=data.appointments.find(a=>a.id===v.id)||{};put(data.appointments,{...old,id:v.id,person:key,doctor:v.doctor,date:v.date,time:v.time,type:v.channel==='ONLINE'?'Online':'In person',status:v.status==='COMPLETED'?'Completed':['CANCELED','NO_SHOW'].includes(v.status)?'Cancelled':'Scheduled',payment:v.paid>=v.fee?'Paid':'Pending',reason:v.reason,fee:v.fee,...(v.summary?{summary:v.summary,rx:v.rx}:{}),shared:true});}
     for(const c of Object.values(w.consultations)){const key=patientKey(data,c.uhid);if(!key)continue;const v=w.visits[c.visitId];if(!v)continue;put(data.reports,{id:'DOC-'+c.id,person:key,consultation:v.id,title:'Signed consultation summary',date:v.date,category:'Consultation',source:c.signedBy,body:summary(c)});}
     for(const rx of Object.values(w.prescriptions)){const key=patientKey(data,rx.patientId);if(!key)continue;put(data.prescriptions,{id:rx.id,person:key,date:rx.date,doctor:rx.doctorId,consultation:rx.visitId,body:rx.items.map(m=>`${m.name} ${m.strength||''} — ${m.frequency||''} · ${m.route||''} · ${m.duration||''}${m.instructions?' · '+m.instructions:''}`).join('\n')+'\n'+(rx.instructions||'')});}
     for(const a of db.roles.inpatient?.admissions||[]){const key=patientKey(data,a.patient);if(!key||a.status!=='Discharged')continue;put(data.reports,{id:'DISCHARGE-'+a.id,person:key,title:'Discharge summary · '+a.id,date:db.demoDate,category:'Discharge',source:a.doctor,body:Object.entries(a.summary).map(([k,v])=>k+': '+v).join('\n')});}
   }
   if(role==='reception'||role==='nurse') {
     data.db.date=db.demoDate;
-    for(const p of Object.values(w.patients)){const name=(p.name||'').split(' ');put(data.db.patients,{...p,first:p.first||name.shift(),last:p.last||name.join(' '),dob:p.dob||'1992-04-10',gender:p.gender||'MALE'});}
+    for(const p of Object.values(w.patients)){const name=(p.name||'').split(' ');put(data.db.patients,{...p,first:p.first||name.shift(),last:p.last||name.join(' '),dob:p.dob||'1992-04-10',gender:p.gender||data.db.patients.find(x=>x.id===p.id)?.gender||'Not recorded'});}
     for(const d of Object.values(w.doctors))put(data.db.doctors,d);
-    for(const v of visits){const old=data.db.visits.find(x=>x.id===v.id)||{};put(data.db.visits,{intake:'Not started',assessment:{},audit:[],consultation:'Pending',...old,...v,shared:true});}
+    for(const v of visits){const old=data.db.visits.find(x=>x.id===v.id)||{};put(data.db.visits,{intake:'Not started',assessment:{},audit:[],consultation:'Pending',...old,...v,...(v.walkin?{audit:(v.audit||[]).map(a=>({...a,title:a.title||a.text,detail:a.detail||a.actor}))}:{}),shared:true});}
     if(role==='nurse'){
       for(const v of data.db.visits){if(v.status==='COMPLETED')v.consultation='Completed';if(['CANCELED','NO_SHOW'].includes(v.status))v.consultation='Cancelled';}
       for(const a of db.roles.inpatient?.admissions||[]){const p=db.roles.inpatient.patients.find(p=>p.id===a.patient);const previous=data.admissions.find(x=>x.id===a.id);put(data.admissions,{id:a.id,patient:a.patient,bed:a.bed,name:p?.name||a.patient,vitals:previous?.vitals||[],notes:previous?.notes||[],shared:true,status:a.status});for(const m of a.meds)put(data.meds,{id:m.id,admission:a.id,time:m.time,drug:m.name,dose:m.dose,route:m.route,state:a.status==='Discharged'?'Closed':m.status,note:m.reason,at:m.recorded,shared:true});}
@@ -123,6 +123,7 @@ function commit(db,{role,base,data}) {
 }
 function findProduct(stock,name,strength){const n=name.toLowerCase().replace(/[^a-z]/g,'');return stock.find(p=>(n.includes(p.match)||p.match.includes(n))&&(!strength||p.strength.replace(/\s/g,'').toLowerCase()===strength.replace(/\s/g,'').toLowerCase()));}
 function transaction(db,action,input) {
+  if(action.startsWith('walkin-')){const rules=typeof module==='object'&&module.exports?require('./walkin-core.js'):globalThis.WalkinCore;if(!rules)throw Error('Walk-in rules unavailable');return rules.transact(db,action,input);}
   if(action!=='dispense')throw new Error('Unknown mock action');
   const w=db.workflow,rx=w.prescriptions[input.id]||w.pharmacy.find(r=>r.id===input.id);
   if(!rx||!['Pending','Partial'].includes(rx.status))bad('Prescription unavailable or already dispensed');
